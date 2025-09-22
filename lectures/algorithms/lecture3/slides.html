@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>lecture #3</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h2>MATHEMATICS REVIEW</h2>
+                    </section>
+
+                    <section>
+                        <h3>Floor &amp; Ceiling</h3>
+                        <p>For any real number <em>x</em>:</p>
+                        <ul>
+                            <li class="fragment"><strong>Floor:</strong> The floor of <em>x</em>, written as $\lfloor x \rfloor$, is the greatest integer less than or equal to <em>x</em>.</li>
+                            <li class="fragment"><strong>Ceiling:</strong> The ceiling of <em>x</em>, written as $\lceil x \rceil$, is the least integer greater than or equal to <em>x</em>.</li>
+                        </ul>
+                        <div class="fragment">
+                            <p><strong>Examples:</strong></p>
+                            <ul>
+                                <li>For $x=2.5$, $\lfloor x \rfloor=2$ and $\lceil x \rceil=3$.</li>
+                                <li>For $x=1.2$, $\lfloor x \rfloor=1$ and $\lceil x \rceil=2$.</li>
+                                <li>For $x=10.8$, $\lfloor x \rfloor=10$ and $\lceil x \rceil=11$.</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h3>Floor &amp; Ceiling Properties</h3>
+                        <p>For any real number <em>x</em>, the following inequality holds:</p>
+                        $$x-1 < \lfloor x \rfloor \le x \le \lceil x \rceil < x+1$$
+                        <p class="fragment">For any integer <em>n</em>, the following equation holds:
+                        $$\lfloor n/2 \rfloor + \lceil n/2 \rceil = n$$</p>
+                    </section>
+
+                    <section>
+                        <h3>Polynomials</h3>
+                        <p>Given a non-negative integer <em>d</em>, a polynomial in <em>x</em> of degree <em>d</em> is a function $p(x)$ of the form:</p>
+                        $$p(x) = \sum_{i=0}^{d} a_{i}x^{i} = a_{0}x^{0} + a_{1}x^{1} + ... + a_{d}x^{d}$$
+                        <p>The constants $a_{0}, a_{1}, ..., a_{d}$ are the coefficients of the polynomial, and we require that $a_{d} \ne 0$.</p>
+                    </section>
+
+                    <section>
+                        <h3>Linear Polynomials (Degree 1)</h3>
+                        <p>A linear polynomial has the form $p(x) = a_{0} + a_{1}x$.</p>
+                        <p><strong>Is $5+7x$ a linear polynomial?</strong> Yes.</p>
+                        <p><strong>Is $5+7x+29x^2$ a linear polynomial?</strong> No, it's quadratic.</p>
+                    </section>
+
+                    <section>
+                        <img src='media/f01.png' width='60%'>
+                        <p class="caption">A plot of a simple linear function, $y = x$.</p>
+                    </section>
+
+                    <section>
+                        <h3>Quadratic Polynomials (Degree 2)</h3>
+                        <p>A quadratic polynomial has the form $p(x) = a_{0} + a_{1}x + a_{2}x^2$.</p>
+                        <p><strong>Is $7x + 9x^2$ a quadratic polynomial?</strong> Yes.</p>
+                        <p><strong>Is $x^2$ a quadratic polynomial?</strong> Yes ($a_0=0, a_1=0, a_2=1$).</p>
+                    </section>
+
+                    <section>
+                        <img src='media/f02.png' width='60%'>
+                        <p class="caption">A plot of a simple quadratic function, $y = x^2$.</p>
+                    </section>
+
+                    <section>
+                        <h3>Cubic Polynomials (Degree 3)</h3>
+                        <p>A cubic polynomial has the form $p(x) = a_{0} + a_{1}x + a_{2}x^2 + a_{3}x^3$.</p>
+                        <p><strong>Is $5x^3 + 3x^2 + x + 1$ a cubic polynomial?</strong> Yes.</p>
+                        <p><strong>Is $x^3$ a cubic polynomial?</strong> Yes.</p>
+                    </section>
+
+                    <section>
+                        <img src='media/f03.png' width='60%'>
+                        <p class="caption">A plot of a simple cubic function, $y = x^3$.</p>
+                    </section>
+
+                    <section>
+                        <h3>Exponential Functions</h3>
+                        <p>An exponential function is a function of the form:</p>
+                        $$f(x) = c^x$$
+                        <p>...where <em>c</em> is any constant, called the base.</p>
+                        <p><strong>Examples:</strong></p>
+                        <ul>
+                            <li>If $c=2$, then $f(x) = 2^x$.</li>
+                            <li>If $c=\frac{1}{2}$, then $f(x) = (\frac{1}{2})^x$.</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <img src='media/f04.png' width='60%'>
+                        <p class="caption">Plots of exponential functions with a base less than 1 (decay) and greater than 1 (growth).</p>
+                    </section>
+
+                    <section>
+                        <h3>Exponentials vs. Polynomials</h3>
+                        <p>A key concept in algorithm analysis is that <strong>any exponential function with a base strictly greater than 1 grows faster than any polynomial function</strong>.</p>
+                        <p>Let's see what this looks like.</p>
+                    </section>
+
+                    <section>
+                        <img src='media/f05.png' width='60%'>
+                        <p class="caption">For small values of <em>x</em>, polynomial functions like $x^3$ can appear to grow faster than an exponential like $2^x$.</p>
+                    </section>
+
+                    <section>
+                        <img src='media/f06.png' width='60%'>
+                        <p class="caption">However, for larger values of <em>x</em>, the exponential function's growth quickly overtakes all polynomial functions.</p>
+                    </section>
+
+                    <section>
+                        <h3>Logarithms</h3>
+                        <p>The logarithm is the inverse function of exponentiation. It answers the question: "How many times do we need to multiply a base by itself to get a certain number?"</p>
+                        $$ b^a = x \iff \log_{b} x = a $$
+                        <p><strong>Examples:</strong></p>
+                        <ul>
+                            <li>$2^5 = 32 \iff \log_{2} 32 = 5$</li>
+                            <li>$10^3 = 1000 \iff \log_{10} 1000 = 3$</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Logarithm Properties</h3>
+                        <ul>
+                            <li><strong>Product:</strong> $\log_{b}(xy) = \log_{b}x + \log_{b}y$</li>
+                            <li><strong>Quotient:</strong> $\log_{b}\frac{x}{y} = \log_{b}x - \log_{b}y$</li>
+                            <li><strong>Power:</strong> $\log_{b}(x^p) = p \log_{b}x$</li>
+                            <li><strong>Root:</strong> $\log_{b}\sqrt[p]{x} = \frac{1}{p}\log_{b}x$</li>
+                            <li><strong>Change of Base:</strong> $\log_{a}b = \frac{\log_{c}b}{\log_{c}a}$</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>A Useful Logarithm Identity</h3>
+                        <p>Let's prove the following identity:</p>
+                        $$ a^{\log_{b}x} = x^{\log_{b}a} $$
+                    </section>
+
+                    <section>
+                        <p><strong>Proof:</strong></p>
+                        \[
+                        a^{\log_b(x)} \\
+                        = b^{\log_b\!\left(a^{\log_b(x)}\right)} \\
+                        = b^{\log_b(x)\,\log_b(a)} \\
+                        = \left(b^{\log_b(x)}\right)^{\log_b(a)} \\
+                        = x^{\log_b(a)}
+                        \]
+                        <p><strong>Example:</strong> $9^{\log_{3}n} = n^{\log_{3}9} = n^2$</p>
+                    </section>
+
+                    <section>
+                        <h3>Common Logarithm Notations</h3>
+                        <ul>
+                            <li><strong>Binary logarithm:</strong> $lg\ x = \log_{2}x$</li>
+                            <li><strong>Natural logarithm:</strong> $ln\ x = \log_{e}x$</li>
+                            <li><strong>Exponentiation:</strong> $lg^k x = (lg\ x)^k$</li>
+                            <li><strong>Composition:</strong> $lg\ lg\ x = lg(lg\ x)$</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Logarithms vs. Polynomials</h3>
+                        <p>Just as exponentials grow faster than polynomials, <strong>any positive polynomial function grows faster than any logarithmic function</strong>.</p>
+                    </section>
+
+                    <section>
+                        <img src='media/f07.png' width='60%'>
+                        <p class="caption">Logarithmic functions grow much more slowly than polynomials.</p>
+                    </section>
+
+                    <section>
+                        <h3>Function Growth Rate Summary</h3>
+                        <p>The <strong>growth rate</strong> of a function describes how fast its value increases as <em>x</em> increases.</p>
+                        <p>The hierarchy of growth is generally:</p>
+                        <p><strong>Logarithmic &lt; Polynomial &lt; Exponential</strong></p>
+                    </section>
+
+                    <section>
+                        <img src='media/f08.png' width='60%'>
+                        <p class="caption">For small inputs, the differences can be subtle.</p>
+                    </section>
+
+                    <section>
+                        <img src='media/f09.png' width='60%'>
+                        <p class="caption">For large inputs, the different growth rates become extremely clear.</p>
+                    </section>
+
+                    <section style="font-size: 22pt;">
+                        <h3>Series Summation: Arithmetic</h3>
+                        <ul>
+                            <li>
+                                <strong>Arithmetic Series:</strong>
+                                $$ \sum_{k=1}^{n} k = 1 + 2 + ... + n = \frac{n(n+1)}{2} $$
+                            </li>
+                            <li>
+                                <strong>Sum of Squares:</strong>
+                                $$ \sum_{k=1}^{n} k^2 = 1^2 + 2^2 + ... + n^2 = \frac{n(n+1)(2n+1)}{6} $$
+                            </li>
+                            <li>
+                                <strong>Sum of Cubes:</strong>
+                                $$ \sum_{k=1}^{n} k^3 = 1^3 + 2^3 + ... + n^3 = \frac{n^2(n+1)^2}{4} $$
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section style="font-size: 22pt;">
+                        <h3>Series Summation: Geometric</h3>
+                        <ul>
+                            <li>
+                                <strong>General Geometric Series:</strong>
+                                $$ \sum_{k=0}^{n} x^k = \frac{x^{n+1}-1}{x-1} $$
+                            </li>
+                            <li>
+                                <strong>Infinite Geometric Series (for $|x| < 1$):</strong>
+                                $$ \sum_{k=0}^{\infty} x^k = \frac{1}{1-x} $$
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Common Derivatives: Polynomials</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Function $f(x)$</th>
+                                    <th>Derivative $f'(x)$</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>$c$</td>
+                                    <td>$0$</td>
+                                </tr>
+                                <tr>
+                                    <td>$a \cdot x$</td>
+                                    <td>$a$</td>
+                                </tr>
+                                <tr>
+                                    <td>$x^d$</td>
+                                    <td>$d \cdot x^{d-1}$</td>
+                                </tr>
+                                <tr>
+                                    <td>$a \cdot x^d$</td>
+                                    <td>$a \cdot d \cdot x^{d-1}$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <section>
+                        <h3>Common Derivatives: Exponentials &amp; Logarithms</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Function $f(x)$</th>
+                                    <th>Derivative $f'(x)$</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>$a^x$</td>
+                                    <td>$a^x \ln a$</td>
+                                </tr>
+                                <tr>
+                                    <td>$e^x$</td>
+                                    <td>$e^x$</td>
+                                </tr>
+                                <tr>
+                                    <td>$\ln x$</td>
+                                    <td>$\frac{1}{x}$</td>
+                                </tr>
+                                <tr>
+                                    <td>$\log_a x$</td>
+                                    <td>$\frac{1}{x \ln a}$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <section>
+                        <h3>Derivative Rules</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Function $f(x)$</th>
+                                    <th>Derivative $f'(x)$</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>$g(x) + h(x)$</td>
+                                    <td>$g'(x) + h'(x)$</td>
+                                </tr>
+                                <tr>
+                                    <td>$g(x) \cdot h(x)$</td>
+                                    <td>$g'(x)h(x) + g(x)h'(x)$</td>
+                                </tr>
+                                <tr>
+                                    <td>$\frac{g(x)}{h(x)}$</td>
+                                    <td>$\frac{g'(x)h(x) - g(x)h'(x)}{h^2(x)}$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <section>
+                        <h3>The Chain Rule</h3>
+                        <p>The chain rule is used to find the derivative of a composite function.</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Function $f(x)$</th>
+                                    <th>Derivative $f'(x)$</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>$g(h(x))$</td>
+                                    <td>$g'(h(x)) \cdot h'(x)$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h2>ASYMPTOTIC ANALYSIS</h2>
+                    </section>
+
+                    <section>
+                        <h3>Analyzing Running Time</h3>
+                        <p>When we perform asymptotic analysis of an algorithm's running time, $T(n)$, we follow these principles:</p>
+                        <ul>
+                            <li>Parameterize the running time by the input size, <em>n</em>.</li>
+                            <li>Ignore machine-dependent constants (like CPU speed).</li>
+                            <li>Focus on the growth of $T(n)$ as <em>n</em> approaches infinity.</li>
+                            <li>Typically, we analyze the upper bound, or worst-case running time.</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Example: Sorting Algorithms</h3>
+                        <ul>
+                            <li><strong>Insertion Sort</strong> worst-case time is $\Theta(n^2)$.</li>
+                            <li><strong>Merge Sort</strong> worst-case time is $\Theta(n \log n)$.</li>
+                        </ul>
+                        <p class="fragment">Because $n \log n$ grows more slowly than $n^2$, we can say that Merge Sort asymptotically beats Insertion Sort in the worst case.</p>
+                    </section>
+
+                    <section>
+                        <h3>The Importance of Scalability</h3>
+                        <p>For small inputs, an algorithm with a worse asymptotic complexity (like $n^2$) might be faster due to smaller constant factors.</p>
+                        <p class="fragment">However, as the input size <em>n</em> grows, the algorithm with better asymptotic complexity (like $n \log n$) will always win.</p>
+                    </section>
+
+                    <section>
+                        <img src='media/f10.png' width='49%'>
+                        <img src='media/f11.png' width='49%'>
+                        <p class="caption">Left (Small Inputs): $0.1n^2$ is faster. Right (Big Inputs): $10n \log_2 n$ is much faster.</p>
+                    </section>
+
+                    <section>
+                        <h3>Asymptotic Notation</h3>
+                        <p>We need a formal way to compare how quickly different functions grow as <em>n</em> goes to infinity.</p>
+                        <p>This is where asymptotic notation like Big-O, Big-$\Omega$, and Big-$\Theta$ comes in.</p>
+                    </section>
+
+                    <section>
+                        <h3>O-Notation (Upper Bounds)</h3>
+                        <p>We write $f(n) = O(g(n))$ if there exist positive constants <em>c</em> and $n_0$ such that:</p>
+                        $$ 0 \le f(n) \le c \cdot g(n) $$
+                        <p>for all $n \ge n_0$.</p>
+                        <p class="fragment">This means that for large enough <em>n</em>, $f(n)$ is "less than or equal to" some constant multiple of $g(n)$. It provides an <strong>asymptotic upper bound</strong>.</p>
+                    </section>
+
+                    <section>
+                        <h3>O-Notation: Set Definition</h3>
+                        <p>Formally, $O(g(n))$ is a set of functions:</p>
+                        <p>$O(g(n)) = \{ f(n):$ there exist constants $c>0, n_0>0$ such that $0 \le f(n) \le cg(n)$ for all $n \ge n_0 \}$</p>
+                        <p>So, when we write $2n^2 = O(n^3)$, we technically mean $2n^2 \in O(n^3)$.</p>
+                    </section>
+
+                    <section>
+                        <h3>Example: Proving an Upper Bound</h3>
+                        <p><strong>Claim:</strong> $6n^2 \in O(n^3)$</p>
+                    </section>
+
+                    <section>
+                        <p><strong>Proof:</strong></p>
+                        <p>We must show there exist constants $c, n_0$ such that $0 \le 6n^2 \le cn^3$ for all $n \ge n_0$.</p>
+                        <p>Let's choose $c=1$ and $n_0=6$.</p>
+                        <p>For any $n \ge 6$, multiplying both sides by $n^2$ gives $n^3 \ge 6n^2$.</p>
+                        <p>Since we chose $c=1$, the condition $6n^2 \le 1 \cdot n^3$ is satisfied for all $n \ge 6$. The definition is met.</p>
+                    </section>
+
+                    <section>
+                        <h3>$\Omega$-Notation (Lower Bounds)</h3>
+                        <p>We write $f(n) = \Omega(g(n))$ if there exist positive constants <em>c</em> and $n_0$ such that:</p>
+                        $$ 0 \le c \cdot g(n) \le f(n) $$
+                        <p>for all $n \ge n_0$.</p>
+                        <p class="fragment">This means that for large enough <em>n</em>, $f(n)$ is "greater than or equal to" some constant multiple of $g(n)$. It provides an <strong>asymptotic lower bound</strong>.</p>
+                    </section>
+
+                    <section>
+                        <h3>$\Theta$-Notation (Tight Bounds)</h3>
+                        <p>We write $f(n) = \Theta(g(n))$ if $f(n)$ is both $O(g(n))$ and $\Omega(g(n))$.</p>
+                        $$ \Theta(g(n)) = O(g(n)) \cap \Omega(g(n)) $$
+                        <p>This means $f(n)$ is "equal to" $g(n)$ asymptotically. It provides an <strong>asymptotic tight bound</strong>.</p>
+                        <p class="fragment">For example, $\frac{1}{2}n^2 - 2n = \Theta(n^2)$.</p>
+                    </section>
+
+                    <section>
+                        <h3>Analogies for Asymptotic Notation</h3>
+                        <p>Think of the relationship between functions in terms of standard comparisons:</p>
+                        <ul>
+                            <li>$f(n) = O(g(n))$ is like $f \le g$</li>
+                            <li>$f(n) = \Omega(g(n))$ is like $f \ge g$</li>
+                            <li>$f(n) = \Theta(g(n))$ is like $f = g$</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Strict Bounds: o and $\omega$</h3>
+                        <p>There are also notations for strict inequalities:</p>
+                        <ul>
+                            <li>$f(n) = o(g(n))$ is like $f < g$ (strict upper bound)</li>
+                            <li>$f(n) = \omega(g(n))$ is like $f > g$ (strict lower bound)</li>
+                        </ul>
+                        <p>For example, $2n^2 = o(n^3)$, but $2n^2 \ne o(n^2)$.</p>
+                    </section>
+
+                    <section style="font-size: 28pt;">
+                        <h3>Using Limits to Compare Functions</h3>
+                        <p>If the limit exists, we can compare $f(n)$ and $g(n)$ by evaluating:</p>
+                        $$ \lim_{n\to\infty} \frac{f(n)}{g(n)} $$
+                        <ul>
+                            <li class="fragment">If the limit is <strong>0</strong>, then $f(n) = o(g(n))$ (and also $O(g(n))$).</li>
+                            <li class="fragment">If the limit is a <strong>positive constant</strong>, then $f(n) = \Theta(g(n))$.</li>
+                            <li class="fragment">If the limit is <strong>$\infty$</strong>, then $f(n) = \omega(g(n))$ (and also $\Omega(g(n))$).</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Properties of Asymptotic Notation</h3>
+                        <ul>
+                            <li><strong>Transitivity:</strong> If $f=O(g)$ and $g=O(h)$, then $f=O(h)$.</li>
+                            <li><strong>Additivity:</strong> If $f=O(h)$ and $g=O(h)$, then $f+g=O(h)$.</li>
+                            <li><strong>Multiplication:</strong> If $f=O(h_1)$ and $g=O(h_2)$, then $f \cdot g = O(h_1 \cdot h_2)$.</li>
+                        </ul>
+                        <p>(Similar properties hold for $\Omega, \Theta, o, \omega$)</p>
+                    </section>
+
+                    <section>
+                        <h3>Common Function Bounds</h3>
+                        <ul>
+                            <li><strong>Polynomials:</strong> $a_d n^d + ... + a_0 = \Theta(n^d)$ for $a_d > 0$.</li>
+                            <li><strong>Logarithms:</strong> $\log_a n = \Theta(\log_b n)$ for any bases $a, b > 1$. Logs grow slower than any polynomial, $log\ n = O(n^c)$ for any $c > 0$.</li>
+                            <li><strong>Exponentials:</strong> Grow faster than any polynomial. $n^d = O(r^n)$ for any $r > 1$ and $d > 0$.</li>
+                            <li><strong>Factorial:</strong> $n! \in 2^{\Theta(n \log n)}$. Grows faster than exponentials. Note that this is a collection of classes and not a single class!</li>
+                        </ul>
+                    </section>
+
+                    <section>
+
+                        <p>
+                            Let's prove the last claim:
+                        </p>
+
+                        <p>
+                            $n! \in 2^{\Theta(n \log n)}$
+                        </p>
+
+                        <p class="fragment">
+                            $\iff log(n!) \in \Theta(n \log n)$
+                        </p>
+
+                    </section>
+
+                    <section>
+                        <p><strong>Upper Bound ($O$):</strong></p>
+                        $$ \log(n!) = \sum_{i=1}^{n} \log(i) \le \sum_{i=1}^{n} \log(n) = n \log(n) $$
+                        <p>Thus, $\log(n!) \in O(n \log n)$.</p>
+                    </section>
+
+                    <section>
+                        <p><strong>Lower Bound ($\Omega$):</strong></p>
+                        $$ \log(n!) = \sum_{i=1}^{n} \log(i) \ge \sum_{i=n/2}^{n} \log(i) $$
+                        $$ \ge \sum_{i=n/2}^{n} \log(n/2) = \frac{n}{2} \log(n/2) $$
+                        $$ = \frac{n}{2}(\log n - \log 2) \in \Omega(n \log n) $$
+                    </section>
+
+                    <section>
+
+                        <p>Since $\log(n!)$ is both $O(n \log n)$ and $\Omega(n \log n)$, it is $\Theta(n \log n)$.</p>
+
+                        <p class="fragment">Thus $n! \in 2^{\Theta(n \log n)}$</p>
+
+                    </section>
+
+                    <section>
+                        <h3>Growth Rate Hierarchy</h3>
+                        <p>Here are some common functions sorted by increasing asymptotic growth:</p>
+                        <span class="fragment">$\log n$ < </span>
+                        <span class="fragment">$\sqrt{n}$ < </span>
+                        <span class="fragment">$n$ < </span>
+                        <span class="fragment">$n \log n$ < </span>
+                        <span class="fragment">$n^2$ < </span>
+                        <span class="fragment">$n^k$ (k > 2) < </span>
+                        <span class="fragment">$2^n$ < </span>
+                        <span class="fragment">$n!$</span>
+                    </section>
+
+                </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+
+    </body>
+
+</html>

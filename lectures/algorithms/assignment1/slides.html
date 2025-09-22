@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>assignment #1</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section style="font-size: 22pt;">
+                        <h3>POINTS</h3>
+                        <p>
+                            <ul>
+                                <li>Q1 - 10pts</li>
+                                <li>Q2 - 20pts</li>
+                                <li>Q3 - 30pts</li>
+                                <li>Q4 - 10pts</li>
+                                <li>Q5 - 10pts</li>
+                                <li>Q6 - 20pts</li>
+                            </ul>
+                        </p>
+                        <p>
+                            <ul>
+                                <li>Extra Question - 30pts</li>
+                            </ul>
+                        </p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>QUESTION 1</h3>
+                        <p>loop invariants</p>
+                    </section>
+
+                    <section>
+                        <p>Consider the following algorithm which takes an array <em>A</em> of real numbers, indexed from 1 to <em>n</em>.</p>
+                    </section>
+
+                    <section>
+                        <pre><code data-trim data-noescape class="language-plaintext">
+                    TestAlg(A)
+                    ----------
+                    n ← length(A)
+                    for j ← 1 to floor(n/2) do
+                        k ← n + 1 - j
+                        A[j] ← A[j] + A[k]
+                        A[k] ← A[j] - A[k]
+                        A[j] ← A[j] - A[k]
+                    end for
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <p>Note: The three-step process of assignments in the loop body is a common method for swapping two numbers without using a temporary variable.</p>
+                    </section>
+
+                    <section style="font-size: 24pt;">
+                        <p>Which of the following invariants are <strong>true</strong> at the end of every iteration of the for loop?</p>
+                        <ol>
+                            <li>The sub-array A[1...j] contains its original contents in the same order.</li>
+                            <li>The sub-array A[1...j] contains the original contents of sub-array A[(n+1-j)...n] in reverse order.</li>
+                            <li>The sub-array A[1...j] contains its original contents in reverse order.</li>
+                            <li>The sub-array A[(n+1-j)...n] contains its original contents in the same order.</li>
+                            <li>The sub-array A[(n+1-j)...n] contains the original contents of sub-array A[1...j] in reverse order.</li>
+                            <li>The sub-array A[(n+1-j)...n] contains its original contents in reverse order.</li>
+                        </ol>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>QUESTION 2</h3>
+                        <p>counting merge-sort calls</p>
+                    </section>
+
+                    <section>
+
+                        <p>Recall the pseudocode for Merge-Sort</p>
+
+                    </section>
+
+                    <section>
+                        <pre><code data-trim data-noescape class="language-plaintext">
+                    Merge-Sort(A, p, r)
+                    -------------------
+                    if p < r then
+                        q ← floor((p+r)/2)
+                        Merge-Sort(A, p, q)
+                        Merge-Sort(A, q+1, r)
+                        Merge(A, p, q, r)
+                    end if
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <p>How many calls to <code>Merge-Sort</code> (including the first) are performed in total when we call <code>Merge-Sort(A, 1, n)</code>?</p>
+                        <p><small>Give your answer as a precise, self-contained claim (e.g., "The total number of calls to Merge-Sort performed when we run Merge-Sort(A, 1, n) is $6^n-123$"). Hint: Run the algorithm by hand on a few inputs and look for a pattern.</small></p>
+                        <p><small>Hint: Run the algorithm by hand on a few inputs and look for a pattern.</small></p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>QUESTION 3</h3>
+                        <p>generalizing the claim</p>
+                    </section>
+
+                    <section>
+                        <p>Generalize your claim from the previous question to give a formula for the total number of calls when we run <code>Merge-Sort(A, p, r)</code>. The formula should be a function of $r - p$.</p>
+                    </section>
+
+                    <section>
+                        <p>Using strong induction, prove that your claim is correct by following these steps:</p>
+                        <ul>
+                            <li>State the claim.</li>
+                            <li>State and prove the base case.</li>
+                            <li>State the induction hypothesis.</li>
+                            <li>Prove the induction step.</li>
+                            <li>Apply the induction principle to prove the claim.</li>
+                        </ul>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>QUESTION 4</h3>
+                        <p>algorithm performance</p>
+                    </section>
+
+                    <section>
+                        <p>What is the <strong>smallest integer value of n</strong> such that an algorithm with running time $5000n^2$ runs faster than an algorithm with running time $1.5^n$ on the same machine?</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>QUESTION 5</h3>
+                        <p>insertion sort vs. merge sort</p>
+                    </section>
+
+                    <section>
+                        <p>We are comparing implementations of insertion sort and merge sort on the same machine. Suppose that for inputs of size $n$:</p>
+                        <ul>
+                            <li>Insertion sort runs in $0.5n^2$ steps.</li>
+                            <li>Merge sort runs in $256n \log n$ steps.</li>
+                        </ul>
+                        <p>For which values of <em>n</em> does insertion sort take <strong>more steps</strong> than merge sort?</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>QUESTION 6</h3>
+                        <p>concepts review</p>
+                    </section>
+
+                    <section>
+                        <p>
+                            There could be more than one correct answer; select all correct answers.
+                        </p>
+                    </section>
+
+                    <section>
+                        <p><strong>1. The run time function T(n) represents:</strong></p>
+                        <ol>
+                            <li>the real running time of an algorithm implementation</li>
+                            <li>the estimated running time of an algorithm implementation</li>
+                            <li>the number of basic steps performed by an algorithm</li>
+                        </ol>
+                    </section>
+
+                    <section>
+                        <p><strong>2. If we are sorting n integers (each 32 bits), what is the proper way to define the problem size?</strong></p>
+                        <ol>
+                            <li>1</li>
+                            <li>32</li>
+                            <li>n</li>
+                            <li>$n^2$</li>
+                        </ol>
+                    </section>
+
+                    <section>
+                        <p><strong>3. If doing bitwise addition between n integers of k bits, what is the proper problem size?</strong></p>
+                        <ol>
+                            <li>k</li>
+                            <li>32</li>
+                            <li>n</li>
+                            <li>nk</li>
+                        </ol>
+                    </section>
+
+                    <section>
+                        <p><strong>4. The meaning of $f(n)=O(g(n))$ is:</strong></p>
+                        <ol style="font-size: 0.8em;">
+                            <li>$f(n)$ and $g(n)$ are the same run time function</li>
+                            <li>$f(n)$ and $g(n)$ must have the same growth rate</li>
+                            <li>$f(n)$ has the same or lower growth rate than $g(n)$</li>
+                            <li>$f(n)$ belongs to the complexity class $O(g(n))$</li>
+                        </ol>
+                    </section>
+
+                    <section>
+                        <p><strong>5. If $f(n)=O(g(n))$ and $f(n)=\omega(h(n))$, their growth rates should be ordered as:</strong></p>
+                        <ol style="font-size: 0.8em;">
+                            <li>$f(n) > h(n) \le g(n)$</li>
+                            <li>$h(n) > f(n) \le g(n)$</li>
+                            <li>$h(n) < f(n) \le g(n)$</li>
+                            <li>$g(n) < f(n) \le h(n)$</li>
+                        </ol>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>EXTRA QUESTION</h3>
+                        <p>bubblesort analysis</p>
+                    </section>
+
+                    <section>
+                        <p>Bubblesort is an inefficient sorting algorithm that works by repeatedly swapping adjacent elements that are out of order.</p>
+                    </section>
+
+                    <section>
+                        <pre><code data-trim data-noescape class="language-plaintext">
+                    BUBBLESORT(A, n)
+                    ----------------
+                    1:  for i ← 1 to n-1 do
+                    2:      for j ← n downto i+1 do
+                    3:          if A[j] < A[j-1] then
+                    4:              exchange A[j] with A[j-1]
+                    5:          end if
+                    6:      end for
+                    7:  end for
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h3>part a</h3>
+                        <p>
+                            Let A' denote the array A after Bubblesort(A, n) is executed.
+                        </p>
+                        <p>Note that in order to prove that BUBBLESORT is correct, we must first show it terminates and that the final array A' satisfies $A'[1] \le A'[2] \le \dots \le A'[n]$.</p>
+                        <p><strong>Question:</strong> Besides termination and the sorted property, what else must you prove to show that BUBBLESORT actually sorts the original array A?</p>
+                    </section>
+
+                    <section>
+                        <h3>part b</h3>
+                        State a precise loop invariant for the inner <code>for</code> loop (lines 2-5) and prove that this invariant holds.</p>
+                    </section>
+
+                    <section>
+                        <h3>part c</h3>
+                        Using the result from part (b), state a loop invariant for the outer <code>for</code> loop (lines 1-4) that allows you to prove the final sorted property (of A'). Prove this invariant holds.</p>
+                    </section>
+
+                    <section>
+                        <h3>part d</h3>
+                        <p>What is the worst-case running time of BUBBLESORT? How does it compare with the running time of INSERTION-SORT?</p>
+                    </section>
+
+                </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+
+    </body>
+
+</html>

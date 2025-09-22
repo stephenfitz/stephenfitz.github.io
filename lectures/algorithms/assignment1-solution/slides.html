@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>assignment #1 solution</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>SOLUTION 1</h3>
+                        <p>loop invariants</p>
+                    </section>
+
+                    <section>
+                        <p>The core operation of the algorithm in each iteration is to swap the elements at index <em>j</em> and <em>k</em>, where $k = n+1-j$. This effectively swaps elements from the beginning of the array with elements from the end of the array.</p>
+                    </section>
+
+                    <section>
+                        <p>The correct invariants that hold true after every iteration are:</p>
+                        <ul>
+                            <li><strong>2. [True]</strong> The sub-array A[1...j] contains the original contents of sub-array A[(n+1-j)...n] in reverse order.</li>
+                            <li><strong>5. [True]</strong> The sub-array A[(n+1-j)...n] contains the original contents of sub-array A[1...j] in reverse order.</li>
+                        </ul>
+                        <p>The overall effect of the algorithm is to reverse the entire array.</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>SOLUTION 2</h3>
+                        <p>counting merge-sort calls</p>
+                    </section>
+
+                    <section>
+                        <p><strong>Claim:</strong> The total number of calls to <code>Merge-Sort</code> performed when we run <code>Merge-Sort(A, 1, n)</code> is <strong>2n - 1</strong>.</p>
+                        <p><strong>Explanation:</strong> The calls to <code>Merge-Sort</code> form a binary tree. The leaves of this tree correspond to calls on subarrays of length 1. Since there are exactly <em>n</em> such subarrays (leaves), the total number of nodes in the binary tree (and thus the total number of calls) is $2n - 1$.</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>SOLUTION 3</h3>
+                        <p>generalizing the claim</p>
+                    </section>
+
+                    <section>
+                        <p><strong>Claim to Prove:</strong> Let $P(k)$ be the proposition that for any integers <em>r, p</em> where $r-p=k \ge 0$, the number of calls for <code>Merge-Sort(A, p, r)</code> is $2k+1$.</p>
+                    </section>
+
+                    <section>
+                        <p><strong>Base Case (k=0):</strong></p>
+                        <p>When $k=0$, we have $r=p$. The <code>if</code> condition on line 1 of the algorithm ($p < r$) is false, so no further recursive calls are made. There is only the initial call. The formula gives $2(0)+1=1$, which is correct. Thus, $P(0)$ holds.</p>
+                    </section>
+
+                    <section>
+                        <p><strong>Induction Hypothesis:</strong></p>
+                        <p>Assume that for a fixed integer $k \ge 0$, the proposition $P(j)$ is true for all integers $j$ where $0 \le j \le k$.</p>
+                    </section>
+
+                    <section>
+
+                        <p>We must show that the hypothesis implies $P(k+1)$ holds. Let $r-p = k+1$. Since $k+1 > 0$, the <code>if</code> condition is true, and two recursive calls are made: <code>Merge-Sort(A, p, q)</code> and <code>Merge-Sort(A, q+1, r)</code>, where $q = \lfloor(p+r)/2\rfloor$.</p>
+
+                    </section>
+
+                    <section>
+                        <p>
+                            For the first call, the size is $q-p$
+                            $$= \lfloor(p+r)/2\rfloor - p = \lfloor(r-p)/2\rfloor \le k$$
+                            By the I.H., this results in $2(q-p)+1$ calls.
+                        </p>
+                    </section>
+
+                    <section>
+                        <p>
+                            For the second call, the size is $r-(q+1)$
+                            $$= r - \lfloor(p+r)/2\rfloor - 1 = \lfloor(r-p)/2\rfloor - 1 \le k$$
+                            By the I.H., this results in $2(r-q-1)+1$ calls.
+                        </p>
+                    </section>
+
+                    <section>
+                        <p>
+                            The total number of calls is 
+                            $$1 + (2(q-p)+1) + (2(r-q-1)+1) \newline = 2(r-p)+1 = 2(k+1)+1$$
+                            This shows $P(k+1)$ holds.
+                        </p>
+                    </section>
+
+                    <section>
+                        <p>By the principle of strong induction, we have proven that $P(k)$ holds for all $k \ge 0$.</p>
+                        <p>Therefore, the total number of calls to <code>Merge-Sort(A, p, r)</code> is always $2(r-p)+1$.</p>
+                        <p>For an array of size <em>n</em> (from 1 to <em>n</em>), this is $2(n-1)+1 = 2n-1$ calls.</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>SOLUTION 4</h3>
+                        <p>algorithm performance</p>
+                    </section>
+
+                    <section>
+                        <p>What is the smallest value of <em>n</em> such that $5000n^2$ runs faster than $1.5^n$?</p>
+                        <p><strong>Answer:</strong> The smallest integer value is <strong>n = 40</strong>.</p>
+                    </section>
+
+                    <section>
+                        <img src="media/crossover_original_scale.png" width="100%">
+                    </section>
+
+                    <section>
+                        <img src="media/crossover_log_scale.png" width="100%">
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>SOLUTION 5</h3>
+                        <p>insertion sort vs. merge sort</p>
+                    </section>
+
+                    <section>
+                        <p>For which values of <em>n</em> does insertion sort ($0.5n^2$ steps) take more steps than merge sort ($256n \log n$ steps)?</p>
+                        <p><strong>Answer:</strong> When <strong>n ≥ 6484</strong>.</p>
+                    </section>
+
+                    <section>
+                        <img src="media/insertion_vs_merge_crossing.png" width="100%">
+                    </section>
+
+                    <section>
+                        <img src="media/insertion_vs_merge_crossing_zoom.png" width="100%">
+                    </section>
+
+                    <section>
+                        <img src="media/insertion_vs_merge_difference.png" width="100%">
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>SOLUTION 6</h3>
+                        <p>concepts review</p>
+                    </section>
+
+                    <section>
+                        <ol>
+                            <li>The run time function T(n) represents: <strong>(3) the number of basic instructions performed by an algorithm</strong></li>
+                            <li>If sorting n integers (32 bits each), the proper problem size is: <strong>(3) n</strong></li>
+                            <li>If doing bitwise addition between n integers of k bits, the proper problem size is: <strong>(4) nk</strong></li>
+                            <li>The meaning of $f(n)=O(g(n))$ is: <strong>(3) f(n) has the same or lower growth rate than g(n)</strong> AND <strong>(4) f(n) belongs to the function set O(g(n))</strong></li>
+                            <li>If $f(n)=O(g(n))$ and $f(n)=\omega(h(n))$, the growth rates are ordered as: <strong>(3) $h(n) < f(n) \le g(n)$</strong></li>
+                        </ol>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>EXTRA SOLUTION</h3>
+                        <p>bubblesort analysis</p>
+                    </section>
+
+                    <section>
+                        <p><strong>(a) Correctness:</strong></p>
+                        <p>To fully prove that Bubblesort sorts, you must also show that the output array A' is a <strong>permutation</strong> of the original input array A. This ensures no elements are lost or created.</p>
+                    </section>
+
+                    <section>
+                        <p><strong>(b) Inner Loop Invariant (for j):</strong></p>
+                        <p>At the start of each iteration of the inner loop (lines 2-5), the element <strong>$A[j]$ is the minimum value in the subarray $A[j..n]$</strong>.</p>
+                        <p>\[ A[j] = \min \{ A[k] : j \leq k \leq n \} \]</p>
+                    </section>
+
+                    <section>
+                        <ul>
+                            <li><strong>Initialization:</strong> Initially $j=n$. $A[n]$ is trivially the minimum of $A[n..n]$.</li>
+                            <li><strong>Maintenance:</strong> The loop compares $A[j]$ and $A[j-1]$ and swaps them if $A[j]$ is smaller. This ensures that after the comparison, $A[j-1]$ becomes the new minimum of the subarray $A[j-1..n]$.</li>
+                            <li><strong>Termination:</strong> When the loop ends (j=i), $A[i]$ is the minimum element in $A[i..n]$.</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <p><strong>(c) Outer Loop Invariant (for i):</strong></p>
+                        <p>At the start of each iteration of the outer loop (lines 1-7), the subarray <strong>$A[1..i-1]$ contains the $i-1$ smallest elements of the original array, in sorted order</strong>.</p>
+                        <p>$A[i..n]$ consists of the $n−i + 1$ remaining values originally in $A[1..n]$.</p>
+                    </section>
+
+                    <section>
+                        <p>
+                            <strong>Initialization:</strong> Before the first iteration, $i=1$. The subarray $A[1..0]$ is empty and the invariant holds vacuously.
+                        </p>
+                    </section>
+
+                    <section>
+                        <p>
+                            <strong>Maintenance:</strong> By the invariant, $A[1..i-1]$ contains the sorted, smallest elements. From part (b), we know the inner loop finishes by placing the smallest remaining element (from $A[i..n]$) into $A[i]$. Thus, $A[1..i]$ now contains the $i$ smallest values originally in $A[1..n]$, in sorted order.
+                        </p>
+                        <p>
+                            Moreover, since the <code>for</code> loop of lines 2-5 permutes $A[i + 1..n]$, the subarray $A[i + 1..n]$ consists of the $n−i$ remaining values originally in $A[1..n]$.
+                        </p>
+                    </section>
+
+
+                    <section>
+                        <p>
+                            <strong>Termination:</strong> The outer loop terminates when $i=n$. At this point, the invariant states that $A[1..n-1]$ contains the n-1 smallest elements in sorted order. Including the last element, we see that the entire array $A[1..n]$ is sorted.
+                        </p>
+                    </section>
+
+                    <section>
+                        <p><strong>(d) Running Time:</strong></p>
+                        <p>The running time of Bubblesort is $\Theta(n^2)$ in all cases. Its worst-case running time is the same as that of Insertion Sort.</p>
+                    </section>
+
+                </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+
+    </body>
+
+</html>

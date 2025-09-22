@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>lecture #4</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+
+                        <h3>REVIEW</h3>
+
+                    </section>
+
+                    <section>
+                        <p>Are the following statements <strong>True</strong> or <strong>False</strong>?</p>
+                        <ol>
+                            <li>$n^{2}-5n-100=O(n)$ <span class="fragment">→ <strong>False</strong></span></li>
+                            <li>$n^{3}+10n^{2}+125=\omega(n)$ <span class="fragment">→ <strong>True</strong></span></li>
+                            <li>$n^{2}+O(n)=O(n^{2})$ <span class="fragment">→ <strong>True</strong></span></li>
+                            <li>$2^{n+1}=O(2^{n})$ <span class="fragment">→ <strong>True</strong>, since $2^{n+1} = 2 \cdot 2^n$</span></li>
+                            <li>$2^{5n}=O(2^{n})$ <span class="fragment">→ <strong>False</strong>, since $2^{5n} = (2^5)^n = 32^n$</span></li>
+                            <li>$log(n^{2})=O(log(n))$ <span class="fragment">→ <strong>True</strong>, since $log(n^2) = 2 \log n$</span></li>
+                        </ol>
+                    </section>
+
+                    <section>
+                        <h3>Review: Merge Sort</h3>
+                        <p>Merge Sort is a classic recursive, divide-and-conquer algorithm.</p>
+                        <p>Its running time can be described by the recurrence relation:</p>
+                        $$T(n) = 2T(\frac{n}{2}) + cn$$
+                        <p>This solves to a running time of $T(n) = \Theta(n \log n)$.</p>
+                    </section>
+
+                    <section>
+                        <h3>Merge Sort Pseudocode</h3>
+                        <pre><code data-trim data-noescape class="language-plaintext">
+                    // Input: Array A, indices p and r
+                    // Output: Sorted subarray A[p:r]
+                    Algorithm Merge-Sort(A, p, r)
+                    if p >= r then
+                        return
+                    end
+
+                    q ← floor((p+r)/2)
+                    Merge-Sort(A, p, q)
+                    Merge-Sort(A, q+1, r)
+                    Merge(A, p, q, r)
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h3>What does this function do? 🤔</h3>
+                        <p>Let's analyze the following recursive algorithm, which takes a real number <em>a</em> and an integer <em>b</em>.</p>
+                    </section>
+
+                    <section style="font-size: 28pt;">
+
+                        <pre><code data-trim data-noescape class="language-plaintext">
+                    Foo(a, b):
+                        if b = 1 then
+                            return a
+                        end
+                        </code></pre>
+                        <pre class="fragment"><code data-trim data-noescape class="language-plaintext">
+                        else
+                            if b is even then
+                                x ← Foo(a, b/2)
+                                return x * x
+                            end
+                            else
+                                x ← Foo(a, (b-1)/2)
+                                return a * x * x
+                            end
+                        end
+                        </code></pre>
+
+                    </section>
+
+                    <section style="font-size: 26pt;">
+
+                        <p>Think for some time...</p>
+
+                        <pre><code data-trim data-noescape class="language-plaintext">
+                    Foo(a, b):
+                        if b = 1 then
+                            return a  // Base case
+                        end
+                        else
+                            if b is even then
+                                x ← Foo(a, b/2)
+                                return x * x
+                            end
+                            else
+                                x ← Foo(a, (b-1)/2)
+                                return a * x * x
+                            end
+                        end
+                        </code></pre>
+
+                        <p class="fragment">This is an efficient algorithm for exponentiation, calculating $a^b$. </p>
+
+                    </section>
+
+                    <section>
+                        <h3>Methods for Solving Recurrences</h3>
+                        <p>To determine the running time of recursive algorithms like Merge Sort or Foo, we need to solve their recurrence relations. We will cover three primary methods:</p>
+                        <ul>
+                            <li class="fragment"><strong>Recursion Tree:</strong> A visual method to map out and sum the costs. </li>
+                            <li class="fragment"><strong>Substitution Method:</strong> A formal proof technique using mathematical induction. </li>
+                            <li class="fragment"><strong>Master Theorem:</strong> A "cookbook" method for a common class of recurrences. </li>
+                        </ul>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h2>THE RECURSION TREE METHOD</h2>
+                    </section>
+
+                    <section>
+                        <h3>How the Recursion Tree Method Works</h3>
+                        <p>This method converts the recurrence into a tree structure to help visualize the cost at each level of recursion. </p>
+                        <p><strong>The steps are:</strong></p>
+                        <ol>
+                            <li>Draw the tree, where each node represents the cost of a single subproblem. </li>
+                            <li>Calculate the total cost for each level of the tree. </li>
+                            <li>Sum the costs of all levels to find the total running time. </li>
+                        </ol>
+                    </section>
+
+                    <section>
+                        <h3>Recursion Tree Example</h3>
+                        <p>Let's solve the following recurrence:</p>
+                        $$T(n) = T(n/4) + T(n/2) + n^2$$
+                    </section>
+
+                    <section>
+                        <img src='media/f01.png' width='100%'>
+                        <p class="caption">The root represents the initial cost, $n^2$. It branches into subproblems of size $n/4$ and $n/2$.</p>
+                    </section>
+
+                    <section>
+                        <img src='media/f02.png' width='100%'>
+                        <p class="caption">We continue expanding the tree until we reach the base cases, which have a cost of $\Theta(1)$.</p>
+                    </section>
+
+                    <section>
+                        <h3>Summing Costs Per Level</h3>
+                        <p>Now, let's sum the costs at each level.</p>
+                        <ul>
+                            <li>Level 0: $n^2$</li>
+                            <li>Level 1: $(n/4)^2 + (n/2)^2 = n^2/16 + n^2/4 = \frac{5}{16}n^2$</li>
+                            <li>Level 2: $(n/16)^2 + 2(n/8)^2 + (n/4)^2 = (\frac{5}{16})^2 n^2$</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <img src='media/f03.png' width='100%'>
+                        <p class="caption">The cost at each level forms a geometric progression. </p>
+                    </section>
+
+                    <section>
+                        <h3>Total Cost</h3>
+                        <p>The total cost is the sum of costs across all levels. </p>
+                        $$Total = n^2 \left( 1 + \frac{5}{16} + \left(\frac{5}{16}\right)^2 + \left(\frac{5}{16}\right)^3 + \dots \right)$$
+                        <p>This is a converging geometric series, which is bounded by a constant. The first term dominates.</p>
+                        $$Total = \Theta(n^2)$$
+                    </section>
+
+                    <section>
+                        <h3>Exercise: Recursion Tree</h3>
+                        <p>Draw the recursion tree for the following recurrence:</p>
+                        $$T(n) = 4T(n/2) + n$$
+                        <p>Questions to consider:</p>
+                        <ul>
+                            <li>What is the depth of the tree?</li>
+                            <li>How many leaves are there?</li>
+                            <li>What is your guess for the total running time $T(n)$?</li>
+                        </ul>
+                    </section>
+
+                </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+
+    </body>
+
+</html>

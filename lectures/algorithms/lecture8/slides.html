@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>lecture #8</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h2>DATA STRUCTURES</h2>
+                    </section>
+
+                    <section>
+
+                        <p>
+                            Algorithms work in tandem with <strong>data structures</strong>.
+                        </p>
+
+                    </section>
+
+                    <section>
+                        <h3>What is a Data Structure?</h3>
+                        <ul>
+                            <li>A way to organize information for efficient processing</li>
+                            <li>Comes with algorithms for typical operations</li>
+                            <li>Example: <em>hash table with chaining</em></li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Abstract Data Type (ADT)</h3>
+                        <p>Specification of the <strong>interface</strong> a structure should provide.</p>
+                        <ul>
+                            <li><span class="wrap-indent"><strong>Init()</strong> — construct an empty structure</span></li>
+                            <li><span class="wrap-indent"><strong>Insert(key, value)</strong></span></li>
+                            <li><span class="wrap-indent"><strong>Delete(key)</strong></span></li>
+                            <li><span class="wrap-indent"><strong>Find(key)</strong></span></li>
+                        </ul>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h2>HASH TABLES</h2>
+                    </section>
+
+                    <section>
+                        <p><strong>Goal</strong>: constant-time average insert, lookup, delete on key–value pairs.</p>
+                        <ul>
+                            <li>Array backing store</li>
+                            <li>Hash function maps keys to indices</li>
+                            <li>Collision handling strategy</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <img src="media/names_array.png" width="100%">
+                    </section>
+
+                    <section>
+                        <h3>SIMPLE ASCII HASHING</h3>
+                        <p>Compute an index <em>from the element itself</em>:</p>
+                        <ol>
+                            <li>Map each character to ASCII</li>
+                            <li>Sum the values</li>
+                            <li>Take modulo by table length</li>
+                            <li>Store at that position</li>
+                        </ol>
+                    </section>
+
+                    <section>
+                        <p><strong>Mia</strong> ⇒ (M + i + a) mod 11 ⇒ (77 + 105 + 97) mod 11 ⇒ 4</p>
+                        <img src="media/ascii_hash_mia.png" width="100%">
+                    </section>
+
+                    <section>
+                        <p>Applying to multiple names:</p>
+                        <ul>
+                            <li>Tim ⇒ 1, Bea ⇒ 0, Zoe ⇒ 5</li>
+                        </ul>
+                        <img src="media/ascii_hash_tim_bea_zoe.png" width="100%">
+                        <p class="caption">Each key is mapped deterministically to an index.</p>
+                    </section>
+
+                    <section>
+                        <p>All names placed by computed index:</p>
+                        <p>Mia ⇒ 4, Tim ⇒ 1, Bea ⇒ 0, Zoe ⇒ 5, Jan ⇒ 6, Lou ⇒ 7, Max ⇒ 8, Ada ⇒ 9, Leo ⇒ 2, Ted ⇒ 10, Sam ⇒ 3</p>
+                        <img src="media/ascii_hash_all.png" width="100%">
+                        <p class="caption">Time to access any known index remains constant.</p>
+                    </section>
+
+                    <section>
+                        <h3>RETRIEVING A KEY</h3>
+                        <p>To find <strong>Ada</strong>:</p>
+                        <ol>
+                            <li>Compute index: (A + d + a) mod 11 = 9</li>
+                            <li>Return array[9]</li>
+                        </ol>
+                        <img src="media/ascii_hash_all.png" width="100%">
+                    </section>
+
+                    <section>
+                        <h2>HASH TABLE MODEL</h2>
+                        <ul>
+                            <li>Key–value pairs stored in an array of size m</li>
+                            <li><strong>Hash function</strong> h(key) → {0,…,m−1}</li>
+                            <li>Average time for insert/delete/find: <em>O(1)</em> (with good hashing and low load)</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>OBJECT VALUES</h3>
+                        <p>Keys map to array indices, but the array stores pointers to arbitrary objects.</p>
+                        <p>Key = name; Value = properties (e.g., nationality, birth year).</p>
+                        <img src="media/rich_values.png" width="100%">
+                        <p class="caption">Same index mapping; values can be arbitrary records.</p>
+                    </section>
+
+                    <section>
+                        <h3>HASH FUNCTIONS</h3>
+                        <p>Map arbitrary keys to fixed-range indices.</p>
+                        <ul>
+                            <li><strong>Division</strong>: h(key) = key mod n</li>
+                            <li><strong>Mid-Square</strong>: square, take middle digits</li>
+                            <li><strong>Folding</strong>: split and sum parts, then mod</li>
+                            <li><strong>ASCII Sum</strong> (for strings): sum chars, then mod</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>HASH FUNCTION TYPES</h3>
+                        <ul>
+                            <li><strong>One-to-one</strong> (injective)</li>
+                            <li><strong>Many-to-one</strong> (collisions inevitable when |keys| &gt; |table|)</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>HASH COLLISIONS</h3>
+                        <p>Different keys can map to the same index.</p>
+                        <img src="media/collisions.png" width="100%">
+                    </section>
+
+                    <section>
+                        <p>Example: Mia ⇒ 4; Sue ⇒ 4 (mod 11)</p>
+                        <img src="media/collision_sue_mia.png" width="100%">
+                        <p class="caption">We need a collision resolution strategy.</p>
+                    </section>
+
+                    <section>
+                        <h3>COLLISION RESOLUTION</h3>
+                        <ul>
+                            <li><strong>Open Addressing</strong>: probe for a new slot</li>
+                            <li><strong>Chaining</strong>: maintain a list at each slot</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                    <h3>LINEAR PROBING</h3>
+                    <p>Probe sequence: h′(key, i) = (h(key) + i) mod m</p>
+                    <ol>
+                        <li>Start i = 0</li>
+                        <li>While occupied: i ← i + 1</li>
+                        <li>Place at first empty slot</li>
+                    </ol>
+                    </section>
+
+                    <section>
+                        <img src="media/linear_probing_1.png" width="100%">
+                    </section>
+
+                    <section>
+                    <p>Mia ⇒ 4; Sue collides at 4 ⇒ try 5 ⇒ 6</p>
+                    <p>
+                        <ul>
+                            <li>
+                                i = 1,h′(Sue,1) = (4 + 1) mod 11 = 5
+                            </li>
+                            <li>
+                                i = 2,h′(Sue,1) = (4 + 2) mod 11 = 6
+                            </li>
+                        </ul>
+                    </p>
+                    </section>
+
+                    <section>
+                        <ul>
+                        <li>Tim ⇒ 1</li>
+                        <li>Len ⇒ 1 → 2 (collision)</li>
+                        <li>Bea ⇒ 0</li>
+                        <li>Moe ⇒ 3</li>
+                        <li>Zoe ⇒ 5</li>
+                        <li>Lou ⇒ 7</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <img src="media/linear_probing_2.png" width="100%">
+                    </section>
+
+                    <section>
+                    <ul>
+                        <li>Rae ⇒ 5 → 6 → 7 → 8</li>
+                        <li>Max ⇒ 8 → 9</li>
+                        <li>Tod ⇒ 9 → 10</li>
+                    </ul>
+                    </section>
+
+                    <section>
+                        <p>Rae collides at 5</p>
+                        <p>
+                            Rae ⇒(R + a + e) mod len ⇒(82 + 97 + 101) mod 11 ⇒5
+                            <ul>
+                                <li>
+                            i = 1,h′(Ray,1) = (5 + 1) mod 11 = 6
+                                </li>
+                                <li>
+                            i = 2,h′(Ray,1) = (5 + 2) mod 11 = 7
+                                </li>
+                                <li>
+                            i = 3,h′(Ray,1) = (5 + 3) mod 11 = 8
+                                </li>
+                            </ul>
+                        </p>
+                    </section>
+
+                    <section>
+                        <img src="media/linear_probing_3.png" width="100%">
+                    </section>
+
+                    <section>
+                        <h3>linear probing: lookup path</h3>
+                        <p>Find Rae: compute 5; probe 6, 7, then 8 → found.</p>
+                        <img src="media/linear_probing_3.png" width="100%">
+                        <p class="caption">Probes follow the same sequence used at insertion time.</p>
+                    </section>
+
+                    <section>
+                        <h3>LINEAR PROBING</h3>
+                        <ul>
+                            <li>✓ Simple; cache-friendly; no extra pointers</li>
+                            <li>× Clustering can degrade performance</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>QUADRATIC PROBING</h3>
+                        <p>Probe sequence: h′(key, i) = (h(key) + i<sup>2</sup>) mod m</p>
+                        <ul>
+                            <li>Reduces clustering vs. linear</li>
+                            <li>Requires careful choice of table size (often prime)</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <p>Mia ⇒ 4; Sue collides at 4 ⇒ try 5 (i=1) ⇒ 8 (i=2)</p>
+                        <img src="media/quadratic_probing.png" width="100%">
+                        <p class="caption">Non-linear jumps distribute probes more widely.</p>
+                    </section>
+
+                    <section>
+                        <h3>QUADRATIC PROBING</h3>
+                        <ul>
+                            <li>✓ Less clustering; efficient under moderate load</li>
+                            <li>× May not visit all slots unless m is chosen well</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>CHAINING</h3>
+                        <img src="media/chaining.png" width="30%">
+                        <p class="caption">Each slot stores a dynamic list of keys hashed there.</p>
+                        <ul>
+                            <li>Compute h(key)</li>
+                            <li>Insert at head or tail of the list at that slot</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>CHAINING: SEARCH COST</h3>
+                        <p>Load factor α = n / m.</p>
+                        <ul>
+                            <li>Unsuccessful search: Θ(1 + α)</li>
+                            <li>Successful search: Θ(1 + α/2)</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>CHAINING</h3>
+                        <ul>
+                            <li>✓ Insertions always succeed; deletions are simple</li>
+                            <li>✓ Less prone to clustering; supports unbounded growth</li>
+                            <li>× Pointer overhead; worst-case list can be long if hashing is poor</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>CHOOSING HASH FUNCTIONS</h3>
+                        <ul>
+                            <li>deterministic</li>
+                            <li>efficient (O(1))</li>
+                            <li>uniform distribution; minimizes collisions</li>
+                            <li>works across data types (can hash different keys)</li>
+                            <li>avalanche effect (small change in data results in big changes in hash values)</li>
+                        </ul>
+                    </section>
+
+                </section>
+                
+                <section>
+
+                    <section>
+                        <h2>TREES</h2>
+                    </section>
+
+                    <section>
+                        <p>Trees were designed to model hierarchical structure and recursive decompositions.</p>
+                    </section>
+
+                    <section>
+                        <img src="media/trees.png" width="100%">
+                    </section>
+
+                    <section>
+                        <img src="media/tree_families.png" width="100%">
+                    </section>
+
+                    <section>
+                        <img src="media/binary_trees.png" width="70%">
+                    </section>
+
+                    <section>
+                        <ul>
+                            <li><strong>Node</strong> (root, parent, child, leaf)</li>
+                            <li class="fragment"><strong>Edge</strong></li>
+                            <li class="fragment"><strong>Subtree</strong></li>
+                            <li class="fragment"><strong>Height/Depth</strong>: longest path length to a leaf</li>
+                            <li class="fragment">Families: <strong>Binary</strong>, <strong>Ternary</strong>, …, <strong>N-ary</strong></li>
+                            <li class="fragment"><strong>Full</strong>: each node has none or all children</li>
+                            <li class="fragment"><strong>Complete</strong>: all levels full except possibly last (filled left-to-right)</li>
+                            <li class="fragment"><strong>Perfect</strong>: all internal nodes have all children; all leaves at same level</li>
+                            <li class="fragment"><strong>Balanced</strong>: height difference of children ≤ 1 at every node</li>
+                        </ul>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h2>HEAPS</h2>
+                    </section>
+
+                    <section>
+                        <p>Heaps efficiently implement <strong>priority queues</strong> using complete binary trees.</p>
+                    </section>
+
+                    <section>
+                        <h3>QUEUE ADT</h3>
+                        <ul>
+                            <li>dynamic set of elements</li>
+                            <li>operations: MakeNewQ(), Enqueue(x), Dequeue()</li>
+                            <li>classic implementations: array, linked list; Θ(1) operations</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <H3>PRIORITY QUEUE ADT</H3>
+                        <ul>
+                            <li>dynamic set of (key, data) pairs</li>
+                            <li>Insert(x), Extract-Max (or Extract-Min)</li>
+                            <li>use cases: schedule the highest-priority job</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>HEAP: STRUCTURE</h3>
+                        <ul>
+                            <li>conceptually: binary tree; <em>nearly complete</em></li>
+                            <li>in memory: compact array representation</li>
+                            <li>bottom level filled left-to-right</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <ul>
+                            <li>For height \(h\): \(N_{\min}(h)=2^{h}\), \(N_{\max}(h)=2^{h+1}-1\).</li>
+                            <li>For \(n\) nodes: \(h=\lfloor \log_2 n \rfloor\) so \(2^{h} \le n \le 2^{h+1}-1\).</li>
+                            <li>Leaves in array layout (1-based): indices \(\lfloor n/2 \rfloor+1,\dots,n\).</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>HEAP PROPERTY (MAX-HEAP)</h3>
+                        <ul>
+                            <li>For every parent/child: parent.key ≥ child.key</li>
+                            <li>Maximum is at the root; keys non-increasing along any path</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <img src="media/max_heap.png" width="70%">
+                        <p class="caption">Root holds the maximum key; each subtree is itself a max-heap.</p>
+                    </section>
+
+                    <section>
+                        <h3>ARRAY REPRESENTATION</h3>
+                        <ul>
+                            <li>Store nodes level-order, left-to-right</li>
+                            <li>Indexing (1-based): Left(i)=2i, Right(i)=2i+1, Parent(i)=⌊i/2⌋</li>
+                            <li>Example array: [16, 14, 10, 8, 7, 9, 3, 2, 4, 1]</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <img src="media/max_heap_array.png" width="100%">
+                        <p class="caption">Constant-time navigation via index arithmetic.</p>
+                    </section>
+
+                    <section>
+                        <h3>CHECK YOUR UNDERSTANDING</h3>
+                        <ul>
+                            <li>Is <em>[20, 10, 4, 9, 6, 3, 2, 8, 7, 5, 12, 1]</em> a valid max-heap? If not, repair.</li>
+                            <li class="fragment" style="color:red">No. Violation: child 12 &gt; parent 6 at indices 11 and 5. Repair via heapify-up from index 11 ⇒ array becomes <em>[20, 12, 4, 9, 10, 3, 2, 8, 7, 5, 6, 1]</em>.</li>
+                            <li>Is a decreasingly sorted array a valid max-heap?</li>
+                            <li class="fragment" style="color:lightgreen">Yes. Any strictly decreasing array A[1..n] is a valid max-heap because for every parent i, its children are at positions 2i and 2i+1 &gt; i, hence A[i] ≥ A[2i], A[2i+1].</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>LOCAL REPAIR: HEAPIFY DOWN</h3>
+                        <p>After decreasing a node’s key (or moving last element to root), push it down until heap property holds.</p>
+                        <ul>
+                            <li>Swap with largest child while smaller than a child</li>
+                            <li>Stops when ≥ both children or at a leaf</li>
+                        </ul>
+                        <p>This is operation is often called "max heapify" or "heapify down".</p>
+                    </section>
+
+                    <section>
+                        <pre><code class="language-python">
+MAX-HEAPIFY(A, i, heap_size)
+  L ← 2i
+  R ← 2i+1
+  largest ← i
+  if L ≤ heap_size and A[L] &gt; A[largest] then 
+    largest ← L
+  if R ≤ heap_size and A[R] &gt; A[largest] then 
+    largest ← R
+  if largest ≠ i then
+    swap A[i], A[largest]
+    MAX-HEAPIFY(A, largest, heap_size)
+                        </code></pre>
+                        <p><em>Running time:</em> O(log n)</p>
+                    </section>
+
+                    <section>
+                        <p>What does MAX-HEAPIFY do on input:</p>
+                        <pre><code class="language-python">[2.5, 10, 4, 9, 6, 3, 2, 8, 7, 5, 0, 1]</code></pre>
+                        <p class="fragment" style="color:lightgreen">Answer: MAX-HEAPIFY at i=1 swaps 2.5↔10, then 2.5↔9, then 2.5↔8; stop. Result: <em>[10, 9, 4, 8, 6, 3, 2, 2.5, 7, 5, 0, 1]</em>.</p>
+                    </section>
+
+                    <section>
+                        <h3>EXTRACT-MAX</h3>
+                        <p>Remove and return the maximum while maintaining a max-heap.</p>
+                        <ul>
+                            <li>swap root with last element</li>
+                            <li>pop last element and shrink size by 1</li>
+                            <li>heapify down from root</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <pre><code class="language-python">
+EXTRACT-MAX(A, heap_size)
+  if heap_size &lt; 1 then error "underflow"
+  max ← A[1]
+  A[1] ← A[heap_size]
+  heap_size ← heap_size − 1
+  MAX-HEAPIFY(A, 1, heap_size)
+  return max
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h3>LOCAL REPAIR: HEAPIFY UP</h3>
+                        <p>After increasing a node’s key, bubble it up until heap property holds.</p>
+                        <ul>
+                            <li>While A[i] &gt; A[parent(i)], swap with parent</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <p>What does Heapify Up at i=10 do on:</p>
+                        <pre><code class="language-python">[20, 10, 4, 9, 6, 3, 2, 8, 7, 21, 0, 1]</code></pre>
+                        <p class="fragment" style="color:lightgreen">Answer: HEAPIFY-UP from i=10 swaps 21↔6, then 21↔10, then 21↔20; stop. Result: <em>[21, 20, 4, 9, 10, 3, 2, 8, 7, 6, 0, 1]</em>.</p>
+                    </section>
+
+                    <section>
+                        <pre><code class="language-python">
+HEAPIFY-UP(A, i)
+  while i &gt; 1 and A[⌊i/2⌋] &lt; A[i] do
+    swap A[i], A[⌊i/2⌋]
+    i ← ⌊i/2⌋
+                        </code></pre>
+                        <p><em>Running time:</em> O(log n)</p>
+                    </section>
+
+                    <section>
+                        <pre><code class="language-python">
+HEAP-INCREASE-KEY(A, i, key)
+  if key &lt; A[i] then error "new key is smaller"
+  A[i] ← key
+  while i &gt; 1 and A[⌊i/2⌋] &lt; A[i] do
+    swap A[i], A[⌊i/2⌋]
+    i ← ⌊i/2⌋
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h3>INSERT INTO MAX-HEAP</h3>
+                        <ul>
+                            <li>Append new element at end; increase heap size</li>
+                            <li>Heapify up from the new position</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <pre><code class="language-python">
+MAX-HEAP-INSERT(A, x, heap_size)
+  heap_size ← heap_size + 1
+  A[heap_size] ← x
+  HEAPIFY-UP(A, heap_size)
+                        </code></pre>
+                    </section>
+
+                    <section>
+                    <h3>BUILD A HEAP</h3>
+                    <p>Transform an arbitrary array A[1..n] into a max-heap by local repairs.</p>
+                    <ul>
+                        <li>Call MAX-HEAPIFY on internal nodes from ⌊n/2⌋ down to 1</li>
+                        <li>Reason: A[⌊n/2⌋+1..n] are leaves</li>
+                        <li><em>Running time:</em> O(n log n)</li>
+                    </ul>
+                    </section>
+
+                    <section>
+                        <pre><code class="language-plaintext">
+BUILD-MAX-HEAP(A, n)
+  heap_size ← n
+  for i ← ⌊n/2⌋ downto 1 do
+    MAX-HEAPIFY(A, i, heap_size)
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h3>HEAP SORT</h3>
+                        <ul>
+                            <li>max element at root (A[1])</li>
+                            <li>move it to end by swapping with A[n] and shrink size</li>
+                            <li>restore heap on remaining elements; repeat</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <img src="media/heapsort.png" width="75%">
+                    </section>
+
+                    <section>
+                        <pre><code class="language-plaintext">
+HEAPSORT(A, n)
+  BUILD-MAX-HEAP(A, n)
+  for i ← n downto 2 do
+    swap A[1], A[i]
+    heap_size ← heap_size − 1
+    MAX-HEAPIFY(A, 1, heap_size)
+                        </code></pre>
+                    </section>
+
+                </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+
+    </body>
+
+</html>
