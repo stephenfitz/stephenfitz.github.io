@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>assignment #3</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section style="font-size: 22pt;">
+                        <h3>POINTS</h3>
+                        <p>
+                            <ul>
+                                <li>Q1 - 20pts</li>
+                                <li>Q2 - 10pts</li>
+                                <li>Q3 - 10pts</li>
+                                <li>Q4 - 10pts</li>
+                                <li>Q5 - 20pts</li>
+                                <li>Q6 - 30pts</li>
+                            </ul>
+                        </p>
+                        <p>
+                            <ul>
+                                <li>Extra Question - 30pts</li>
+                            </ul>
+                        </p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>QUESTION 1</h2>
+                  </section>
+
+                  <section>
+                    <h3>RECURSIVE INSERTION SORT</h3>
+                    <ul>
+                      <li>Write <em>insertion sort</em> as a <strong>recursive</strong> algorithm.</li>
+                      <li>Give the recurrence <span>\(T(n)\)</span> for the running time as a function of input size <span>\(n\)</span>.</li>
+                    </ul>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>QUESTION 2</h2>
+                  </section>
+
+                  <section>
+                    <h3>MERGE SORT TRACE</h3>
+                    <p>Given input array:</p>
+                    <pre><code data-trim data-noescape class="language-plaintext">
+1, 0, 2, 6, 4, 5, 3, 8, 9, 7
+                    </code></pre>
+                    <ul>
+                      <li>After the two outermost recursive calls finish (just before the final <em>Merge</em>), view the two 5-element outputs as one glued 10-element array.</li>
+                      <li>Which number is at the <strong>7-th position</strong>?</li>
+                    </ul>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>QUESTION 3</h2>
+                  </section>
+
+                  <section>
+                    <h3>TERNARY MERGE SORT</h3>
+                    <ul>
+                      <li>Modify merge sort to split into <strong>thirds</strong>, recursively sort each third, then use a <em>three-way Merge</em>.</li>
+                      <li>What is the running time in terms of <span>\(n\)</span>, ignoring constants and lower-order terms?</li>
+                      <li>Provide explanation and working details.</li>
+                    </ul>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>QUESTION 4</h2>
+                  </section>
+
+                  <section>
+                    <h3>SUCCESSIVE MERGING OF ARRAYS</h3>
+                    <ul>
+                      <li>You have <span>\(k\)</span> sorted arrays, each of length <span>\(n\)</span>.</li>
+                      <li>Merge linearly by repeatedly merging the running result with the next array using an <span>\(O(n)\)</span> subroutine.</li>
+                      <li>What is the total running time as a function of <span>\(k\)</span> and <span>\(n\)</span> (ignore constants/lower-order terms)?</li>
+                      <li>Provide explanation and working details.</li>
+                    </ul>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>QUESTION 5</h2>
+                  </section>
+
+                  <section>
+                    <h3>PAIRWISE MERGE SCHEDULE</h3>
+                    <ul>
+                      <li>Group the <span>\(k\)</span> arrays into <span>\(k/2\)</span> pairs; merge each pair to get <span>\(k/2\)</span> arrays of length <span>\(2n\)</span>.</li>
+                      <li>Repeat until a single array of length <span>\(kn\)</span> remains.</li>
+                      <li>What is the total running time as a function of <span>\(k\)</span> and <span>\(n\)</span> (ignore constants/lower-order terms)?</li>
+                      <li>Provide explanation and working details.</li>
+                    </ul>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>QUESTION 6</h2>
+                  </section>
+
+                  <section>
+                    <h3>CLOSEST PAIR OF POINTS</h3>
+                    <p><strong>Goal:</strong> Find the pair of points with minimum Euclidean distance in 2D.</p>
+                    <p><strong>Input:</strong> <span>\(P=\{(x_1,y_1),(x_2,y_2),\ldots,(x_n,y_n)\}\)</span></p>
+                    <p><strong>Output:</strong> a pair <span>\((p_i,p_j)\)</span> minimizing distance</p>
+                    <p><span>\(\displaystyle \min_{i\ne j}\sqrt{((x_i-x_j)^2+(y_i-y_j)^2})\)</span></p>
+                  </section>
+
+                  <section>
+                    <h3>EXAMPLE</h3>
+                    <p><strong>Input:</strong></p>
+                    <pre style="font-size: 22pt;"><code data-trim data-noescape class="language-plaintext">
+P = {(2, 3), (12, 30), (40, 50), (5, 1), (12, 10)}
+                  </code></pre>
+                    <p><strong>Output:</strong> The closest pair is <span>\((2,3)\)</span> and <span>\((5,1)\)</span>.</p>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>EXTRA QUESTION</h2>
+                  </section>
+
+                  <section>
+                    <h3>TILING WITH L-SHAPED CARPETS</h3>
+                    <ul>
+                      <li>Room: <span>\(2^k \times 2^k\)</span> square, divided into <span>\(2^{2k}\)</span> unit cells.</li>
+                      <li>Exactly one cell is already covered; all others are bare.</li>
+                      <li>Tiles: <span>\(2^{2k-1}\)</span> <strong>L-shaped</strong> pieces, each covering 3 cells.</li>
+                      <li>Goal: Tile all uncovered cells without overlap; rotations allowed; no cutting.</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <h3>(A) ALGORITHM</h3>
+                    <ul>
+                      <li>Design a <strong>divide-and-conquer</strong> algorithm.</li>
+                      <li>Input: <span>\(n=2^k\)</span> and coordinates <span>\((x,y)\in\{1,\ldots,n\}\times\{1,\ldots,n\}\)</span> of the missing square.</li>
+                      <li>Output: A list of triples describing the positions of placed L-shaped tiles.</li>
+                      <li>Provide: (i) concise English description (pictures welcome), (ii) clear pseudocode or readable Python.</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <h3>(B) CORRECTNESS</h3>
+                    <ul>
+                      <li>Prove the algorithm correctly tiles all uncovered cells and respects constraints.</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <h3>(C) RUNNING TIME</h3>
+                    <ul>
+                      <li>Give a <strong>recurrence</strong> for the worst-case running time in terms of <span>\(n\)</span>.</li>
+                      <li>Solve the recurrence and state the asymptotic running time.</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <img src="media/extra_question.png" width="75%">
+                    <p class="caption">(a) A carpet piece in one of its 4 possible orientations. (b) A <span>\(16\times16\)</span> floor with one covered cell.</p>
+                  </section>
+
+                </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+
+    </body>
+
+</html>
