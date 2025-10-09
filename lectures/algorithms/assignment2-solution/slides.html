@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>assignment #2 solution</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>SOLUTION 1</h3>
+                    </section>
+
+                    <section>
+                        <ol>
+                            <li>\(n + 50n^2 + 50 = O(n^2)\)</li>
+                            <li>\(n^2 + 50n^2 + 21n^2 = O(n^2)\)</li>
+                            <li>\(n^3 - 10n^2 + 500 = O(n^3)\)</li>
+                            <li>\(n^a + n^b,\; a>b>0 \Rightarrow O(n^a)\)</li>
+                        </ol>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>SOLUTION 2</h3>
+                    </section>
+
+                    <section>
+                    <ol>
+                        <li><strong>(a)</strong> \(f(n)+g(n)=\Omega(\max(f(n),g(n)))\) — <strong>Always true</strong>.</li>
+                        <li><strong>(b)</strong> \(f(n)=\omega(g(n))\) and \(f(n)=O(g(n))\) — <strong>Never true</strong> (contradiction via limit).</li>
+                        <li><strong>(c)</strong> \(f(n)=O(g(n)) \Rightarrow 2^{f(n)}=O(2^{g(n)})\) — <strong>Sometimes</strong> (true for \(f=n,\;g=n+1\); false for \(f=2n,\;g=n\)).</li>
+                    </ol>
+                    </section>
+
+                    <section>
+                        <h3>(A) PROOF (SKETCH)</h3>
+                        <p>\(f,g\) asymptotically nonnegative; for all \(n\), \(f(n)+g(n)\ge \max(f(n),g(n))\). Choose \(c_1=1\), \(n_0=1\) to obtain the \(\Omega\) bound.</p>
+                    </section>
+
+                    <section>
+                        <h3>(B) PROOF BY CONTRADICTION (SKETCH)</h3>
+                        <p>Assume both \(f=\omega(g)\) and \(f=O(g)\). Then \(\lim_{n\to\infty} \frac{f}{g}=\infty\) and \(\exists c_1,n_0: f\le c_1 g\) for \(n\ge n_0\). But then \(\lim \frac{f}{g}\le \lim c_1=c_1\), contradiction.</p>
+                    </section>
+
+                    <section>
+                        <h3>(C) COUNTEREXAMPLES</h3>
+                        <ul>
+                            <li><strong>True case:</strong> \(f(n)=n,\; g(n)=n+1\) ⇒ \(2^{f}\le 2^{g}\cdot 2^{-1} = \frac{1}{2}  2^{g} \in O(2^{g})\).</li>
+                            <li><strong>False case:</strong> \(f(n)=2n,\; g(n)=n\) ⇒ \(f=O(g)\) fails for exponentials: \(2^{2n} = 2^n \cdot 2^n \notin O(2^n)\).</li>
+                        </ul>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>SOLUTION 3</h3>
+                    </section>
+
+                    <section>
+                        <h3>(a)</h3>
+                        <p>Prove \(T(n)=O(n^4)\), given \(T(n)=6n^4+5n^3+6n^2+2n+99\).</p>
+                        <p>Bound each lower-degree term by \(n^4\) for \(n\ge 1\): \(T(n)\le (6+5+6+2+99)n^4=118n^4\). Pick \(c=118\).</p>
+                    </section>
+
+                    <section>
+                        <h3>(b)</h3>
+                        <p>Prove \(T(n)=\Theta(n^3)\), given \(T(n)=4n^3+n^2\).</p>
+                        <p>Lower bound: \(T(n)\ge 4n^3\). Upper bound: \(T(n)\le 4n^3+n^3=5n^3\). Choose \(c_1=4,\;c_2=5,\; n\ge 1\).</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>SOLUTION 4</h3>
+                    </section>
+
+                    <section>
+                        <h3>(a)</h3>
+                        <ul>
+                            <li><strong>Algorithm 1:</strong> \(T(n)=2T(\tfrac{n}{2})+\Theta(1)\).</li>
+                            <li><strong>Algorithm 2:</strong> \(T(n)=7T(\tfrac{n}{2})+\Theta(n^2)\).</li>
+                        </ul>
+                    </section>
+
+                    <!-- <section>
+                    <h3>Algorithm 1: Context</h3>
+                        <p>Divide-and-conquer maximum on subarray \([\ell,r]\). Two recursive calls on halves; constant work to split/compare.</p>
+                    </section> -->
+
+                    <!-- <section>
+                        <h3>Algorithm 2 (Strassen-like): Context</h3>
+                        <p>Square matrix multiply with 7 recursive multiplies on \(n/2\times n/2\) blocks; \(\Theta(n^2)\) for additions and recombination.</p>
+                    </section> -->
+
+                    <section>
+                        <h3>(b)</h3>
+                        <ol>
+                            <li><strong>\(T(n)=4T(n/2)+n^2\)</strong><br>
+                            Leaves: \(\Theta(n^{\log_2 4})=\Theta(n^2)\). Height: \(h=\log_2 n \pm 1\). Nodes: \(\Theta(n^2)\).
+                            </li>
+                            <li><strong>\(T(n)=T(n-1)+n\)</strong><br>
+                            Leaves: \(1\). Height: \(n\pm 1\). Nodes: \(n\).
+                            </li>
+                            <li><strong>\(T(n)=3T(n/5)+n^3\)</strong><br>
+                            Leaves: \(\Theta(n^{\log_5 3})\). Height: \(\log_5 n\). Nodes: \(\Theta(n^{\log_5 3})\).
+                            </li>
+                            <li><strong>\(T(n)=T(n/3)+T(2n/3)+\sqrt{n}\)</strong><br>
+                            Leaves: \(\Theta(n)\). Height: \(\log_{3/2} n \pm 1\). Nodes: \(\Theta(n)\).
+                            </li>
+                        </ol>
+                    </section>
+
+                    <!-- <section>
+                        <h2>Q4(b) Notes</h2>
+                        <p>At depth \(i\), subproblem sizes multiply; e.g., (i) size \(n/2^i\), nodes \(4^i\). For (iv), layer-wise sum of subproblem sizes remains \(n\); full binary tree bounds nodes by a constant factor of leaves; assume \(T(n)=1\) for \(n\le 1\).</p>
+                    </section> -->
+
+                    <section>
+                        <h3>(c)</h3>
+                        <p>Given \(T(n)=T(n/3)+T(2n/3)+\sqrt{n}\), prove \(T(n)=O(n)\), and \(T(n)=1\) for \(n\le 1\).</p>
+                        <p><strong>IH:</strong> For all \(k&lt;n\), \(T(k)\le c_1 k - c_2\sqrt{k}\).</p>
+                    </section>
+
+                    <section style="font-size: 28pt;">
+                        <p><strong>Step:</strong>
+                        \[
+                        \begin{aligned}
+                        T(n)&\le \left(c_1\frac{n}{3}-c_2\sqrt{\frac{n}{3}}\right)+\left(c_1\frac{2n}{3}-c_2\sqrt{\frac{2n}{3}}\right)+\sqrt{n}\\
+                            &= c_1 n - \sqrt{n}\left(c_2\big( \tfrac{1}{\sqrt{3}}+\tfrac{\sqrt{2}}{\sqrt{3}}\big)-1\right)\\
+                            &\le c_1 n - c_2 \sqrt{n},
+                        \end{aligned}
+                        \]
+                        choosing \(c_2 \ge \dfrac{\sqrt{3}}{1+\sqrt{2}-\sqrt{3}}\) and \(c_1\ge c_2+T(1)\).</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>SOLUTION 5</h3>
+                    </section>
+
+                    <section>
+                        <h3>(a)</h3>
+                        <p>\(T(n)=T(n/4)+T(n/8)+n\sqrt{\log_2 n}\)</p>
+                        <p><strong>Master doesn’t apply.</strong> Not of the form \(aT(n/b)+f(n)\).</p>
+                    </section>
+
+                    <section>
+                        <h3>(b)</h3>
+                        <p>\(T(n)=8T(n/2)+n^3\)</p>
+                        <p>Here \(a=8,\; b=2,\; \log_b a=3,\;\)</p>
+                        <p>\(f(n)=n^3=\Theta(n^{\log_b a}\log^0 n)\).</p>
+                        <p><strong>Case 2</strong> ⇒ \(T(n)=\Theta(n^3 \log n)\).</p>
+                    </section>
+
+                    <section>
+                        <h3>(c)</h3>
+                        <p>\(T(n)=T(n/3)+2T(n/3)+\sqrt{n}\)</p>
+                        <p>Rewrite: \(T(n)=3T(n/3)+n^{1/2}\).</p>
+                        <p>Thus \(a=b=3,\; \log_b a=1\),</p>
+                        <p>\(f(n)=n^{1/2}=O(n^{c})\) with \(c&lt;1\).</p>
+                        <p><strong>Case 1</strong> ⇒ \(T(n)=\Theta(n)\).</p>
+                    </section>
+
+                    <section>
+                        <h3>(d)</h3>
+                        <p>\(T(n)=4T(n/2)+n^2\sqrt{n}\)</p>
+                        <p>\(a=4,\; b=2,\; \log_b a=2,\; f(n)=n^{5/2}\).</p>
+                        <p>Since \(f(n)=\Omega(n^{c})\) with \(c&gt;2\) and \(af(n/b)=\tfrac{4}{2^{5/2}}n^{5/2}\le k f(n)\) for \(k&lt;1\), the regularity condition holds.</p>
+                        <p><strong>Case 3</strong> ⇒ \(T(n)=\Theta(n^{5/2})\).</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h3>EXTRA SOLUTION</h3>
+                    </section>
+
+                    <!-- <section>
+                        <p>Functions: \(\sqrt[3]{n}\log^3 n,\; \ln\ln n,\; n^{1/2},\; n^3,\;\) ...</p>
+                        <p>... \(n\lg^2 n,\; n^2,\; n\ln\ln n,\; \ln^2 n,\; 4^{\log n}\)</p>
+                        <p>Note: \(4^{\log n}=n^{\log 4}=n^2\) (base-2 logs); class with \(n^2\).</p>
+                    </section> -->
+
+                    <section style="font-size: 28pt;">
+                        <ul>
+                            <li>\(\displaystyle \frac{\ln\ln n}{n^2}\to 0 \Rightarrow \ln\ln n=o(n^2)\).</li>
+                            <li>\(\displaystyle \frac{\ln^2 n\cdot n^2}{n^{1/2}}\to 0 \Rightarrow \ln^2 n=o(n^{-3/2})\) relative to \(n^{1/2}\) (hence \(\ln^2 n \ll n^{1/2}\)).</li>
+                            <li>\((\sqrt{3})^{\log_3 n}=n^{1/2}\) since \(a^{\log_b n}=n^{\log_b a}\).</li>
+                            <li>\(\displaystyle \frac{n^{1/2}}{n\lg^2 n}\to 0 \Rightarrow n^{1/2}=o(n\lg^2 n)\).</li>
+                            <li>\(\displaystyle \frac{\ln^2 n}{n}\to 0\) and \(\frac{\ln n}{n^{1/2}}\to 0\).</li>
+                            <li>\(4^{\log n}=n^2,\; \frac{n^2}{n^3}\to 0,\; \frac{\ln n}{n\ln\ln n}\to 0\).</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <p><u>final ordering (from smallest to largest):</u></p>
+                        <p>\(\ln n \;<\; \ln^2 n \;<\; n^{1/2} = (\sqrt{3})^{\log_3 n} \;<\; n\lg^2 n\)</p>
+                        <p>\(\;<\; [\,n^2 = 4^{\log n}\,] \;<\; n^3 \;<\; n\ln\ln n\)</p>
+                        <p><u>Equivalence classes:</u></p>
+                        <p>\([\,n^{1/2},\; (\sqrt{3})^{\log_3 n}\,]\), \([\,n^2,\; 4^{\log n}\,]\)</p>
+                    </section>
+
+                </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+
+    </body>
+
+</html>
