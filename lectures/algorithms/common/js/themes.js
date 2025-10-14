@@ -55,4 +55,5 @@ Reveal.on('ready', () => {
     });
     darkTheme();
     // lightTheme();
+    Object.assign(window, { switchTheme, lightTheme, darkTheme });
 });
