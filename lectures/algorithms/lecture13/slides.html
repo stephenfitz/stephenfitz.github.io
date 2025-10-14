@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>lecture #13</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h2>KNAPSACK PROBLEM</h2>
+                    </section>
+
+                    <section>
+                        <h3>0/1 KNAPSACK</h3>
+                        <p>Input: \(n\) items, weights \(w[i]\), benefits \(b[i]\), capacity \(W\). Choose a subset \(T\subseteq \{1..n\}\) to maximize \(\sum_{i\in T} b[i]\) subject to \(\sum_{i\in T} w[i] \le W\).</p>
+                        <p>0/1 means each item is either taken or not taken; no fractional items.</p>
+                    </section>
+
+                    <section>
+                        <h3><strong>BRUTE FORCE BASELINE</strong></h3>
+                        <p>Enumerate all \(2^n\) subsets; select the feasible one with maximum benefit. Exponential time \(O(2^n)\), not acceptable for large \(n\).</p>
+                    </section>
+
+                    <section>
+                        <h3><strong>CHOOSING SUBPROBLEMS</strong></h3>
+                        <p>Naïve “first \(k\) items” alone is insufficient. Proper subproblem includes remaining capacity: let \(B[k,w]\) be the maximum value using items \(1..k\) with available capacity \(w\).</p>
+                    </section>
+
+                    <section>
+                        <h3>RECURRENCE</h3>
+                        <p style="font-size: 22pt;">\[
+                        B[k,w] =
+                        \begin{cases}
+                            B[k{-}1,w], & \text{if } w[k] > w,\\
+                            \max\{B[k{-}1,w],\; B[k{-}1,\,w{-}w[k]] + b[k]\}, & \text{otherwise.}
+                        \end{cases}
+                        \]</p>
+                        <p>Choice: exclude item \(k\) or include it (if it fits) and add \(b[k]\) plus the best for reduced capacity.</p>
+                    </section>
+
+                    <section>
+                        <pre><code data-trim data-noescape class="language-plaintext">
+Knapsack_BottomUp(w[1..n], b[1..n], W):
+  create B[0..n][0..W]
+  for cap in 0..W: B[0][cap] = 0
+  for i in 1..n:
+    for cap in 0..W:
+      if w[i] <= cap:
+        B[i][cap] = max(B[i-1][cap],
+                    b[i] + B[i-1][cap - w[i]])
+      else:
+        B[i][cap] = B[i-1][cap]
+  return B[n][W]
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h3>EXERCISE</h3>
+                        <p>Items: weights [2,3,4,5], benefits [3,4,5,6], capacity \(W=5\).</p>
+                        <p>Use the recurrence to fill the table; the optimum is recovered at \(B[4,5]\).</p>
+                    </section>
+
+                    <section>
+                        <h3>TRACEBACK</h3>
+                        <pre><code data-trim data-noescape class="language-plaintext">
+Knapsack_Traceback(B, w[1..n], b[1..n], W):
+  i = n; cap = W; T = empty set
+  while i > 0 and cap >= 0:
+    if B[i][cap] == B[i-1][cap]:
+      i = i - 1  // item i not taken
+    else:
+      add i to T
+      cap = cap - w[i]
+      i = i - 1
+  return T
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h3>COMPLEXITY</h3>
+                        <p>Knapsack bottom-up time runs in \(\Theta(nW)\). Space can be reduced to \(O(W)\) for when only the final value is needed.</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+
+                        <h2>FRACTIONAL KNAPSACK</h2>
+
+                    </section>
+
+                    <section>
+                        <ul>
+                            <li>items \(i=1,\dots,n\) with weight \(w[i]\) and benefit \(b[i]\)</li>
+                            <li>knapsack capacity \(W\)</li>
+                            <li>maximize total benefit subject to total weight \(\le W\)</li>
+                            <li><strong>fractional setting:</strong> can take any portion of an item</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>FRACTIONAL VS. 0/1 KNAPSACK</h3>
+                        <ul>
+                            <li><strong>0/1:</strong> each item either fully taken or not taken at all</li>
+                            <li><strong>fractional:</strong> arbitrary fractions allowed</li>
+                            <li>greedy approach is optimal for <strong>fractional</strong>; not generally optimal for <strong>0/1</strong></li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>GREEDY STRATEGY</h3>
+                        <ul>
+                            <li>Compute unit benefit \(R[i] = b[i]/w[i]\)</li>
+                            <li>Sort items by decreasing \(R[i]\)</li>
+                            <li>Take as much as possible of the current best item until capacity is filled</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>ALGORITHM</h3>
+                        <ul>
+                            <li>Precompute ratios \(R[i]\)</li>
+                            <li>Sort by \(R[i]\) descending</li>
+                            <li>Iterate through items; take whole item if it fits, otherwise take the fraction that fills remaining capacity</li>
+                            <li>Return total benefit</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <pre><code data-trim data-noescape class="language-plaintext">
+# Input: weights w[1..n], benefits b[1..n], capacity W
+
+# Output: maximum achievable benefit B
+
+for i = 1 to n:
+  R[i] = b[i] / w[i]
+
+sort items so that R[1] ≥ R[2] ≥ ... ≥ R[n]
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <pre><code data-trim data-noescape class="language-plaintext">
+i = 1
+B = 0
+
+while W > 0 and i ≤ n:
+  if w[i] ≤ W:
+    B = B + b[i]
+    W = W - w[i]
+  else:
+    B = B + R[i] * W
+    W = 0
+  i = i + 1
+
+return B
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h3>COMPLEXITY</h3>
+                        <ul>
+                            <li>Compute ratios: \(O(n)\)</li>
+                            <li>Sort by ratio: <strong>\(O(n \log n)\)</strong></li>
+                            <li>Single pass select/fractional fill: \(O(n)\)</li>
+                            <li><strong>Overall:</strong> \(O(n \log n)\)</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>EXERCISE</h3>
+                        <pre><code data-trim data-noescape class="language-plaintext">
+Items:    1   2   3   4   5
+Weight:   2   3   4   5   9
+Benefit:  3   4   5   8  10
+R=b/w:  1.5 1.33 1.25 1.6 1.11
+Capacity W = 20
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h3>WHY GREEDY IS OPTIMAL (FRACTIONAL)</h3>
+                        <p>
+                            Exchange argument / proof by contradiction:
+                        </p>
+                        <ul>
+                            <li>If an optimal solution uses a lower-ratio item where a higher-ratio item is available, swapping an equal weight increases value</li>
+                            <li>Therefore an optimal solution can be transformed to the greedy solution without loss</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>PROOF SKETCH (CONTRADICTION)</h3>
+                        <ul>
+                            <li>Assume greedy solution \(G\) is not optimal; let \(OPT\) have strictly higher value</li>
+                            <li>There exist items \(i\) (in \(G\)) and \(j\) (in \(OPT\)) with \(R_i &gt; R_j\)</li>
+                            <li>Shift weight \(x\) from \(j\) to \(i\): value increases by \(x(R_i - R_j) &gt; 0\)</li>
+                            <li>Contradiction: \(G\) was optimal</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>WHY GREEDY FAILS FOR 0/1 KNAPSACK</h3>
+                    <ul>
+                        <li>Taking the best ratio early can block capacity for a better <em>combination</em></li>
+                        <li>Local choice does not account for future packing constraints</li>
+                    </ul>
+                    </section>
+
+                    <section>
+                        <h3>0/1 COUNTEREXAMPLE (DATA)</h3>
+                        <pre><code data-trim data-noescape class="language-plaintext">
+Item   Benefit  Weight  Ratio
+1         60      10     6.0
+2        100      20     5.0
+3        120      30     4.0
+Capacity W = 50
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h3>0/1 COUNTEREXAMPLE (OUTCOME)</h3>
+                        <ul>
+                            <li><strong>Greedy by ratio:</strong> choose {1, 2} → total benefit 160, total weight 30</li>
+                            <li><strong>Optimal (DP):</strong> choose {2, 3} → total benefit 220, total weight 50</li>
+                        </ul>
+                    </section>
+
+                </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+
+    </body>
+
+</html>
