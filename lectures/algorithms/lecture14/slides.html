@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>lecture #14</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h2>TASK SCHEDULING</h2>
+                    </section>
+
+                    <section>
+                        <ul>
+                            <li><strong>Input:</strong> Activities \(a_1,\dots,a_n\) with start times \(s_i\) and finish times \(f_i\).</li>
+                            <li><strong>Constraint:</strong> Only one activity at a time; activities cannot overlap.</li>
+                            <li><strong>Goal:</strong> Maximize the number of activities completed today.</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                      <h3>INTUITION</h3>
+                      <ul>
+                        <li>To leave room for future activities, prefer activities that <strong>finish earliest</strong>.</li>
+                        <li>This greedy choice enables the largest residual window for subsequent selections.</li>
+                      </ul>
+                    </section>
+
+                    <section>
+                      <h2>GREEDY ALGORITHM</h2>
+                      <ul>
+                        <li>Sort activities by increasing finish time \(f_i\).</li>
+                        <li>Select the first activity; then repeatedly add the next activity whose start time \(\ge\) last selected finish.</li>
+                      </ul>
+                    </section>
+
+                   <section>
+                      <div class="r-stack">
+                        <img src="media/scheduling1.png" width="100%" class="fragment" data-fragment-index="1" />
+                        <img src="media/scheduling2.png" width="100%" class="fragment" data-fragment-index="2" />
+                        <img src="media/scheduling3.png" width="100%" class="fragment" data-fragment-index="3" />
+                        <img src="media/scheduling4.png" width="100%" class="fragment" data-fragment-index="4" />
+                        <img src="media/scheduling5.png" width="100%" class="fragment" data-fragment-index="5" />
+                        <img src="media/scheduling6.png" width="100%" class="fragment" data-fragment-index="6" />
+                        <img src="media/scheduling7.png" width="100%" class="fragment" data-fragment-index="7" />
+                        <img src="media/scheduling8.png" width="100%" class="fragment" data-fragment-index="8" />
+                      </div>
+                   </section> 
+
+                  <section>
+                    <pre><code data-trim data-noescape class="language-plaintext">
+Input: A = [a1..an], starts S = [s1..sn], finishes F = [f1..fn]
+
+Output: C = maximum-size set of non-overlapping activities
+
+Sort activities by increasing F (break ties arbitrarily)
+                    </code></pre>
+                  </section>
+
+                  <section>
+                    <pre><code data-trim data-noescape class="language-plaintext">
+C = [A[1]]
+last = 1
+for i = 2..n:
+  if S[i] ≥ F[last]:
+    append A[i] to C
+    last = i
+return C
+                      </code></pre>
+                    </section>
+
+                    <section>
+                      <h3>WHY EARLIEST-FINISH GREEDY IS OPTIMAL</h3>
+                      <ul>
+                        <li>Define subproblem \(B[i,j]\): maximum #activities after activity \(i\) ends and before \(j\) starts.</li>
+                        <li><strong>Exchange argument:</strong> if an optimal solution picks an activity that finishes later than the greedy choice, swapping improves or preserves feasibility and never reduces the count.</li>
+                      </ul>
+                    </section>
+
+                    <section>
+                      <h3>OPTIMALITY SKETCH VIA EXCHANGE</h3>
+                      <ul>
+                        <li>Consider subproblem \(B[i, n+1]\); greedy picks \(a_k\) with earliest finish among feasible.</li>
+                        <li>Take any optimal solution not containing \(a_k\); let \(a_j\) be its first activity.</li>
+                        <li>Since \(f_k \le f_j\), replace \(a_j\) by \(a_k\); feasibility is preserved and remaining window is no smaller.</li>
+                        <li>Inductively, greedy achieves an optimal-size set.</li>
+                      </ul>
+                    </section>
+
+                  </section>
+
+                  <section>
+
+                    <section>
+                      <h2>HUFFMAN ENCODING</h2>
+                    </section>
+
+                    <section>
+                      <img src="media/huffman1.png" width="100%">
+                      <p class="caption">ASCII encoding assigns 8 bits to each character. However some characters appear often (such as <b>e</b>).</p>
+                    </section>
+
+                    <section>
+                      <img src="media/huffman2.png" width="80%">
+                      <p class="caption">character frequency distribution in English text</p>
+                    </section>
+
+                    <section>
+                      <p>Fixed-width encodings (e.g., 8-bit ASCII) are wasteful when character frequencies are skewed.</p>
+                      <p>Goal: assign <strong>shorter</strong> codewords to frequent symbols and <strong>longer</strong> ones to rare symbols to minimize expected length.</p>
+                    </section>
+
+                   <section>
+                    <div class="r-stack">
+                      <div class="fragment fade-in-then-out">
+                        <img src="media/huffman3.png" width="100%"/>
+                        <p class="caption">simplified example</p>
+                      </div>
+                      <div class="fragment fade-in-then-out">
+                        <img src="media/huffman4.png" width="100%"/>
+                        <p class="caption">first attempt</p>
+                      </div>
+                      <div class="fragment fade-in-then-out">
+                        <img src="media/huffman4.png" width="100%"/>
+                        <p class="caption">
+                          <b>ambiguous!</b>
+                        </p>
+                      </div>
+                      <div class="fragment fade-in-then-out">
+                        <img src="media/huffman4.png" width="100%"/>
+                        <p class="caption">
+                          000 could be AAA/AB/BA
+                        </p>
+                      </div>
+                    </div>
+                   </section> 
+
+                    <section>
+                      <h3>PREFIX-FREE PROPERTY</h3>
+                      <ul>
+                        <li>No codeword is a prefix of another.</li>
+                        <li>Guarantees unique decodability via tree traversal from root to leaves.</li>
+                      </ul>
+                    </section>
+
+                    <section>
+                        <img src="media/huffman5.png" width="100%"/>
+                        <p class="caption">this works!</p>
+                    </section>
+
+                    <section>
+                        <img src="media/huffman6.png" width="100%"/>
+                        <p class="caption">as long as all letters are leaves the code is prefix-free</p>
+                    </section>
+
+                    <section>
+                      <h3>STRATEGY</h3>
+                      <p>greedily build subtrees, starting with the infrequent letters</p>
+                      <ul>
+                        <li>Repeatedly <strong>merge the two least frequent</strong> nodes into a new parent with summed frequency.</li>
+                        <li>Assign one child edge as 0 and the other as 1; codes are read from root to leaves.</li>
+                      </ul>
+                    </section>
+
+                   <section>
+                    <div class="r-stack">
+                      <div class="fragment fade-in-then-out">
+                        <img src="media/huffman7.png" width="100%"/>
+                        <p class="caption">Merge the two smallest frequencies \(5\) and \(9\) to form \(14\).</p>
+                      </div>
+                      <div class="fragment fade-in-then-out">
+                        <img src="media/huffman8.png" width="100%"/>
+                        <p class="caption">Merge the next two smallest \(12\) and \(13\) to form \(25\).</p>
+                      </div>
+                      <div class="fragment fade-in-then-out">
+                        <img src="media/huffman9.png" width="100%"/>
+                        <p class="caption">Merge \(14\) and \(16\) to form \(30\).</p>
+                      </div>
+                      <div class="fragment fade-in-then-out">
+                        <img src="media/huffman10.png" width="100%"/>
+                        <p class="caption">Merge \(25\) and \(30\) to form \(55\).</p>
+                      </div>
+                      <div class="fragment fade-in-then-out">
+                        <img src="media/huffman11.png" width="100%"/>
+                        <p class="caption">Merge \(55\) and \(45\) to obtain the root \(100\); read codewords from root to leaves.</p>
+                      </div>
+                    </div>
+                   </section> 
+
+                  <section>
+                    <h3>EXPECTED CODE LENGTH</h3>
+                    <p>The expected bits per symbol is</p>
+                    <p>\[
+                      \mathbb{E}[L] \;=\; \sum_{c \in C} p(c)\,\ell(c),
+                    \]</p>
+                    <p>where \(p(c)\) is the symbol probability and \(\ell(c)\) is its codeword length (tree depth).</p>
+                  </section>
+
+                  <section>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 2em;">
+                      <div style="width: 70%;">
+                        <img src="media/huffman12.png" width="1000%">
+                      </div>
+                      <div style="width: 30%; font-size: 22pt;">
+                        <p>
+                          expected cost of encoding a letter:
+                        </p>
+                        <p>
+                          $$
+                          1*0.45 + \\
+                          3*0.41 + \\
+                          4*0.14 = \\
+                          2.24
+                          $$
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section style="font-size: 26pt;">
+                    <pre><code data-trim data-noescape class="language-plaintext">
+# C: symbols with frequencies
+Q = PriorityQueue(C, key = freq)
+
+while Q.size() > 1:
+  x = Q.extract_min()
+  y = Q.extract_min()
+  z = new InternalNode()
+  z.left = x; z.right = y
+  z.freq = x.freq + y.freq
+  Q.insert(z)
+
+root = Q.extract_min()
+return root
+                    </code></pre>
+                  </section>
+
+                  <section>
+                    <h3>DECODING</h3>
+                    <ul>
+                      <li>Start at root; read bits left (0) / right (1) until a leaf is reached.</li>
+                      <li>Emit the leaf symbol; restart from root for the next symbol.</li>
+                      <li>Prefix-free property ensures unambiguous parsing without separators.</li>
+                    </ul>
+                  </section>
+
+                </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+        <script>
+          window.addEventListener('load', function() {
+            switchTheme();
+          });
+        </script>
+
+    </body>
+
+</html>

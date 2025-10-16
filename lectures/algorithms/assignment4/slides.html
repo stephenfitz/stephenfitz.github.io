@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>assignment #4</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section style="font-size: 22pt;">
+                        <h3>POINTS</h3>
+                        <p>
+                            <ul>
+                                <li>Q1 - 20pts</li>
+                                <li>Q2 - 20pts</li>
+                                <li>Q3 - 20pts</li>
+                                <li>Q4 - 20pts</li>
+                                <li>Q5 - 20pts</li>
+                            </ul>
+                        </p>
+                        <p>
+                            <ul>
+                                <li>Extra Question - 30pts</li>
+                            </ul>
+                        </p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>QUESTION 1</h2>
+                  </section>
+
+                  <section>
+                    <p>Given an array of integers <em>nums</em> and an integer <em>target</em>, return the indices of the two numbers such that they add up to <em>target</em>. You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
+                    <p><strong>Hint:</strong> You may solve this question using a hash table.</p>
+                  </section>
+
+                  <section>
+                    <h3>EXAMPLE</h3>
+                    <p><strong>Input:</strong> nums = [2, 7, 11, 15], target = 9</p>
+                    <p><strong>Output:</strong> [0, 1]</p>
+                    <ul>
+                      <li>Explanation: nums[0] + nums[1] = 2 + 7 = 9</li>
+                      <li>The indices of the two numbers are [0, 1].</li>
+                    </ul>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>QUESTION 2</h2>
+                  </section>
+
+                  <section>
+                    <p>In class, we discussed heapify up and heapify down operations for a <strong>Max-Heap</strong>, where:</p>
+                    <ul>
+                      <li>Heapify up "floats" a larger key to restore the heap property.</li>
+                      <li>Heapify down "sinks" a smaller key to restore the heap property.</li>
+                    </ul>
+                    <p>Your task is to implement the <strong>heapify up</strong> and <strong>heapify down</strong> functions for a <strong>Min-Heap</strong> (binary heap with <em>parent.key ≤ child.key</em>, root has the minimum key).</p>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>QUESTION 3</h2>
+                  </section>
+
+                  <section>
+                    <p>You are given an array of intervals where intervals[i] = [start_i, end_i] represents the start and end times of a meeting. Return the <strong>minimum number of meeting rooms</strong> required to schedule all the meetings without any overlap.</p>
+                    <p><strong>Hint:</strong> You may need a <em>min-heap</em> to efficiently manage meeting end times.</p>
+                  </section>
+
+                  <section>
+                    <h3>EXAMPLE</h3>
+                    <p><strong>Input:</strong> intervals = [[0, 30], [5, 10], [15, 20]]</p>
+                    <p><strong>Output:</strong> 2</p>
+                    <ul>
+                      <li>Meeting [0, 30] conflicts with [5, 10].</li>
+                      <li>You need at least two rooms: one for [0, 30] and another for [5, 10] and [15, 20].</li>
+                    </ul>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>QUESTION 4</h2>
+                  </section>
+
+                  <section>
+                    <p>Suppose that we were to rewrite the for loop header in line 10 of the <strong>Counting-Sort</strong> as <em>for j = 1 to n</em>. Show that the algorithm still works correctly but is <strong>not stable</strong>. A sorting algorithm is stable if it preserves the relative order of equal elements in the input.</p>
+                    <p>Use the following input example: <strong>A = [4, 1, 3, 4, 3]</strong></p>
+                  </section>
+
+                  <section>
+                    <pre style="font-size: 20pt;"><code data-trim data-noescape class="language-plaintext">
+Counting-Sort(A, n, k)
+----------------------
+01:   for i = 0 to k do
+02:       C[i] = 0
+03:   end for
+04:   for j = 1 to n do
+05:       C[A[j]] = C[A[j]] + 1
+06:   end for
+07:   for i = 1 to k do
+08:       C[i] = C[i] + C[i− 1]
+09:   end for
+10:  for j = n downto 1 do
+11:      B[C[A[j]]] = A[j]
+12:      C[A[j]] = C[A[j]] − 1
+13:  end for
+14:  return B
+                    </code></pre>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>QUESTION 5</h2>
+                  </section>
+
+                  <section>
+                    <p>Which of the following sorting algorithms are <strong>stable</strong>: insertion sort, merge sort, heapsort, and quicksort? Justify your answer.</p>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>EXTRA QUESTION</h2>
+                  </section>
+
+                  <section>
+                    <p>A <strong>d-ary heap</strong> is like a binary heap, but (with one possible exception) nonleaf nodes have <em>d</em> children instead of two children.</p>
+                    <p>Assume the time to maintain the mapping between objects and heap elements is O(1) per operation.</p>
+                  </section>
+
+                  <section>
+                    <h3>PART A</h3>
+                    <p>Describe how to represent a d-ary heap in an array.</p>
+                  </section>
+
+                  <section>
+                    <h3>PART B</h3>
+                    <p>Express the height of a d-ary heap of n elements in terms of n and d in Θ.</p>
+                  </section>
+
+                  <section>
+                    <h3>PART C</h3>
+                    <p>Give an implementation of <em>D-ary Heapify Down</em> in a d-ary max-heap. Analyze its running time in terms of d and n.</p>
+                  </section>
+
+                  <section>
+                    <h3>PART D</h3>
+                    <p>Give an implementation of <em>D-ary Heapify Up</em> in a d-ary max-heap. Analyze its running time in terms of d and n.</p>
+                  </section>
+
+                </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+
+    </body>
+
+</html>
