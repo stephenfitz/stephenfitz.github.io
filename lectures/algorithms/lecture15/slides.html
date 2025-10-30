@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>lecture #15</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                <!-- <section>
+                  <h3>DICTIONARY-LIKE ABSTRACT DATA TYPES</h3>
+                  <ul>
+                    <li><strong>Dictionary:</strong> set of (key, value) pairs with <em>Insert</em>, <em>Delete</em>, <em>Find</em></li>
+                    <li><strong>Priority Queue:</strong> (priority, value) or (priority, id, value) with <em>Insert</em>, <em>Extract-Min/Max</em>, <em>Change-priority</em></li>
+                    <li><strong>Ordered dictionary:</strong> keys from an ordered domain; supports <em>Insert</em>, <em>Delete</em>, <em>Find</em>, <em>Next</em>, <em>Previous</em></li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h3>IMPLEMENTING ORDERED DICTIONARIES VIA ARRAYS</h3>
+                  <p>Suppose we maintain a <em>sorted array</em>. Consider asymptotic costs:</p>
+                  <ul>
+                    <li><strong>Find:</strong> binary search</li>
+                    <li><strong>Next/Previous:</strong> with key vs. with array position</li>
+                    <li><strong>Insert/Delete:</strong> shifting costs</li>
+                  </ul>
+                  <p><strong>Question:</strong> Which operations become bottlenecks, and why does this motivate trees?</p>
+                </section>
+
+                <section>
+                  <h3>ROOTED TREES</h3>
+                  <ul>
+                    <li>Edges directed from parent to children</li>
+                    <li>No two distinct paths to the same node</li>
+                    <li>Children may be distinguished (e.g., left/right)</li>
+                  </ul>
+                </section> -->
+
+                <section>
+                  <h2>BINARY SEARCH TREES</h2>
+                </section>
+
+                <section>
+                  <ul>
+                    <li><strong>Binary tree:</strong> each node has 0, 1, or 2 children</li>
+                    <li><strong>BST property:</strong> for any node x,
+                      <div>\(\forall y \in \text{left}(x):\; \mathrm{key}(y) \le \mathrm{key}(x)\)</div>
+                      <div>\(\forall y \in \text{right}(x):\; \mathrm{key}(y) \ge \mathrm{key}(x)\)</div>
+                    </li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h3>BST DATA STRUCTURE</h3>
+                  <ul>
+                    <li>Each node stores: <em>key</em>, <em>left</em>, <em>right</em>, <em>parent</em></li>
+                    <li>Key type supports total ordering (e.g., numbers, strings)</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <img src="media/bst1.png" width="100%">
+                  <p class="caption">Keeping vertical alignment clarifies in-order positions; unique legal insertion point for key 4 is clear.</p>
+                </section>
+
+                <section>
+                  <h3>BST HEIGHT</h3>
+                  <ul>
+                    <li><strong>Best case:</strong> \(h = \Theta(\log n)\) (well-balanced)</li>
+                    <li><strong>Worst case:</strong> \(h = \Theta(n)\) (degenerate chain)</li>
+                  </ul>
+                  <img src="media/bst2.png" width="30%">
+                  <p class="caption">Tree shape governs performance of all basic operations.</p>
+                </section>
+
+                <section>
+                  <h3>BST SEARCH</h3>
+                  <p>Follows left/right pointers based on key comparisons.</p>
+                  <p><strong>Running time:</strong> \(\Theta(\text{height})\)</p>
+                </section>
+
+                <section>
+                  <pre><code data-trim data-noescape class="language-plaintext">
+TREE-SEARCH(x, k)
+  if x == NIL or k == x.key
+      return x
+  if k < x.key
+      return TREE-SEARCH(x.left, k)
+  else
+      return TREE-SEARCH(x.right, k)
+                  </code></pre>
+                  <p class="caption">Initial call: <em>TREE-SEARCH(T.root, k)</em></p>
+                </section>
+
+                <section>
+                  <h3>BST INSERTION</h3>
+                  <ul>
+                    <li>Search down to a NIL child, remembering the parent</li>
+                    <li>Attach new node as left or right child</li>
+                  </ul>
+                  <p><strong>Running time:</strong> \(\Theta(\text{height})\)</p>
+                </section>
+
+                <section>
+                  <pre style="font-size: 18pt;"><code data-trim data-noescape class="language-plaintext">
+TREE-INSERT(T, z)
+  y = NIL
+  x = T.root
+  while x ≠ NIL
+      y = x
+      if z.key < x.key
+          x = x.left
+      else
+          x = x.right
+  z.p = y
+  if y == NIL
+      T.root = z // tree T was empty
+  elseif z.key < y.key
+      y.left = z
+  else
+      y.right = z
+                  </code></pre>
+                </section>
+
+                <section>
+                  <h3>TREE MINIMUM AND MAXIMUM</h3>
+                  <ul>
+                    <li>\(\mathrm{Tree\text{-}Min}(x)\): follow <em>left</em> pointers</li>
+                    <li>\(\mathrm{Tree\text{-}Max}(x)\): follow <em>right</em> pointers</li>
+                  </ul>
+                  <p><strong>Running time:</strong> \(\Theta(\text{height})\)</p>
+                </section>
+
+                <section>
+                  <pre><code data-trim data-noescape class="language-plaintext">
+TREE-MINIMUM(x)
+  while x.left ≠ NIL
+      x = x.left
+  return x
+
+TREE-MAXIMUM(x)
+  while x.right ≠ NIL
+      x = x.right
+  return x
+                  </code></pre>
+                </section>
+
+                <section>
+                  <h3>TREE SUCCESSOR</h3>
+                  <ul>
+                    <li>If node has right subtree: min of right subtree</li>
+                    <li>Else: go up via parent pointers to first ancestor for which node lies in left subtree</li>
+                  </ul>
+                  <p><strong>Running time:</strong> \(\Theta(\text{height})\)</p>
+                </section>
+
+                <section>
+                  <pre><code data-trim data-noescape class="language-plaintext">
+TREE-SUCCESSOR(x)
+  if x.right ≠ NIL
+      return TREE-MINIMUM(x.right)
+  y = x.p
+  while y ≠ NIL and x == y.right
+      x = y
+      y = y.p
+  return y
+                  </code></pre>
+                </section>
+
+                <section>
+                  <h3>TREE TRAVERSALS</h3>
+                  <ul>
+                    <li><strong>Inorder:</strong> Left → Root → Right (sorted order in BSTs)</li>
+                    <li><strong>Preorder:</strong> Root → Left → Right (copying structure)</li>
+                    <li><strong>Postorder:</strong> Left → Right → Root (aggregate properties like height or number of nodes)</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <pre><code data-trim data-noescape class="language-plaintext">
+Algorithm Inorder-Tree-Walk(x):
+  if x ≠ NIL:
+    Inorder-Tree-Walk(x.left)
+    print x.key
+    Inorder-Tree-Walk(x.right)
+                  </code></pre>
+                  <p class="caption">Initial call: <em>Inorder-Tree-Walk(T.root)</em> | Running time: Θ(n)</p>
+                </section>
+
+                <section>
+                  <pre><code data-trim data-noescape class="language-plaintext">
+Algorithm Copy-Tree(x):
+  if x == NIL: return NIL
+  y ← new node
+  y.key ← x.key
+  y.left  ← Copy-Tree(x.left)
+  y.right ← Copy-Tree(x.right)
+  return y
+                  </code></pre>
+                  <p class="caption">Initial call: <em>Copy-Tree(T.root)</em> | Running time: Θ(n)</p>
+                </section>
+
+                <section>
+                  <pre><code data-trim data-noescape class="language-plaintext">
+Algorithm Find-height(x):
+  if x == NIL: return -1
+  h1 ← Find-height(x.left)
+  h2 ← Find-height(x.right)
+  return max(h1, h2) + 1
+                  </code></pre>
+                  <p class="caption">Initial call: <em>Find-height(T.root)</em> | Running time: Θ(n)</p>
+                </section>
+
+                <section>
+                  <h3>BST SORT VIA INSERTION + INORDER</h3>
+                  <pre><code data-trim data-noescape class="language-plaintext">
+T ← ∅ # empty BST
+for i = 1 to n:
+  TREE-INSERT(T, A[i])
+
+# prints keys in sorted order
+INORDER-TREE-WALK(T.root)
+                  </code></pre>
+                  <p class="caption"><strong>Build time:</strong> depends on insertion order; inorder walk is \(O(n)\).</p>
+                </section>
+
+                <section>
+                  <h3>BST VS. QUICKSORT: COMPARISON</h3>
+                  <ul>
+                    <li>First inserted key (root) compared with all subsequent keys</li>
+                    <li>Within each subtree, first inserted key compared within that subtree</li>
+                    <li><strong>Analogy:</strong> root behaves like quicksort pivot</li>
+                    <li>Random insertion order ⇒ expected total comparisons \(O(n \log n)\)</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h3>AVERAGE NODE DEPTH</h3>
+                  <p>Depth of a node equals number of comparisons during its insertion.</p>
+                  <p>Summing over nodes gives total comparisons; averaging yields expected depth on random permutations.</p>
+                </section>
+
+                <section>
+                  <h3>BST NODE DEPTH ↔ COMPARISONS</h3>
+                  <ul>
+                    <li class="fragment">Depth of a node = # edges from root to that node.</li>
+                    <li class="fragment">When inserting a key, its depth equals the # of comparisons made during that insertion.</li>
+                    <li class="fragment">Example: compared with 10 → 4 → 6 → placed ⇒ depth = 3.</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h3>TOTAL &AMP; AVERAGE DEPTH</h3>
+                  <ul>
+                    <li class="fragment">Sum of all node depths = total # of comparisons over all insertions.</li>
+                    <li class="fragment">Average node depth = (1/n) × (total # of comparisons).</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h3>EXPECTED COSTS (RANDOM INSERTION ORDER)</h3>
+                  <ul>
+                    <li class="fragment">Assume all input permutations are equally likely.</li>
+                    <li class="fragment">Insertion-comparison structure matches randomized quicksort’s partitioning recurrences.</li>
+                    <li class="fragment">Therefore, expected total comparisons = <em>O(n&nbsp;log&nbsp;n)</em>.</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h3>AVERAGE DEPTH RESULT</h3>
+                  <p class="fragment">Average depth = (1/n) · E[total comparisons] = (1/n) · O(n&nbsp;log&nbsp;n) = <strong>O(log&nbsp;n)</strong>.</p>
+                </section>
+
+                <section>
+                  <h3>INTUITION</h3>
+                  <ul>
+                    <li class="fragment">Randomly built BSTs are balanced in expectation; most nodes sit ≈ log&nbsp;n levels from the root.</li>
+                    <li class="fragment">But worst case (e.g., sorted input) yields depth <em>O(n)</em>.</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <table>
+                    <thead><tr><th>Quantity</th><th>Expression</th><th>Expected Order</th></tr></thead>
+                    <tbody>
+                      <tr><td>Total comparisons</td><td>∑ depths</td><td>O(n&nbsp;log&nbsp;n)</td></tr>
+                      <tr><td>Average node depth</td><td>(1/n) ∑ depths</td><td>O(log&nbsp;n)</td></tr>
+                    </tbody>
+                  </table>
+                </section>
+
+                <section>
+                  <h3>BALANCED SEARCH TREES</h3>
+                  <p><strong>Goal:</strong> guarantee \(h = O(\log n)\) for dynamic sets.</p>
+                </section>
+
+              </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+        <script>
+          window.addEventListener('load', function() {
+            switchTheme();
+          });
+        </script>
+
+    </body>
+
+</html>

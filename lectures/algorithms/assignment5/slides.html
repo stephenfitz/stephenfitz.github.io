@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>assignment #5</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section style="font-size: 22pt;">
+                        <h3>POINTS</h3>
+                        <p>
+                            <ul>
+                                <li>Q1 - 20pts</li>
+                                <li>Q2 - 25pts</li>
+                                <li>Q3 - 25pts</li>
+                                <li>Q4 - 30pts</li>
+                            </ul>
+                        </p>
+                        <p>
+                            <ul>
+                                <li>Extra Question - 30pts</li>
+                            </ul>
+                        </p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                      <h2>QUESTION 1</h2>
+                    </section>
+
+                    <section>
+                      <h3>(A)</h3>
+                      <p>Draw the <strong>recursion tree</strong> for Merge-Sort on the array:</p>
+                      <pre><code data-trim data-noescape class="language-plaintext">A = [38, 27, 43, 3, 9, 82, 10, 76]</code></pre>
+                    </section>
+
+                    <section>
+                      <h3>(B)</h3>
+                      <p><strong>Explain</strong> why memoization does <em>not</em> speed up an efficient divide-and-conquer algorithm such as Merge-Sort.</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                      <h2>QUESTION 2</h2>
+                    </section>
+
+                    <section>
+                      <p>Given a rod of length \(n\) and a price table \(P\) (where \(P[i]\) is the price for length \(i\)), determine the maximum revenue \(R[n]\) by optimally cutting and selling pieces.</p>
+                    </section>
+
+                    <section>
+                      <pre><code data-trim data-noescape class="language-plaintext">
+Length (inches): [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+Price ($): [1, 5, 8, 9, 10, 17, 17, 20, 24, 25]
+                      </code></pre>
+                      <p><strong>Example:</strong> For \(n=10\), selling whole yields \(\$25\); cutting into 6+4 yields \(17 + 9 = 26\) (better).</p>
+                    </section>
+
+                    <section>
+                      <p>Design and implement an algorithm to compute <strong>maximum revenue</strong>.</p>
+                      <ul>
+                        <li>Input: price array \(P\), where \(P[i]\) is the price of length \(i\) rod</li>
+                        <li>Output: maximum revenue obtainable from cutting the rod in an optimal way.</li>
+                      </ul>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                      <h2>QUESTION 3</h2>
+                    </section>
+
+                    <section>
+                      <p>Find the sum of a <strong>contiguous</strong> subarray with the largest total (at least one element).</p>
+                    </section>
+
+                    <section>
+                      <h3>EXAMPLE</h3>
+                      <pre><code data-trim data-noescape class="language-plaintext">
+Input: [2, 3, -8, 7, -1, 2, 3]
+Output: 11
+                      </code></pre>
+                      <p>subarray [7, -1, 2, 3] sums to 11</p>
+                    </section>
+
+                    <section>
+                      <p>Design a <strong>DP algorithm</strong>. Show how to fill the table and obtain the final result.</p>
+                    </section>
+                    
+                </section>
+
+                <section>
+
+                    <section>
+                      <h2>QUESTION 4</h2>
+                    </section>
+
+                    <section>
+                      <p>Compare <strong>brute-force</strong> vs. <strong>memoized</strong> Fibonacci to understand the difference in efficiency on real runs.</p>
+                    </section>
+
+                    <section>
+                      <h3>(A)</h3>
+                      <ul>
+                        <li>Implement a <strong>naïve recursive</strong> Fibonacci function (no optimizations).</li>
+                        <li>Run it for inputs \(n \in \{10, 100, 1000\}\); <strong>record execution time</strong>.</li>
+                      </ul>
+                    </section>
+
+                    <section>
+                      <h3>(B)</h3>
+                      <ul>
+                        <li>Implement <strong>memoization</strong>.</li>
+                        <li>Run it for inputs \(n \in \{10, 100, 1000\}\); <strong>record execution time</strong>.</li>
+                      </ul>
+                    </section>
+
+                    <section>
+                      <h3>(C)</h3>
+                      <ul>
+                        <li>Build a <strong>comparison table</strong> of execution times for both methods across \(n\).</li>
+                        <li>Plot the results on a combined figure in different colors.</li>
+                        <li><strong>Answer</strong>: what is the difference in time complexity (specify the two complexity classes)?.</li>
+                      </ul>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                      <h2>EXTRA QUESTION</h2>
+                      <p>For PhD students.</p>
+                    </section>
+
+                    <section>
+                      <h3>LONGEST PALINDROMIC SUBSEQUENCE (LPS)</h3>
+                      <p>Find the <strong>longest subsequence</strong> of a given string that is also a palindrome.</p>
+                      <pre><code data-trim data-noescape class="language-plaintext">
+Example string:
+MAHDYNAMICPROGRAMZLETMESHOWYOUTHEM
+LPS:
+MHYMRORMYHM
+                      </code></pre>
+                    </section>
+
+                    <section>
+                      <h3>HINT</h3>
+                      <p>Let the input be array \(A\). For \(i &lt; j\), define \(f_{i,j}\) as the length of the LPS in \(A[i,\dots,j]\). Compute \(f_{i,j}\) using smaller subinterval values \(f_{k,l}\) where \(\ell-k &lt; j-i\).</p>
+                    </section>
+
+                    <section>
+                      <ul>
+                        <li><strong>Subproblems:</strong> Specify the family of intervals \((i,j)\).</li>
+                        <li><strong>Recurrence:</strong> Give \(f_{i,j}\) in terms of smaller intervals.</li>
+                        <li><strong>Algorithm &amp; Analysis:</strong> Compute the best value and analyze complexity.</li>
+                      </ul>
+                    </section>
+
+                </section>
+
+<!-- <section>
+  <h2>Bonus Question (up to +5 to final grade)</h2>
+  <h3>AI-Assisted Algorithm Design Exploration</h3>
+  <p><strong>Objective:</strong> Use AI tools to explore concepts interactively for the <em>Longest Common Subsequence (LCS)</em> problem.</p>
+</section>
+
+<section>
+  <h3>Bonus: Instructions</h3>
+  <ol>
+    <li>Choose the DP problem: <strong>LCS</strong>.</li>
+    <li>Devise prompts that seek <strong>insights and hints</strong>, not direct solutions.</li>
+    <li><strong>Do not</strong> ask for the final solution outright; iterate conceptually.</li>
+    <li>Submit a <strong>transcript/screenshots</strong> of the AI interaction and a brief <strong>reflection</strong> on what you learned.</li>
+  </ol>
+</section>
+
+<section>
+  <h3>Bonus: Evaluation Criteria</h3>
+  <ul>
+    <li><strong>Effective AI Interaction</strong> (1 pt): Quality of prompts guiding insight.</li>
+    <li><strong>Depth of Understanding</strong> (1 pt): Step-by-step exploration and reasoning.</li>
+    <li><strong>Reflection &amp; Analysis</strong> (1 pt): How AI assisted your understanding.</li>
+    <li><strong>Survey</strong> (up to +2): Complete the survey and keep a submission screenshot.</li>
+  </ul>
+</section>
+
+<section>
+  <h3>Bonus: Notes</h3>
+  <ul>
+    <li>You may reflect on <strong>Q4 from Assignment 5</strong> or this bonus question.</li>
+    <li>Survey bonus can be earned <strong>only once</strong>, even if both are completed.</li>
+    <li>Goal: develop a <strong>structured thought process</strong>—not just obtain an answer.</li>
+  </ul>
+</section> -->
+
+                </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+
+    </body>
+
+</html>

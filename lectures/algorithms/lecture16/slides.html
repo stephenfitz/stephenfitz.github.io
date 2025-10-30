@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>lecture #16</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>RED-BLACK TREES</h2>
+                  </section>
+
+                  <section>
+                    <ol>
+                      <li>Every node is colored <strong>red</strong> or <strong>black</strong>.</li>
+                      <li>The root and all leaves (NILs) are <strong>black</strong>.</li>
+                      <li>No red node has a red parent.</li>
+                      <li>Every simple path from a node x to any descendant NIL has the same number of black nodes (black-height of x).</li>
+                    </ol>
+                  </section>
+
+                  <section>
+                    <img src="media/rbt1.png" width="100%">
+                    <p class="caption">All four red-black properties satisfied.</p>
+                  </section>
+
+                  <section>
+                    <h3>RED-BLACK HEIGHT THEOREM</h3>
+                    <p><strong>Theorem:</strong> A red-black tree with \(n\) keys has height \(h \le 2\lg(n+1)\).</p>
+                  </section>
+
+                  <section>
+                    <p><strong>Idea:</strong> Merge each red node into its black parent to form a 2–3–4 tree with uniform leaf depth.</p>
+                    <div class="r-stack">
+                        <div class="fragment"><img src="media/rbt2.png" width="50%"></div>
+                        <div class="fragment"><img src="media/rbt3.png" width="50%"></div>
+                        <div class="fragment"><img src="media/rbt4.png" width="50%"></div>
+                        <div class="fragment"><img src="media/rbt5.png" width="50%"></div>
+                    </div>
+                  </section>
+
+                  <section>
+                    <ul>
+                      <li>Merge every <span style="color:red;">red</span> node into its black parent.</li>
+                      <li>This creates a tree where each node has 2, 3, or 4 children — a <strong>2–3–4 tree</strong>.</li>
+                      <li>All leaves in this 2–3–4 tree have uniform depth $h'$.</li>
+                    </ul>
+                  </section>
+                  <section>
+                    <ul>
+                      <li>Let $ h $ be the height of the red–black tree and $ h' $ be the height of the corresponding 2–3–4 tree.</li>
+                      <li>Since at most half the nodes along any path are red, we have:</li>
+                    </ul>
+                    <p>
+                    $$ h' \ge \frac{h}{2} $$
+                    </p>
+                  </section>
+
+                  <section>
+                    <div class="r-stack">
+                        <div class="fragment"><img src="media/rbt6.png" width="60%"></div>
+                        <div class="fragment"><img src="media/rbt7.png" width="70%"></div>
+                    </div>
+                  </section>
+
+                  <section>
+                    <ul>
+                      <li class="fragment">The number of leaves is $ n + 1 $.</li>
+                      <li class="fragment">For a 2–3–4 tree of height $ h' $, $ n + 1 \ge 2^{h'} $.</li>
+                    </ul>
+                    <p class="fragment">
+                    $$\Rightarrow \log_2(n + 1) \ge h' \ge \frac{h}{2}$$
+                    </p>
+                    <p class="fragment">
+                    $$\Rightarrow h \le 2 \log_2(n + 1)$$
+                    </p>
+                  </section>
+
+                  <!-- <section>
+                    <h3>HEIGHT BOUND: SKETCH</h3>
+                    <ul>
+                      <li>On any root-to-leaf path, at least half the nodes are black ⇒ black-height \(h'\ge h/2\).</li>
+                      <li>A 2–3–4 tree with black-height \(h'\) has at least \(2^{h'}\) leaves: \(n+1 \ge 2^{h'}\).</li>
+                      <li>\(\lg(n+1) \ge h' \ge h/2 \Rightarrow h \le 2\lg(n+1)\).</li>
+                    </ul>
+                  </section> -->
+
+                  <section>
+                    <h3>RED-BLACK TREES: QUERY TIME</h3>
+                    <p><strong>Corollary:</strong> SEARCH, MIN, MAX, SUCCESSOR, PREDECESSOR run in \(O(\log n)\).</p>
+                  </section>
+
+                  <section>
+                    <h3>TREE ROTATIONS</h3>
+                    <img src="media/rbt8.png" width="100%">
+                    <p class="caption">Rotations preserve in-order key order and run in \(O(1)\).</p>
+                    <p>
+                      $$
+                      a \in \alpha , b \in \beta , c \in \gamma \implies a \leq A \leq b \leq B \leq c
+                      $$
+                    </p>
+                  </section>
+
+                  <section>
+                    <h3>RB-INSERT: HIGH-LEVEL STRATEGY</h3>
+                    <ul>
+                      <li>Insert as in BST; color new node red</li>
+                      <li>Only property 3 (no red parent of red node) may be violated</li>
+                      <li>Fix-up proceeds up the tree using recoloring and at most two rotations</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <div class="r-stack">
+                        <div class="fragment"><img src="media/rbt9.png" width="100%"></div>
+                        <div class="fragment"><img src="media/rbt10.png" width="100%"></div>
+                        <div class="fragment"><img src="media/rbt11.png" width="100%"></div>
+                        <div class="fragment"><img src="media/rbt12.png" width="100%"></div>
+                        <div class="fragment"><img src="media/rbt13.png" width="100%"></div>
+                    </div>
+                  </section>
+
+                  <section>
+                    <pre><code data-trim data-noescape class="language-plaintext">
+RB-INSERT(T, x):
+  TREE-INSERT(T, x)
+  color[x] ← RED
+  while x ≠ root[T] and color[parent[x]] = RED:
+    if parent[x] = left[parent[parent[x]]]:
+      y ← right[parent[parent[x]]] # "uncle"
+      if color[y] = RED: # case 1
+        color[parent[x]] ← BLACK
+        color[y] ← BLACK
+        color[parent[parent[x]]] ← RED
+        x ← parent[parent[x]]
+    ...
+                    </code></pre>
+                  </section>
+
+                  <section>
+                    <pre><code data-trim data-noescape class="language-plaintext">
+      else:
+        if x = right[parent[x]]: # case 2 → 3
+          x ← parent[x]
+          LEFT-ROTATE(T, x)
+        # case 3
+        color[parent[x]] ← BLACK
+        color[parent[parent[x]]] ← RED
+        RIGHT-ROTATE(T, parent[parent[x]])
+    else:
+      # symmetric: swap 'left' and 'right'
+      ...
+  color[root[T]] ← BLACK
+                    </code></pre>
+                  </section>
+
+                  <section>
+                    <h3>RB-INSERT: CASE 1 (RECOLOR)</h3>
+                    <img src="media/rbt14.png" width="100%">
+                    <p class="caption">Parent and uncle red ⇒ recolor and move violation up.</p>
+                  </section>
+
+                  <section>
+                    <h3>RB-INSERT: CASE 2 (ROTATE TO CASE 3)</h3>
+                    <img src="media/rbt15.png" width="100%">
+                    <p class="caption">Inner configuration ⇒ one rotation converts to case 3.</p>
+                  </section>
+
+                  <section>
+                    <h3>RB-INSERT: CASE 3 (ROTATE, RECOLOR)</h3>
+                    <img src="media/rbt16.png" width="100%">
+                    <p class="caption">Rotation and recoloring ⇒ done.</p>
+                  </section>
+
+                  <section>
+                    <h3>RB-INSERT ANALYSIS</h3>
+                    <ul>
+                      <li>Zero or more Case 1 recolor steps</li>
+                      <li>At most two rotations (Case 2 then Case 3)</li>
+                      <li><strong>Time:</strong> \(O(\log n)\) with \(O(1)\) rotations</li>
+                    </ul>
+                    <p><em>RB-DELETE</em> has analogous asymptotics and bounded rotations.</p>
+                  </section>
+
+                  <section>
+                    <h3>SUMMARY</h3>
+                    <ul>
+                      <li>BSTs: simplicity with performance tied to height</li>
+                      <li>Red-Black trees: enforce balance to guarantee \(O(\log n)\) operations</li>
+                      <li>Rotations are the primitive for structural adjustments</li>
+                    </ul>
+                  </section>
+
+                </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+        <script>
+          window.addEventListener('load', function() {
+            switchTheme();
+          });
+        </script>
+
+    </body>
+
+</html>

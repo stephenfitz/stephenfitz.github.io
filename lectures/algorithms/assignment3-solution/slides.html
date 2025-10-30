@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>assignment #3</p>
+                    </section>
+
+                </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>SOLUTION 1</h2>
+                  </section>
+
+                  <section>
+                    <pre><code data-trim data-noescape class="language-plaintext">
+RecursiveInsertionSort(A, n)
+  if n ≤ 1 then
+    return
+  RecursiveInsertionSort(A, n-1)
+  key ← A[n]
+  j ← n-1
+  while j ≥ 0 and A[j] > key do
+    A[j+1] ← A[j]
+    j ← j-1
+  A[j+1] ← key
+end function
+                    </code></pre>
+                  </section>
+
+                  <section>
+                    <p>The recurrence relation is:</p>
+                    <p><span>\(T(n) = T(n-1) + O(n)\)</span></p>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>SOLUTION 2</h2>
+                  </section>
+                  <section>
+                    <p><strong>Element at the 7th position (both acceptable):</strong></p>
+                    <ul>
+                      <li>If counting from index 1 → <strong>5</strong></li>
+                      <li>If counting from index 0 → <strong>7</strong></li>
+                    </ul>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>SOLUTION 3</h2>
+                  </section>
+
+                  <section>
+                    <p>Recurrence:</p>
+                    <p><span>\(T(n) = 3T(n/3) + O(n)\)</span></p>
+                    <p>Solution:</p>
+                    <p><span>\(O(n \log_3 n)\)</span></p>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>SOLUTION 4</h2>
+                  </section>
+
+                  <section>
+                    <p>Merge costs: <span>2n, 3n, 4n, …, kn</span></p>
+                    <p>Total time:</p>
+                    <p><span>\(\sum_{i=2}^k in = O(k^2 n)\)</span></p>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>SOLUTION 5</h2>
+                  </section>
+
+                  <section>
+                    <p>The merge operations form a tree.</p>
+                    <p>At each level, cost is <span>O(kn)</span>.</p>
+                    <p>Number of levels: <span>\(O(\log_2 k)\)</span>.</p>
+                    <p>Total complexity:</p>
+                    <p><span>\(O(kn \log k)\)</span></p>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>SOLUTION 6</h2>
+                  </section>
+
+                  <section>
+                    <p><strong>Strategy:</strong> Divide and Conquer</p>
+                    <ol>
+                      <li>Sort points by x-coordinate.</li>
+                      <li>Divide into two halves.</li>
+                      <li>Recursively solve in both halves.</li>
+                      <li>Merge: check strip around dividing line.</li>
+                    </ol>
+                  </section>
+
+                  <section>
+                    <img src="media/solution3q6.png" width="100%">
+                  </section>
+
+                  <section>
+                    <pre><code data-trim data-noescape class="language-plaintext">
+ClosestPair(P)
+  divide P into left and right (half the set)
+  δ1 ← ClosestPair(left)
+  δ2 ← ClosestPair(right)
+  δ ← min(δ1, δ2)
+  filter points within δ of dividing line
+  sort by y-coordinate
+  compare distances in strip (update δ)
+  return min distance δ
+end function
+                    </code></pre>
+                  </section>
+
+                  <section>
+                    <ul>
+                      <li>Initial sorting: <span>O(n log n)</span></li>
+                      <li>Recurrence: <span>T(n) = 2T(n/2) + O(n)</span></li>
+                      <li>Solution: <span>O(n log n)</span></li>
+                    </ul>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>EXTRA SOLUTION</h2>
+                  </section>
+
+                  <section>
+                    <h3>STRATEGY</h3>
+                    <p><strong>Recursive Idea:</strong></p>
+                    <ul>
+                      <li>Divide floor into 4 quadrants.</li>
+                      <li>Place 1 tromino to ensure each quadrant has 1 missing square.</li>
+                      <li>Recurse on each quadrant.</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <img src="media/solution3extraquestion.png" width="60%">
+                  </section>
+
+                  <section>
+                    <h3>CORRECTNESS</h3>
+                    <p><strong>Induction:</strong></p>
+                    <ul>
+                      <li><em>Base case:</em> 1x1 grid is trivially correct.</li>
+                      <li><em>Induction step:</em> After tromino placement, all 4 subgrids have exactly one missing cell; recursive correctness ensures full tiling.</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <h3>COMPLEXITY</h3>
+                    <p>Recurrence:</p>
+                    <p><span>\(T(n) = 4T(n/2) + \Theta(1)\)</span></p>
+                    <p>Solution:</p>
+                    <p><span>\(T(n) = \Theta(n^2)\)</span></p>
+                  </section>
+
+                  <section>
+                    <h3>PSEUDOCODE</h3>
+                    <pre><code data-trim data-noescape class="language-plaintext">
+Triominos(p, q, x, y, b)
+  if b = 0 then return []
+  define center coordinates
+  place tromino covering 3 central cells
+  recurse on 4 quadrants with missing cells
+  return placements
+end function
+                    </code></pre>
+                  </section>
+
+                  <section>
+                    <pre><code data-trim data-noescape class="language-plaintext">
+Triominos(p, q, x, y, b)
+
+Input: (p, q) are the coordinates of the top-left corner of the square being covered by this
+call,
+
+(x, y) is a cell already covered, and b is the log of the size of the square.
+
+Output: List of triomino placements.
+                  </code></pre>
+                </section>
+
+                <section>
+                  <pre><code data-trim data-noescape class="language-plaintext">
+if b = 0 then return (empty list) ▷ Base case: A 1x1 grid with the cell already covered
+
+▷ Divide Section: Define the coordinates for recursive calls.
+
+▷ There are eight variables denoting the coordinates of the squares in the recursive calls.
+                  </code></pre>
+                </section>
+
+                <section>
+                  <pre><code data-trim data-noescape class="language-plaintext">
+▷ B = bottom, T = top, L = left, R = right.
+
+(BLx, BLy)← (p+ 2b−1 − 1, q + 2b−1)
+
+(TLx, TLy)← (p+ 2b−1 − 1, q + 2b−1 − 1)
+
+(BRx, BRy)← (p+ 2b−1, q + 2b−1)
+
+(TRx, TRy)← (p+ 2b−1, q + 2b−1 − 1)
+
+▷ Override coordinates based on the location of (x, y).
+                  </code></pre>
+                </section>
+
+                <section>
+                  <pre><code data-trim data-noescape class="language-plaintext">
+if x &lt; p+ 2b−1 and y ≥ q + 2b−1 then
+  (BLx, BLy)← (x, y)
+  currentTriomino ← ((TRx, TRy),BLdirection)
+else if x &lt; p+ 2b−1 and y &lt; q + 2b−1 then
+  (TLx, TLy)← (x, y)
+  currentTriomino ← ((BRx, BRy),TLdirection)
+else if x ≥ p+ 2b−1 and y ≥ q + 2b−1 then
+  (BRx, BRy)← (x, y)
+  currentTriomino ← ((TLx, TLy),BRdirection)
+else if x ≥ p+ 2b−1 and y &lt; q + 2b−1 then
+  (TRx, TRy)← (x, y)
+  currentTriomino ← ((BLx, BLy),TRdirection)
+end if
+                </code></pre>
+                </section>
+
+                <section>
+                  <pre><code data-trim data-noescape class="language-plaintext">
+▷ Make four recursive calls and concatenate the results.
+return [currentTriomino]
+
+∥Triominos(p, q + 2b−1, BLx, BLy, b− 1)
+
+∥Triominos(p, q, TLx, TLy, b− 1)
+
+∥Triominos(p+ 2b−1, q + 2b−1, BRx, BRy, b− 1)
+
+∥Triominos(p+ 2b−1, q, TRx, TRy, b− 1)
+
+▷ where ∥ is list concatenation.
+                  </code></pre>
+                </section>
+
+                </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+
+    </body>
+
+</html>
