@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>lecture #17</p>
+                    </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>GRAPHS</h2>
+                  </section>
+
+                  <section>
+                    <ul>
+                      <li class="fragment">A directed graph (digraph) \(G=(V,E)\) has a vertex set \(V\) and an edge set \(E \subseteq V\times V\).</li>
+                      <li class="fragment">An edge \(e=(u,v)\) goes from \(u\) to \(v\). Self-loops \(u=v\) may or may not be allowed.</li>
+                      <li class="fragment">An undirected graph has \(E\) as unordered pairs \(\{u,v\}\).</li>
+                      <li class="fragment">Edges may store additional attributes (weights, lengths, labels).</li>
+                      <li class="fragment">Maximum number of edges is \(O(|V|^2)\) in both directed and undirected cases.</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <h3>GRAPHS ARE EVERYWHERE</h3>
+                    <table>
+                      <thead><tr><th>Domain</th><th>Nodes</th><th>Edges</th></tr></thead>
+                      <tbody>
+                        <tr><td>Transportation</td><td>Airports</td><td>Nonstop flights</td></tr>
+                        <tr><td>Communication</td><td>Computers, hubs, routers</td><td>Physical links</td></tr>
+                        <tr><td>Web</td><td>Pages</td><td>Hyperlinks</td></tr>
+                        <tr><td>Citation</td><td>Articles</td><td>References</td></tr>
+                        <tr><td>Social</td><td>People</td><td>Friendships, follows, messages</td></tr>
+                        <tr><td>Programs</td><td>Functions / modules</td><td>Calls, control-flow</td></tr>
+                      </tbody>
+                    </table>
+                  </section>
+
+                  <section>
+                    <h3>PATHS AND CONNECTIVITY</h3>
+                    <ul>
+                      <li class="fragment"><strong>Path</strong>: sequence \((u,n_1),(n_1,n_2),\dots,(n_{k-1},v)\) of edges in \(E\). Direction matters in digraphs.</li>
+                      <li class="fragment"><strong>Simple path</strong>: no vertex repeats.</li>
+                      <li class="fragment">Undirected graph is <strong>connected</strong> if every \(u,v\in V\) have a path.</li>
+                      <li class="fragment">Directed graph is <strong>strongly connected</strong> if \(u\rightsquigarrow v\) and \(v\rightsquigarrow u\) for all pairs.</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <h3>CYCLES</h3>
+                    <p>A <strong>cycle</strong> is a path \(v_1,\dots,v_{k-1},v_k\) with \(v_1=v_k\), \(k&gt;2\), and \(v_1,\dots,v_{k-1}\) distinct.</p>
+                    <img src="media/graph1.png" width="50%">
+                    <p class="caption">Example cycle: b-c-e-d.</p>
+                  </section>
+
+                  <section>
+                    <h3>TREES VS GRAPHS</h3>
+                    <table>
+                      <thead><tr><th>Feature</th><th>Tree</th><th>Graph</th></tr></thead>
+                      <tbody>
+                        <tr><td>Structure</td><td>Hierarchical</td><td>General</td></tr>
+                        <tr><td>Cycles</td><td>None</td><td>May exist</td></tr>
+                        <tr><td>Connectivity</td><td>Always connected</td><td>May be disconnected</td></tr>
+                        <tr><td>Edges</td><td>\(n-1\) for \(n\) nodes</td><td>Varies up to \(O(n^2)\)</td></tr>
+                        <tr><td>Paths</td><td>Unique between nodes</td><td>Possibly multiple</td></tr>
+                      </tbody>
+                    </table>
+                  </section>
+
+                  <section>
+                    <h3>ADJACENCY MATRIX</h3>
+                    <ul>
+                      <li>For \(V=\{1,\dots,n\}\), matrix \(A[1..n,1..n]\) with
+                        \(A[i,j]=1\) if \((i,j)\in E\) and \(0\) otherwise.</li>
+                      <li>Space: \(\Theta(|V|^2)\) — a dense representation.</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <img src="media/graph2.png" width="100%">
+                    <p class="caption">Adjacency matrix encodes edges as 1s; zeros elsewhere.</p>
+                  </section>
+
+                  <section>
+                    <h3>ADJACENCY LIST</h3>
+                    <ul>
+                      <li><strong>Adj[v]</strong> is the list of vertices adjacent from \(v\).</li>
+                      <li>Space: \(\Theta(|V|+|E|)\) — a sparse representation.</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <img src="media/graph3.png" width="100%">
+                    <p class="caption">Example: Adj[1]={2,3}, Adj[2]={3}, Adj[3]={}, Adj[4]={3}.</p>
+                  </section>
+
+                  <section>
+                    <h3>DEGREES &AMP; HANDSHAKING LEMMA</h3>
+                    <ul>
+                      <li class="fragment">Undirected: \(|\text{Adj}[v]|=\deg(v)\).</li>
+                      <li class="fragment">Directed: out-degree is \(|\text{Adj}[v]|\).</li>
+                      <li class="fragment"><strong>Handshaking Lemma</strong> (undirected): \(\sum_{v\in V}\deg(v)=2|E|\).</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <h3>IN-DEGREE IN DIRECTED GRAPHS</h3>
+                    <ul>
+                      <li class="fragment"><strong>Out-degree</strong>: number of edges leaving \(v\); equals \(|\text{Adj}[v]|\).</li>
+                      <li class="fragment"><strong>In-degree</strong>: number of edges entering \(v\); formally \(\deg^{-}(v)=|\{u\in V : (u,v)\in E\}|\).</li>
+                      <li class="fragment">To compute in-degree in adjacency lists: for each \(u\in V\), for each \(v\in \text{Adj}[u]\), increment \(\text{indegree}[v]\).</li>
+                      <li class="fragment">In adjacency matrix \(A\), \(\deg^{-}(v_i)=\sum_{j=1}^n A[j,i]\).</li>
+                      <li class="fragment">Total time complexity: \(O(|V|+|E|)\).</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <h3>EXPLORING A GRAPH</h3>
+                    <p>Given \(s,t\in V\), is there a path from \(s\) to \(t\)? Explore all vertices reachable from \(s\).</p>
+                    <ul>
+                      <li class="fragment"><strong>Breadth-First Search (BFS)</strong>: layer-by-layer by distance from \(s\).</li>
+                      <li class="fragment"><strong>Depth-First Search (DFS)</strong>: dive along a path before backtracking.</li>
+                    </ul>
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <H2>BREADTH-FIRST SEARCH</H2>
+                  </section>
+
+                  <section>
+                    <h3>BFS: INTUITION</h3>
+                    <ul>
+                      <li>Start at \(s\); grow a frontier in "waves".</li>
+                      <li>Levels \(L_0=\{s\}, L_1\)= neighbors of \(s\), \(L_{i+1}\)= unseen vertices adjacent to \(L_i\).</li>
+                    </ul>
+                    <p>BFS visits vertices in nondecreasing distance from \(s\).</p>
+                  </section>
+
+                  <section>
+                    <h3>BFS TREE</h3>
+                    <p>A BFS tree is the spanning tree built by the BFS algorithm, showing parent-child relations between vertices as discovered.</p>
+                    <ul>
+                      <li>The root is the source vertex \(s\).</li>
+                      <li>Each vertex's parent is the vertex that first discovered it.</li>
+                      <li>The path from the root to any vertex in the BFS tree is the shortest path in \(G\) (by number of edges).</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <img src="media/bfs1.png" width="30%">
+                    <div class="r-stack">
+                        <div class="fragment"><img src="media/bfs2.png" width="30%"></div>
+                        <div class="fragment"><img src="media/bfs2.png" width="30%"><img src="media/bfs3.png" width="30%"></div>
+                        <div class="fragment"><img src="media/bfs2.png" width="33%"><img src="media/bfs3.png" width="33%"><img src="media/bfs4.png" width="33%"></div>
+                    </div>
+                  </section>
+
+                  <section>
+                    <h3>LEVEL PROPERTY</h3>
+                    <p>If \(T\) is a BFS tree of \(G=(V,E)\) and \((x,y)\in E\), then the levels of \(x\) and \(y\) differ by at most 1.</p>
+                  </section>
+
+                  <section>
+                    <h3>DATA STRUCTURES</h3>
+                    <ul>
+                      <li><strong>level[ ]</strong> or <strong>d[ ]</strong> for distances (or parent pointers).</li>
+                      <li><strong>Queue Q</strong> for the wavefront (FIFO).</li>
+                      <li><strong>Tree T</strong> via parent pointers or edge set (optional for paths).</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <h3>STRATEGY</h3>
+                    <ol>
+                      <li>Initialize all distances to \(\infty\); set \(d[s]=0\); enqueue \(s\).</li>
+                      <li>While \(Q\) nonempty: dequeue \(u\); for each \(v\in \text{Adj}[u]\): if \(d[v]=\infty\), set \(d[v]=d[u]+1\) and enqueue \(v\).</li>
+                    </ol>
+                  </section>
+
+                  <section>
+                    <pre><code data-trim data-noescape class="language-plaintext">
+BFS(G = (V, E), s)
+  for each u in V − {s}:
+    d[u] = ∞
+  d[s] = 0
+  Q = empty queue
+  ENQUEUE(Q, s)
+  while Q is not empty:
+    u = DEQUEUE(Q)
+    for each v in Adj[u]:
+      if d[v] == ∞:
+        d[v] = d[u] + 1
+        ENQUEUE(Q, v)
+                    </code></pre>
+                  </section>
+
+                <section>
+                  <div class="r-stack">
+                    <div class="fragment">
+                      <img src="media/bfs5.png" width="75%">
+                    </div>
+                    <div class="fragment">
+                      <img src="media/bfs6.png" width="75%">
+                    </div>
+                    <div class="fragment">
+                      <img src="media/bfs7.png" width="75%">
+                    </div>
+                    <div class="fragment">
+                      <img src="media/bfs8.png" width="75%">
+                    </div>
+                    <div class="fragment">
+                      <img src="media/bfs9.png" width="75%">
+                    </div>
+                    <div class="fragment">
+                      <img src="media/bfs10.png" width="75%">
+                    </div>
+                    <div class="fragment">
+                      <img src="media/bfs11.png" width="75%">
+                    </div>
+                    <div class="fragment">
+                      <img src="media/bfs12.png" width="75%">
+                    </div>
+                    <div class="fragment">
+                      <img src="media/bfs13.png" width="75%">
+                    </div>
+                    <div class="fragment">
+                      <img src="media/bfs14.png" width="75%">
+                    </div>
+                    <div class="fragment">
+                      <img src="media/bfs15.png" width="75%">
+                    </div>
+                    <div class="fragment">
+                      <img src="media/bfs16.png" width="75%">
+                    </div>
+                  </div>
+                </section>
+
+                <section>
+                  <h3>CONNECTED COMPONENTS</h3>
+                  <ul>
+                    <li><strong>Connected component</strong>: a maximal set of vertices that reach each other.</li>
+                    <li>In an undirected graph, BFS from \(s\) discovers exactly the component containing \(s\).</li>
+                  </ul>
+                  <img src="media/bfs17.png" width="50%">
+                  <p class="caption">Each BFS run identifies one component; repeat from unvisited vertices.</p>
+                </section>
+
+              </section>
+
+              <section>
+
+                <section>
+                  <h2>DEPTH-FIRST SEARCH</h2>
+                </section>
+
+                <section>
+                  <p><strong>Goal:</strong> Explore a graph deeply along each branch before backtracking; record discovery/finish times, classify vertices by color, and analyze complexity.</p>
+                </section>
+
+                <section>
+                  <ul>
+                    <li>Maintain a global <em>time</em> counter.</li>
+                    <li>For each vertex \(v\):
+                      <ul>
+                        <li>Timestamps: \(v.d\) (first discovery), \(v.f\) (finish time).</li>
+                        <li>Color \(v.\text{color}\): <strong>white</strong> (unexplored), <strong>gray</strong> (in process), <strong>black</strong> (finished).</li>
+                        <li>Parent pointer \(v.\pi\) in the DFS tree.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </section>
+
+                <section>
+                  <ul>
+                    <li>Colors during search:
+                      <ul>
+                        <li><strong>white</strong>: undiscovered</li>
+                        <li><strong>gray</strong>: discovered but not finished</li>
+                        <li><strong>black</strong>: finished (all reachable vertices explored)</li>
+                      </ul>
+                    </li>
+                    <li>Timestamps are unique in \(\{1,\dots,2|V|\}\).</li>
+                    <li>For every vertex \(v\): \(1 \le d(v) < f(v) \le 2|V|\).</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h3>STRATEGY</h3>
+                  <ul>
+                    <li>Initialize all vertices to <strong>white</strong>; set \(\text{time}=0\).</li>
+                    <li>Iterate over vertices; when a <strong>white</strong> vertex \(u\) is found, start <em>DFS-VISIT</em>(\(u\)).</li>
+                    <li><em>DFS-VISIT</em>:
+                      <ul>
+                        <li>Increment \(\text{time}\), set \(u.d\), color \(u\) <strong>gray</strong>.</li>
+                        <li>Recursively visit each <strong>white</strong> neighbor \(v \in \mathrm{Adj}[u]\).</li>
+                        <li>On return, color \(u\) <strong>black</strong>, increment \(\text{time}\), set \(u.f\).</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </section>
+
+                <section>
+                  <pre><code data-trim data-noescape class="language-plaintext">
+DFS(G):
+  for each u in G.V:
+    u.color = WHITE
+    u.π = NIL
+  time = 0
+  for each u in G.V:
+    if u.color == WHITE:
+      DFS-VISIT(G, u)
+                  </code></pre>
+                </section>
+
+                <section>
+                  <pre><code data-trim data-noescape class="language-plaintext">
+DFS-VISIT(G, u):
+  time = time + 1
+  u.d = time
+  u.color = GRAY
+  for each v in G.Adj[u]:
+    if v.color == WHITE:
+      v.π = u
+      DFS-VISIT(G, v)
+  u.color = BLACK
+  time = time + 1
+  u.f = time
+                    </code></pre>
+                  </section>
+
+                  <section>
+                    <p>As the search progresses, each vertex receives unique discovery/finish times satisfying \(d(v) < f(v)\). Colors transition <strong>white</strong> → <strong>gray</strong> → <strong>black</strong>.</p>
+                  </section>
+
+                  <section>
+                    <img src="media/dfs.gif" width="80%">
+                  </section>
+
+                  <section>
+                    <h2>ANALYSIS</h2>
+                    <p>(adjacency list implementation)</p>
+                    <ul>
+                      <li>Initialization loop: \(O(n)\).</li>
+                      <li>Each vertex becomes <strong>gray</strong> and <strong>black</strong> exactly once: total vertex work \(O(n)\).</li>
+                      <li>For each vertex \(u\), scanning \(\mathrm{Adj}[u]\) costs \(O(\deg(u))\).</li>
+                      <li>Total edge scans: \(\sum_u \deg(u) = m\).</li>
+                      <li><strong>Total:</strong> \(O(m + n)\).</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <h3>QUESTION</h3>
+                    <p><strong>Task:</strong> Given directed \(G\), find a cycle if one exists.</p>
+                    <p><strong>Hint:</strong> Use DFS.</p>
+                    <!-- <ul>
+                      <li>Run DFS; during exploration, encountering a <strong>gray</strong> neighbor indicates a back edge.</li>
+                      <li>Record parent pointers; when a back edge \((u \to v)\) to <strong>gray</strong> \(v\) is found, reconstruct the cycle by following parents from \(u\) back to \(v\).</li>
+                      <li>Time: \(O(m+n)\).</li>
+                    </ul> -->
+                  </section>
+
+              </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+        <script>
+          window.addEventListener('load', function() {
+            switchTheme();
+          });
+        </script>
+
+    </body>
+
+</html>
