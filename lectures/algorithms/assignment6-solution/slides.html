@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>assignment #6</p>
+                    </section>
+
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>SOLUTION 1</h2>
+                  </section>
+
+<section>
+  <p><strong>Greedy idea:</strong></p>
+  <ul>
+    <li>Sort all jobs by their profit in <strong>descending</strong> order.</li>
+    <li>For each job in that order, schedule it in the <strong>latest available time slot</strong> on or before its deadline.</li>
+    <li>This maximizes total profit while keeping earlier slots free for other jobs, increasing flexibility.</li>
+  </ul>
+</section>
+
+<section>
+  <pre><code data-trim data-noescape class="language-plaintext">
+1: Let J ← list of job indices 1 to n
+2: Sort J in descending order of p[i]
+3: Let D ← max(d[1..n])
+4: Initialize slot[1..D] as false
+5: for each job index j in J do
+6:     for t ← d[j] to 1 do
+7:         if slot[t] = false then
+8:             slot[t] ← true
+9:             Add j to s
+10:             break
+11:         end if
+12:     end for
+13: end for
+14: return s</code></pre>
+</section>
+
+<section>
+  <ul>
+    <li>Sorting jobs by profit: \(O(n \log n)\)</li>
+    <li>Assigning time slots for each job: \(O(n \cdot d_{\max})\), where \(d_{\max}\) is the maximum deadline</li>
+    <li><strong>Total running time:</strong> \(O(n \cdot d_{\max}) + O(n \log n)\)</li>
+  </ul>
+</section>
+
+</section>
+
+<section>
+
+                  <section>
+                    <h2>SOLUTION 2</h2>
+                  </section>
+
+<section>
+  <h3>Key Observations</h3>
+  <ul>
+    <li>If the <strong>total gas</strong> is less than the <strong>total cost</strong>, it is impossible to complete the circuit.</li>
+    <li>If it is possible, we can find a valid starting station using a greedy strategy.</li>
+  </ul>
+  <p>We can maintain a running gas balance while traversing the stations once.</p>
+</section>
+
+<section>
+  <h3>Greedy Strategy</h3>
+  <ul>
+    <li>Iterate over the stations, maintaining a running balance of gas in the tank.</li>
+    <li>If the balance becomes negative at station <em>i</em>, we reset the candidate start station to <em>i + 1</em> and reset the tank balance to 0.</li>
+    <li>Intuition: if you cannot reach station <em>i+1</em> from station <em>i</em>, then no station between the previous start and <em>i</em> can be a valid starting point.</li>
+  </ul>
+</section>
+
+<section>
+  <p>Keep track of:</p>
+  <ul>
+    <li><strong>G</strong>: total net gas gain (sum of gas[i] − cost[i])</li>
+    <li><strong>T</strong>: current tank balance along the path</li>
+    <li><strong>s</strong>: candidate starting index</li>
+  </ul>
+  <p>If the total gain G is negative, we return \(-1\). Otherwise, the final candidate start index s is valid.</p>
+</section>
+
+<section style="font-size: 26pt;">
+  <pre><code data-trim data-noescape class="language-plaintext">
+1: G ← 0 ▷ Total gas gain
+2: T ← 0 ▷ Tank balance
+3: s ← 0 ▷ Starting index
+4: for i ← 1 to n do
+5:     d ← gas[i] − cost[i]
+6:     G ← G + d
+7:     T ← T + d
+8:     if T &lt; 0 then
+10:         s ← i + 1
+11:         T ← 0
+12:    end if
+13: end for
+14: if G &lt; 0 then
+15:     return −1
+16: else
+17:     return s
+18: end if</code></pre>
+</section>
+
+<section>
+  <ul>
+    <li>The algorithm performs a single pass through the gas and cost arrays.</li>
+    <li><strong>Running time:</strong> \(O(n)\)</li>
+  </ul>
+</section>
+
+</section>
+
+<section>
+
+                  <section>
+                    <h2>SOLUTION 3</h2>
+                  </section>
+
+<section>
+  <h3>Average-Keys</h3>
+  <ul>
+    <li>Use any tree traversal (for example, post-order) starting at <em>x</em>.</li>
+    <li>Recursively compute, for each subtree:
+      <ul>
+        <li>The number of nodes in the subtree.</li>
+        <li>The sum of the keys in the subtree.</li>
+      </ul>
+    </li>
+    <li>At the root <em>x</em>, compute <strong>average = sum / count</strong>.</li>
+  </ul>
+  <p><strong>Running time:</strong> \(O(n)\) since each node is visited once and the work per node is \(O(1)\).</p>
+</section>
+
+<section>
+  <pre><code data-trim data-noescape class="language-plaintext">Average-Keys(x)
+1: if x == null then
+2:   return 0
+3: else
+4:   (count, sum) ← Count-Sum(x)
+5:   return sum/count
+6: end if</code></pre>
+</section>
+
+<section>
+  <pre><code data-trim data-noescape class="language-plaintext">Count-Sum(x)
+1: if x == null then
+2:   return (0, 0)
+3: else
+4:   (leftcount, leftsum) ← Count-Sum(x.left)
+5:   (rightcount, rightsum) ← Count-Sum(x.right)
+6:   count ← leftcount + rightcount + 1
+7:   sum ← leftsum + rightsum + x.key
+8:   return (count, sum)
+9: end if</code></pre>
+</section>
+
+<section>
+  <h3>Kth Smallest Element</h3>
+  <ul>
+    <li>A BST stores values in sorted order by key.</li>
+    <li>In-order traversal (Left, Root, Right) visits nodes in <strong>ascending</strong> key order.</li>
+    <li>Maintain a counter during traversal; when it reaches <em>k</em>, return the corresponding node.</li>
+  </ul>
+  <p><strong>Time complexity:</strong> In the worst case, we may visit all nodes, so \(O(n)\).</p>
+</section>
+
+<!-- <section style="font-size: 28pt;"> -->
+<section>
+  <pre><code data-trim data-noescape class="language-plaintext">
+    SmallestElement(T, k):
+        count ← 0
+        result ← null
+        return Inorder(T)
+  </code></pre>
+</section>
+<section>
+  <pre><code data-trim data-noescape class="language-plaintext">Inorder(x):
+    if x = null or result ̸= null then
+        return
+    end if
+    Inorder(x.left)
+    count ← count + 1
+    if count = k then
+        result ← x
+         return
+    end if
+    Inorder(x.right)
+  </code></pre>
+</section>
+
+<section>
+  <h3>Range-Search</h3>
+  <p>There is an easy \(\Theta(n)\) solution, but we want an algorithm that runs in time \(O(k + h)\) where:</p>
+  <ul>
+    <li><em>k</em> is the number of reported nodes (in the range).</li>
+    <li><em>h</em> is the height of the search tree.</li>
+  </ul>
+</section>
+
+<section>
+  <p>Use the BST ordering property to avoid unnecessary work:</p>
+  <ul>
+    <li>Only visit subtrees that <strong>could</strong> contain keys in \([a, b]\).</li>
+    <li>If the current node's key is in \([a, b]\), add it to the result.</li>
+    <li>If the current key is greater than <em>a</em>, explore the left subtree.</li>
+    <li>If the current key is less than <em>b</em>, explore the right subtree.</li>
+  </ul>
+  <p>This prunes entire subtrees whose keys all lie outside the range.</p>
+</section>
+
+<section>
+  <ul>
+    <li>The algorithm avoids traversing subtrees that do not intersect \([a, b]\).</li>
+    <li>Each reported node contributes to the <em>k</em> term.</li>
+    <li>Each root-to-leaf search path has length at most <em>h</em>, and we may traverse at most two such paths at each boundary.</li>
+    <li><strong>Total running time:</strong> \(O(k + h)\)</li>
+  </ul>
+</section>
+
+<section style="font-size: 28pt;">
+  <pre><code data-trim data-noescape class="language-plaintext">Range-Search(x, a, b):
+    if x == null then
+        return [ ]
+    end if
+    if x.key &gt; b then
+        return Range-Search(x.left, a, b)
+    end if
+    if a ≤ x.key ≤ b then
+        results ← Range-Search(x.left, a, b)
+        results.append(x)
+        results.extend(Range-Search(x.right, a, b))
+        return results
+    end if
+    if x.key &lt; a then
+        return Range-Search(x.right, a, b)
+    end if</code></pre>
+</section>
+
+</section>
+
+<section>
+
+                  <section>
+                    <h2>EXTRA SOLUTION</h2>
+                  </section>
+
+<section>
+  <ul>
+    <li>Setting <em>z</em> to black would indeed not violate property 4 (red nodes must have black children), since <em>z</em> has no children yet.</li>
+    <li>However, it would violate property 5, which requires all paths from any node to its descendant leaves to contain the same number of black nodes.</li>
+  </ul>
+</section>
+
+<section>
+  <ul>
+    <li>Inserting <em>z</em> as a black node increases the black-height of every path that passes through <em>z</em> by 1.</li>
+    <li>Other paths in the tree that do not pass through <em>z</em> remain unchanged, creating an imbalance in black-heights.</li>
+  </ul>
+</section>
+
+<section>
+  <ul>
+    <li>To preserve property 5, <em>z</em> is inserted as a red node, which does not change the black-height of any path.</li>
+    <li>Any violations of property 4 arising from a red parent and red child can then be fixed using local rotations and recoloring.</li>
+  </ul>
+</section>
+
+                </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+
+    </body>
+
+</html>

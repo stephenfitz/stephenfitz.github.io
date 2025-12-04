@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>algorithms</title>
+        <meta charset="utf-8" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="../common/reveal/dist/reset.css" rel="stylesheet" />
+        <link href="../common/reveal/dist/reveal.css" rel="stylesheet" />
+        <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme" rel="stylesheet" />
+        <!-- <link id="theme" rel="stylesheet" href="../common/reveal/dist/theme/white.css" id="theme" rel="stylesheet" /> -->
+        <!-- <link href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme" rel="stylesheet" /> -->
+        <!-- <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/nord.min.css"> -->
+        <link id="highlight-theme" rel="stylesheet" href="../common/reveal/plugin/highlight/github.css">
+        <link href="../common/css/style.css" rel="stylesheet" />
+        <link href="../common/media/logo.png" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+
+                    <section>
+                        <h2>ADVANCED ALGORITHMS</h2>
+                        <p>assignment #7</p>
+                    </section>
+
+                  </section>
+
+                </section>
+
+                <section>
+
+                  <section>
+                    <h2>SOLUTION 1</h2>
+                  </section>
+
+<section>
+  <ul>
+    <li>Maintain a <strong>visited</strong> set to record nodes that have already been explored.</li>
+    <li>For each node from 1 to n:
+      <ul>
+        <li>If it has not been visited, start a BFS from that node.</li>
+        <li>The BFS visits all nodes in that connected component.</li>
+        <li>Each time a new BFS starts, we have discovered a new connected component.</li>
+      </ul>
+    </li>
+    <li>Increment the component count each time a new BFS is started.</li>
+  </ul>
+</section>
+
+<section>
+  <p><strong>Running time:</strong> BFS on the whole graph runs in \(O(n + m)\), where n is the number of nodes and m is the number of edges.</p>
+</section>
+
+<section>
+  <pre><code data-trim data-noescape class="language-plaintext">
+Build adjacency list G[1 . . . n] from edges
+Initialize empty set visited
+Initialize count ← 0
+</code></pre>
+</section>
+
+<section>
+  <pre><code data-trim data-noescape class="language-plaintext">
+function BFS(u):
+    Initialize queue Q ← [u]
+    while Q is not empty do
+        v ← Q.pop()
+        for each neighbor w of v in G[v] do
+            if w /∈ visited then
+                Add w to visited
+                Enqueue w into Q</code></pre>
+</section>
+
+<section>
+  <pre><code data-trim data-noescape class="language-plaintext">
+for u ← 1 to n do
+    if u /∈ visited then
+        Add u to visited
+        BFS(u)
+        count ← count + 1
+  </code></pre>
+</section>
+
+</section>
+
+<section>
+
+                  <section>
+                    <h2>SOLUTION 2</h2>
+                  </section>
+
+<section>
+  <ul>
+    <li>Use DFS with a <strong>coloring scheme</strong> for each vertex:
+      <ul>
+        <li>White: unvisited.</li>
+        <li>Gray: currently in the recursion stack (in progress).</li>
+        <li>Black: finished.</li>
+      </ul>
+    </li>
+    <li>When exploring an edge from node u to neighbor v:
+      <ul>
+        <li>If v is white, recursively continue DFS on v.</li>
+        <li>If v is gray and v is not the parent of u, then a cycle has been detected.</li>
+      </ul>
+    </li>
+  </ul>
+  <p><strong>Running time:</strong> A single DFS traversal explores all vertices and edges in \(O(n + m)\).</p>
+</section>
+
+<section>
+  <pre><code data-trim data-noescape class="language-plaintext">HasCycle(n, G):
+  Initialize color array color[1 . . . n] ← White
+  for u ← 1 to n do:
+    if color[u] is White then
+        if DFS(u, −1) returns true then
+            return true
+  return false</code></pre>
+</section>
+
+<section>
+  <pre><code data-trim data-noescape class="language-plaintext">function DFS(u, parent):
+  color[u] ← Gray
+  for each neighbor v of u in G[u] do
+    if color[v] is White then
+        if DFS(v, u) returns true then
+            return true
+    else if color[v] is Gray and v ≠ parent then
+  return true</code></pre>
+</section>
+
+</section>
+
+<section>
+
+                  <section>
+                    <h2>SOLUTION 3</h2>
+                  </section>
+
+<section>
+  <p><strong>Hint:</strong> This is a variant of a single-source shortest path problem with a constraint on the number of stops. It can be approached using a modified Dijkstra algorithm or a layered Bellman–Ford algorithm.</p>
+</section>
+
+<section>
+  <p><strong>Key idea (modified Dijkstra):</strong></p>
+  <ul>
+    <li>Maintain a min-priority queue of tuples (cost, current node, remaining stops).</li>
+    <li>At each step, expand the state with the smallest current cost.</li>
+    <li>Decrease the remaining stop count as you move along edges.</li>
+    <li>Only push a neighbor into the queue if the number of remaining stops is non-negative.</li>
+    <li>If you reach the destination with stops remaining ≥ 0, return the current cost.</li>
+  </ul>
+</section>
+
+<section>
+  <p><strong>Time complexity:</strong></p>
+  <ul>
+    <li>Let n be the number of cities and m the number of flights.</li>
+    <li>Each node can be inserted into the priority queue up to K times.</li>
+    <li>Total complexity is \(O(K \cdot m \cdot \log n)\).</li>
+  </ul>
+</section>
+
+<section>
+  <pre><code data-trim data-noescape class="language-plaintext">CheapestFlightWithKStops(n, flights, src, dst, K)
+  Build adjacency list G from flights
+  Initialize min-priority queue Q
+  Enqueue (0, src, K + 1) into Q
+  while Q is not empty do
+    (cost, u, stops) ← Q.pop()
+    if u = dst then
+      return cost
+    if stops &gt; 0 then
+      for each neighbor (v, w) of u in G do
+        Enqueue (cost + w, v, stops − 1) into Q
+  return −1
+    </code></pre>
+</section>
+
+</section>
+
+<section>
+
+                  <section>
+                    <h2>EXTRA SOLUTION</h2>
+                  </section>
+
+<section>
+  <p><strong>Hint:</strong> This problem reduces to detecting a cycle in a directed graph.</p>
+</section>
+
+<section>
+  <ul>
+    <li>Treat each course as a node in a directed graph.</li>
+    <li>For each prerequisite pair [a, b], add a directed edge b → a.</li>
+    <li>If the directed graph contains a cycle, then it is impossible to finish all courses.</li>
+    <li>Use DFS with three states for each node:
+      <ul>
+        <li>0: unvisited,</li>
+        <li>1: visiting,</li>
+        <li>2: finished.</li>
+      </ul>
+    </li>
+    <li>Encountering a node in the visiting state during DFS indicates a cycle.</li>
+  </ul>
+</section>
+
+<section>
+  <pre><code data-trim data-noescape class="language-plaintext">CanFinishCourses(n, prerequisites):
+  Build adjacency list G[0 . . . n−1]
+  Initialize visited[0 . . . n−1] ← 0
+  ▷ 0 = unvisited, 1 = visiting, 2 = finished
+  for u ← 0 to n−1 do
+    if visited[u] = 0 then
+      if not DFS(u) then
+        return false
+  return true
+</code></pre>
+</section>
+
+<section>
+  <pre><code data-trim data-noescape class="language-plaintext">function DFS(u):
+  if visited[u] = 1 then
+    return false
+  else if visited[u] = 2 then
+    return true
+  visited[u] ← 1
+  for each neighbor v in G[u] do
+    if not DFS(v) then
+      return false
+  visited[u] ← 2
+  return true
+</code></pre>
+</section>
+
+<section>
+  <ul>
+    <li><strong>Building the graph:</strong> \(O(n + m)\), where n is the number of courses and m is the number of prerequisite pairs.</li>
+    <li><strong>DFS traversal:</strong> Each node and edge is visited at most once, so DFS runs in \(O(n + m)\).</li>
+    <li><strong>Total complexity:</strong> \(O(n + m)\).</li>
+  </ul>
+</section>
+
+
+                </section>
+
+            </div>
+        </div>
+        <script src="../common/reveal/dist/reveal.js"></script>
+        <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+        <script src="../common/reveal/plugin/notes/notes.js"></script>
+        <script src="../common/reveal/plugin/search/search.js"></script>
+        <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+        <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+        <script src="../common/reveal/plugin/math/math.js"></script>
+        <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                plugins: [RevealHighlight, RevealMath]
+            });
+        </script>
+
+        <script src="../common/js/themes.js"></script>
+
+    </body>
+
+</html>
