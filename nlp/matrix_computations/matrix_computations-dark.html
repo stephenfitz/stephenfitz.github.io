@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+
+@page {
+    size: letter;
+    margin: 0.75in;
+}
+
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    html { background-color: #1a1a1a; }
+    body {
+        max-width: 100%;
+        margin: 0;
+        padding: 0.5in;
+        box-shadow: none;
+        border-radius: 0;
+    }
+}
+
+html {
+    background-color: #1a1a1a;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 12pt;
+    line-height: 1.6;
+    color: #d4d4d4;
+    max-width: 850px;
+    margin: 2rem auto;
+    padding: 3rem;
+    background-color: #2a2a2a;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #e8e8e8;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.3;
+    page-break-after: avoid;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 24pt;
+    border-bottom: 2px solid #666;
+    padding-bottom: 0.3em;
+    color: #f0f0f0;
+    font-weight: 700;
+}
+
+h2 { font-size: 18pt; color: #ddd; }
+h3 { font-size: 14pt; color: #ccc; }
+h4 { font-size: 12pt; color: #bbb; }
+h5 { font-size: 11pt; color: #aaa; }
+h6 { font-size: 11pt; font-style: italic; color: #999; }
+
+body > h1:first-child {
+    text-align: center;
+    border-bottom: 3px solid #888;
+    margin-top: 0;
+    font-size: 26pt;
+    letter-spacing: 0.02em;
+}
+
+/* Paragraphs */
+p {
+    margin: 0 0 0.8em 0;
+    text-align: justify;
+    hyphens: auto;
+}
+
+/* Links */
+a {
+    color: #bbb;
+    text-decoration: underline;
+    text-decoration-color: #666;
+}
+
+a:hover {
+    color: #e8e8e8;
+    text-decoration-color: #999;
+}
+
+/* Code */
+code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.9em;
+    background-color: #3a3a3a;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    color: #d0d0d0;
+    border: 1px solid #555;
+}
+
+pre {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 9pt;
+    line-height: 1.45;
+    background-color: #222;
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 16px;
+    overflow-x: auto;
+    page-break-inside: avoid;
+    color: #d0d0d0;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+    border: none;
+}
+
+/* Blockquotes */
+blockquote {
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    border-left: 4px solid #777;
+    color: #bbb;
+    background-color: #333;
+    font-style: italic;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* Lists */
+ul, ol {
+    margin: 0.5em 0 1em 0;
+    padding-left: 2em;
+}
+
+li { margin-bottom: 0.25em; }
+
+li > ul, li > ol {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+}
+
+th, td {
+    border: 1px solid #555;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #3a3a3a;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+tr:nth-child(even) { background-color: #2e2e2e; }
+tr:nth-child(odd) { background-color: #333; }
+
+/* Horizontal rule */
+hr {
+    border: none;
+    border-top: 2px solid #555;
+    margin: 1.5em 0;
+}
+
+/* Math */
+.math-display {
+    display: block;
+    text-align: center;
+    margin: 1em 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline { display: inline; }
+
+.katex {
+    font-size: 1.1em;
+    color: #e8e8e8;
+}
+.katex-display { margin: 0.75em 0; }
+.katex-display > .katex { text-align: center; }
+
+/* Images */
+img {
+    display: block;
+    width: 50%;
+    max-width: 50%;
+    height: auto;
+    margin: 1.5em auto 0.5em auto;
+    border: 2px solid #666;
+    border-radius: 4px;
+    padding: 8px;
+    background-color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Image captions */
+img + em {
+    display: block;
+    text-align: center;
+    font-size: 0.9em;
+    color: #aaa;
+    margin: 0.5em auto 1.5em auto;
+    max-width: 60%;
+    font-style: italic;
+}
+
+p > img {
+    display: block;
+    margin: 1.5em auto;
+}
+
+    </style>
+</head>
+<body>
+<h1 id="matrix-computations">Matrix Computations</h1>
+<p>Matrix multiplication is among the most fundamental operations in all of applied mathematics. It appears constantly in deep learning—every forward pass through a linear layer, every attention computation, every gradient update is, at bottom, a matrix product. Yet the definition itself is often presented as a mechanical rule: multiply rows by columns, sum the products, and move on. This obscures the deeper structure.</p>
+<p>In this article, I want to build up the matrix product from first principles, develop its geometric interpretation as a composition of linear maps, and then connect the theory to practice by implementing it in Python at progressively higher levels of abstraction—from raw nested loops to optimized BLAS routines—measuring the performance consequences at each step.</p>
+<hr />
+<h2 id="notation">Notation</h2>
+<p>We begin by fixing notation. Let $ A $ be an $ n \times m $ matrix and $ B $ be an $ m \times l $ matrix. We write</p>
+$$
+A = (a_{i,j})_{\substack{i = 1, \ldots, n \\ j = 1, \ldots, m}}, \qquad B = (b_{i,j})_{\substack{i = 1, \ldots, m \\ j = 1, \ldots, l}}
+$$
+
+<p>where $ a_{i,j} $ denotes the entry in the $ i $-th row and $ j $-th column of $ A $, and similarly for $ B $. The critical constraint for the product $ AB $ to be defined is that the number of columns of $ A $ must equal the number of rows of $ B $—both equal to $ m $.</p>
+<hr />
+<h2 id="the-matrix-product">The Matrix Product</h2>
+<p>The product $ AB $ is an $ n \times l $ matrix whose $ (i,j) $-th entry is defined by</p>
+$$
+(AB)_{i,j} = \sum_{k=1}^{m} a_{i,k} \, b_{k,j}
+$$
+
+<p>This is worth pausing on. Each entry of the product is a sum of $ m $ terms, where we walk along the $ i $-th row of $ A $ and the $ j $-th column of $ B $ simultaneously, multiplying corresponding entries and accumulating the results.</p>
+<hr />
+<h2 id="elements-of-the-product-written-out">Elements of the Product Written Out</h2>
+<p>To see the full structure, it helps to write out all the entries explicitly.</p>
+<p><img alt="Elements of the matrix product written out in full" src="figures/mm3.jpg" /></p>
+<p>The resulting matrix $ AB $ has $ n $ rows and $ l $ columns. Every entry is an inner product—a sum over the shared dimension $ m $.</p>
+<hr />
+<h2 id="a-single-element-as-an-inner-product">A Single Element as an Inner Product</h2>
+<p>Consider a concrete example. To compute the entry in row 2, column 1 of the product, we take the second row of $ A $ and the first column of $ B $, multiply them elementwise, and sum:</p>
+<p><img alt="A single element of the matrix product as an inner product of the corresponding row and column vectors" src="figures/mm4.jpg" /></p>
+$$
+(AB)_{2,1} = a_{2,1} b_{1,1} + a_{2,2} b_{2,1} + a_{2,3} b_{3,1} = \sum_{k=1}^{m} a_{2,k} \, b_{k,1}
+$$
+
+<p>This is the defining pattern: each element of the product is the inner product of a row of $ A $ with a column of $ B $. The row index tells you which row to take from $ A $; the column index tells you which column to take from $ B $.</p>
+<hr />
+<h2 id="selecting-a-column-with-a-standard-basis-vector">Selecting a Column with a Standard Basis Vector</h2>
+<p>Before we can understand matrix multiplication geometrically, we need a small but important observation about how individual columns of a matrix can be extracted.</p>
+<p>The $ k $-th standard basis vector $ \vec{e}_k $ is the vector with a 1 in position $ k $ and 0 everywhere else:</p>
+$$
+\vec{e}_k = \begin{bmatrix} 0 \\ \vdots \\ 1 \\ \vdots \\ 0 \end{bmatrix} \leftarrow k\text{-th position}
+$$
+
+<p>When we multiply a matrix $ A $ by $ \vec{e}_k $, the result is the $ k $-th column of $ A $:</p>
+$$
+A \vec{e}_k = \vec{a}_k
+$$
+
+<p>This follows directly from the definition of matrix–vector multiplication. Each entry of the result is an inner product of a row of $ A $ with $ \vec{e}_k $, which simply selects the $ k $-th element of that row.</p>
+<p><img alt="Extracting the first column of a matrix by multiplying with the first standard basis vector" src="figures/mm6.jpg" /></p>
+<p>For instance, multiplying by $ \vec{e}_1 $ yields the first column, and multiplying by $ \vec{e}_2 $ yields the second column. This seemingly trivial fact has deep consequences.</p>
+<hr />
+<h2 id="geometric-interpretation">Geometric Interpretation</h2>
+<p>A matrix $ A \in \mathbb{R}^{n \times m} $ defines a linear map from $ \mathbb{R}^m $ to $ \mathbb{R}^n $. To understand what this map <em>does</em>, it is enough to know where it sends the standard basis vectors.</p>
+<p>Since $ A \vec{e}_k = \vec{a}_k $, each standard basis vector is mapped to the corresponding column of $ A $. The columns of a matrix <em>are</em> the images of the standard basis under the linear map.</p>
+<p><img alt="Geometric interpretation of a 2x2 matrix as a linear transformation, showing how standard basis vectors are mapped to the columns of A" src="figures/mm8.jpg" /></p>
+<p>In the figure above, the matrix</p>
+$$
+A = \begin{bmatrix} -2 & -1 \\ 1 & 2 \end{bmatrix}
+$$
+
+<p>sends $ \vec{e}_1 = (1, 0) $ to $ (-2, 1) $ and $ \vec{e}_2 = (0, 1) $ to $ (-1, 2) $. These are the columns of $ A $. The unit square spanned by $ \vec{e}_1 $ and $ \vec{e}_2 $ is transformed into the parallelogram spanned by the two column vectors.</p>
+<p>This is the essential geometric insight: <em>a matrix encodes a linear transformation, and its columns tell you exactly where the basis vectors go</em>.</p>
+<hr />
+<h2 id="matrixvector-product-as-a-linear-combination-of-columns">Matrix–Vector Product as a Linear Combination of Columns</h2>
+<p>This observation leads to a powerful reinterpretation of matrix–vector multiplication.</p>
+<p>Any vector $ \vec{x} \in \mathbb{R}^m $ can be written as a linear combination of the standard basis vectors:</p>
+$$
+\vec{x} = x_1 \vec{e}_1 + x_2 \vec{e}_2 + \cdots + x_m \vec{e}_m
+$$
+
+<p>Applying the linear map $ A $ and using linearity:</p>
+$$
+A\vec{x} = A(x_1 \vec{e}_1 + \cdots + x_m \vec{e}_m) = x_1 A\vec{e}_1 + \cdots + x_m A\vec{e}_m = x_1 \vec{a}_1 + \cdots + x_m \vec{a}_m
+$$
+
+<p><img alt="Matrix–vector product as a linear combination of columns" src="figures/mm10.jpg" /></p>
+<blockquote>
+<p>The matrix–vector product $ A\vec{x} $ is a linear combination of the columns of $ A $, with the components of $ \vec{x} $ as coefficients.</p>
+</blockquote>
+<p>This is one of the most important reinterpretations in linear algebra. The "row times column" definition and the "linear combination of columns" view are algebraically equivalent, but they offer different geometric insights. The column view makes it immediately clear that the range of $ A $ is the span of its columns.</p>
+<hr />
+<h2 id="matrix-product-as-a-composition-of-linear-maps">Matrix Product as a Composition of Linear Maps</h2>
+<p>Now we can return to the full matrix product. If $ A $ is an $ n \times m $ matrix and $ B $ is an $ m \times l $ matrix, then $ AB $ is the $ n \times l $ matrix representing the <em>composition</em> of the two linear maps: first apply $ B $, then apply $ A $.</p>
+<p><img alt="Matrix product as a composition of two linear maps, showing the geometric effect of applying B then A" src="figures/mm12.jpg" /></p>
+<p>In the figure, three matrices $ A $, $ B $, and their product $ C = AB $ are shown alongside the transformations they induce on the unit square. The transformation $ C $ sends each basis vector to the same place as applying $ B $ first and then $ A $:</p>
+$$
+C \vec{e}_k = A(B \vec{e}_k)
+$$
+
+<p>This is why matrix multiplication is defined the way it is. The seemingly arbitrary "rows by columns" rule is precisely the algebraic expression of function composition for linear maps.</p>
+<hr />
+<h2 id="columns-of-the-product">Columns of the Product</h2>
+<p>We can derive the structure of each column of $ AB $ directly.</p>
+<p>The $ j $-th column of $ AB $ is obtained by multiplying the entire product by $ \vec{e}_j $:</p>
+$$
+(AB)\vec{e}_j = A(B\vec{e}_j) = A \vec{b}_j
+$$
+
+<p>where $ \vec{b}_j $ is the $ j $-th column of $ B $. But we know from our earlier result that $ A \vec{b}_j $ is a linear combination of the columns of $ A $:</p>
+$$
+A \vec{b}_j = b_{1,j} \vec{a}_1 + b_{2,j} \vec{a}_2 + \cdots + b_{m,j} \vec{a}_m
+$$
+
+<blockquote>
+<p>Each column of the product $ AB $ is a linear combination of the columns of $ A $, with coefficients given by the corresponding column of $ B $.</p>
+</blockquote>
+<p>This is the column-space view of matrix multiplication, and it is equivalent to the elementwise definition: the $ i $-th component of the $ j $-th column is</p>
+$$
+(AB)_{i,j} = \sum_{k=1}^{m} a_{i,k} \, b_{k,j}
+$$
+
+<p>which is exactly the inner product of the $ i $-th row of $ A $ with the $ j $-th column of $ B $.</p>
+<hr />
+<h2 id="implementing-matrix-multiplication-in-python">Implementing Matrix Multiplication in Python</h2>
+<p>With the theory in place, we now turn to implementation. The goal is to implement the matrix product in NumPy at progressively higher levels of abstraction, measuring execution time at each step. This exercise illustrates a general principle in scientific computing: <em>the more structure you expose to the underlying library, the faster the computation becomes</em>.</p>
+<p>We begin by defining two random matrices and a timing harness.</p>
+<pre><code class="language-python">import numpy as np
+from timeit import timeit
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+
+times = {}
+
+def timelog(version):
+    times[version] = timeit('matmul(a,b)', globals=globals(), number=10)
+    print(f'average execution time: {times[version]:.5f} seconds')
+</code></pre>
+<pre><code class="language-python">a = np.random.randn(50, 200)
+b = np.random.randn(200, 20)
+</code></pre>
+<p>The matrices $ A $ and $ B $ have shapes $ 50 \times 200 $ and $ 200 \times 20 $, so the product will be $ 50 \times 20 $. Each entry of the result requires a dot product of length 200.</p>
+<p>For completeness, I also include visualization code I wrote to generate the final figure at the end of the article.</p>
+<pre><code class="language-python">def vis():
+    data = {'version': times.keys(), 'time': times.values()}
+    df = pd.DataFrame.from_dict(data)
+    sns.set_theme()
+    sns.set_style(&quot;darkgrid&quot;, {&quot;grid.color&quot;: &quot;.5&quot;, &quot;grid.linestyle&quot;: &quot;:&quot;})
+    plt.style.use(&quot;dark_background&quot;)
+    sns.lineplot(
+        data=df, x=&quot;version&quot;, y=&quot;time&quot;, color=&quot;gray&quot;, linewidth=3
+    ).set(title='execution time (seconds on log scale) per implementation')
+    sns.scatterplot(
+        data=df, x=&quot;version&quot;, y=&quot;time&quot;, markers=True, s=200, color=&quot;lightgray&quot;, zorder=2
+    ).set_yscale(&quot;log&quot;)
+    sns.despine(left=True, bottom=True)
+</code></pre>
+<hr />
+<h3 id="triple-nested-loops">Triple Nested Loops</h3>
+<p>The most direct translation of the definition uses three nested loops: one over rows of $ A $, one over columns of $ B $, and one to accumulate the inner product.</p>
+<pre><code class="language-python">def matmul(a, b):
+    ar, ac = a.shape
+    br, bc = b.shape
+    assert ac == br
+    c = np.zeros(shape=(ar, bc))
+    for i in range(ar):
+        for j in range(bc):
+            for k in range(ac):
+                c[i,j] += a[i,k] * b[k,j]
+    return c
+</code></pre>
+<pre><code>average execution time: 0.54048 seconds
+</code></pre>
+<p>This is faithful to the definition but very slow. Each iteration of the innermost loop touches a single scalar multiplication in Python, with all the overhead that entails. The loop executes $ 50 \times 20 \times 200 = 200{,}000 $ scalar multiplications, each paying the cost of Python's interpreted loop machinery.</p>
+<hr />
+<h3 id="removing-the-inner-loop-with-elementwise-operations">Removing the Inner Loop with Elementwise Operations</h3>
+<p>The inner loop computes an inner product, which NumPy can express as an elementwise multiply followed by a sum. This eliminates one level of Python looping, handing that work to compiled C code.</p>
+<pre><code class="language-python">def matmul(a, b):
+    ar, ac = a.shape
+    br, bc = b.shape
+    assert ac == br
+    c = np.zeros(shape=(ar, bc))
+    for i in range(ar):
+        for j in range(bc):
+            c[i,j] = (a[i,:] * b[:,j]).sum()
+    return c
+</code></pre>
+<pre><code>average execution time: 0.02733 seconds
+</code></pre>
+<p>A factor of $ \sim 20 \times $ speedup from replacing the innermost loop with a vectorized operation. The two outer loops remain in Python, but the heavy arithmetic now runs in compiled code.</p>
+<hr />
+<h3 id="removing-the-second-loop-with-broadcasting">Removing the Second Loop with Broadcasting</h3>
+<p>NumPy's broadcasting mechanism allows operations between arrays of different shapes by implicitly expanding dimensions. This lets us eliminate another loop.</p>
+<p>To understand the technique, consider a brief detour. Broadcasting works by aligning array shapes from the right and expanding dimensions of size 1 to match:</p>
+<pre><code class="language-python">x = np.array(range(5))                       # shape (5,)
+y = np.array(range(25)).reshape((5, 5)) + 1  # shape (5, 5)
+z = y - x                                    # x is broadcast to (5, 5)
+</code></pre>
+<p>The key operations are <code>np.expand_dims</code> (or equivalently <code>None</code> indexing) to introduce new axes, and <code>np.squeeze</code> to remove them:</p>
+<pre><code class="language-python">x3 = x[None, :]   # shape (1, 5) — row vector
+x4 = x[:, None]   # shape (5, 1) — column vector
+</code></pre>
+<p>With this machinery, we can compute an entire row of the output at once. The expression <code>a[i, :, None] * b</code> broadcasts the $ i $-th row of $ A $ (reshaped to a column) against all of $ B $, producing a matrix of elementwise products whose column sums give the $ i $-th row of the result:</p>
+<pre><code class="language-python">def matmul(a, b):
+    ar, ac = a.shape
+    br, bc = b.shape
+    assert ac == br
+    c = np.zeros(shape=(ar, bc))
+    for i in range(ar):
+        c[i] = (a[i, :, None] * b).sum(axis=0)
+    return c
+</code></pre>
+<pre><code>average execution time: 0.00738 seconds
+</code></pre>
+<p>Another $ \sim 4 \times $ speedup. Only one Python loop remains—over the 50 rows of $ A $.</p>
+<hr />
+<h3 id="einstein-summation">Einstein Summation</h3>
+<p>Einstein summation notation provides a compact way to express tensor contractions. NumPy's <code>einsum</code> function takes a string specifying which indices to sum over:</p>
+<pre><code class="language-python">matmul = lambda a, b: np.einsum('ik,kj-&gt;ij', a, b)
+</code></pre>
+<pre><code>average execution time: 0.00223 seconds
+</code></pre>
+<p>The string <code>'ik,kj-&gt;ij'</code> reads: "for each output index pair $ (i,j) $, sum over the shared index $ k $." This is the definition of matrix multiplication expressed directly in index notation. NumPy's <code>einsum</code> implementation can optimize the contraction order and memory access patterns internally.</p>
+<hr />
+<h3 id="blas">BLAS</h3>
+<p>Finally, we use NumPy's built-in <code>matmul</code>, which calls through to a BLAS (Basic Linear Algebra Subprograms) library—typically OpenBLAS or Intel MKL. These are heavily optimized implementations written in Fortran and C, exploiting cache hierarchies, SIMD instructions, and CPU-specific tuning:</p>
+<pre><code class="language-python">matmul = np.matmul
+</code></pre>
+<pre><code>average execution time: 0.00192 seconds
+</code></pre>
+<hr />
+<h2 id="results">Results</h2>
+<p>The progression from naive loops to BLAS spans nearly three orders of magnitude:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Implementation</th>
+<th style="text-align: right;">Time (seconds)</th>
+<th style="text-align: right;">Relative to BLAS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Triple nested loops</td>
+<td style="text-align: right;">0.54048</td>
+<td style="text-align: right;">282x</td>
+</tr>
+<tr>
+<td style="text-align: left;">Elementwise (remove inner loop)</td>
+<td style="text-align: right;">0.02733</td>
+<td style="text-align: right;">14x</td>
+</tr>
+<tr>
+<td style="text-align: left;">Broadcasting (remove second loop)</td>
+<td style="text-align: right;">0.00738</td>
+<td style="text-align: right;">3.8x</td>
+</tr>
+<tr>
+<td style="text-align: left;">Einstein summation</td>
+<td style="text-align: right;">0.00223</td>
+<td style="text-align: right;">1.2x</td>
+</tr>
+<tr>
+<td style="text-align: left;">BLAS (<code>np.matmul</code>)</td>
+<td style="text-align: right;">0.00192</td>
+<td style="text-align: right;">1.0x</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Execution time (seconds on log scale) per implementation" src="figures/results.png" /></p>
+<p>The lesson is general: at each step, we replaced Python-level looping with an operation that exposes more structure to compiled, optimized code. The triple loop does $ 200{,}000 $ Python-level multiplications; BLAS does the same arithmetic but in a tight, cache-aware, vectorized inner kernel. The mathematics is identical. The implementation makes all the difference.</p>
+<p>This is why, in practice, deep learning frameworks never implement matrix multiplication in Python. Every <code>nn.Linear</code> layer, every attention head, every gradient computation ultimately calls down to BLAS or GPU equivalents (cuBLAS, Tensor Cores). Understanding the mathematical structure of the matrix product is essential; implementing it efficiently means knowing when to let the hardware do the work.</p>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false,
+            trust: true,
+            strict: false,
+            macros: {
+                "\\logit": "\\operatorname{logit}",
+                "\\softmax": "\\operatorname{softmax}",
+                "\\sigmoid": "\\operatorname{sigmoid}",
+                "\\sgn": "\\operatorname{sgn}",
+                "\\sign": "\\operatorname{sign}",
+                "\\argmax": "\\operatorname{argmax}",
+                "\\argmin": "\\operatorname{argmin}",
+                "\\Var": "\\operatorname{Var}",
+                "\\Cov": "\\operatorname{Cov}",
+                "\\Corr": "\\operatorname{Corr}",
+                "\\E": "\\mathbb{E}",
+                "\\P": "\\mathbb{P}",
+                "\\R": "\\mathbb{R}",
+                "\\N": "\\mathbb{N}",
+                "\\Z": "\\mathbb{Z}",
+                "\\C": "\\mathbb{C}",
+                "\\ind": "\\mathbb{1}",
+                "\\KL": "\\operatorname{KL}",
+                "\\Tr": "\\operatorname{Tr}",
+                "\\tr": "\\operatorname{tr}",
+                "\\diag": "\\operatorname{diag}",
+                "\\rank": "\\operatorname{rank}",
+                "\\relu": "\\operatorname{ReLU}",
+                "\\gelu": "\\operatorname{GELU}",
+                "\\selu": "\\operatorname{SELU}"
+            }
+        });
+    });
+</script>
+</body>
+</html>
