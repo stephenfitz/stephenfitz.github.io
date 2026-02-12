@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+
+@page {
+    size: letter;
+    margin: 0.75in;
+}
+
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    html { background-color: #1a1a1a; }
+    body {
+        max-width: 100%;
+        margin: 0;
+        padding: 0.5in;
+        box-shadow: none;
+        border-radius: 0;
+    }
+}
+
+html {
+    background-color: #1a1a1a;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 12pt;
+    line-height: 1.6;
+    color: #d4d4d4;
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 3rem;
+    background-color: #2a2a2a;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #e8e8e8;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.3;
+    page-break-after: avoid;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 24pt;
+    border-bottom: 2px solid #666;
+    padding-bottom: 0.3em;
+    color: #f0f0f0;
+    font-weight: 700;
+}
+
+h2 { font-size: 18pt; color: #ddd; }
+h3 { font-size: 14pt; color: #ccc; }
+h4 { font-size: 12pt; color: #bbb; }
+h5 { font-size: 11pt; color: #aaa; }
+h6 { font-size: 11pt; font-style: italic; color: #999; }
+
+body > h1:first-child {
+    text-align: center;
+    border-bottom: 3px solid #888;
+    margin-top: 0;
+    font-size: 26pt;
+    letter-spacing: 0.02em;
+}
+
+/* Paragraphs */
+p {
+    margin: 0 0 0.8em 0;
+    text-align: justify;
+    hyphens: auto;
+}
+
+/* Links */
+a {
+    color: #bbb;
+    text-decoration: underline;
+    text-decoration-color: #666;
+}
+
+a:hover {
+    color: #e8e8e8;
+    text-decoration-color: #999;
+}
+
+/* Code */
+code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.9em;
+    background-color: #3a3a3a;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    color: #d0d0d0;
+    border: 1px solid #555;
+}
+
+pre {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 9pt;
+    line-height: 1.45;
+    background-color: #222;
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 16px;
+    overflow-x: auto;
+    page-break-inside: avoid;
+    color: #d0d0d0;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+    border: none;
+}
+
+/* Blockquotes */
+blockquote {
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    border-left: 4px solid #777;
+    color: #bbb;
+    background-color: #333;
+    font-style: italic;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* Lists */
+ul, ol {
+    margin: 0.5em 0 1em 0;
+    padding-left: 2em;
+}
+
+li { margin-bottom: 0.25em; }
+
+li > ul, li > ol {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+}
+
+th, td {
+    border: 1px solid #555;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #3a3a3a;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+tr:nth-child(even) { background-color: #2e2e2e; }
+tr:nth-child(odd) { background-color: #333; }
+
+/* Horizontal rule */
+hr {
+    border: none;
+    border-top: 2px solid #555;
+    margin: 1.5em 0;
+}
+
+/* Math */
+.math-display {
+    display: block;
+    text-align: center;
+    margin: 1em 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline { display: inline; }
+
+.katex {
+    font-size: 1.1em;
+    color: #e8e8e8;
+}
+.katex-display { margin: 0.75em 0; }
+.katex-display > .katex { text-align: center; }
+
+/* Images */
+img {
+    display: block;
+    width: 50%;
+    max-width: 50%;
+    height: auto;
+    margin: 1.5em auto 0.5em auto;
+    border: 2px solid #666;
+    border-radius: 4px;
+    padding: 8px;
+    background-color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Image captions */
+img + em {
+    display: block;
+    text-align: center;
+    font-size: 0.9em;
+    color: #aaa;
+    margin: 0.5em auto 1.5em auto;
+    max-width: 60%;
+    font-style: italic;
+}
+
+p > img {
+    display: block;
+    margin: 1.5em auto;
+}
+
+    </style>
+</head>
+<body>
+<h1 id="n-gram-language-models">N-gram Language Models</h1>
+<p>A <strong>language model</strong> assigns probabilities to sequences of words. Given a sequence $w_1, w_2, \ldots, w_n$, a language model estimates $P(w_1, w_2, \ldots, w_n)$—the probability that this particular sequence occurs in the language. Language models are foundational to NLP: they power speech recognition, machine translation, spelling correction, and text generation.</p>
+<p>This article develops <strong>n-gram language models</strong>, the classical count-based approach to language modeling. We derive the mathematical framework from first principles, examine why naive estimation fails, and systematically develop smoothing and back-off techniques that address the fundamental sparsity problem.</p>
+<hr />
+<h2 id="the-language-modeling-problem">The Language Modeling Problem</h2>
+<h3 id="joint-probability-of-word-sequences">Joint Probability of Word Sequences</h3>
+<p>Consider a sentence like "the cat sat on the mat". A language model should assign this grammatical, semantically coherent sentence a higher probability than "green to jumped now then". Formally, we want to estimate:</p>
+$$
+P(w_1, w_2, \ldots, w_n)
+$$
+<p>for any sequence of words $w_1, w_2, \ldots, w_n$ from a vocabulary $V$.</p>
+<h3 id="the-chain-rule-of-probability">The Chain Rule of Probability</h3>
+<p>Any joint probability can be decomposed using the <strong>chain rule</strong>:</p>
+$$
+P(w_1, w_2, \ldots, w_n) = P(w_1) \cdot P(w_2 \mid w_1) \cdot P(w_3 \mid w_1, w_2) \cdots P(w_n \mid w_1, \ldots, w_{n-1})
+$$
+
+<p>More compactly:</p>
+$$
+P(w_1, w_2, \ldots, w_n) = \prod_{i=1}^{n} P(w_i \mid w_1, \ldots, w_{i-1})
+$$
+
+<p>This decomposition is exact—no approximation has been made. It reframes the problem: instead of estimating the joint probability directly, we estimate a sequence of conditional probabilities, each predicting the next word given all previous words.</p>
+<p><strong>Why this decomposition?</strong> The chain rule converts an exponentially large joint distribution into a product of conditional distributions. If our vocabulary has $|V|$ words, the joint distribution over sequences of length $n$ has $|V|^n$ possible outcomes. The chain rule doesn't reduce this complexity directly, but it provides a natural structure for approximation.</p>
+<h3 id="the-curse-of-history">The Curse of History</h3>
+<p>The challenge is clear: to compute $P(w_n \mid w_1, \ldots, w_{n-1})$, we need to condition on the entire history $w_1, \ldots, w_{n-1}$. For a sentence of 20 words, we'd need to estimate probabilities conditioned on 19-word histories. With a vocabulary of 50,000 words, the number of possible 19-word histories is $50000^{19}$—far more than atoms in the observable universe.</p>
+<p>We will never observe most histories in any training corpus, no matter how large. This motivates the key approximation in n-gram models.</p>
+<hr />
+<h2 id="the-markov-assumption">The Markov Assumption</h2>
+<h3 id="finite-history-approximation">Finite History Approximation</h3>
+<p>The <strong>Markov assumption</strong> truncates the conditioning history to a fixed length $k$:</p>
+$$
+P(w_i \mid w_1, \ldots, w_{i-1}) \approx P(w_i \mid w_{i-k}, \ldots, w_{i-1})
+$$
+
+<p>This assumes that the probability of the next word depends only on the previous $k$ words, not the entire history. The assumption is linguistically imperfect—long-range dependencies exist in language—but it makes estimation tractable.</p>
+<h3 id="n-gram-models">N-gram Models</h3>
+<p>An <strong>n-gram</strong> is a contiguous sequence of $n$ words. An <strong>n-gram model</strong> conditions on the previous $n-1$ words:</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Conditions on</th>
+<th>Approximation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unigram ($n=1$)</td>
+<td>Nothing</td>
+<td>$P(w_i)$</td>
+</tr>
+<tr>
+<td>Bigram ($n=2$)</td>
+<td>Previous word</td>
+<td>$P(w_i \mid w_{i-1})$</td>
+</tr>
+<tr>
+<td>Trigram ($n=3$)</td>
+<td>Previous 2 words</td>
+<td>$P(w_i \mid w_{i-2}, w_{i-1})$</td>
+</tr>
+<tr>
+<td>4-gram ($n=4$)</td>
+<td>Previous 3 words</td>
+<td>$P(w_i \mid w_{i-3}, w_{i-2}, w_{i-1})$</td>
+</tr>
+</tbody>
+</table>
+<p>The terminology can be confusing: a <strong>bigram model</strong> predicts one word from one previous word (pairs of words are considered), a <strong>trigram model</strong> predicts one word from two previous words (triples are considered), and so on.</p>
+<h3 id="mathematical-justification">Mathematical Justification</h3>
+<p>Why is the Markov assumption reasonable? Consider two perspectives:</p>
+<p><strong>Information-theoretic</strong>: If language has finite entropy rate $H$, then by the asymptotic equipartition property, most of the information about the next word is captured in recent context. Longer histories provide diminishing returns.</p>
+<p><strong>Statistical</strong>: With limited training data, we face a bias-variance tradeoff. Longer histories reduce bias (more accurate modeling of dependencies) but increase variance (fewer observations per context). The Markov assumption controls variance at the cost of some bias.</p>
+<p><strong>Empirical</strong>: In practice, trigram and 4-gram models capture most useful local structure. Perplexity improvements diminish rapidly beyond $n=5$ for typical corpora.</p>
+<hr />
+<h2 id="maximum-likelihood-estimation">Maximum Likelihood Estimation</h2>
+<h3 id="counting-n-grams">Counting N-grams</h3>
+<p>Given a training corpus, we estimate n-gram probabilities by counting. Let $C(w_1, \ldots, w_n)$ denote the count of the n-gram $w_1, \ldots, w_n$ in the corpus.</p>
+<p><strong>Bigram MLE</strong>:</p>
+$$
+P_{\text{MLE}}(w_i \mid w_{i-1}) = \frac{C(w_{i-1}, w_i)}{C(w_{i-1})}
+$$
+
+<p>The numerator counts how often the bigram $(w_{i-1}, w_i)$ appears; the denominator counts how often the context $w_{i-1}$ appears (which equals the sum of counts of all bigrams starting with $w_{i-1}$).</p>
+<p><strong>Trigram MLE</strong>:</p>
+$$
+P_{\text{MLE}}(w_i \mid w_{i-2}, w_{i-1}) = \frac{C(w_{i-2}, w_{i-1}, w_i)}{C(w_{i-2}, w_{i-1})}
+$$
+
+<p><strong>General n-gram MLE</strong>:</p>
+$$
+P_{\text{MLE}}(w_i \mid w_{i-n+1}, \ldots, w_{i-1}) = \frac{C(w_{i-n+1}, \ldots, w_i)}{C(w_{i-n+1}, \ldots, w_{i-1})}
+$$
+
+<h3 id="derivation-from-maximum-likelihood">Derivation from Maximum Likelihood</h3>
+<p>Why this formula? MLE finds parameters that maximize the likelihood of the training data. For bigrams, we want:</p>
+$$
+\hat{\theta} = \argmax_\theta \prod_{i} P_\theta(w_i \mid w_{i-1})
+$$
+
+<p>Taking logs and treating each context independently, this becomes maximizing:</p>
+$$
+\sum_{w, w'} C(w, w') \log P(w' \mid w)
+$$
+<p>subject to $\sum_{w'} P(w' \mid w) = 1$ for each context $w$.</p>
+<p>Using Lagrange multipliers, the optimal solution is:</p>
+$$
+P(w' \mid w) = \frac{C(w, w')}{\sum_{w''} C(w, w'')} = \frac{C(w, w')}{C(w)}
+$$
+
+<p>This confirms that relative frequency is the maximum likelihood estimator.</p>
+<h3 id="example-calculation">Example Calculation</h3>
+<p>Consider a tiny corpus: "the cat sat. the cat ate. the dog sat."</p>
+<p>Bigram counts:</p>
+<table>
+<thead>
+<tr>
+<th>Bigram</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(the, cat)</td>
+<td>2</td>
+</tr>
+<tr>
+<td>(the, dog)</td>
+<td>1</td>
+</tr>
+<tr>
+<td>(cat, sat)</td>
+<td>1</td>
+</tr>
+<tr>
+<td>(cat, ate)</td>
+<td>1</td>
+</tr>
+<tr>
+<td>(dog, sat)</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Context counts:</p>
+<table>
+<thead>
+<tr>
+<th>Context</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>the</td>
+<td>3</td>
+</tr>
+<tr>
+<td>cat</td>
+<td>2</td>
+</tr>
+<tr>
+<td>dog</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Bigram probabilities:</p>
+$$
+P(\text{cat} \mid \text{the}) = \frac{2}{3}, \quad P(\text{dog} \mid \text{the}) = \frac{1}{3}
+$$
+$$
+P(\text{sat} \mid \text{cat}) = \frac{1}{2}, \quad P(\text{ate} \mid \text{cat}) = \frac{1}{2}
+$$
+$$
+P(\text{sat} \mid \text{dog}) = \frac{1}{1} = 1
+$$
+
+<hr />
+<h2 id="the-sparsity-problem">The Sparsity Problem</h2>
+<h3 id="zero-counts">Zero Counts</h3>
+<p>The fundamental problem with MLE is <strong>sparsity</strong>: most n-grams never appear in the training corpus, yielding zero probability estimates.</p>
+<p>If "the elephant" never appears in training:</p>
+$$
+P_{\text{MLE}}(\text{elephant} \mid \text{the}) = \frac{C(\text{the}, \text{elephant})}{C(\text{the})} = \frac{0}{C(\text{the})} = 0
+$$
+
+<p>Any sentence containing "the elephant" receives probability zero, regardless of how reasonable the sentence is.</p>
+<h3 id="why-sparsity-is-catastrophic">Why Sparsity Is Catastrophic</h3>
+<p>The problem compounds multiplicatively. The probability of a sentence is a product:</p>
+$$
+P(w_1, \ldots, w_n) = \prod_i P(w_i \mid w_{i-1})
+$$
+
+<p>A single zero factor makes the entire product zero. One unseen bigram invalidates the entire sentence.</p>
+<p>Moreover, zero probabilities make <strong>perplexity</strong> (the standard evaluation metric) undefined. Perplexity involves $\log P$, and $\log 0 = -\infty$.</p>
+<h3 id="the-scale-of-sparsity">The Scale of Sparsity</h3>
+<p>Consider a vocabulary of $V = 50{,}000$ words:</p>
+<table>
+<thead>
+<tr>
+<th>N-gram</th>
+<th>Possible contexts</th>
+<th>Typical corpus coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bigram</td>
+<td>$5 \times 10^4$</td>
+<td>~10-30%</td>
+</tr>
+<tr>
+<td>Trigram</td>
+<td>$2.5 \times 10^9$</td>
+<td>~0.1-1%</td>
+</tr>
+<tr>
+<td>4-gram</td>
+<td>$1.25 \times 10^{14}$</td>
+<td>~0.001%</td>
+</tr>
+</tbody>
+</table>
+<p>Even with billions of words of training data, most trigrams and nearly all 4-grams will never be observed. Sparsity isn't a minor inconvenience—it's the dominant challenge in n-gram modeling.</p>
+<h3 id="mathematical-perspective-on-zero-estimates">Mathematical Perspective on Zero Estimates</h3>
+<p>From a Bayesian viewpoint, observing zero occurrences of an n-gram doesn't mean its true probability is zero—it means we lack evidence. The MLE estimate conflates "unobserved" with "impossible."</p>
+<p>Let $\theta$ be the true probability of an n-gram. If we observe $k$ occurrences in $N$ trials, the MLE is $\hat{\theta} = k/N$. When $k=0$, we get $\hat{\theta} = 0$, but the true $\theta$ could be any small positive value we haven't yet observed.</p>
+<p>This motivates <strong>smoothing</strong>: adjusting probability estimates to reserve some mass for unseen events.</p>
+<hr />
+<h2 id="smoothing-the-core-idea">Smoothing: The Core Idea</h2>
+<h3 id="redistributing-probability-mass">Redistributing Probability Mass</h3>
+<p><strong>Smoothing</strong> (or <strong>discounting</strong>) takes probability mass from observed n-grams and redistributes it to unobserved ones. The total probability must still sum to 1:</p>
+$$
+\sum_{w} P(w \mid \text{context}) = 1
+$$
+
+<p>If we increase $P(w \mid \text{context})$ for unseen words $w$, we must decrease it for seen words.</p>
+<h3 id="desiderata-for-smoothing">Desiderata for Smoothing</h3>
+<p>A good smoothing method should:</p>
+<ol>
+<li><strong>Assign nonzero probability to all n-grams</strong> (avoid zeros)</li>
+<li><strong>Preserve relative ordering</strong> (likely n-grams should remain more likely than unlikely ones)</li>
+<li><strong>Be consistent</strong> (probabilities should still sum to 1)</li>
+<li><strong>Perform well empirically</strong> (improve perplexity on held-out data)</li>
+</ol>
+<p>We now examine progressively more sophisticated smoothing methods.</p>
+<hr />
+<h2 id="laplace-add-one-smoothing">Laplace (Add-One) Smoothing</h2>
+<h3 id="the-method">The Method</h3>
+<p><strong>Laplace smoothing</strong> adds 1 to every count:</p>
+$$
+P_{\text{Laplace}}(w_i \mid w_{i-1}) = \frac{C(w_{i-1}, w_i) + 1}{C(w_{i-1}) + |V|}
+$$
+
+<p>The denominator adds $|V|$ (vocabulary size) to ensure normalization. If we add 1 to each of $|V|$ possible bigram continuations, the denominator must increase by $|V|$.</p>
+<h3 id="derivation-and-justification">Derivation and Justification</h3>
+<p>Laplace smoothing has a Bayesian interpretation. Suppose we place a symmetric Dirichlet prior on the distribution over next words:</p>
+$$
+P(w \mid \text{context}) \sim \text{Dirichlet}(\alpha, \alpha, \ldots, \alpha)
+$$
+
+<p>With $\alpha = 1$ (uniform prior), the posterior mean after observing counts $C$ is:</p>
+$$
+\E[P(w \mid \text{context})] = \frac{C(\text{context}, w) + 1}{\sum_{w'} [C(\text{context}, w') + 1]} = \frac{C(\text{context}, w) + 1}{C(\text{context}) + |V|}
+$$
+
+<p>This is exactly Laplace smoothing. The interpretation: before seeing any data, we act as if we've seen each n-gram once.</p>
+<h3 id="example">Example</h3>
+<p>Continuing our tiny corpus with $|V| = 5$ words (the, cat, dog, sat, ate):</p>
+<p>Without smoothing:</p>
+$$
+P(\text{cat} \mid \text{the}) = \frac{2}{3} \approx 0.667
+$$
+
+<p>With Laplace smoothing:</p>
+$$
+P_{\text{Laplace}}(\text{cat} \mid \text{the}) = \frac{2 + 1}{3 + 5} = \frac{3}{8} = 0.375
+$$
+
+<p>For an unseen bigram like (the, the):</p>
+$$
+P_{\text{Laplace}}(\text{the} \mid \text{the}) = \frac{0 + 1}{3 + 5} = \frac{1}{8} = 0.125
+$$
+
+<h3 id="problems-with-laplace-smoothing">Problems with Laplace Smoothing</h3>
+<p>Laplace smoothing is simple but deeply flawed for language modeling:</p>
+<p><strong>Excessive discounting</strong>: It takes too much probability from seen n-grams. In the example above, $P(\text{cat} \mid \text{the})$ dropped from 0.667 to 0.375—nearly halved.</p>
+<p><strong>Uniform treatment of unseen events</strong>: All unseen n-grams receive equal probability, but some unseen n-grams are more plausible than others. "The elephant" should be more likely than "the the."</p>
+<p><strong>Scale dependence</strong>: The discount ratio $C/(C + |V|)$ depends heavily on vocabulary size. With $|V| = 50{,}000$, even high-count n-grams are severely discounted.</p>
+<p><strong>Poor perplexity</strong>: Laplace smoothing typically performs worse than more sophisticated methods in practice.</p>
+<hr />
+<h2 id="add-k-smoothing">Add-k Smoothing</h2>
+<h3 id="generalizing-laplace">Generalizing Laplace</h3>
+<p><strong>Add-k smoothing</strong> generalizes Laplace by adding a fractional count $k < 1$:</p>
+$$
+P_{\text{add-}k}(w_i \mid w_{i-1}) = \frac{C(w_{i-1}, w_i) + k}{C(w_{i-1}) + k|V|}
+$$
+
+<p>The parameter $k$ controls how much probability mass shifts to unseen events. When $k = 1$, we recover Laplace smoothing. When $k \to 0$, we approach MLE.</p>
+<h3 id="choosing-k">Choosing k</h3>
+<p>The optimal $k$ is chosen to minimize perplexity on held-out data (validation set). Typical values for bigrams range from 0.01 to 0.5.</p>
+<p><strong>Grid search</strong>: Try values like $k \in \{0.001, 0.01, 0.1, 0.5, 1.0\}$ and select the one with lowest validation perplexity.</p>
+<h3 id="bayesian-interpretation">Bayesian Interpretation</h3>
+<p>Add-k smoothing corresponds to a Dirichlet prior with parameter $\alpha = k$:</p>
+<ul>
+<li>$k > 1$: Prior believes the distribution is more uniform than data suggests</li>
+<li>$k = 1$: Uniform prior (Laplace)</li>
+<li>$0 < k < 1$: Prior believes the distribution is more peaked than uniform</li>
+<li>$k \to 0$: Maximum likelihood (no prior influence)</li>
+</ul>
+<h3 id="limitations">Limitations</h3>
+<p>Add-k smoothing improves on Laplace but still has fundamental limitations:</p>
+<ol>
+<li><strong>Single parameter for all contexts</strong>: The same $k$ is used regardless of how much data we have for a context</li>
+<li><strong>Uniform smoothing for unseen events</strong>: Still treats all unseen n-grams equally</li>
+<li><strong>No use of lower-order information</strong>: Ignores potentially useful unigram or lower-order n-gram statistics</li>
+</ol>
+<hr />
+<h2 id="good-turing-smoothing">Good-Turing Smoothing</h2>
+<h3 id="the-intuition">The Intuition</h3>
+<p><strong>Good-Turing smoothing</strong> (Good, 1953) addresses a key question: how much probability mass should be reserved for unseen events?</p>
+<p>The insight: <strong>n-grams seen once</strong> provide information about n-grams seen zero times. If many n-grams appear exactly once, we should expect many unseen n-grams to appear once in new data.</p>
+<h3 id="notation">Notation</h3>
+<p>Let $N_r$ be the number of n-grams that appear exactly $r$ times in the training corpus:</p>
+<ul>
+<li>$N_0$ = number of unseen n-grams</li>
+<li>$N_1$ = number of n-grams appearing once (hapax legomena)</li>
+<li>$N_2$ = number of n-grams appearing twice</li>
+<li>etc.</li>
+</ul>
+<p>The total number of n-gram tokens is:</p>
+$$
+N = \sum_{r=1}^{\infty} r \cdot N_r
+$$
+
+<h3 id="the-good-turing-estimator">The Good-Turing Estimator</h3>
+<p>Good-Turing replaces each count $r$ with an adjusted count $r^*$:</p>
+$$
+r^* = (r + 1) \frac{N_{r+1}}{N_r}
+$$
+
+<p>The probability estimate for an n-gram with count $r$ is then:</p>
+$$
+P_{\text{GT}}(\text{n-gram with count } r) = \frac{r^*}{N}
+$$
+
+<p>For unseen n-grams ($r = 0$):</p>
+$$
+0^* = 1 \cdot \frac{N_1}{N_0}
+$$
+
+<p>The total probability mass for unseen events is:</p>
+$$
+P(\text{unseen}) = N_0 \cdot \frac{0^*}{N} = N_0 \cdot \frac{N_1}{N_0 \cdot N} = \frac{N_1}{N}
+$$
+
+<p>This elegant result says: <strong>the probability mass for unseen events equals the fraction of tokens that are singletons</strong> (n-grams occurring exactly once).</p>
+<h3 id="derivation">Derivation</h3>
+<p>The derivation relies on a key assumption: n-gram frequencies follow a statistical distribution where $N_r$ estimates the expected number of n-grams with true frequency yielding $r$ observations.</p>
+<p>Consider the probability mass from n-grams occurring $r$ times:</p>
+$$
+\text{Mass}_r = r \cdot N_r / N
+$$
+
+<p>Good-Turing reallocates this mass based on the empirical relationship between $N_r$ and $N_{r+1}$. The adjusted count $r^*$ satisfies:</p>
+$$
+r^* \cdot N_r = (r+1) \cdot N_{r+1}
+$$
+
+<p>This ensures the total mass is preserved while shifting estimates based on frequency-of-frequency statistics.</p>
+<h3 id="example_1">Example</h3>
+<p>Suppose we count bigrams in a corpus and find:</p>
+<table>
+<thead>
+<tr>
+<th>Count $r$</th>
+<th>$N_r$ (n-grams with this count)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1,000,000 (unseen)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>5,000</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2,000</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1,000</td>
+</tr>
+<tr>
+<td>4</td>
+<td>600</td>
+</tr>
+<tr>
+<td>5</td>
+<td>400</td>
+</tr>
+</tbody>
+</table>
+<p>Adjusted counts:</p>
+$$
+0^* = 1 \cdot \frac{5000}{1000000} = 0.005
+$$
+$$
+1^* = 2 \cdot \frac{2000}{5000} = 0.8
+$$
+$$
+2^* = 3 \cdot \frac{1000}{2000} = 1.5
+$$
+
+<p>A bigram seen once gets adjusted count 0.8 instead of 1. The "missing" 0.2 goes toward unseen bigrams.</p>
+<h3 id="practical-issues">Practical Issues</h3>
+<p>Good-Turing has theoretical elegance but practical challenges:</p>
+<p><strong>Sparse $N_r$ for large $r$</strong>: For high counts, $N_{r+1}$ may be zero or very noisy. Solution: smooth the $N_r$ values (e.g., fit a power-law regression) before computing $r^*$.</p>
+<p><strong>Not directly applicable</strong>: Good-Turing gives a total probability for unseen events but doesn't specify how to distribute it among specific unseen n-grams.</p>
+<p><strong>Combination with back-off</strong>: In practice, Good-Turing is combined with back-off (covered below) to allocate the reserved probability mass.</p>
+<hr />
+<h2 id="back-off-models">Back-off Models</h2>
+<h3 id="the-intuition_1">The Intuition</h3>
+<p><strong>Back-off</strong> models address a key limitation of fixed n-gram models: when we lack evidence for a high-order n-gram, we should consult lower-order statistics.</p>
+<p>If we've never seen "colorless green ideas," we can still estimate its probability using:</p>
+<ul>
+<li>The bigram probability $P(\text{ideas} \mid \text{green})$</li>
+<li>Or the unigram probability $P(\text{ideas})$</li>
+</ul>
+<h3 id="stupid-back-off">Stupid Back-off</h3>
+<p><strong>Stupid back-off</strong> (Brants et al., 2007) is the simplest approach:</p>
+$$
+S(w_i \mid w_{i-n+1}, \ldots, w_{i-1}) =
+\begin{cases}
+\dfrac{C(w_{i-n+1}, \ldots, w_i)}{C(w_{i-n+1}, \ldots, w_{i-1})} & \text{if } C(w_{i-n+1}, \ldots, w_i) > 0 \\[10pt]
+\lambda \cdot S(w_i \mid w_{i-n+2}, \ldots, w_{i-1}) & \text{otherwise}
+\end{cases}
+$$
+
+<p>where $\lambda$ is a fixed back-off weight (typically 0.4).</p>
+<p><strong>Key properties</strong>:</p>
+<ul>
+<li>Uses MLE when counts are available</li>
+<li>Backs off to shorter context when count is zero</li>
+<li>The factor $\lambda$ penalizes backing off</li>
+<li>Scores don't sum to 1 (not true probabilities—hence "stupid")</li>
+</ul>
+<p>Stupid back-off is fast and works well at scale (used by Google for web-scale language models), but the non-normalized scores limit some applications.</p>
+<h3 id="katz-back-off">Katz Back-off</h3>
+<p><strong>Katz back-off</strong> (Katz, 1987) combines Good-Turing discounting with back-off:</p>
+$$
+P_{\text{Katz}}(w_i \mid w_{i-n+1}, \ldots, w_{i-1}) =
+\begin{cases}
+\dfrac{C^*(w_{i-n+1}, \ldots, w_i)}{C(w_{i-n+1}, \ldots, w_{i-1})} & \text{if } C(w_{i-n+1}, \ldots, w_i) > 0 \\[10pt]
+\alpha(w_{i-n+1}, \ldots, w_{i-1}) \cdot P_{\text{Katz}}(w_i \mid w_{i-n+2}, \ldots, w_{i-1}) & \text{otherwise}
+\end{cases}
+$$
+
+<p>where:</p>
+<ul>
+<li>$C^*$ is the Good-Turing adjusted count</li>
+<li>$\alpha$ is a normalization factor to preserve probability mass</li>
+</ul>
+<h3 id="computing-the-back-off-weight">Computing the Back-off Weight</h3>
+<p>The back-off weight $\alpha$ is determined by the constraint that probabilities sum to 1:</p>
+$$
+\sum_w P_{\text{Katz}}(w \mid \text{context}) = 1
+$$
+
+<p>Let $\mathcal{S}$ be the set of words $w$ where $C(\text{context}, w) > 0$ (seen continuations) and $\mathcal{U}$ be unseen continuations. Then:</p>
+$$
+\sum_{w \in \mathcal{S}} \frac{C^*(\text{context}, w)}{C(\text{context})} + \alpha \sum_{w \in \mathcal{U}} P_{\text{Katz}}(w \mid \text{shorter context}) = 1
+$$
+
+<p>Solving for $\alpha$:</p>
+$$
+\alpha(\text{context}) = \frac{1 - \sum_{w \in \mathcal{S}} \frac{C^*(\text{context}, w)}{C(\text{context})}}{\sum_{w \in \mathcal{U}} P_{\text{Katz}}(w \mid \text{shorter context})}
+$$
+
+<p>The numerator is the probability mass reserved for unseen events (from Good-Turing discounting). The denominator normalizes the back-off distribution.</p>
+<hr />
+<h2 id="interpolation">Interpolation</h2>
+<h3 id="the-idea">The Idea</h3>
+<p><strong>Interpolation</strong> combines estimates from multiple n-gram orders simultaneously, rather than backing off only when counts are zero:</p>
+$$
+P_{\text{interp}}(w_i \mid w_{i-2}, w_{i-1}) = \lambda_3 P_3(w_i \mid w_{i-2}, w_{i-1}) + \lambda_2 P_2(w_i \mid w_{i-1}) + \lambda_1 P_1(w_i)
+$$
+
+<p>where $\lambda_1 + \lambda_2 + \lambda_3 = 1$ and each $\lambda_j \geq 0$.</p>
+<h3 id="motivation">Motivation</h3>
+<p>Why interpolate rather than back off?</p>
+<ol>
+<li>
+<p><strong>Lower-order models provide useful signal even when higher-order counts exist</strong>: Even if we've seen "New York" 100 times, the unigram probability of "York" is still informative.</p>
+</li>
+<li>
+<p><strong>Robustness</strong>: When higher-order counts are small, they're noisy. Interpolation provides regularization.</p>
+</li>
+<li>
+<p><strong>Smooth degradation</strong>: Rather than abrupt transitions at count thresholds, interpolation smoothly blends information.</p>
+</li>
+</ol>
+<h3 id="choosing-interpolation-weights">Choosing Interpolation Weights</h3>
+<p>The weights $\lambda$ are typically learned by maximizing likelihood on held-out data using the <strong>EM algorithm</strong> (expectation-maximization).</p>
+<p><strong>E-step</strong>: Given current $\lambda$, compute the expected contribution of each component:</p>
+$$
+\gamma_j^{(i)} = \frac{\lambda_j P_j(w_i \mid \text{context})}{\sum_k \lambda_k P_k(w_i \mid \text{context})}
+$$
+
+<p><strong>M-step</strong>: Update $\lambda$ based on expected contributions:</p>
+$$
+\lambda_j = \frac{1}{N} \sum_i \gamma_j^{(i)}
+$$
+
+<p>Iterate until convergence.</p>
+<h3 id="context-dependent-weights">Context-Dependent Weights</h3>
+<p><strong>Jelinek-Mercer smoothing</strong> uses interpolation with context-dependent weights:</p>
+$$
+P(w \mid u, v) = \lambda(u, v) P_{\text{MLE}}(w \mid u, v) + (1 - \lambda(u, v)) P(w \mid v)
+$$
+
+<p>where $\lambda(u, v)$ depends on how reliable the context $(u, v)$ is (e.g., higher $\lambda$ when $C(u, v)$ is large).</p>
+<p>A simple approach: bucket contexts by count and learn a separate $\lambda$ for each bucket.</p>
+<hr />
+<h2 id="absolute-discounting">Absolute Discounting</h2>
+<h3 id="the-observation">The Observation</h3>
+<p>Empirical studies (Church and Gale, 1991) revealed a striking pattern: the optimal discount for n-gram counts is approximately <strong>constant</strong> across different count values.</p>
+<p>If an n-gram appears $r$ times, its expected count in held-out data is approximately $r - d$, where $d \approx 0.75$ is nearly independent of $r$ (for $r \geq 1$).</p>
+<h3 id="the-method_1">The Method</h3>
+<p><strong>Absolute discounting</strong> subtracts a fixed discount $d$ from each non-zero count:</p>
+$$
+P_{\text{abs}}(w \mid v) = \frac{\max(C(v, w) - d, 0)}{C(v)} + \lambda(v) P(w)
+$$
+
+<p>where $\lambda(v)$ is chosen to ensure normalization:</p>
+$$
+\lambda(v) = \frac{d \cdot |\{w : C(v, w) > 0\}|}{C(v)}
+$$
+
+<p>The term $|\{w : C(v, w) > 0\}|$ counts the number of distinct word types following context $v$.</p>
+<h3 id="interpretation">Interpretation</h3>
+<p>The discount $d$ represents probability mass taken from each observed n-gram. This mass is collected into $\lambda(v)$ and redistributed via the lower-order model $P(w)$.</p>
+<p>The factor $|\{w : C(v, w) > 0\}|$ in $\lambda$ means: contexts with more diverse continuations redistribute more mass to the back-off distribution. This makes linguistic sense—a context that precedes many different words is less predictive.</p>
+<h3 id="estimating-the-discount">Estimating the Discount</h3>
+<p>The optimal discount can be estimated from the training data:</p>
+$$
+d = \frac{N_1}{N_1 + 2N_2}
+$$
+
+<p>where $N_1$ and $N_2$ are the number of n-grams occurring exactly once and twice, respectively. This formula emerges from Good-Turing analysis and typically yields $d \approx 0.75$.</p>
+<hr />
+<h2 id="kneser-ney-smoothing">Kneser-Ney Smoothing</h2>
+<h3 id="the-problem-with-standard-back-off">The Problem with Standard Back-off</h3>
+<p>Standard interpolation and back-off have a subtle flaw. Consider the word "Francisco." In the phrase "San Francisco," "Francisco" appears frequently. But "Francisco" almost never appears in other contexts.</p>
+<p>Standard unigram probability: $P(\text{Francisco})$ is relatively high (frequent word).</p>
+<p>But when backing off from an unseen context like "I visited ___," we shouldn't favor "Francisco"—it's not a word that appears in diverse contexts.</p>
+<h3 id="continuation-probability">Continuation Probability</h3>
+<p><strong>Kneser-Ney smoothing</strong> (Kneser and Ney, 1995) addresses this by replacing the lower-order probability with <strong>continuation probability</strong>—how likely a word is to appear as a novel continuation.</p>
+<p>Instead of $P(w) \propto C(w)$, use:</p>
+$$
+P_{\text{continuation}}(w) \propto |\{v : C(v, w) > 0\}|
+$$
+
+<p>This counts the number of distinct contexts that $w$ follows. "Francisco" follows few contexts (mainly "San"), so its continuation probability is low. A word like "the" follows many contexts, so its continuation probability is high.</p>
+<h3 id="the-full-kneser-ney-formula">The Full Kneser-Ney Formula</h3>
+<p><strong>Bigram Kneser-Ney</strong>:</p>
+$$
+P_{\text{KN}}(w \mid v) = \frac{\max(C(v, w) - d, 0)}{C(v)} + \lambda(v) P_{\text{continuation}}(w)
+$$
+
+<p>where:</p>
+$$
+\lambda(v) = \frac{d \cdot |\{w : C(v, w) > 0\}|}{C(v)}
+$$
+$$
+P_{\text{continuation}}(w) = \frac{|\{v' : C(v', w) > 0\}|}{\sum_{w'} |\{v : C(v, w') > 0\}|}
+$$
+
+<h3 id="recursive-definition-for-higher-orders">Recursive Definition for Higher Orders</h3>
+<p>For n-grams with $n > 2$, Kneser-Ney is defined recursively. The highest-order model uses regular counts; lower-order models use continuation counts:</p>
+$$
+P_{\text{KN}}(w \mid u, v) = \frac{\max(C(u, v, w) - d, 0)}{C(u, v)} + \lambda(u, v) P_{\text{KN}}(w \mid v)
+$$
+
+<p>where $P_{\text{KN}}(w \mid v)$ uses continuation counts rather than raw counts.</p>
+<h3 id="modified-kneser-ney">Modified Kneser-Ney</h3>
+<p><strong>Modified Kneser-Ney</strong> (Chen and Goodman, 1999) uses different discounts for different count levels:</p>
+$$
+d(c) = \begin{cases}
+0 & \text{if } c = 0 \\
+d_1 & \text{if } c = 1 \\
+d_2 & \text{if } c = 2 \\
+d_{3+} & \text{if } c \geq 3
+\end{cases}
+$$
+
+<p>The discounts are estimated from training data:</p>
+$$
+d_1 = 1 - 2 \frac{N_2}{N_1} \cdot \frac{N_1}{N_1 + N_2}
+$$
+$$
+d_2 = 2 - 3 \frac{N_3}{N_2} \cdot \frac{N_1}{N_1 + N_2}
+$$
+$$
+d_{3+} = 3 - 4 \frac{N_4}{N_3} \cdot \frac{N_1}{N_1 + N_2}
+$$
+
+<p>Modified Kneser-Ney consistently achieves the best perplexity among classical smoothing methods and remained state-of-the-art for count-based language models.</p>
+<h3 id="why-kneser-ney-works">Why Kneser-Ney Works</h3>
+<p>The effectiveness of Kneser-Ney stems from two insights:</p>
+<ol>
+<li>
+<p><strong>Absolute discounting</strong>: Constant subtraction matches empirical behavior better than proportional discounting.</p>
+</li>
+<li>
+<p><strong>Continuation probability</strong>: The lower-order distribution should reflect how words behave as novel continuations, not their raw frequency. This captures the difference between words that are frequent because they follow specific contexts vs. words that are genuinely versatile.</p>
+</li>
+</ol>
+<hr />
+<h2 id="evaluation-perplexity">Evaluation: Perplexity</h2>
+<h3 id="definition">Definition</h3>
+<p><strong>Perplexity</strong> measures how well a language model predicts a test set. For a test sequence $w_1, \ldots, w_N$:</p>
+$$
+\text{PP}(W) = P(w_1, \ldots, w_N)^{-1/N} = \sqrt[N]{\frac{1}{P(w_1, \ldots, w_N)}}
+$$
+
+<p>Equivalently, using cross-entropy $H$:</p>
+$$
+\text{PP}(W) = 2^{H(W)}
+$$
+<p>where:</p>
+$$
+H(W) = -\frac{1}{N} \log_2 P(w_1, \ldots, w_N) = -\frac{1}{N} \sum_i \log_2 P(w_i \mid w_1, \ldots, w_{i-1})
+$$
+
+<h3 id="interpretation_1">Interpretation</h3>
+<p>Perplexity can be interpreted as the <strong>effective vocabulary size</strong> the model is uncertain among at each step. A perplexity of 100 means the model is, on average, as uncertain as if it were choosing uniformly among 100 words.</p>
+<p><strong>Lower perplexity is better</strong>: The model assigns higher probability to the test data.</p>
+<p><strong>Relationship to entropy</strong>: Perplexity is the exponential of cross-entropy. Minimizing perplexity is equivalent to minimizing cross-entropy, which is equivalent to maximizing likelihood.</p>
+<h3 id="typical-values">Typical Values</h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Typical Perplexity (Wall Street Journal)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unigram</td>
+<td>950</td>
+</tr>
+<tr>
+<td>Bigram</td>
+<td>170</td>
+</tr>
+<tr>
+<td>Trigram</td>
+<td>100</td>
+</tr>
+<tr>
+<td>4-gram + Kneser-Ney</td>
+<td>80</td>
+</tr>
+</tbody>
+</table>
+<p>Modern neural language models achieve perplexity below 20 on similar benchmarks.</p>
+<h3 id="caveats">Caveats</h3>
+<p>Perplexity is only comparable across models with the same vocabulary and test set. Different preprocessing (tokenization, handling of unknown words) can significantly affect perplexity.</p>
+<p>Perplexity also doesn't capture all aspects of language model quality. A model might have good perplexity but generate incoherent text, or vice versa.</p>
+<hr />
+<h2 id="practical-considerations">Practical Considerations</h2>
+<h3 id="handling-unknown-words">Handling Unknown Words</h3>
+<p>Real text contains words not in the training vocabulary. Common strategies:</p>
+<p><strong>Closed vocabulary</strong>: Treat out-of-vocabulary (OOV) words as a special <code>&lt;UNK&gt;</code> token. Replace rare training words (count &lt; threshold) with <code>&lt;UNK&gt;</code> to create training examples.</p>
+<p><strong>Open vocabulary</strong>: Use subword units (BPE, etc.) that can represent any word. This moves the OOV problem to a lower level.</p>
+<h3 id="start-tokens">Start Tokens</h3>
+<p>The beginning-of-sentence token <code>&lt;s&gt;</code> (or <code>&lt;BOS&gt;</code>) provides context for the first word(s). Without it, we'd need a separate distribution for "sentence-initial words" versus the conditional distributions used elsewhere.</p>
+<p>For an n-gram model, pad the beginning with $n-1$ start tokens:</p>
+<pre><code>Sentence: &quot;the cat sat&quot;
+Bigram contexts: (&lt;s&gt;, the), (the, cat), (cat, sat), ...
+Trigram contexts: (&lt;s&gt;, &lt;s&gt;, the), (&lt;s&gt;, the, cat), (the, cat, sat), ...
+</code></pre>
+<p>This is a notational convenience—it lets us use the same conditional probability machinery throughout.</p>
+<hr />
+<h2 id="the-necessity-of-the-end-of-sentence-token">The Necessity of the End-of-Sentence Token</h2>
+<p>The end-of-sentence token <code>&lt;/s&gt;</code> (or <code>&lt;EOS&gt;</code>) is not merely a notational convenience—it is <strong>mathematically essential</strong> for the language model to define a valid probability distribution over sentences. Without it, the model is fundamentally broken as a probability distribution.</p>
+<h3 id="the-problem-what-are-we-modeling">The Problem: What Are We Modeling?</h3>
+<p>A language model should define a probability distribution over <strong>sentences</strong> (finite sequences of words). For any probability distribution, the total probability over all possible outcomes must equal 1:</p>
+$$
+\sum_{\text{all sentences } S} P(S) = 1
+$$
+
+<p>The question is: does our n-gram model satisfy this requirement?</p>
+<h3 id="without-eos-the-probabilities-sum-to-infinity">Without EOS: The Probabilities Sum to Infinity</h3>
+<p>Consider a model without an end token. For a bigram model, we compute:</p>
+$$
+P(w_1, w_2, \ldots, w_n) = P(w_1) \cdot P(w_2 \mid w_1) \cdot P(w_3 \mid w_2) \cdots P(w_n \mid w_{n-1})
+$$
+
+<p>At each position, the conditional probabilities sum to 1 over the vocabulary:</p>
+$$
+\sum_{w \in V} P(w \mid \text{context}) = 1
+$$
+
+<p>Now let's sum over all sentences. First, all one-word sentences:</p>
+$$
+\sum_{w_1 \in V} P(w_1) = 1
+$$
+
+<p>All two-word sentences:</p>
+$$
+\sum_{w_1 \in V} \sum_{w_2 \in V} P(w_1) P(w_2 \mid w_1) = \sum_{w_1 \in V} P(w_1) \underbrace{\sum_{w_2 \in V} P(w_2 \mid w_1)}_{= 1} = \sum_{w_1 \in V} P(w_1) = 1
+$$
+
+<p>All three-word sentences:</p>
+$$
+\sum_{w_1, w_2, w_3 \in V} P(w_1) P(w_2 \mid w_1) P(w_3 \mid w_2) = 1
+$$
+
+<p>By induction, for any length $n$:</p>
+$$
+\sum_{\text{all } n\text{-word sentences}} P(w_1, \ldots, w_n) = 1
+$$
+
+<p>Therefore, the total probability over <strong>all</strong> sentences is:</p>
+$$
+\sum_{\text{all sentences}} P(S) = \sum_{n=1}^{\infty} \sum_{\text{all } n\text{-word sentences}} P(w_1, \ldots, w_n) = \sum_{n=1}^{\infty} 1 = \infty
+$$
+
+<p><strong>The probabilities sum to infinity, not 1.</strong> This is not a valid probability distribution.</p>
+<h3 id="the-interpretation-problem">The Interpretation Problem</h3>
+<p>What does the model without EOS actually represent? It defines a probability distribution over the <strong>next word given any prefix</strong>, but not over complete sentences. The quantity $P(w_1, \ldots, w_n)$ is not "the probability of the sentence $w_1 \ldots w_n$"—it's something else entirely.</p>
+<p>More precisely, without EOS the model defines a <strong>stochastic process</strong> that generates infinite sequences. At each step, it samples a word from $P(w \mid \text{context})$. But since there's no stopping condition, every generated sequence is infinite. Finite sentences have probability zero under this interpretation (they're measure-zero events in the space of infinite sequences).</p>
+<h3 id="with-eos-a-proper-distribution">With EOS: A Proper Distribution</h3>
+<p>Now include <code>&lt;/s&gt;</code> as a special token in the vocabulary. At each position, the model can either:</p>
+<ul>
+<li>Generate a regular word $w \in V$ and continue</li>
+<li>Generate <code>&lt;/s&gt;</code> and stop</li>
+</ul>
+<p>The conditional distributions now include <code>&lt;/s&gt;</code>:</p>
+$$
+P(\text{EOS} \mid \text{context}) + \sum_{w \in V} P(w \mid \text{context}) = 1
+$$
+
+<p>The probability of a complete sentence $w_1, \ldots, w_n$ followed by termination is:</p>
+$$
+P(w_1, \ldots, w_n, \text{EOS}) = P(w_1) \cdot P(w_2 \mid w_1) \cdots P(w_n \mid w_{n-1}) \cdot P(\text{EOS} \mid w_n)
+$$
+
+<p><strong>Claim</strong>: The sum over all finite sentences equals 1.</p>
+<p><strong>Proof</strong>: Let $p_{\text{stop}}(w) = P(\text{EOS} \mid w)$ and $p_{\text{cont}}(w) = 1 - p_{\text{stop}}(w) = \sum_{w' \in V} P(w' \mid w)$.</p>
+<p>The probability of all 1-word sentences:</p>
+$$
+\sum_{w_1} P(w_1) \cdot p_{\text{stop}}(w_1)
+$$
+
+<p>The probability of all 2-word sentences:</p>
+$$
+\sum_{w_1, w_2} P(w_1) \cdot P(w_2 \mid w_1) \cdot p_{\text{stop}}(w_2)
+$$
+
+<p>And so on. The total is:</p>
+$$
+\sum_{n=1}^{\infty} \sum_{w_1, \ldots, w_n} P(w_1) \prod_{i=2}^{n} P(w_i \mid w_{i-1}) \cdot p_{\text{stop}}(w_n)
+$$
+
+<p>This equals 1 by a standard result: the probability of eventually stopping in a Markov chain where each state has positive stopping probability sums to 1, provided $p_{\text{stop}}(w) > 0$ for all $w$ (which holds if <code>&lt;/s&gt;</code> has positive probability in every context).</p>
+<h3 id="a-concrete-example">A Concrete Example</h3>
+<p>Consider a tiny vocabulary $V = \{a, b\}$ plus <code>&lt;/s&gt;</code>, with a unigram model:</p>
+<p><strong>Without EOS</strong>: $P(a) = 0.6$, $P(b) = 0.4$</p>
+<p>Sum over 1-word sentences: $0.6 + 0.4 = 1$
+Sum over 2-word sentences: $(0.6 + 0.4)^2 = 1$
+Sum over all sentences: $1 + 1 + 1 + \cdots = \infty$</p>
+<p><strong>With EOS</strong>: $P(a) = 0.4$, $P(b) = 0.3$, $P(\text{EOS}) = 0.3$</p>
+<p>Sum over 1-word sentences: $0.3$ (just <code>&lt;/s&gt;</code>)</p>
+<p>Sum over 2-word sentences: $(0.4 + 0.3) \times 0.3 = 0.21$</p>
+<p>Sum over 3-word sentences: $(0.4 + 0.3)^2 \times 0.3 = 0.147$</p>
+<p>Sum over $n$-word sentences: $0.7^{n-1} \times 0.3$</p>
+<p>Total: $\sum_{n=1}^{\infty} 0.3 \times 0.7^{n-1} = 0.3 \times \frac{1}{1 - 0.7} = 0.3 \times \frac{10}{3} = 1$ ✓</p>
+<h3 id="implications-for-perplexity">Implications for Perplexity</h3>
+<p>Perplexity requires a valid probability, so the EOS token must be included:</p>
+$$
+\text{PP}(w_1, \ldots, w_n) = P(w_1, \ldots, w_n, \text{EOS})^{-1/(n+1)}
+$$
+
+<p>Note the denominator is $n + 1$, counting the EOS prediction. This is important: it means the model is evaluated on its ability to predict both words and sentence boundaries.</p>
+<p>If we excluded EOS from perplexity:</p>
+$$
+\text{PP}'(w_1, \ldots, w_n) = P(w_1, \ldots, w_n)^{-1/n}
+$$
+
+<p>This would <strong>favor longer sentences</strong> because $P(w_1, \ldots, w_n)$ doesn't include the "penalty" for continuing (the model never has to predict when to stop). Two models could have identical per-word predictions but different perplexities under this flawed metric if they differ only in EOS probabilities.</p>
+<h3 id="deficient-models">Deficient Models</h3>
+<p>A model without EOS is called <strong>deficient</strong>: it assigns total probability less than 1 to the event space it's supposed to model (finite sentences), with the "missing" mass going to infinite sequences.</p>
+<p>More generally, a model can be deficient even with EOS if the EOS probability is too low. If $P(\text{EOS} \mid w) = 0$ for some word $w$, and $w$ can be reached with positive probability, then there's positive probability of generating an infinite sequence, and the model is deficient.</p>
+<p>In practice, smoothing ensures $P(\text{EOS} \mid w) > 0$ for all $w$, avoiding deficiency.</p>
+<h3 id="the-bos-token-is-different">The BOS Token Is Different</h3>
+<p>Note that the beginning token BOS serves a different purpose than EOS. The start token is a <strong>conditioning context</strong>: it is never predicted, only conditioned on. It provides the initial context for predicting $w_1$.</p>
+<p>Without BOS, we would need a separate "initial distribution" $P_0(w_1)$ distinct from the conditional distributions $P(w \mid \text{context})$. The start token lets us unify these: $P(w_1 \mid \text{BOS})$ is just another conditional probability.</p>
+<p>The asymmetry is clear:</p>
+<ul>
+<li>BOS appears on the <strong>right side</strong> of the conditioning bar: $P(w_1 \mid \text{BOS})$</li>
+<li>EOS appears on the <strong>left side</strong>: $P(\text{EOS} \mid w_n)$</li>
+</ul>
+<hr />
+<h2 id="efficiency">Efficiency</h2>
+<p><strong>Storage</strong>: N-gram models can be compressed using tries, perfect hashing, or quantization. Tools like KenLM provide highly optimized implementations.</p>
+<p><strong>Computation</strong>: Probability lookups are O(1) with hash tables. The main cost is loading the model into memory.</p>
+<p><strong>Pruning</strong>: Remove n-grams below a count threshold or that contribute little to perplexity. Entropy pruning selectively removes n-grams where backing off loses minimal information.</p>
+<hr />
+<h2 id="summary">Summary</h2>
+<p>N-gram language models estimate the probability of word sequences by decomposing via the chain rule and applying the Markov assumption to limit context. Maximum likelihood estimation from corpus counts provides the foundation, but <strong>sparsity</strong>—the fact that most n-grams never appear in training—necessitates smoothing.</p>
+<p><strong>Smoothing methods</strong> redistribute probability mass from observed to unobserved events:</p>
+<ul>
+<li><strong>Laplace (add-one)</strong>: Simple but over-smooths; Bayesian interpretation as uniform prior</li>
+<li><strong>Add-k</strong>: Tunable smoothing; Bayesian interpretation with Dirichlet prior</li>
+<li><strong>Good-Turing</strong>: Uses frequency-of-frequencies to estimate mass for unseen events</li>
+<li><strong>Absolute discounting</strong>: Subtracts constant from counts; matches empirical discount patterns</li>
+</ul>
+<p><strong>Back-off</strong> consults lower-order models when higher-order counts are unavailable:</p>
+<ul>
+<li><strong>Stupid back-off</strong>: Simple, unnormalized; effective at scale</li>
+<li><strong>Katz back-off</strong>: Combines Good-Turing with normalized back-off</li>
+</ul>
+<p><strong>Interpolation</strong> combines multiple orders simultaneously, with weights learned from held-out data.</p>
+<p><strong>Kneser-Ney smoothing</strong> achieves the best performance by combining absolute discounting with <strong>continuation probability</strong>—using how many contexts a word appears in, rather than raw frequency, for back-off distributions.</p>
+<p>While neural language models have largely supplanted n-gram models for generation tasks, understanding n-gram models illuminates fundamental concepts in language modeling: the tradeoff between model expressiveness and data requirements, the relationship between counts and probabilities, and the critical importance of handling sparsity. These concepts carry forward directly into neural approaches, where similar challenges manifest in different forms.</p>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false,
+            trust: true,
+            strict: false,
+            macros: {
+                "\\logit": "\\operatorname{logit}",
+                "\\softmax": "\\operatorname{softmax}",
+                "\\sigmoid": "\\operatorname{sigmoid}",
+                "\\sgn": "\\operatorname{sgn}",
+                "\\sign": "\\operatorname{sign}",
+                "\\argmax": "\\operatorname{argmax}",
+                "\\argmin": "\\operatorname{argmin}",
+                "\\Var": "\\operatorname{Var}",
+                "\\Cov": "\\operatorname{Cov}",
+                "\\Corr": "\\operatorname{Corr}",
+                "\\E": "\\mathbb{E}",
+                "\\P": "\\mathbb{P}",
+                "\\R": "\\mathbb{R}",
+                "\\N": "\\mathbb{N}",
+                "\\Z": "\\mathbb{Z}",
+                "\\C": "\\mathbb{C}",
+                "\\ind": "\\mathbb{1}",
+                "\\KL": "\\operatorname{KL}",
+                "\\Tr": "\\operatorname{Tr}",
+                "\\tr": "\\operatorname{tr}",
+                "\\diag": "\\operatorname{diag}",
+                "\\rank": "\\operatorname{rank}",
+                "\\relu": "\\operatorname{ReLU}",
+                "\\gelu": "\\operatorname{GELU}",
+                "\\selu": "\\operatorname{SELU}"
+            }
+        });
+    });
+</script>
+</body>
+</html>
