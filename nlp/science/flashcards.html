@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>On Science — Flashcards</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Light theme (default) */
+        html {
+            background-color: #f5f5f5;
+            transition: background-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #2a2a2a;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 3rem;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Dark theme */
+        html.dark {
+            background-color: #1a1a1a;
+        }
+
+        body.dark {
+            color: #d4d4d4;
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+        }
+
+        /* Header */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5em;
+            padding-bottom: 0.5em;
+            border-bottom: 3px solid #666;
+            flex-wrap: wrap;
+            gap: 1em;
+        }
+
+        body.dark .header-container {
+            border-color: #888;
+        }
+
+        h1 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 24pt;
+            color: #1a1a1a;
+            letter-spacing: 0.02em;
+            font-weight: 700;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        body.dark h1 {
+            color: #f0f0f0;
+        }
+
+        /* Theme toggle switch */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.8em;
+        }
+
+        .toggle-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #666;
+        }
+
+        body.dark .toggle-label {
+            color: #aaa;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background-color: #bbb;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            border: 2px solid #999;
+        }
+
+        body.dark .toggle-switch {
+            background-color: #666;
+            border-color: #888;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        body.dark .toggle-slider {
+            transform: translateX(30px);
+            background-color: #2a2a2a;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+
+        .toggle-slider::before {
+            content: '\2600';
+            color: #2a2a2a;
+        }
+
+        body.dark .toggle-slider::before {
+            content: '\263E';
+            color: #c0c8d8;
+        }
+
+        /* Article back link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2em;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #2a2a2a;
+        }
+
+        body.dark .back-link {
+            color: #aaa;
+        }
+
+        body.dark .back-link:hover {
+            color: #e8e8e8;
+        }
+
+        /* Card counter */
+        .card-counter {
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            color: #888;
+            margin-bottom: 1.5em;
+        }
+
+        body.dark .card-counter {
+            color: #999;
+        }
+
+        /* Flashcard container */
+        .flashcard-scene {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 680px;
+            min-height: 340px;
+            margin: 0 auto 2em auto;
+            cursor: pointer;
+        }
+
+        .flashcard {
+            position: relative;
+            width: 100%;
+            min-height: 340px;
+            transition: transform 0.6s ease;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-face {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 340px;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2.5em 2.5em;
+            border-radius: 10px;
+            border: 1px solid #d5d5d5;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body.dark .flashcard-face {
+            border-color: #555;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+        }
+
+        .flashcard-front {
+            background-color: #fafafa;
+        }
+
+        body.dark .flashcard-front {
+            background-color: #333;
+        }
+
+        .flashcard-back {
+            background-color: #f0f4f8;
+            transform: rotateY(180deg);
+        }
+
+        body.dark .flashcard-back {
+            background-color: #2f3640;
+        }
+
+        .flashcard-face .face-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 9pt;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #aaa;
+            margin-bottom: 1em;
+            font-weight: 600;
+        }
+
+        body.dark .flashcard-face .face-label {
+            color: #777;
+        }
+
+        .flashcard-front .card-text {
+            font-size: 14pt;
+            line-height: 1.5;
+            text-align: center;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        body.dark .flashcard-front .card-text {
+            color: #e8e8e8;
+        }
+
+        .flashcard-back .card-text {
+            font-size: 12pt;
+            line-height: 1.6;
+            text-align: center;
+            color: #2a2a2a;
+        }
+
+        body.dark .flashcard-back .card-text {
+            color: #d4d4d4;
+        }
+
+        .tap-hint {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 9pt;
+            color: #bbb;
+            margin-top: 1.2em;
+        }
+
+        body.dark .tap-hint {
+            color: #666;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            font-weight: 500;
+            padding: 0.7em 1.8em;
+            border-radius: 4px;
+            border: 2px solid #1a1a1a;
+            background-color: #e8e8e8;
+            color: #2a2a2a;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        body.dark .controls button {
+            background-color: #1a1a1a;
+            color: #e8e8e8;
+            border-color: #666;
+        }
+
+        .controls button:hover {
+            background-color: #f5f5f5;
+            border-color: #666;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        body.dark .controls button:hover {
+            background-color: #000;
+            border-color: #888;
+            box-shadow: 0 2px 8px rgba(102,102,102,0.4);
+        }
+
+        .controls button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .controls button:disabled:hover {
+            background-color: #e8e8e8;
+            border-color: #1a1a1a;
+            transform: none;
+            box-shadow: none;
+        }
+
+        body.dark .controls button:disabled:hover {
+            background-color: #1a1a1a;
+            border-color: #666;
+        }
+
+        .shuffle-btn {
+            border-style: dashed !important;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 3em;
+            padding-top: 1.5em;
+            border-top: 2px solid #ccc;
+            text-align: center;
+            color: #888;
+            font-size: 9pt;
+        }
+
+        body.dark footer {
+            border-color: #555;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            body {
+                padding: 2em 1.5em;
+                margin: 1rem;
+            }
+
+            h1 {
+                font-size: 18pt;
+            }
+
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .flashcard-scene {
+                min-height: 300px;
+            }
+
+            .flashcard {
+                min-height: 300px;
+            }
+
+            .flashcard-face {
+                min-height: 300px;
+                padding: 2em 1.5em;
+            }
+
+            .flashcard-front .card-text {
+                font-size: 13pt;
+            }
+
+            .flashcard-back .card-text {
+                font-size: 11pt;
+            }
+
+            .controls {
+                gap: 0.6em;
+            }
+
+            .controls button {
+                padding: 0.6em 1.2em;
+                font-size: 10pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <h1>On Science &mdash; Flashcards</h1>
+        <div class="theme-toggle">
+            <span class="toggle-label">Theme</span>
+            <div class="toggle-switch" onclick="toggleTheme()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </div>
+
+    <a href="science-light.html" class="back-link article-link" data-article="science">&larr; Back to article</a>
+
+    <div class="card-counter" id="cardCounter">Card 1 of 15</div>
+
+    <div class="flashcard-scene" id="flashcardScene" onclick="flipCard()">
+        <div class="flashcard" id="flashcard">
+            <div class="flashcard-face flashcard-front">
+                <div class="face-label">Question</div>
+                <div class="card-text" id="frontText"></div>
+                <div class="tap-hint">Click to reveal answer</div>
+            </div>
+            <div class="flashcard-face flashcard-back">
+                <div class="face-label">Answer</div>
+                <div class="card-text" id="backText"></div>
+                <div class="tap-hint">Click to see question</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" onclick="prevCard()">&larr; Previous</button>
+        <button class="shuffle-btn" onclick="shuffleDeck()">Shuffle</button>
+        <button id="nextBtn" onclick="nextCard()">Next &rarr;</button>
+    </div>
+
+    <footer>
+        <p>Stephen Fitz &middot; 2026</p>
+    </footer>
+
+    <script>
+        // Flashcard data
+        const cards = [
+            {
+                front: "What distinguishes a science according to philosophers of science?",
+                back: "Not primarily its method, but the kind of explanations it aims to deliver. A discipline is scientific if it attempts to provide scientific explanations of a class of phenomena."
+            },
+            {
+                front: "What is Hempel\u2019s nomological\u2013deductive model of explanation?",
+                back: "A scientific explanation starts with universal laws, adds initial/boundary conditions, then deduces the phenomenon as a logical consequence. The word \u2018nomological\u2019 comes from Greek \u2018nomos\u2019 meaning \u2018law\u2019."
+            },
+            {
+                front: "What are \u2018explanation sketches\u2019 in Hempel\u2019s framework?",
+                back: "Partial, incomplete approximations to the nomological\u2013deductive ideal. They use statistical regularities, probabilistic models, and empirical generalizations rather than strict universal laws. Most sciences (biology, psychology, medicine) rely on these."
+            },
+            {
+                front: "What three dimensions differentiate scientific disciplines?",
+                back: "1) The class of phenomena they attempt to explain, 2) The tools they use to search for laws or regularities, 3) The language in which explanations are expressed."
+            },
+            {
+                front: "What does AI study as its class of phenomena?",
+                back: "Substrate-free cognitive processes \u2014 reasoning, learning, perception, memory, planning, language, and decision-making \u2014 studied independently of any particular biological or physical implementation."
+            },
+            {
+                front: "How does AI differ from physics in its abstractions?",
+                back: "Physics seeks substrate-specific laws of nature. AI seeks substrate-independent laws of organization (computation + representation) that make certain behaviors possible across different substrates (brains, silicon chips, cellular automata)."
+            },
+            {
+                front: "What are examples of genuinely nomological\u2013deductive results in AI?",
+                back: "Convergence theorems in optimization, generalization bounds in learning theory, computational complexity results, and formal properties of algorithms and architectures."
+            },
+            {
+                front: "What are examples of statistical explanation sketches in AI?",
+                back: "Empirical scaling laws, performance trends in large models, heuristic architectural principles, and observed regularities in representation learning."
+            },
+            {
+                front: "What three formal languages does AI use for explanation?",
+                back: "1) Geometry and topology of representation spaces (high-dimensional vectors, manifolds, embeddings), 2) Information theory and statistics (entropy, Bayesian inference), 3) Tensor computation and linear algebra (multilinear maps, backpropagation)."
+            },
+            {
+                front: "Why is AI considered a science even without universal laws?",
+                back: "Being a science doesn\u2019t require possessing universal laws \u2014 it requires systematically searching for lawful structure. AI targets well-defined phenomena, systematically searches for structure, and expresses explanations in formal, cumulative languages."
+            },
+            {
+                front: "What does \u2018substrate-free\u2019 mean in the context of AI?",
+                back: "That the same functional patterns of intelligence can, in principle, be realized across very different physical substrates (brains, silicon chips, cellular automata), provided they implement the relevant state transitions and representational fidelity."
+            },
+            {
+                front: "Why is following the scientific method not sufficient to be a science?",
+                back: "Many activities (market research, quality control, A/B testing, systematic trial-and-error in engineering) follow something resembling the scientific method while remaining fundamentally pragmatic and instrumental, without pursuing deep explanatory goals."
+            },
+            {
+                front: "What is the relationship between cross-entropy loss and scientific explanation in AI?",
+                back: "Cross-entropy loss is part of the information-theoretic language AI uses for explanation. It connects practical model training to the theoretical framework of entropy and probabilistic modeling."
+            },
+            {
+                front: "What is \u2018multiple realizability\u2019 in AI?",
+                back: "The idea that intelligent behaviors can be realized in multiple different physical substrates. AI studies which computational structures and representational mappings give rise to \u2018intelligent\u2019 patterns in any capable system."
+            },
+            {
+                front: "Where does Hempel place AI among the sciences?",
+                back: "AI straddles both sides of Hempel\u2019s divide: it has genuinely deductive, law-like results (convergence theorems, complexity results) AND statistical explanation sketches (scaling laws, empirical trends), placing it alongside biology, medicine, and psychology."
+            }
+        ];
+
+        let currentIndex = 0;
+        let deck = cards.map((_, i) => i);
+
+        // Theme management
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.body.classList.add('dark');
+        }
+        updateArticleLink();
+
+        function toggleTheme() {
+            const isDark = document.body.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateArticleLink();
+        }
+
+        function updateArticleLink() {
+            const isDark = document.body.classList.contains('dark');
+            const theme = isDark ? 'dark' : 'light';
+            document.querySelectorAll('.article-link').forEach(function(link) {
+                var article = link.getAttribute('data-article');
+                link.href = article + '-' + theme + '.html';
+            });
+        }
+
+        // Card rendering
+        function renderCard() {
+            var card = cards[deck[currentIndex]];
+            document.getElementById('frontText').textContent = card.front;
+            document.getElementById('backText').textContent = card.back;
+            document.getElementById('cardCounter').textContent = 'Card ' + (currentIndex + 1) + ' of ' + deck.length;
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            document.getElementById('nextBtn').disabled = currentIndex === deck.length - 1;
+
+            // Reset flip
+            document.getElementById('flashcard').classList.remove('is-flipped');
+        }
+
+        function flipCard() {
+            document.getElementById('flashcard').classList.toggle('is-flipped');
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCard();
+            }
+        }
+
+        function nextCard() {
+            if (currentIndex < deck.length - 1) {
+                currentIndex++;
+                renderCard();
+            }
+        }
+
+        function shuffleDeck() {
+            // Fisher-Yates shuffle
+            for (var i = deck.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = deck[i];
+                deck[i] = deck[j];
+                deck[j] = temp;
+            }
+            currentIndex = 0;
+            renderCard();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                prevCard();
+            } else if (e.key === 'ArrowRight') {
+                nextCard();
+            } else if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                flipCard();
+            }
+        });
+
+        // Initial render
+        renderCard();
+    </script>
+</body>
+</html>

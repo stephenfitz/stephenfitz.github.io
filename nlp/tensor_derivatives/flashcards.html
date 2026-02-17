@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tensor Derivatives — Flashcards</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        /* ── Light theme (default) ── */
+        :root {
+            --bg: #f5f5f5;
+            --body-bg: white;
+            --text: #2a2a2a;
+            --text-secondary: #555;
+            --card-bg: white;
+            --card-border: #ddd;
+            --card-shadow: rgba(0,0,0,0.12);
+            --btn-bg: #e8e8e8;
+            --btn-hover: #ddd;
+            --btn-text: #2a2a2a;
+            --link-color: #1a5276;
+            --toggle-bg: #ccc;
+            --toggle-knob: white;
+            --card-front-bg: #fafafa;
+            --card-back-bg: #f0f7f0;
+        }
+
+        /* ── Dark theme ── */
+        [data-theme="dark"] {
+            --bg: #1a1a1a;
+            --body-bg: #2a2a2a;
+            --text: #d4d4d4;
+            --text-secondary: #999;
+            --card-bg: #333;
+            --card-border: #444;
+            --card-shadow: rgba(0,0,0,0.4);
+            --btn-bg: #444;
+            --btn-hover: #555;
+            --btn-text: #d4d4d4;
+            --link-color: #5dade2;
+            --toggle-bg: #555;
+            --toggle-knob: #222;
+            --card-front-bg: #363636;
+            --card-back-bg: #2f3a2f;
+        }
+
+        html {
+            background-color: var(--bg);
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: var(--text);
+            max-width: 850px;
+            margin: 2rem auto;
+            padding: 2rem 3rem 3rem;
+            background-color: var(--body-bg);
+            box-shadow: 0 2px 8px var(--card-shadow);
+            border-radius: 4px;
+        }
+
+        /* ── Header ── */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header h1 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+            color: var(--text);
+        }
+
+        .article-link {
+            color: var(--link-color);
+            text-decoration: none;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .article-link:hover {
+            text-decoration: underline;
+        }
+
+        /* ── Theme toggle ── */
+        .theme-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            flex-shrink: 0;
+        }
+
+        .theme-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--toggle-bg);
+            border-radius: 30px;
+            transition: background-color 0.3s;
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            height: 24px;
+            width: 24px;
+            left: 3px;
+            bottom: 3px;
+            background-color: var(--toggle-knob);
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .theme-toggle input:checked + .toggle-slider::before {
+            transform: translateX(30px);
+        }
+
+        .toggle-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            pointer-events: none;
+            z-index: 1;
+            line-height: 1;
+        }
+
+        .toggle-icon.sun {
+            left: 7px;
+        }
+
+        .toggle-icon.moon {
+            right: 7px;
+        }
+
+        /* ── Card scene ── */
+        .card-scene {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 640px;
+            min-height: 320px;
+            margin: 0 auto 1.5rem;
+            cursor: pointer;
+        }
+
+        .card {
+            position: relative;
+            width: 100%;
+            min-height: 320px;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+        }
+
+        .card.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            min-height: 320px;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 2.5rem;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px var(--card-shadow);
+            text-align: center;
+        }
+
+        .card-front {
+            background-color: var(--card-front-bg);
+        }
+
+        .card-back {
+            background-color: var(--card-back-bg);
+            transform: rotateY(180deg);
+        }
+
+        .card-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .card-front .card-text {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .card-back .card-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .card-hint {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 1.2rem;
+        }
+
+        /* ── Controls ── */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 0.9rem;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            cursor: pointer;
+            transition: background-color 0.2s;
+            user-select: none;
+        }
+
+        .controls button:hover {
+            background-color: var(--btn-hover);
+        }
+
+        .controls button:active {
+            transform: scale(0.97);
+        }
+
+        .card-counter {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            min-width: 90px;
+            text-align: center;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            body {
+                margin: 0.5rem;
+                padding: 1rem 1.2rem 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.2rem;
+            }
+
+            .card-scene {
+                min-height: 280px;
+            }
+
+            .card, .card-face {
+                min-height: 280px;
+            }
+
+            .card-face {
+                padding: 1.5rem 1.2rem;
+            }
+
+            .card-front .card-text {
+                font-size: 1.05rem;
+            }
+
+            .card-back .card-text {
+                font-size: 0.95rem;
+            }
+
+            .controls {
+                gap: 0.6rem;
+            }
+
+            .controls button {
+                padding: 0.45rem 0.9rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div>
+            <h1>Tensor Derivatives &mdash; Flashcards</h1>
+            <a href="tensor_derivatives-light.html" class="article-link" data-article="tensor_derivatives">&larr; Back to article</a>
+        </div>
+        <label class="theme-toggle" title="Toggle dark/light theme">
+            <input type="checkbox" id="theme-switch">
+            <span class="toggle-slider"></span>
+            <span class="toggle-icon sun">&#9728;</span>
+            <span class="toggle-icon moon">&#9790;</span>
+        </label>
+    </div>
+
+    <!-- Flashcard -->
+    <div class="card-scene" id="card-scene">
+        <div class="card" id="card">
+            <div class="card-face card-front">
+                <div class="card-label">Question</div>
+                <div class="card-text" id="front-text"></div>
+                <div class="card-hint">Click to reveal answer</div>
+            </div>
+            <div class="card-face card-back">
+                <div class="card-label">Answer</div>
+                <div class="card-text" id="back-text"></div>
+                <div class="card-hint">Click to return to question</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <button id="prev-btn">&larr; Prev</button>
+        <span class="card-counter" id="card-counter">Card 1 of 18</span>
+        <button id="next-btn">Next &rarr;</button>
+        <button id="shuffle-btn">Shuffle</button>
+    </div>
+
+    <script>
+    (function () {
+        /* ── Flashcard data ── */
+        const flashcards = [
+            {
+                front: "What is the key strategy for computing tensor derivatives?",
+                back: "Reduce the problem to derivatives of individual scalar components. Once you understand the scalar structure, the tensor result becomes almost automatic."
+            },
+            {
+                front: "What is the Jacobian of y = Wx with respect to x?",
+                back: "\\(\\frac{\\partial \\vec{y}}{\\partial \\vec{x}} = W\\) — The Jacobian is the C×D matrix where \\(\\frac{\\partial y_i}{\\partial x_j} = W_{i,j}\\). Each entry of the Jacobian equals the corresponding entry of W."
+            },
+            {
+                front: "How do you compute a single component ∂y₃/∂x₇ for y = Wx?",
+                back: "Since \\(y_3 = \\sum_j W_{3,j} x_j\\), only the term \\(W_{3,7} x_7\\) depends on \\(x_7\\), so \\(\\frac{\\partial y_3}{\\partial x_7} = W_{3,7}\\)."
+            },
+            {
+                front: "What is the Jacobian of y = xW (row vector case)?",
+                back: "\\(\\frac{\\partial \\vec{y}}{\\partial \\vec{x}} = W^T\\) — The transpose appears because the orientation of vectors is different. With row vectors, \\(\\frac{\\partial y_3}{\\partial x_7} = W_{7,3}\\)."
+            },
+            {
+                front: "What is the derivative ∂y/∂W for y = xW?",
+                back: "A three-dimensional tensor (one axis for y components, two for W components). It is highly sparse: \\(\\frac{\\partial y_j}{\\partial W_{i,j}} = x_i\\), and all other entries are zero."
+            },
+            {
+                front: "Why are tensor derivatives often sparse?",
+                back: "Because each output component typically depends on only a small subset of the parameters. For y = xW, output y\u2C7C only depends on column j of W, making the derivative tensor mostly zeros."
+            },
+            {
+                front: "What does the chain rule look like for tensor derivatives?",
+                back: "For \\(\\vec{y} = V\\vec{m}\\) and \\(\\vec{m} = W\\vec{x}\\): \\(\\frac{\\partial y_i}{\\partial x_j} = \\sum_k \\frac{\\partial y_i}{\\partial m_k} \\frac{\\partial m_k}{\\partial x_j} = \\sum_k V_{i,k} W_{k,j} = (VW)_{i,j}\\)"
+            },
+            {
+                front: "What is the Jacobian of y = VWx?",
+                back: "\\(\\frac{\\partial \\vec{y}}{\\partial \\vec{x}} = VW\\) — The chain rule for tensor derivatives gives the matrix product, which is why backpropagation involves repeated matrix multiplications."
+            },
+            {
+                front: "How do batch computations affect derivatives?",
+                back: "For Y = XW with batch X \u2208 \u211D\u1D3A\u02E3\u1D30, \\(\\frac{\\partial Y_{a,b}}{\\partial X_{c,d}}\\) is nonzero only when a = c (rows correspond to independent examples). For each row, the derivative is W\u1D40."
+            },
+            {
+                front: "What three principles suffice for working with tensor derivatives?",
+                back: "1) Introduce intermediate variables \u2014 break long expressions into simple steps. 2) Work component-wise \u2014 start from a single scalar derivative. 3) Reduce along the right axes \u2014 apply summation to collapse intermediate tensors."
+            },
+            {
+                front: "Why does deep learning require tensor derivatives?",
+                back: "Modern deep learning is gradient-based optimization of parameters. Every training step involves computing derivatives of vectors w.r.t. vectors, vectors w.r.t. matrices, matrices w.r.t. matrices, and higher-order tensors in batch settings."
+            },
+            {
+                front: "What does \u2018reduce along the right axes\u2019 mean in tensor calculus?",
+                back: "Apply summation to collapse intermediate tensors into usable forms. For example, the chain rule involves summing over shared indices to produce the final derivative, similar to contracting tensor indices."
+            },
+            {
+                front: "What is the reduced representation G\u1D62\u2C7C for the derivative tensor \u2202y/\u2202W?",
+                back: "Since the full tensor F_{i,j,k} = \u2202y\u1D62/\u2202W_{j,k} has nonzero entries only when i = k, we can summarize it as G_{i,j} = F_{i,j,i} = x\u2C7C. This reduction is essential for efficient backpropagation."
+            },
+            {
+                front: "How does backpropagation relate to the chain rule for tensor derivatives?",
+                back: "Backpropagation is repeated application of the chain rule: \\(\\frac{\\partial \\vec{y}}{\\partial \\vec{x}} = \\frac{\\partial \\vec{y}}{\\partial \\vec{m}} \\frac{\\partial \\vec{m}}{\\partial \\vec{x}}\\), where each factor is a Jacobian matrix. The chain becomes a product of matrices."
+            },
+            {
+                front: "What is a Jacobian matrix?",
+                back: "The matrix of all partial derivatives \\(\\frac{\\partial y_i}{\\partial x_j}\\) for a vector-valued function y(x). If y \u2208 \u211D\u1D9C and x \u2208 \u211D\u1D30, the Jacobian is a C\u00D7D matrix."
+            },
+            {
+                front: "Why does the transpose W\u1D40 appear when differentiating row-vector products?",
+                back: "For y = xW (row vectors), \\(y_3 = \\sum_j x_j W_{j,3}\\), so \\(\\frac{\\partial y_3}{\\partial x_7} = W_{7,3}\\). Collecting all components gives the transpose W\u1D40 because the row/column indices are swapped."
+            },
+            {
+                front: "What happens when you differentiate Y = XW with respect to W?",
+                back: "This produces a 4-dimensional tensor (2 output indices from Y, 2 parameter indices from W). The result is sparse \u2014 \u2202Y_{a,b}/\u2202W_{c,d} is nonzero only when d = b, and equals X_{a,c}."
+            },
+            {
+                front: "What is the connection between \u2018index notation\u2019 and tensor derivatives?",
+                back: "Working component-wise (fixing specific indices like i,j,k) turns tensor calculus into ordinary scalar calculus. The tensor result is then assembled from the scalar components \u2014 careful bookkeeping of indices and shapes is the key skill."
+            }
+        ];
+
+        /* ── State ── */
+        let order = flashcards.map((_, i) => i);
+        let current = 0;
+        let flipped = false;
+
+        /* ── DOM refs ── */
+        const cardEl = document.getElementById('card');
+        const frontText = document.getElementById('front-text');
+        const backText = document.getElementById('back-text');
+        const counter = document.getElementById('card-counter');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const shuffleBtn = document.getElementById('shuffle-btn');
+        const themeSwitch = document.getElementById('theme-switch');
+        const articleLink = document.querySelector('.article-link');
+
+        /* ── Render card ── */
+        function renderCard() {
+            const idx = order[current];
+            const card = flashcards[idx];
+
+            /* Unflip first if needed */
+            if (flipped) {
+                flipped = false;
+                cardEl.classList.remove('is-flipped');
+            }
+
+            frontText.innerHTML = card.front;
+            backText.innerHTML = card.back;
+            counter.textContent = 'Card ' + (current + 1) + ' of ' + order.length;
+
+            /* Re-typeset MathJax */
+            if (window.MathJax && MathJax.typesetPromise) {
+                MathJax.typesetPromise([frontText, backText]).catch(function () {});
+            }
+        }
+
+        /* ── Flip ── */
+        document.getElementById('card-scene').addEventListener('click', function () {
+            flipped = !flipped;
+            cardEl.classList.toggle('is-flipped');
+
+            /* Re-typeset after flip animation completes */
+            if (window.MathJax && MathJax.typesetPromise) {
+                setTimeout(function () {
+                    MathJax.typesetPromise([frontText, backText]).catch(function () {});
+                }, 650);
+            }
+        });
+
+        /* ── Navigation ── */
+        prevBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            current = (current - 1 + order.length) % order.length;
+            renderCard();
+        });
+
+        nextBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            current = (current + 1) % order.length;
+            renderCard();
+        });
+
+        /* ── Shuffle (Fisher-Yates) ── */
+        shuffleBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            for (let i = order.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                var tmp = order[i];
+                order[i] = order[j];
+                order[j] = tmp;
+            }
+            current = 0;
+            renderCard();
+        });
+
+        /* ── Keyboard navigation ── */
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft') {
+                current = (current - 1 + order.length) % order.length;
+                renderCard();
+            } else if (e.key === 'ArrowRight') {
+                current = (current + 1) % order.length;
+                renderCard();
+            } else if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                flipped = !flipped;
+                cardEl.classList.toggle('is-flipped');
+                if (window.MathJax && MathJax.typesetPromise) {
+                    setTimeout(function () {
+                        MathJax.typesetPromise([frontText, backText]).catch(function () {});
+                    }, 650);
+                }
+            }
+        });
+
+        /* ── Theme ── */
+        function setTheme(dark) {
+            if (dark) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeSwitch.checked = true;
+                articleLink.href = 'tensor_derivatives-dark.html';
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                themeSwitch.checked = false;
+                articleLink.href = 'tensor_derivatives-light.html';
+            }
+            try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+        }
+
+        themeSwitch.addEventListener('change', function () {
+            setTheme(this.checked);
+        });
+
+        /* Restore saved theme */
+        var saved = null;
+        try { saved = localStorage.getItem('theme'); } catch (e) {}
+        if (saved === 'dark') {
+            setTheme(true);
+        } else {
+            setTheme(false);
+        }
+
+        /* ── Initial render ── */
+        renderCard();
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Machine Learning — Flashcards</title>
+    <script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']]
+        },
+        startup: {
+            ready: function () {
+                MathJax.startup.defaultReady();
+            }
+        }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+
+        /* ── Light theme (default) ── */
+        :root {
+            --bg: #f5f5f5;
+            --body-bg: #ffffff;
+            --text: #2a2a2a;
+            --text-secondary: #555555;
+            --card-bg-front: #ffffff;
+            --card-bg-back: #f9f9f5;
+            --card-border: #d0d0d0;
+            --card-shadow: rgba(0,0,0,0.12);
+            --btn-bg: #e8e8e8;
+            --btn-hover: #d8d8d8;
+            --btn-text: #2a2a2a;
+            --link: #1a5276;
+            --toggle-bg: #cccccc;
+            --toggle-knob: #ffffff;
+        }
+
+        /* ── Dark theme ── */
+        [data-theme="dark"] {
+            --bg: #1a1a1a;
+            --body-bg: #2a2a2a;
+            --text: #d4d4d4;
+            --text-secondary: #999999;
+            --card-bg-front: #333333;
+            --card-bg-back: #2e2e2e;
+            --card-border: #444444;
+            --card-shadow: rgba(0,0,0,0.4);
+            --btn-bg: #3a3a3a;
+            --btn-hover: #4a4a4a;
+            --btn-text: #d4d4d4;
+            --link: #5dade2;
+            --toggle-bg: #555555;
+            --toggle-knob: #222222;
+        }
+
+        html {
+            background-color: var(--bg);
+            transition: background-color 0.3s;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: var(--text);
+            max-width: 850px;
+            margin: 2rem auto;
+            padding: 2rem 2rem 3rem;
+            background-color: var(--body-bg);
+            box-shadow: 0 2px 8px var(--card-shadow);
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* ── Header ── */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .header h1 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin: 0 0 0.3rem;
+            color: var(--text);
+        }
+
+        .article-link {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 0.85rem;
+            color: var(--link);
+            text-decoration: none;
+        }
+
+        .article-link:hover {
+            text-decoration: underline;
+        }
+
+        /* ── Theme toggle ── */
+        .theme-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 30px;
+            background: var(--toggle-bg);
+            border-radius: 15px;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .theme-toggle .icon {
+            font-size: 14px;
+            width: 24px;
+            text-align: center;
+            line-height: 30px;
+            z-index: 1;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .theme-toggle .knob {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: var(--toggle-knob);
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        [data-theme="dark"] .theme-toggle .knob {
+            transform: translateX(30px);
+        }
+
+        /* ── Card scene ── */
+        .card-scene {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 600px;
+            min-height: 320px;
+            margin: 0 auto 1.5rem;
+            cursor: pointer;
+        }
+
+        .card {
+            width: 100%;
+            min-height: 320px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            min-height: 320px;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 2rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 4px 16px var(--card-shadow);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .card-front {
+            background-color: var(--card-bg-front);
+        }
+
+        .card-back {
+            background-color: var(--card-bg-back);
+            transform: rotateY(180deg);
+        }
+
+        .card-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .card-front .card-content {
+            font-size: 1.15rem;
+            line-height: 1.5;
+            color: var(--text);
+        }
+
+        .card-back .card-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text);
+            text-align: left;
+            width: 100%;
+        }
+
+        .card-hint {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-top: 1.2rem;
+        }
+
+        /* ── Controls ── */
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .controls button {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+            user-select: none;
+        }
+
+        .controls button:hover {
+            background: var(--btn-hover);
+        }
+
+        .controls button:disabled {
+            opacity: 0.4;
+            cursor: default;
+        }
+
+        .card-counter {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            min-width: 90px;
+            text-align: center;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            body {
+                margin: 0;
+                padding: 1rem;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .header h1 {
+                font-size: 1.25rem;
+                padding-right: 70px;
+            }
+
+            .card-scene {
+                min-height: 280px;
+            }
+
+            .card, .card-face {
+                min-height: 280px;
+            }
+
+            .card-front .card-content {
+                font-size: 1.05rem;
+            }
+
+            .card-back .card-content {
+                font-size: 0.9rem;
+            }
+
+            .controls {
+                gap: 0.5rem;
+            }
+
+            .controls button {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Machine Learning &mdash; Flashcards</h1>
+        <a href="../learning_theory/machine_learning-light.html" class="article-link" data-article="machine_learning">&larr; Back to article</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
+            <span class="icon">&#9728;</span>
+            <span class="icon">&#9790;</span>
+            <span class="knob"></span>
+        </button>
+    </div>
+
+    <div class="card-scene" id="cardScene">
+        <div class="card" id="card">
+            <div class="card-face card-front">
+                <div class="card-label">Question</div>
+                <div class="card-content" id="frontContent"></div>
+                <div class="card-hint">Click to reveal answer</div>
+            </div>
+            <div class="card-face card-back">
+                <div class="card-label">Answer</div>
+                <div class="card-content" id="backContent"></div>
+                <div class="card-hint">Click to return to question</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" aria-label="Previous card">&larr; Prev</button>
+        <span class="card-counter" id="cardCounter">Card 1 of 25</span>
+        <button id="nextBtn" aria-label="Next card">Next &rarr;</button>
+        <button id="shuffleBtn" aria-label="Shuffle cards">Shuffle</button>
+    </div>
+
+    <script>
+    (function () {
+        /* ── Flashcard data ── */
+        const flashcards = [
+            {
+                front: "What is Tom Mitchell\u2019s definition of machine learning?",
+                back: "A computer program learns from experience E with respect to some class of tasks T and performance measure P, if its performance at tasks in T, as measured by P, improves with experience E. (Tom Mitchell, 1997)"
+            },
+            {
+                front: "What is the bias-variance tradeoff?",
+                back: "\\(\\mathbb{E}[(y - \\hat{f}(x))^2] = \\text{Bias}^2 + \\text{Variance} + \\text{Irreducible Error}\\). Simple models: high bias, low variance. Complex models: low bias, high variance. The optimal model balances these."
+            },
+            {
+                front: "What is overfitting?",
+                back: "When a model is too complex and fits noise in the training data: low training error but high test error (large gap). The model has high variance. Remedies: more data, simpler model, regularization, early stopping, dropout."
+            },
+            {
+                front: "What is underfitting?",
+                back: "When a model is too simple to capture the underlying pattern: high training error AND high test error. The model has high bias."
+            },
+            {
+                front: "What is VC dimension?",
+                back: "The largest number of points that can be shattered by a hypothesis class. A set is shattered if for every possible labeling, some hypothesis achieves zero training error. Linear classifiers in \u211d\u1d48 have VC dimension d+1."
+            },
+            {
+                front: "What is the curse of dimensionality?",
+                back: "As dimensions d increase: volume grows exponentially (need exponentially more data), distances concentrate (nearest/farthest neighbors become similar), and grid search becomes hopeless. In 100D, searching 50% of each axis covers only (0.5)\u00b9\u2070\u2070 of space."
+            },
+            {
+                front: "What are the three data splits in supervised learning?",
+                back: "Training set (60\u201380%): fit parameters. Validation set (10\u201320%): tune hyperparameters and select models. Test set (10\u201320%): final evaluation only. Tuning on test set makes estimates optimistically biased."
+            },
+            {
+                front: "What is cross-entropy loss (negative log-likelihood)?",
+                back: "\\(L = -\\log p_\\theta(y \\mid x)\\). Minimum is 0 (perfect prediction). Approaches \u221e as predicted probability \u2192 0. Heavily penalizes confident wrong predictions. Corresponds to maximum likelihood estimation."
+            },
+            {
+                front: "What is k-fold cross-validation?",
+                back: "Partition data into k folds. For each fold i: train on all folds except i, validate on fold i. Average performance across all k results. Common: k=5 or k=10. Efficiently uses limited data."
+            },
+            {
+                front: "Name the four learning paradigms.",
+                back: "1) Supervised: learns from labeled (x,y) pairs. 2) Unsupervised: discovers structure in unlabeled data. 3) Self-supervised: creates own supervision from unlabeled data (e.g., next-word prediction). 4) Reinforcement: learns from rewards through environmental interaction."
+            },
+            {
+                front: "What is the difference between generative and discriminative models?",
+                back: "Discriminative models learn p(y|x) directly (logistic regression, SVMs, neural classifiers). Generative models learn p(x,y) = p(x|y)p(y) or p(x) (Naive Bayes, GMMs, LLMs). Discriminative often better for classification; generative can generate samples."
+            },
+            {
+                front: "What is PAC learning?",
+                back: "Probably Approximately Correct learning (Valiant, 1984). A class H is PAC-learnable if an algorithm can output h with P(R(h) \u2264 \u03b5) \u2265 1\u2212\u03b4 using samples polynomial in 1/\u03b5, 1/\u03b4, and complexity of H. A class is PAC-learnable iff it has finite VC dimension."
+            },
+            {
+                front: "What is the generalization bound from VC theory?",
+                back: "\\(R(f) \\leq \\hat{R}(f) + O\\left(\\sqrt{\\frac{h\\log(n/h) + \\log(1/\\delta)}{n}}\\right)\\) \u2014 test error \u2264 training error + complexity penalty. Penalty decreases with more data, increases with VC dimension h."
+            },
+            {
+                front: "What is the difference between parametric and nonparametric models?",
+                back: "Parametric: fixed number of parameters (linear regression, neural nets with fixed architecture). Fast, interpretable. Nonparametric: complexity grows with data (k-NN, kernel methods, GPs). Flexible, fewer assumptions, more data-hungry."
+            },
+            {
+                front: "What is the kernel trick in SVMs?",
+                back: "Implicitly maps data to a high-dimensional feature space for nonlinear decision boundaries, without explicitly computing the transformation. Common kernels: linear, polynomial, RBF (Gaussian)."
+            },
+            {
+                front: "What is gradient boosting?",
+                back: "Sequentially adds trees that correct errors of the ensemble (XGBoost, LightGBM). Often achieves state-of-the-art on tabular data. Each new tree fits the residual errors of the current ensemble."
+            },
+            {
+                front: "What is Naive Bayes?",
+                back: "Assumes features are conditionally independent given the class: \\(p(y|x) \\propto p(y) \\prod_j p(x_j|y)\\). Despite the naive independence assumption, works surprisingly well for text classification."
+            },
+            {
+                front: "What is dropout?",
+                back: "A regularization technique for neural networks that randomly zeros activations during training. Forces the network to learn redundant representations and prevents co-adaptation of neurons."
+            },
+            {
+                front: "What makes deep learning different from classical ML?",
+                back: "Automatic feature learning (no manual engineering), end-to-end training (raw inputs to outputs), benefits from massive data and compute, and representation learning (intermediate layers capture useful abstractions)."
+            },
+            {
+                front: "What is SGD (Stochastic Gradient Descent)?",
+                back: "Updates parameters using gradients computed on mini-batches: \\(\\theta \\leftarrow \\theta - \\eta \\nabla_\\theta L\\). More efficient than full-batch gradient descent. Adam optimizer adds adaptive learning rates with momentum."
+            },
+            {
+                front: "What is the hinge loss?",
+                back: "\\(L(y, \\hat{y}) = \\max(0, 1 - y \\cdot \\hat{y})\\) \u2014 used in SVMs. Zero loss when the prediction is correct with sufficient margin. A differentiable surrogate for the 0-1 classification loss."
+            },
+            {
+                front: "What is a random forest?",
+                back: "An ensemble of decision trees trained on bootstrap samples with random feature subsets. Reduces variance through averaging. Each tree is trained on a random subset of both data and features."
+            },
+            {
+                front: "Why does deep learning work despite overparameterization?",
+                back: "Several factors: compositionality (complex functions from simple parts), distributed representations, implicit regularization (SGD dynamics favor simple solutions), and hardware (GPUs enable large model training). Still being understood theoretically."
+            },
+            {
+                front: "What is the volume concentration near the boundary in high dimensions?",
+                back: "In high dimensions, most volume of a hypersphere is near the surface. In 100D, only 37% of volume lies in the inner 99% of the radius: (0.99)\u00b9\u2070\u2070 \u2248 0.366. Almost all points are near the boundary."
+            },
+            {
+                front: "What is self-supervised learning?",
+                back: "The model creates its own supervision from unlabeled data. Examples: language modeling (predict next word), masked prediction (BERT), contrastive learning. Drives recent advances by enabling learning from massive unlabeled datasets."
+            }
+        ];
+
+        /* ── State ── */
+        let deck = flashcards.map((c, i) => i);
+        let pos = 0;
+        let isFlipped = false;
+
+        /* ── DOM refs ── */
+        const cardEl = document.getElementById('card');
+        const cardScene = document.getElementById('cardScene');
+        const frontContent = document.getElementById('frontContent');
+        const backContent = document.getElementById('backContent');
+        const counter = document.getElementById('cardCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const shuffleBtn = document.getElementById('shuffleBtn');
+        const themeToggle = document.getElementById('themeToggle');
+        const articleLink = document.querySelector('.article-link');
+
+        /* ── Theme ── */
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            if (articleLink) {
+                articleLink.href = theme === 'dark'
+                    ? '../learning_theory/machine_learning-dark.html'
+                    : '../learning_theory/machine_learning-light.html';
+            }
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        applyTheme(savedTheme);
+
+        themeToggle.addEventListener('click', function () {
+            const current = document.documentElement.getAttribute('data-theme') || 'light';
+            applyTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        /* ── Card rendering ── */
+        function renderCard() {
+            const idx = deck[pos];
+            const fc = flashcards[idx];
+
+            /* Unflip without animation if currently flipped */
+            if (isFlipped) {
+                cardEl.style.transition = 'none';
+                cardEl.classList.remove('flipped');
+                /* force reflow */
+                void cardEl.offsetHeight;
+                cardEl.style.transition = '';
+                isFlipped = false;
+            }
+
+            frontContent.innerHTML = fc.front;
+            backContent.innerHTML = fc.back;
+
+            counter.textContent = 'Card ' + (pos + 1) + ' of ' + deck.length;
+            prevBtn.disabled = pos === 0;
+            nextBtn.disabled = pos === deck.length - 1;
+
+            /* Typeset MathJax on the front face (some questions might have math) */
+            if (window.MathJax && MathJax.typesetPromise) {
+                MathJax.typesetPromise([frontContent]).catch(function () {});
+            }
+        }
+
+        /* ── Flip ── */
+        cardScene.addEventListener('click', function () {
+            isFlipped = !isFlipped;
+            cardEl.classList.toggle('flipped');
+
+            if (isFlipped && window.MathJax && MathJax.typesetPromise) {
+                MathJax.typesetPromise([backContent]).catch(function () {});
+            }
+        });
+
+        /* ── Navigation ── */
+        prevBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            if (pos > 0) { pos--; renderCard(); }
+        });
+
+        nextBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            if (pos < deck.length - 1) { pos++; renderCard(); }
+        });
+
+        /* Keyboard navigation */
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft' && pos > 0) { pos--; renderCard(); }
+            else if (e.key === 'ArrowRight' && pos < deck.length - 1) { pos++; renderCard(); }
+            else if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                cardScene.click();
+            }
+        });
+
+        /* ── Shuffle (Fisher-Yates) ── */
+        shuffleBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                const tmp = deck[i]; deck[i] = deck[j]; deck[j] = tmp;
+            }
+            pos = 0;
+            renderCard();
+        });
+
+        /* ── Init ── */
+        renderCard();
+    })();
+    </script>
+</body>
+</html>
