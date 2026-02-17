@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+
+@page {
+    size: letter;
+    margin: 0.75in;
+}
+
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    html { background-color: #1a1a1a; }
+    body {
+        max-width: 100%;
+        margin: 0;
+        padding: 0.5in;
+        box-shadow: none;
+        border-radius: 0;
+    }
+}
+
+html {
+    background-color: #1a1a1a;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 12pt;
+    line-height: 1.6;
+    color: #d4d4d4;
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 3rem;
+    background-color: #2a2a2a;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #e8e8e8;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.3;
+    page-break-after: avoid;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 24pt;
+    border-bottom: 2px solid #666;
+    padding-bottom: 0.3em;
+    color: #f0f0f0;
+    font-weight: 700;
+}
+
+h2 { font-size: 18pt; color: #ddd; }
+h3 { font-size: 14pt; color: #ccc; }
+h4 { font-size: 12pt; color: #bbb; }
+h5 { font-size: 11pt; color: #aaa; }
+h6 { font-size: 11pt; font-style: italic; color: #999; }
+
+body > h1:first-child {
+    text-align: center;
+    border-bottom: 3px solid #888;
+    margin-top: 0;
+    font-size: 26pt;
+    letter-spacing: 0.02em;
+}
+
+/* Paragraphs */
+p {
+    margin: 0 0 0.8em 0;
+    text-align: justify;
+    hyphens: auto;
+}
+
+/* Links */
+a {
+    color: #bbb;
+    text-decoration: underline;
+    text-decoration-color: #666;
+}
+
+a:hover {
+    color: #e8e8e8;
+    text-decoration-color: #999;
+}
+
+/* Code */
+code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.9em;
+    background-color: #3a3a3a;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    color: #d0d0d0;
+    border: 1px solid #555;
+}
+
+pre {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 9pt;
+    line-height: 1.45;
+    background-color: #222;
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 16px;
+    overflow-x: auto;
+    page-break-inside: avoid;
+    color: #d0d0d0;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+    border: none;
+}
+
+/* Blockquotes */
+blockquote {
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    border-left: 4px solid #777;
+    color: #bbb;
+    background-color: #333;
+    font-style: italic;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* Lists */
+ul, ol {
+    margin: 0.5em 0 1em 0;
+    padding-left: 2em;
+}
+
+li { margin-bottom: 0.25em; }
+
+li > ul, li > ol {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+}
+
+th, td {
+    border: 1px solid #555;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #3a3a3a;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+tr:nth-child(even) { background-color: #2e2e2e; }
+tr:nth-child(odd) { background-color: #333; }
+
+/* Horizontal rule */
+hr {
+    border: none;
+    border-top: 2px solid #555;
+    margin: 1.5em 0;
+}
+
+/* Math */
+.math-display {
+    display: block;
+    text-align: center;
+    margin: 1em 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline { display: inline; }
+
+.katex {
+    font-size: 1.1em;
+    color: #e8e8e8;
+}
+.katex-display { margin: 0.75em 0; }
+.katex-display > .katex { text-align: center; }
+
+/* Images */
+img {
+    display: block;
+    width: 50%;
+    max-width: 50%;
+    height: auto;
+    margin: 1.5em auto 0.5em auto;
+    border: 2px solid #666;
+    border-radius: 4px;
+    padding: 8px;
+    background-color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Image captions */
+img + em {
+    display: block;
+    text-align: center;
+    font-size: 0.9em;
+    color: #aaa;
+    margin: 0.5em auto 1.5em auto;
+    max-width: 60%;
+    font-style: italic;
+}
+
+p > img {
+    display: block;
+    margin: 1.5em auto;
+}
+
+    </style>
+</head>
+<body>
+<h1 id="hidden-markov-models">Hidden Markov Models</h1>
+<p>A <strong>Hidden Markov Model</strong> (HMM) is a probabilistic model for sequences where we observe outputs generated by an underlying process whose states we cannot directly see. The "hidden" refers to these unobserved states: we see a sequence of observations (words, letters, sensor readings) and must infer the sequence of states that produced them.</p>
+<p>HMMs occupy a central position in the history of NLP and machine learning. They powered the first successful speech recognition systems, dominated part-of-speech tagging for decades, and introduced key algorithmic ideas—forward-backward computation, the Viterbi algorithm, expectation-maximization—that remain foundational to modern sequence modeling. Understanding HMMs provides essential background for appreciating both their discriminative successors (Conditional Random Fields) and the neural architectures that eventually superseded them.</p>
+<p>This article develops Hidden Markov Models from first principles. We begin with Markov chains, add the hidden state structure, derive the three fundamental algorithms (Forward, Viterbi, Baum-Welch), and apply the framework to part-of-speech tagging.</p>
+<hr />
+<h2 id="markov-chains">Markov Chains</h2>
+<p><img alt="markov model" src="figures/mm.png" /></p>
+<h3 id="sequences-of-random-variables">Sequences of Random Variables</h3>
+<p>Before introducing hidden states, we need to understand <strong>Markov chains</strong>—the visible-state foundation upon which HMMs are built.</p>
+<p>Consider a sequence of random variables $Q_1, Q_2, \ldots, Q_T$, where each $Q_t$ takes values from a finite set of <strong>states</strong> $\mathcal{S} = \{s_1, s_2, \ldots, s_N\}$. We might think of states as weather conditions (sunny, cloudy, rainy), parts of speech (noun, verb, adjective), or any discrete categories.</p>
+<p>We want to model the joint probability:</p>
+$$
+P(Q_1 = q_1, Q_2 = q_2, \ldots, Q_T = q_T)
+$$
+
+<p>By the chain rule of probability:</p>
+$$
+P(Q_1, \ldots, Q_T) = P(Q_1) \cdot P(Q_2 \mid Q_1) \cdot P(Q_3 \mid Q_1, Q_2) \cdots P(Q_T \mid Q_1, \ldots, Q_{T-1})
+$$
+
+<p>This exact decomposition requires conditioning on the entire history, which becomes intractable for long sequences.</p>
+<h3 id="the-markov-assumption">The Markov Assumption</h3>
+<p>A <strong>first-order Markov chain</strong> makes a simplifying assumption: the probability of the current state depends only on the immediately preceding state, not on the entire history.</p>
+$$
+\boxed{P(Q_t = q_t \mid Q_1 = q_1, \ldots, Q_{t-1} = q_{t-1}) = P(Q_t = q_t \mid Q_{t-1} = q_{t-1})}
+$$
+
+<p>This is the <strong>Markov property</strong>: the future is conditionally independent of the past given the present. All relevant information about the history is summarized in the current state.</p>
+<p>With this assumption, the joint probability simplifies to:</p>
+$$
+P(Q_1, \ldots, Q_T) = P(Q_1) \cdot \prod_{t=2}^{T} P(Q_t \mid Q_{t-1})
+$$
+
+<h3 id="formal-definition">Formal Definition</h3>
+<p>A Markov chain is specified by three components:</p>
+<p><strong>States</strong>: A finite set $\mathcal{S} = \{s_1, s_2, \ldots, s_N\}$ of $N$ states.</p>
+<p><strong>Transition probabilities</strong>: An $N \times N$ matrix $A$ where:</p>
+$$
+a_{ij} = P(Q_t = s_j \mid Q_{t-1} = s_i)
+$$
+
+<p>This is the probability of transitioning from state $s_i$ to state $s_j$. Each row must sum to 1:</p>
+$$
+\sum_{j=1}^{N} a_{ij} = 1 \quad \text{for all } i
+$$
+
+<p><strong>Initial distribution</strong>: A vector $\boldsymbol{\pi} = (\pi_1, \ldots, \pi_N)$ where:</p>
+$$
+\pi_i = P(Q_1 = s_i)
+$$
+
+<p>The initial probabilities must sum to 1: $\sum_{i=1}^{N} \pi_i = 1$.</p>
+<h3 id="stationarity">Stationarity</h3>
+<p>We typically assume the Markov chain is <strong>stationary</strong> (or time-homogeneous): the transition probabilities don't depend on the time step $t$. The probability of transitioning from state $i$ to state $j$ is the same whether we're at time 2 or time 200.</p>
+<h3 id="example-weather">Example: Weather</h3>
+<p>Consider a simple weather model with three states: Hot (H), Cold (C), and Warm (W).</p>
+<p>Transition matrix $A$:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>H</th>
+<th>C</th>
+<th>W</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>H</strong></td>
+<td>0.6</td>
+<td>0.1</td>
+<td>0.3</td>
+</tr>
+<tr>
+<td><strong>C</strong></td>
+<td>0.1</td>
+<td>0.8</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td><strong>W</strong></td>
+<td>0.3</td>
+<td>0.1</td>
+<td>0.6</td>
+</tr>
+</tbody>
+</table>
+<p>Initial distribution: $\boldsymbol{\pi} = (0.1, 0.7, 0.2)$</p>
+<p>The probability of the sequence Hot → Hot → Cold → Cold is:</p>
+$$
+P(H, H, C, C) = \pi_H \cdot a_{HH} \cdot a_{HC} \cdot a_{CC} = 0.1 \times 0.6 \times 0.1 \times 0.8 = 0.0048
+$$
+
+<h3 id="markov-chains-as-language-models">Markov Chains as Language Models</h3>
+<p>A Markov chain where states are words is exactly a <strong>bigram language model</strong>. The transition probability $a_{ij}$ represents $P(w_j \mid w_i)$—the probability of word $w_j$ following word $w_i$.</p>
+<p>In this view, generating text is a random walk through the state space: start at some word according to $\boldsymbol{\pi}$, then repeatedly transition to the next word according to $A$.</p>
+<hr />
+<h2 id="from-markov-chains-to-hidden-markov-models">From Markov Chains to Hidden Markov Models</h2>
+<p><img alt="hidden markov model" src="figures/hmm.png" /></p>
+<h3 id="the-limitation-of-observable-states">The Limitation of Observable States</h3>
+<p>In a standard Markov chain, we directly observe the state sequence $Q_1, Q_2, \ldots, Q_T$. But many real problems involve <strong>hidden</strong> states that we cannot observe directly.</p>
+<p><strong>Part-of-speech tagging</strong>: We observe words (the, cat, sat) but not their parts of speech (DT, NN, VBD). The tags are hidden; we must infer them from the words.</p>
+<p><strong>Speech recognition</strong>: We observe acoustic signals but not the words being spoken. The word sequence is hidden; we must infer it from the audio.</p>
+<p><strong>Gene finding</strong>: We observe DNA base sequences (A, T, G, C) but not whether each position is in a gene, intron, or intergenic region.</p>
+<p>In each case, we see <strong>observations</strong> generated by hidden states. The observations provide noisy, indirect evidence about which states generated them.</p>
+<h3 id="the-hidden-markov-model">The Hidden Markov Model</h3>
+<p>A <strong>Hidden Markov Model</strong> extends a Markov chain by adding an observation process. At each time step, the system is in some state, and that state generates an observation according to a probability distribution.</p>
+<p>Formally, an HMM is specified by:</p>
+<p><strong>States</strong>: A finite set $\mathcal{S} = \{s_1, s_2, \ldots, s_N\}$ of $N$ hidden states.</p>
+<p><strong>Observations</strong>: A finite vocabulary $\mathcal{V} = \{v_1, v_2, \ldots, v_M\}$ of $M$ possible observations.</p>
+<p><strong>Transition probabilities</strong> $A$: An $N \times N$ matrix where:</p>
+$$
+a_{ij} = P(Q_t = s_j \mid Q_{t-1} = s_i)
+$$
+
+<p><strong>Emission probabilities</strong> $B$: An $N \times M$ matrix where:</p>
+$$
+b_i(k) = P(O_t = v_k \mid Q_t = s_i)
+$$
+
+<p>This is the probability that state $s_i$ emits observation $v_k$. Each row sums to 1:</p>
+$$
+\sum_{k=1}^{M} b_i(k) = 1 \quad \text{for all } i
+$$
+
+<p><strong>Initial distribution</strong> $\boldsymbol{\pi}$: Where $\pi_i = P(Q_1 = s_i)$.</p>
+<p>We write $\lambda = (A, B, \boldsymbol{\pi})$ to denote the complete HMM specification.</p>
+<h3 id="two-independence-assumptions">Two Independence Assumptions</h3>
+<p>A first-order HMM makes two key assumptions:</p>
+<p><strong>Markov assumption</strong>: The current state depends only on the previous state:</p>
+$$
+P(Q_t \mid Q_1, \ldots, Q_{t-1}) = P(Q_t \mid Q_{t-1})
+$$
+
+<p><strong>Output independence</strong>: The current observation depends only on the current state, not on any other states or observations:</p>
+$$
+P(O_t \mid Q_1, \ldots, Q_T, O_1, \ldots, O_{t-1}, O_{t+1}, \ldots, O_T) = P(O_t \mid Q_t)
+$$
+
+<p>These assumptions yield the graphical model structure:</p>
+$$
+Q_1 \rightarrow Q_2 \rightarrow Q_3 \rightarrow \cdots \rightarrow Q_T
+$$
+$$
+\downarrow \quad\quad\quad \downarrow \quad\quad\quad \downarrow \quad\quad\quad\quad\quad\quad\quad \downarrow
+$$
+$$
+O_1 \quad\quad\quad O_2 \quad\quad\quad O_3 \quad\quad \cdots \quad\quad O_T
+$$
+
+<p>States form a Markov chain horizontally. Each state independently generates one observation vertically.</p>
+<h3 id="generative-process">Generative Process</h3>
+<p>To generate a sequence of length $T$ from an HMM:</p>
+<ol>
+<li>Sample initial state: $Q_1 \sim \boldsymbol{\pi}$</li>
+<li>Sample first observation: $O_1 \sim B_{Q_1}$ (the emission distribution for state $Q_1$)</li>
+<li>For $t = 2, \ldots, T$:<ul>
+<li>Sample next state: $Q_t \sim A_{Q_{t-1}}$ (the transition distribution from state $Q_{t-1}$)</li>
+<li>Sample observation: $O_t \sim B_{Q_t}$</li>
+</ul>
+</li>
+</ol>
+<p>This process produces a state sequence $\mathbf{Q} = (Q_1, \ldots, Q_T)$ and observation sequence $\mathbf{O} = (O_1, \ldots, O_T)$. Only $\mathbf{O}$ is observed; $\mathbf{Q}$ remains hidden.</p>
+<h3 id="joint-probability">Joint Probability</h3>
+<p>Given a state sequence $\mathbf{q} = (q_1, \ldots, q_T)$ and observation sequence $\mathbf{o} = (o_1, \ldots, o_T)$, the joint probability under the HMM is:</p>
+$$
+P(\mathbf{O} = \mathbf{o}, \mathbf{Q} = \mathbf{q} \mid \lambda) = \pi_{q_1} \cdot b_{q_1}(o_1) \cdot \prod_{t=2}^{T} a_{q_{t-1}, q_t} \cdot b_{q_t}(o_t)
+$$
+
+<p>More compactly:</p>
+$$
+P(\mathbf{o}, \mathbf{q} \mid \lambda) = \pi_{q_1} \prod_{t=1}^{T} b_{q_t}(o_t) \prod_{t=2}^{T} a_{q_{t-1}, q_t}
+$$
+
+<p>The first product captures emissions (observations given states); the second captures transitions (state dynamics).</p>
+<hr />
+<h2 id="the-three-fundamental-problems">The Three Fundamental Problems</h2>
+<p>Given an HMM $\lambda = (A, B, \boldsymbol{\pi})$ and observation sequences, three computational problems arise:</p>
+<p><strong>Problem 1 (Evaluation/Likelihood)</strong>: Given observations $\mathbf{o} = (o_1, \ldots, o_T)$, compute $P(\mathbf{o} \mid \lambda)$—the probability of the observations under the model.</p>
+<p><strong>Problem 2 (Decoding)</strong>: Given observations $\mathbf{o}$, find the most likely state sequence:</p>
+$$
+\mathbf{q}^* = \arg\max_{\mathbf{q}} P(\mathbf{q} \mid \mathbf{o}, \lambda)
+$$
+
+<p><strong>Problem 3 (Learning)</strong>: Given observations $\mathbf{o}$ (and possibly many observation sequences), find the parameters $\lambda^* = (A^*, B^*, \boldsymbol{\pi}^*)$ that maximize $P(\mathbf{o} \mid \lambda)$.</p>
+<p>Each problem has an elegant algorithmic solution exploiting the Markov structure.</p>
+<hr />
+<h2 id="problem-1-computing-observation-likelihood">Problem 1: Computing Observation Likelihood</h2>
+<h3 id="the-naive-approach">The Naive Approach</h3>
+<p>To compute $P(\mathbf{o} \mid \lambda)$, we could marginalize over all possible state sequences:</p>
+$$
+P(\mathbf{o} \mid \lambda) = \sum_{\mathbf{q}} P(\mathbf{o}, \mathbf{q} \mid \lambda)
+$$
+
+<p>With $N$ states and sequence length $T$, there are $N^T$ possible state sequences. For a POS tagger with 45 tags and a 20-word sentence, this is $45^{20} \approx 10^{33}$—computationally infeasible.</p>
+<h3 id="the-forward-algorithm">The Forward Algorithm</h3>
+<p>The <strong>Forward algorithm</strong> computes $P(\mathbf{o} \mid \lambda)$ in $O(N^2 T)$ time using dynamic programming.</p>
+<p>Define the <strong>forward variable</strong> $\alpha_t(i)$ as the probability of observing the partial sequence $o_1, \ldots, o_t$ and being in state $s_i$ at time $t$:</p>
+$$
+\alpha_t(i) = P(O_1 = o_1, \ldots, O_t = o_t, Q_t = s_i \mid \lambda)
+$$
+
+<p><strong>Initialization</strong> ($t = 1$):</p>
+$$
+\alpha_1(i) = \pi_i \cdot b_i(o_1) \quad \text{for } i = 1, \ldots, N
+$$
+
+<p>The probability of starting in state $i$ and emitting observation $o_1$.</p>
+<p><strong>Recursion</strong> ($t = 2, \ldots, T$):</p>
+$$
+\alpha_t(j) = \left[ \sum_{i=1}^{N} \alpha_{t-1}(i) \cdot a_{ij} \right] \cdot b_j(o_t) \quad \text{for } j = 1, \ldots, N
+$$
+
+<p>To be in state $j$ at time $t$ having seen $o_1, \ldots, o_t$: sum over all ways to reach $j$ (from any state $i$ at time $t-1$, weighted by $\alpha_{t-1}(i)$ and transition probability $a_{ij}$), then multiply by the emission probability $b_j(o_t)$.</p>
+<p><strong>Termination</strong>:</p>
+$$
+P(\mathbf{o} \mid \lambda) = \sum_{i=1}^{N} \alpha_T(i)
+$$
+
+<p>The total probability is the sum over all states we could end in.</p>
+<h3 id="why-it-works">Why It Works</h3>
+<p>The recursion exploits the Markov property. To compute $\alpha_t(j)$, we only need $\alpha_{t-1}(\cdot)$—not the entire history of how we reached time $t-1$. This is because:</p>
+$$
+P(Q_t = j, o_{1:t}) = \sum_{i} P(Q_{t-1} = i, o_{1:t-1}) \cdot P(Q_t = j \mid Q_{t-1} = i) \cdot P(o_t \mid Q_t = j)
+$$
+
+<p>The Markov property lets us factor the probability this way.</p>
+<h3 id="complexity-analysis">Complexity Analysis</h3>
+<ul>
+<li><strong>Space</strong>: $O(NT)$ to store the $\alpha$ table (or $O(N)$ if we only keep two columns)</li>
+<li><strong>Time</strong>: $O(N^2 T)$—for each of $T$ time steps, we compute $N$ values, each requiring a sum over $N$ previous states</li>
+</ul>
+<p>This is exponentially faster than the naive $O(N^T)$ approach.</p>
+<h3 id="the-backward-algorithm">The Backward Algorithm</h3>
+<p>The <strong>Backward algorithm</strong> computes probabilities starting from the end of the sequence.</p>
+<p>Define the <strong>backward variable</strong> $\beta_t(i)$ as the probability of observing the remaining sequence $o_{t+1}, \ldots, o_T$ given that we're in state $s_i$ at time $t$:</p>
+$$
+\beta_t(i) = P(O_{t+1} = o_{t+1}, \ldots, O_T = o_T \mid Q_t = s_i, \lambda)
+$$
+
+<p><strong>Initialization</strong> ($t = T$):</p>
+$$
+\beta_T(i) = 1 \quad \text{for } i = 1, \ldots, N
+$$
+
+<p><strong>Recursion</strong> ($t = T-1, \ldots, 1$):</p>
+$$
+\beta_t(i) = \sum_{j=1}^{N} a_{ij} \cdot b_j(o_{t+1}) \cdot \beta_{t+1}(j) \quad \text{for } i = 1, \ldots, N
+$$
+
+<p>We can verify: $P(\mathbf{o} \mid \lambda) = \sum_{i=1}^{N} \pi_i \cdot b_i(o_1) \cdot \beta_1(i) = \sum_{i=1}^{N} \alpha_1(i) \cdot \beta_1(i)$.</p>
+<p>More generally, for any time $t$:</p>
+$$
+P(\mathbf{o} \mid \lambda) = \sum_{i=1}^{N} \alpha_t(i) \cdot \beta_t(i)
+$$
+
+<p>The forward and backward variables together give us rich information about state probabilities, which we'll use for learning.</p>
+<hr />
+<h2 id="problem-2-finding-the-best-state-sequence">Problem 2: Finding the Best State Sequence</h2>
+<h3 id="the-decoding-problem">The Decoding Problem</h3>
+<p>Given observations $\mathbf{o} = (o_1, \ldots, o_T)$, we want the most probable state sequence:</p>
+$$
+\mathbf{q}^* = \arg\max_{\mathbf{q}} P(\mathbf{q} \mid \mathbf{o}, \lambda) = \arg\max_{\mathbf{q}} P(\mathbf{o}, \mathbf{q} \mid \lambda)
+$$
+
+<p>The second equality follows because $P(\mathbf{o} \mid \lambda)$ is constant across all $\mathbf{q}$.</p>
+<p>For POS tagging, this finds the tag sequence that best explains the observed words.</p>
+<h3 id="the-viterbi-algorithm">The Viterbi Algorithm</h3>
+<p>The <strong>Viterbi algorithm</strong> finds the optimal state sequence using dynamic programming. Instead of summing over paths (as in Forward), we take the maximum.</p>
+<p>Define the <strong>Viterbi variable</strong> $v_t(j)$ as the probability of the most likely state sequence ending in state $j$ at time $t$:</p>
+$$
+v_t(j) = \max_{q_1, \ldots, q_{t-1}} P(Q_1 = q_1, \ldots, Q_{t-1} = q_{t-1}, Q_t = j, O_1 = o_1, \ldots, O_t = o_t \mid \lambda)
+$$
+
+<p><strong>Initialization</strong> ($t = 1$):</p>
+$$
+v_1(j) = \pi_j \cdot b_j(o_1)
+$$
+$$
+\text{bp}_1(j) = 0 \quad \text{(no predecessor)}
+$$
+
+<p><strong>Recursion</strong> ($t = 2, \ldots, T$):</p>
+$$
+v_t(j) = \max_{i=1}^{N} \left[ v_{t-1}(i) \cdot a_{ij} \right] \cdot b_j(o_t)
+$$
+$$
+\text{bp}_t(j) = \arg\max_{i=1}^{N} \left[ v_{t-1}(i) \cdot a_{ij} \right]
+$$
+
+<p>The <strong>backpointer</strong> $\text{bp}_t(j)$ records which previous state $i$ achieved the maximum—we'll need this to reconstruct the optimal path.</p>
+<p><strong>Termination</strong>:</p>
+$$
+P^* = \max_{i=1}^{N} v_T(i) \quad \text{(probability of best path)}
+$$
+$$
+q_T^* = \arg\max_{i=1}^{N} v_T(i) \quad \text{(final state of best path)}
+$$
+
+<p><strong>Backtracking</strong> ($t = T-1, \ldots, 1$):</p>
+$$
+q_t^* = \text{bp}_{t+1}(q_{t+1}^*)
+$$
+
+<p>Follow backpointers from $q_T^*$ to recover the complete optimal sequence.</p>
+<h3 id="comparison-forward-vs-viterbi">Comparison: Forward vs. Viterbi</h3>
+<p>The Forward and Viterbi algorithms have identical structure—the only difference is <strong>sum vs. max</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Operation</th>
+<th>Computes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Forward</td>
+<td>$\sum_{i} \alpha_{t-1}(i) \cdot a_{ij}$</td>
+<td>Total probability</td>
+</tr>
+<tr>
+<td>Viterbi</td>
+<td>$\max_{i} v_{t-1}(i) \cdot a_{ij}$</td>
+<td>Best path probability</td>
+</tr>
+</tbody>
+</table>
+<p>Both run in $O(N^2 T)$ time. Viterbi additionally tracks backpointers.</p>
+<h3 id="log-space-computation">Log-Space Computation</h3>
+<p>In practice, multiplying many small probabilities causes numerical underflow. We work in log-space:</p>
+$$
+\log v_t(j) = \max_{i} \left[ \log v_{t-1}(i) + \log a_{ij} \right] + \log b_j(o_t)
+$$
+
+<p>Products become sums; the max operation is unchanged. This is numerically stable for arbitrarily long sequences.</p>
+<h3 id="example-pos-tagging">Example: POS Tagging</h3>
+<p>Consider tagging the sentence "Janet will back the bill."</p>
+<p><strong>States</strong>: Parts of speech (NNP, MD, VB, DT, NN, JJ, RB, ...)</p>
+<p><strong>Observations</strong>: Words (Janet, will, back, the, bill)</p>
+<p><strong>Transition probabilities</strong> $A$: Estimated from tagged corpora. For instance:</p>
+<ul>
+<li>$P(\text{VB} \mid \text{MD}) = 0.80$—verbs very likely follow modals</li>
+<li>$P(\text{NN} \mid \text{DT}) = 0.47$—nouns often follow determiners</li>
+</ul>
+<p><strong>Emission probabilities</strong> $B$: Also from tagged corpora. For instance:</p>
+<ul>
+<li>$P(\text{will} \mid \text{MD}) = 0.31$—"will" is often a modal</li>
+<li>$P(\text{back} \mid \text{VB}) = 0.0007$—"back" is sometimes a verb</li>
+<li>$P(\text{back} \mid \text{RB}) = 0.01$—"back" is sometimes an adverb</li>
+<li>$P(\text{back} \mid \text{NN}) = 0.0002$—"back" is sometimes a noun</li>
+</ul>
+<p>The Viterbi algorithm finds the tag sequence maximizing $\prod_t P(w_t \mid t_t) \cdot P(t_t \mid t_{t-1})$.</p>
+<p>For "Janet will back the bill":</p>
+<ul>
+<li>"Janet" is clearly NNP (proper noun)—emission probability dominates</li>
+<li>"will" following NNP: MD is highly probable (modal verb)</li>
+<li>"back" following MD: VB wins because $P(\text{VB} \mid \text{MD}) = 0.80$ is very high</li>
+<li>"the" is unambiguously DT (determiner)</li>
+<li>"bill" following DT: NN (noun) is most likely</li>
+</ul>
+<p>The Viterbi path: <strong>NNP → MD → VB → DT → NN</strong></p>
+<p><img alt="The Viterbi lattice for &quot;Janet will back the bill.&quot; Each column represents a word, each row a possible tag. Blue nodes indicate viable tags for each word; the highlighted path shows the optimal tag sequence. Greyed states have zero emission probability for that word." src="figures/viterbi_lattice.png" /></p>
+<hr />
+<h2 id="problem-3-learning-model-parameters">Problem 3: Learning Model Parameters</h2>
+<h3 id="the-learning-problem">The Learning Problem</h3>
+<p>Given a set of observation sequences $\mathbf{O} = (\mathbf{o}^{(1)}, \ldots, \mathbf{o}^{(K)})$, we want to find parameters $\lambda = (A, B, \boldsymbol{\pi})$ that maximize the likelihood:</p>
+$$
+\lambda^* = \arg\max_{\lambda} P(\mathbf{O} \mid \lambda) = \arg\max_{\lambda} \prod_{k=1}^{K} P(\mathbf{o}^{(k)} \mid \lambda)
+$$
+
+<h3 id="supervised-learning">Supervised Learning</h3>
+<p>If we observe both states and observations (e.g., a corpus with words and their POS tags), learning is straightforward <strong>maximum likelihood estimation</strong> via counting.</p>
+<p><strong>Transition probabilities</strong>:</p>
+$$
+\hat{a}_{ij} = \frac{C(s_i \rightarrow s_j)}{\sum_k C(s_i \rightarrow s_k)} = \frac{C(s_i \rightarrow s_j)}{C(s_i)}
+$$
+
+<p>Count transitions from state $i$ to state $j$, normalize by total transitions from $i$.</p>
+<p><strong>Emission probabilities</strong>:</p>
+$$
+\hat{b}_i(k) = \frac{C(s_i \text{ emits } v_k)}{\sum_m C(s_i \text{ emits } v_m)} = \frac{C(s_i \text{ emits } v_k)}{C(s_i)}
+$$
+
+<p>Count emissions of symbol $k$ from state $i$, normalize by total emissions from $i$.</p>
+<p><strong>Initial probabilities</strong>:</p>
+$$
+\hat{\pi}_i = \frac{C(\text{sequence starts in } s_i)}{K}
+$$
+
+<p>This is the standard relative frequency estimator, and it's the MLE.</p>
+<h3 id="unsupervised-learning-the-challenge">Unsupervised Learning: The Challenge</h3>
+<p>When states are truly hidden (we only observe $\mathbf{o}$, not $\mathbf{q}$), we face a harder problem. We can't simply count transitions because we don't know which states occurred!</p>
+<p>This is a <strong>latent variable</strong> problem. We want to maximize:</p>
+$$
+P(\mathbf{o} \mid \lambda) = \sum_{\mathbf{q}} P(\mathbf{o}, \mathbf{q} \mid \lambda)
+$$
+
+<p>The sum over hidden states makes direct optimization difficult—the likelihood is a mixture, and there's no closed-form MLE.</p>
+<h3 id="the-baum-welch-algorithm">The Baum-Welch Algorithm</h3>
+<p>The <strong>Baum-Welch algorithm</strong> (also called the Forward-Backward algorithm) is an instance of the <strong>Expectation-Maximization (EM)</strong> algorithm specialized to HMMs.</p>
+<p>The key insight: if we knew the <strong>expected counts</strong> of transitions and emissions (averaged over all possible state sequences, weighted by their probabilities), we could estimate parameters as in the supervised case.</p>
+<p><strong>E-step</strong>: Use current parameters $\lambda$ to compute expected counts.</p>
+<p><strong>M-step</strong>: Re-estimate parameters using these expected counts.</p>
+<p>Iterate until convergence.</p>
+<h3 id="computing-expected-counts">Computing Expected Counts</h3>
+<p>Define the probability of being in state $i$ at time $t$ given the observations:</p>
+$$
+\gamma_t(i) = P(Q_t = s_i \mid \mathbf{o}, \lambda) = \frac{P(Q_t = s_i, \mathbf{o} \mid \lambda)}{P(\mathbf{o} \mid \lambda)} = \frac{\alpha_t(i) \cdot \beta_t(i)}{\sum_{j=1}^{N} \alpha_t(j) \cdot \beta_t(j)}
+$$
+
+<p>This uses both forward ($\alpha$) and backward ($\beta$) variables—hence "forward-backward."</p>
+<p>Define the probability of transitioning from state $i$ to state $j$ at time $t$:</p>
+$$
+\xi_t(i, j) = P(Q_t = s_i, Q_{t+1} = s_j \mid \mathbf{o}, \lambda)
+$$
+
+<p>This can be computed as:</p>
+$$
+\xi_t(i, j) = \frac{\alpha_t(i) \cdot a_{ij} \cdot b_j(o_{t+1}) \cdot \beta_{t+1}(j)}{P(\mathbf{o} \mid \lambda)}
+$$
+
+<p><strong>Expected counts</strong>:</p>
+<p>Expected number of times in state $i$:</p>
+$$
+\sum_{t=1}^{T} \gamma_t(i)
+$$
+
+<p>Expected number of transitions from $i$ to $j$:</p>
+$$
+\sum_{t=1}^{T-1} \xi_t(i, j)
+$$
+
+<p>Expected number of times in state $i$ and observing symbol $k$:</p>
+$$
+\sum_{t : o_t = v_k} \gamma_t(i)
+$$
+
+<h3 id="parameter-re-estimation">Parameter Re-estimation</h3>
+<p><strong>Transition probabilities</strong>:</p>
+$$
+\hat{a}_{ij} = \frac{\sum_{t=1}^{T-1} \xi_t(i, j)}{\sum_{t=1}^{T-1} \gamma_t(i)} = \frac{\text{expected transitions } i \rightarrow j}{\text{expected transitions from } i}
+$$
+
+<p><strong>Emission probabilities</strong>:</p>
+$$
+\hat{b}_i(k) = \frac{\sum_{t : o_t = v_k} \gamma_t(i)}{\sum_{t=1}^{T} \gamma_t(i)} = \frac{\text{expected emissions of } k \text{ from } i}{\text{expected visits to } i}
+$$
+
+<p><strong>Initial probabilities</strong>:</p>
+$$
+\hat{\pi}_i = \gamma_1(i)
+$$
+
+<h3 id="convergence-properties">Convergence Properties</h3>
+<p>The Baum-Welch algorithm guarantees:</p>
+<ol>
+<li>Each iteration increases (or maintains) the likelihood: $P(\mathbf{o} \mid \lambda^{(t+1)}) \geq P(\mathbf{o} \mid \lambda^{(t)})$</li>
+<li>The algorithm converges to a local maximum (or saddle point)</li>
+</ol>
+<p><strong>Not guaranteed</strong>: convergence to the global maximum. The likelihood surface for HMMs is generally non-convex with multiple local optima. Results depend on initialization.</p>
+<p><strong>Practical considerations</strong>:</p>
+<ul>
+<li>Run multiple times with different random initializations</li>
+<li>Use domain knowledge to initialize sensibly (e.g., for POS tagging, initialize emissions so "the" has high probability under the determiner state)</li>
+<li>Monitor likelihood to check for convergence</li>
+</ul>
+<hr />
+<h2 id="application-part-of-speech-tagging">Application: Part-of-Speech Tagging</h2>
+<h3 id="formulating-pos-tagging-as-an-hmm">Formulating POS Tagging as an HMM</h3>
+<p><strong>States</strong>: The tag set (e.g., Penn Treebank's 45 tags: NN, NNS, VB, VBD, DT, JJ, ...)</p>
+<p><strong>Observations</strong>: Words in the vocabulary</p>
+<p><strong>Task</strong>: Given a sentence $w_1, \ldots, w_n$, find the tag sequence $t_1, \ldots, t_n$ that maximizes $P(t_1, \ldots, t_n \mid w_1, \ldots, w_n)$.</p>
+<h3 id="the-noisy-channel-model">The Noisy Channel Model</h3>
+<p>Using Bayes' rule:</p>
+$$
+\hat{t}_{1:n} = \arg\max_{t_{1:n}} P(t_{1:n} \mid w_{1:n}) = \arg\max_{t_{1:n}} \frac{P(w_{1:n} \mid t_{1:n}) \cdot P(t_{1:n})}{P(w_{1:n})}
+$$
+
+<p>Since $P(w_{1:n})$ is constant across all tag sequences:</p>
+$$
+\hat{t}_{1:n} = \arg\max_{t_{1:n}} P(w_{1:n} \mid t_{1:n}) \cdot P(t_{1:n})
+$$
+
+<p><strong>HMM assumptions</strong>:</p>
+<p>Output independence (emission):</p>
+$$
+P(w_{1:n} \mid t_{1:n}) \approx \prod_{i=1}^{n} P(w_i \mid t_i)
+$$
+
+<p>Each word depends only on its own tag.</p>
+<p>Markov assumption (transition):</p>
+$$
+P(t_{1:n}) \approx \prod_{i=1}^{n} P(t_i \mid t_{i-1})
+$$
+
+<p>Each tag depends only on the previous tag (with $t_0$ being a special start symbol).</p>
+<p><strong>Combined</strong>:</p>
+$$
+\hat{t}_{1:n} = \arg\max_{t_{1:n}} \prod_{i=1}^{n} \underbrace{P(w_i \mid t_i)}_{\text{emission}} \cdot \underbrace{P(t_i \mid t_{i-1})}_{\text{transition}}
+$$
+
+<p>This is exactly the Viterbi decoding problem!</p>
+<h3 id="training-from-tagged-corpora">Training from Tagged Corpora</h3>
+<p>From a tagged corpus (e.g., Penn Treebank), we estimate:</p>
+<p><strong>Transition probabilities</strong>:</p>
+$$
+P(t_i \mid t_{i-1}) = \frac{C(t_{i-1}, t_i)}{C(t_{i-1})}
+$$
+
+<p>Count bigrams of adjacent tags.</p>
+<p><strong>Emission probabilities</strong>:</p>
+$$
+P(w \mid t) = \frac{C(t, w)}{C(t)}
+$$
+
+<p>Count how often each word appears with each tag.</p>
+<h3 id="example-probabilities">Example Probabilities</h3>
+<p>From the Wall Street Journal corpus:</p>
+<p><strong>Transitions</strong>:</p>
+<ul>
+<li>$P(\text{VB} \mid \text{MD}) = 0.80$—base verbs very likely after modals</li>
+<li>$P(\text{NN} \mid \text{DT}) = 0.47$—nouns common after determiners</li>
+<li>$P(\text{JJ} \mid \text{DT}) = 0.22$—adjectives also follow determiners</li>
+<li>$P(\text{RB} \mid \text{VB}) = 0.05$—adverbs sometimes follow verbs</li>
+</ul>
+<p><strong>Emissions</strong>:</p>
+<ul>
+<li>$P(\text{will} \mid \text{MD}) = 0.31$—"will" often a modal</li>
+<li>$P(\text{will} \mid \text{NN}) = 0.002$—"will" rarely a noun (but possible: "last will")</li>
+<li>$P(\text{the} \mid \text{DT}) = 0.51$—"the" is almost always a determiner</li>
+</ul>
+<h3 id="handling-unknown-words">Handling Unknown Words</h3>
+<p>A major challenge: words not seen in training. If $P(w \mid t) = 0$ for all $t$, Viterbi fails.</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>
+<p><strong>Smoothing</strong>: Add small probability mass to unseen word-tag pairs (e.g., add-k smoothing)</p>
+</li>
+<li>
+<p><strong>Unknown word features</strong>: Replace rare/unknown words with feature signatures based on:</p>
+<ul>
+<li>Capitalization (likely proper noun)</li>
+<li>Suffixes: -ed (past tense), -ing (gerund), -ly (adverb), -tion (noun)</li>
+<li>Contains digits (likely number)</li>
+<li>Contains hyphen (likely adjective or compound)</li>
+</ul>
+</li>
+<li>
+<p><strong>Morphological analysis</strong>: Use prefix/suffix patterns to estimate emission probabilities for unknown words</p>
+</li>
+</ol>
+<h3 id="performance">Performance</h3>
+<p>HMM taggers achieve <strong>96-97% accuracy</strong> on English POS tagging—remarkably good for such a simple model. Most errors occur on:</p>
+<ul>
+<li>Ambiguous words (e.g., "that" as DT vs. IN vs. WDT)</li>
+<li>Unknown words (proper nouns, technical terms)</li>
+<li>Rare constructions</li>
+</ul>
+<hr />
+<h2 id="limitations-of-hmms">Limitations of HMMs</h2>
+<h3 id="the-independence-assumptions">The Independence Assumptions</h3>
+<p>HMMs make strong assumptions that limit their expressiveness:</p>
+<p><strong>Output independence</strong>: Each word depends only on its own tag. But words depend on context! "Bank" following "river" is likely a noun; following "will" is likely a verb.</p>
+<p><strong>First-order Markov</strong>: Each tag depends only on the previous tag. But longer dependencies exist: the tag of "to" affects tags several words later.</p>
+<p><strong>Generative direction</strong>: We model $P(w \mid t)$, but discriminatively we want $P(t \mid w)$. The generative model wastes capacity modeling $P(w)$.</p>
+<h3 id="feature-limitations">Feature Limitations</h3>
+<p>HMMs struggle to incorporate arbitrary features:</p>
+<ul>
+<li>Capitalization</li>
+<li>Word shape (e.g., "Xx" for "John")</li>
+<li>Prefix/suffix patterns</li>
+<li>Surrounding words</li>
+<li>Domain-specific cues</li>
+</ul>
+<p>Adding such features requires restructuring the model, often inelegantly.</p>
+<h3 id="the-rise-of-discriminative-models">The Rise of Discriminative Models</h3>
+<p><strong>Conditional Random Fields (CRFs)</strong> address these limitations by directly modeling $P(\mathbf{t} \mid \mathbf{w})$:</p>
+$$
+P(\mathbf{t} \mid \mathbf{w}) = \frac{1}{Z(\mathbf{w})} \exp\left( \sum_{t} \sum_{k} \lambda_k f_k(t_{t-1}, t_t, \mathbf{w}, t) \right)
+$$
+
+<p>CRFs allow arbitrary feature functions $f_k$ depending on:</p>
+<ul>
+<li>Current and previous tags</li>
+<li>The entire observation sequence</li>
+<li>Position in the sequence</li>
+</ul>
+<p>This lets us include capitalization, word shape, surrounding context, and more—all in a principled probabilistic framework.</p>
+<p>CRFs achieve 97%+ accuracy on POS tagging and have largely replaced HMMs for sequence labeling in NLP.</p>
+<h3 id="neural-sequence-models">Neural Sequence Models</h3>
+<p>Modern neural approaches (BiLSTMs, Transformers) further improve by:</p>
+<ul>
+<li>Learning features automatically from data</li>
+<li>Capturing long-range dependencies</li>
+<li>Scaling to massive datasets</li>
+</ul>
+<p>A BiLSTM-CRF combines:</p>
+<ul>
+<li>Neural feature extraction (BiLSTM encodes entire sentence)</li>
+<li>Structured prediction (CRF layer for tag coherence)</li>
+</ul>
+<p>Transformer-based models (BERT, etc.) achieve near-human performance on many sequence labeling tasks.</p>
+<hr />
+<h2 id="mathematical-properties">Mathematical Properties</h2>
+<h3 id="hmms-as-graphical-models">HMMs as Graphical Models</h3>
+<p>An HMM is a <strong>directed graphical model</strong> (Bayesian network) with the structure:</p>
+$$
+\pi \rightarrow Q_1 \rightarrow Q_2 \rightarrow \cdots \rightarrow Q_T
+$$
+$$
+\quad\quad\quad \downarrow \quad\quad\quad \downarrow \quad\quad\quad\quad\quad\quad\quad \downarrow
+$$
+$$
+\quad\quad\quad O_1 \quad\quad\quad O_2 \quad\quad \cdots \quad\quad O_T
+$$
+
+<p>This structure encodes conditional independencies:</p>
+<ul>
+<li>$O_t \perp O_{t'} \mid Q_t$ for $t' \neq t$ (observations conditionally independent given states)</li>
+<li>$Q_t \perp Q_{t-2}, Q_{t-3}, \ldots \mid Q_{t-1}$ (Markov property)</li>
+</ul>
+<h3 id="expressiveness">Expressiveness</h3>
+<p>HMMs can represent any distribution over sequences that factors according to the graphical model structure. However, they're limited:</p>
+<p><strong>HMMs are equivalent to probabilistic finite automata</strong>. They can model regular languages but not context-free languages. For example, an HMM cannot model the language $\{a^n b^n : n \geq 0\}$ (equal numbers of a's followed by b's).</p>
+<p>This limitation arises because HMMs have finite memory (the state). They cannot "count" unboundedly.</p>
+<h3 id="higher-order-hmms">Higher-Order HMMs</h3>
+<p>A <strong>second-order HMM</strong> conditions on the previous two states:</p>
+$$
+P(Q_t \mid Q_1, \ldots, Q_{t-1}) = P(Q_t \mid Q_{t-2}, Q_{t-1})
+$$
+
+<p>This is equivalent to a first-order HMM with expanded state space: states become pairs $(Q_{t-2}, Q_{t-1})$, giving $N^2$ combined states.</p>
+<p>Higher orders capture longer dependencies but increase parameters quadratically (or worse).</p>
+<h3 id="continuous-observations">Continuous Observations</h3>
+<p>While we've discussed discrete observations, HMMs extend naturally to continuous observations. Replace discrete emission probabilities with probability density functions:</p>
+$$
+b_i(o) = f(o \mid \theta_i)
+$$
+
+<p>Common choices:</p>
+<ul>
+<li><strong>Gaussian</strong>: $b_i(o) = \mathcal{N}(o \mid \mu_i, \Sigma_i)$</li>
+<li><strong>Gaussian Mixture Models</strong>: $b_i(o) = \sum_m w_{im} \mathcal{N}(o \mid \mu_{im}, \Sigma_{im})$</li>
+</ul>
+<p>Gaussian mixture HMMs were the dominant approach in speech recognition for decades.</p>
+<hr />
+<h2 id="historical-notes">Historical Notes</h2>
+<h3 id="origins-in-speech-recognition">Origins in Speech Recognition</h3>
+<p>HMMs were introduced to speech recognition by Baker (1975) and Jelinek (1976) at IBM, building on earlier statistical work by Baum and colleagues in the 1960s.</p>
+<p>The framework enabled the first practical speech recognition systems by:</p>
+<ul>
+<li>Modeling temporal dynamics of speech (transitions between phonemes)</li>
+<li>Handling variability in pronunciation (emission distributions)</li>
+<li>Providing efficient algorithms (Viterbi, Baum-Welch)</li>
+</ul>
+<h3 id="the-nlp-revolution">The NLP Revolution</h3>
+<p>HMMs transformed NLP in the 1980s-1990s:</p>
+<ul>
+<li><strong>Part-of-speech tagging</strong>: Church (1988) demonstrated that simple HMM taggers outperformed rule-based systems</li>
+<li><strong>Named entity recognition</strong>: Bikel et al. (1997) used HMMs for identifying persons, organizations, locations</li>
+<li><strong>Information extraction</strong>: HMMs parsed semi-structured text</li>
+</ul>
+<p>The success of statistical methods, including HMMs, shifted NLP from rule-based to data-driven approaches.</p>
+<h3 id="beyond-hmms">Beyond HMMs</h3>
+<p>The 2000s saw HMMs superseded by:</p>
+<ul>
+<li><strong>Maximum Entropy Markov Models (MEMMs)</strong>: Discriminative models with arbitrary features, but suffered from "label bias"</li>
+<li><strong>Conditional Random Fields</strong>: Solved label bias while retaining rich features</li>
+<li><strong>Neural sequence models</strong>: Learned features automatically, captured long-range dependencies</li>
+</ul>
+<p>Despite these advances, HMMs remain valuable:</p>
+<ul>
+<li>Simple, interpretable, well-understood</li>
+<li>Efficient training and inference</li>
+<li>Strong baseline for sequence modeling tasks</li>
+<li>Foundation for understanding more complex models</li>
+</ul>
+<hr />
+<h2 id="summary">Summary</h2>
+<p>Hidden Markov Models provide a principled probabilistic framework for sequence labeling:</p>
+<p><strong>Structure</strong>: Hidden states generate observations; states form a Markov chain.</p>
+<p><strong>Three problems</strong>:</p>
+<ol>
+<li><strong>Evaluation</strong> (Forward algorithm): Compute $P(\mathbf{o} \mid \lambda)$ in $O(N^2 T)$ time</li>
+<li><strong>Decoding</strong> (Viterbi algorithm): Find optimal state sequence in $O(N^2 T)$ time</li>
+<li><strong>Learning</strong> (Baum-Welch): Estimate parameters via EM</li>
+</ol>
+<p><strong>Applications</strong>: POS tagging, speech recognition, named entity recognition, bioinformatics.</p>
+<p><strong>Limitations</strong>: Strong independence assumptions, difficulty incorporating rich features, generative (not discriminative).</p>
+<p><strong>Legacy</strong>: Introduced dynamic programming for sequences, EM for latent variables, and the sequence labeling paradigm—ideas that remain central to modern NLP.</p>
+<p>The transition from HMMs to CRFs to neural models illustrates a recurring theme in machine learning: start with strong assumptions for tractability, then relax assumptions as data and computation allow. HMMs were a crucial step in this progression, and understanding them illuminates both the foundations and frontiers of sequence modeling.</p>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false,
+            trust: true,
+            strict: false,
+            macros: {
+                "\\logit": "\\operatorname{logit}",
+                "\\softmax": "\\operatorname{softmax}",
+                "\\sigmoid": "\\operatorname{sigmoid}",
+                "\\sgn": "\\operatorname{sgn}",
+                "\\sign": "\\operatorname{sign}",
+                "\\argmax": "\\operatorname{argmax}",
+                "\\argmin": "\\operatorname{argmin}",
+                "\\Var": "\\operatorname{Var}",
+                "\\Cov": "\\operatorname{Cov}",
+                "\\Corr": "\\operatorname{Corr}",
+                "\\E": "\\mathbb{E}",
+                "\\P": "\\mathbb{P}",
+                "\\R": "\\mathbb{R}",
+                "\\N": "\\mathbb{N}",
+                "\\Z": "\\mathbb{Z}",
+                "\\C": "\\mathbb{C}",
+                "\\ind": "\\mathbb{1}",
+                "\\KL": "\\operatorname{KL}",
+                "\\Tr": "\\operatorname{Tr}",
+                "\\tr": "\\operatorname{tr}",
+                "\\diag": "\\operatorname{diag}",
+                "\\rank": "\\operatorname{rank}",
+                "\\relu": "\\operatorname{ReLU}",
+                "\\gelu": "\\operatorname{GELU}",
+                "\\selu": "\\operatorname{SELU}"
+            }
+        });
+    });
+</script>
+</body>
+</html>
