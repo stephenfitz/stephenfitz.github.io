@@ -4,6 +4,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>On Science — Flashcards</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            startup: {
+                typeset: false
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         * {
             margin: 0;
@@ -452,7 +464,7 @@
 
     <script>
         // Flashcard data
-        const cards = [
+        var cards = [
             {
                 front: "What distinguishes a science according to philosophers of science?",
                 back: "Not primarily its method, but the kind of explanations it aims to deliver. A discipline is scientific if it attempts to provide scientific explanations of a class of phenomena."
@@ -543,11 +555,11 @@
             }
         ];
 
-        let currentIndex = 0;
-        let deck = cards.map((_, i) => i);
+        var currentIndex = 0;
+        var deck = cards.map(function(_, i) { return i; });
 
         // Theme management
-        const savedTheme = localStorage.getItem('theme') || 'light';
+        var savedTheme = localStorage.getItem('theme') || 'light';
         if (savedTheme === 'dark') {
             document.documentElement.classList.add('dark');
             document.body.classList.add('dark');
@@ -555,7 +567,7 @@
         updateArticleLink();
 
         function toggleTheme() {
-            const isDark = document.body.classList.contains('dark');
+            var isDark = document.body.classList.contains('dark');
             if (isDark) {
                 document.documentElement.classList.remove('dark');
                 document.body.classList.remove('dark');
@@ -569,8 +581,8 @@
         }
 
         function updateArticleLink() {
-            const isDark = document.body.classList.contains('dark');
-            const theme = isDark ? 'dark' : 'light';
+            var isDark = document.body.classList.contains('dark');
+            var theme = isDark ? 'dark' : 'light';
             document.querySelectorAll('.article-link').forEach(function(link) {
                 var article = link.getAttribute('data-article');
                 link.href = article + '-' + theme + '.html';
@@ -580,18 +592,31 @@
         // Card rendering
         function renderCard() {
             var card = cards[deck[currentIndex]];
-            document.getElementById('frontText').textContent = card.front;
-            document.getElementById('backText').textContent = card.back;
+            document.getElementById('frontText').innerHTML = card.front;
+            document.getElementById('backText').innerHTML = card.back;
             document.getElementById('cardCounter').textContent = 'Card ' + (currentIndex + 1) + ' of ' + deck.length;
             document.getElementById('prevBtn').disabled = currentIndex === 0;
             document.getElementById('nextBtn').disabled = currentIndex === deck.length - 1;
 
             // Reset flip
             document.getElementById('flashcard').classList.remove('is-flipped');
+
+            // Typeset MathJax
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('frontText'), document.getElementById('backText')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
+            }
         }
 
         function flipCard() {
             document.getElementById('flashcard').classList.toggle('is-flipped');
+            // Re-render MathJax on flip to ensure back side renders
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('backText')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
+            }
         }
 
         function prevCard() {

@@ -5,345 +5,466 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>N-gram Language Models — Flashcards</title>
     <script>
-    window.MathJax = {
-        tex: {
-            inlineMath: [['\\(', '\\)']],
-            displayMath: [['\\[', '\\]']]
-        },
-        startup: {
-            ready: function () {
-                MathJax.startup.defaultReady();
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            startup: {
+                typeset: false
             }
-        }
-    };
+        };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        *, *::before, *::after { box-sizing: border-box; }
-
-        /* ── Light theme (default) ── */
-        :root {
-            --bg: #f5f5f5;
-            --body-bg: #ffffff;
-            --text: #2a2a2a;
-            --text-secondary: #555555;
-            --card-bg-front: #ffffff;
-            --card-bg-back: #f9f9f5;
-            --card-border: #d0d0d0;
-            --card-shadow: rgba(0,0,0,0.12);
-            --btn-bg: #e8e8e8;
-            --btn-hover: #d8d8d8;
-            --btn-text: #2a2a2a;
-            --link: #1a5276;
-            --toggle-bg: #cccccc;
-            --toggle-knob: #ffffff;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* ── Dark theme ── */
-        [data-theme="dark"] {
-            --bg: #1a1a1a;
-            --body-bg: #2a2a2a;
-            --text: #d4d4d4;
-            --text-secondary: #999999;
-            --card-bg-front: #333333;
-            --card-bg-back: #2e2e2e;
-            --card-border: #444444;
-            --card-shadow: rgba(0,0,0,0.4);
-            --btn-bg: #3a3a3a;
-            --btn-hover: #4a4a4a;
-            --btn-text: #d4d4d4;
-            --link: #5dade2;
-            --toggle-bg: #555555;
-            --toggle-knob: #222222;
-        }
-
+        /* Light theme (default) */
         html {
-            background-color: var(--bg);
-            transition: background-color 0.3s;
+            background-color: #f5f5f5;
+            transition: background-color 0.3s ease;
         }
 
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
             font-size: 12pt;
             line-height: 1.6;
-            color: var(--text);
-            max-width: 850px;
+            color: #2a2a2a;
+            max-width: 900px;
             margin: 2rem auto;
-            padding: 2rem 2rem 3rem;
-            background-color: var(--body-bg);
-            box-shadow: 0 2px 8px var(--card-shadow);
+            padding: 3rem;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
             border-radius: 4px;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* ── Header ── */
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-            position: relative;
+        /* Dark theme */
+        html.dark {
+            background-color: #1a1a1a;
         }
 
-        .header h1 {
+        body.dark {
+            color: #d4d4d4;
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+        }
+
+        /* Header */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5em;
+            padding-bottom: 0.5em;
+            border-bottom: 3px solid #666;
+            flex-wrap: wrap;
+            gap: 1em;
+        }
+
+        body.dark .header-container {
+            border-color: #888;
+        }
+
+        h1 {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-            font-size: 1.6rem;
-            font-weight: 600;
-            margin: 0 0 0.3rem;
-            color: var(--text);
+            font-size: 24pt;
+            color: #1a1a1a;
+            letter-spacing: 0.02em;
+            font-weight: 700;
+            flex: 1;
+            min-width: 250px;
         }
 
-        .article-link {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-            font-size: 0.85rem;
-            color: var(--link);
-            text-decoration: none;
+        body.dark h1 {
+            color: #f0f0f0;
         }
 
-        .article-link:hover {
-            text-decoration: underline;
-        }
-
-        /* ── Theme toggle ── */
+        /* Theme toggle switch */
         .theme-toggle {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 60px;
-            height: 30px;
-            background: var(--toggle-bg);
-            border-radius: 15px;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            transition: background 0.3s;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 0.8em;
         }
 
-        .theme-toggle .icon {
-            font-size: 14px;
-            width: 24px;
-            text-align: center;
-            line-height: 30px;
-            z-index: 1;
-            user-select: none;
-            pointer-events: none;
+        .toggle-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #666;
         }
 
-        .theme-toggle .knob {
+        body.dark .toggle-label {
+            color: #aaa;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background-color: #bbb;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            border: 2px solid #999;
+        }
+
+        body.dark .toggle-switch {
+            background-color: #666;
+            border-color: #888;
+        }
+
+        .toggle-slider {
             position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 24px;
-            height: 24px;
-            background: var(--toggle-knob);
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background-color: #fff;
             border-radius: 50%;
-            transition: transform 0.3s;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
 
-        [data-theme="dark"] .theme-toggle .knob {
+        body.dark .toggle-slider {
             transform: translateX(30px);
+            background-color: #2a2a2a;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
         }
 
-        /* ── Card scene ── */
-        .card-scene {
+        .toggle-slider::before {
+            content: '\2600';
+            color: #2a2a2a;
+        }
+
+        body.dark .toggle-slider::before {
+            content: '\263E';
+            color: #c0c8d8;
+        }
+
+        /* Article back link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2em;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #2a2a2a;
+        }
+
+        body.dark .back-link {
+            color: #aaa;
+        }
+
+        body.dark .back-link:hover {
+            color: #e8e8e8;
+        }
+
+        /* Card counter */
+        .card-counter {
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            color: #888;
+            margin-bottom: 1.5em;
+        }
+
+        body.dark .card-counter {
+            color: #999;
+        }
+
+        /* Flashcard container */
+        .flashcard-scene {
             perspective: 1000px;
             width: 100%;
-            max-width: 600px;
-            min-height: 320px;
-            margin: 0 auto 1.5rem;
+            max-width: 680px;
+            min-height: 340px;
+            margin: 0 auto 2em auto;
             cursor: pointer;
         }
 
-        .card {
-            width: 100%;
-            min-height: 320px;
+        .flashcard {
             position: relative;
+            width: 100%;
+            min-height: 340px;
+            transition: transform 0.6s ease;
             transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .card.flipped {
+        .flashcard.is-flipped {
             transform: rotateY(180deg);
         }
 
-        .card-face {
+        .flashcard-face {
             position: absolute;
-            top: 0; left: 0; right: 0;
-            min-height: 320px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 340px;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 2rem 2rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            box-shadow: 0 4px 16px var(--card-shadow);
-            transition: background-color 0.3s, border-color 0.3s;
+            padding: 2.5em 2.5em;
+            border-radius: 10px;
+            border: 1px solid #d5d5d5;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .card-front {
-            background-color: var(--card-bg-front);
+        body.dark .flashcard-face {
+            border-color: #555;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.4);
         }
 
-        .card-back {
-            background-color: var(--card-bg-back);
+        .flashcard-front {
+            background-color: #fafafa;
+        }
+
+        body.dark .flashcard-front {
+            background-color: #333;
+        }
+
+        .flashcard-back {
+            background-color: #f0f4f8;
             transform: rotateY(180deg);
         }
 
-        .card-label {
+        body.dark .flashcard-back {
+            background-color: #2f3640;
+        }
+
+        .flashcard-face .face-label {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-            font-size: 0.7rem;
-            font-weight: 600;
+            font-size: 9pt;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
+            letter-spacing: 0.12em;
+            color: #aaa;
+            margin-bottom: 1em;
+            font-weight: 600;
         }
 
-        .card-front .card-content {
-            font-size: 1.15rem;
+        body.dark .flashcard-face .face-label {
+            color: #777;
+        }
+
+        .flashcard-front .card-text {
+            font-size: 14pt;
             line-height: 1.5;
-            color: var(--text);
+            text-align: center;
+            color: #1a1a1a;
+            font-weight: 500;
         }
 
-        .card-back .card-content {
-            font-size: 1rem;
+        body.dark .flashcard-front .card-text {
+            color: #e8e8e8;
+        }
+
+        .flashcard-back .card-text {
+            font-size: 12pt;
             line-height: 1.6;
-            color: var(--text);
-            text-align: left;
-            width: 100%;
+            text-align: center;
+            color: #2a2a2a;
         }
 
-        .card-hint {
+        body.dark .flashcard-back .card-text {
+            color: #d4d4d4;
+        }
+
+        .tap-hint {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            margin-top: 1.2rem;
+            font-size: 9pt;
+            color: #bbb;
+            margin-top: 1.2em;
         }
 
-        /* ── Controls ── */
+        body.dark .tap-hint {
+            color: #666;
+        }
+
+        /* Controls */
         .controls {
             display: flex;
-            align-items: center;
             justify-content: center;
-            gap: 1rem;
+            align-items: center;
+            gap: 1em;
             flex-wrap: wrap;
-            margin-bottom: 1rem;
         }
 
         .controls button {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-            font-size: 0.85rem;
-            padding: 0.5rem 1.2rem;
-            border: 1px solid var(--card-border);
-            border-radius: 6px;
-            background: var(--btn-bg);
-            color: var(--btn-text);
+            font-size: 11pt;
+            font-weight: 500;
+            padding: 0.7em 1.8em;
+            border-radius: 4px;
+            border: 2px solid #1a1a1a;
+            background-color: #e8e8e8;
+            color: #2a2a2a;
             cursor: pointer;
-            transition: background 0.2s, border-color 0.2s;
-            user-select: none;
+            transition: all 0.2s ease;
+        }
+
+        body.dark .controls button {
+            background-color: #1a1a1a;
+            color: #e8e8e8;
+            border-color: #666;
         }
 
         .controls button:hover {
-            background: var(--btn-hover);
+            background-color: #f5f5f5;
+            border-color: #666;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        body.dark .controls button:hover {
+            background-color: #000;
+            border-color: #888;
+            box-shadow: 0 2px 8px rgba(102,102,102,0.4);
         }
 
         .controls button:disabled {
             opacity: 0.4;
-            cursor: default;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
-        .card-counter {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            min-width: 90px;
+        .controls button:disabled:hover {
+            background-color: #e8e8e8;
+            border-color: #1a1a1a;
+            transform: none;
+            box-shadow: none;
+        }
+
+        body.dark .controls button:disabled:hover {
+            background-color: #1a1a1a;
+            border-color: #666;
+        }
+
+        .shuffle-btn {
+            border-style: dashed !important;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 3em;
+            padding-top: 1.5em;
+            border-top: 2px solid #ccc;
             text-align: center;
+            color: #888;
+            font-size: 9pt;
         }
 
-        /* ── Responsive ── */
-        @media (max-width: 600px) {
+        body.dark footer {
+            border-color: #555;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
             body {
-                margin: 0;
-                padding: 1rem;
-                border-radius: 0;
-                box-shadow: none;
+                padding: 2em 1.5em;
+                margin: 1rem;
             }
 
-            .header h1 {
-                font-size: 1.25rem;
-                padding-right: 70px;
+            h1 {
+                font-size: 18pt;
             }
 
-            .card-scene {
-                min-height: 280px;
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
             }
 
-            .card, .card-face {
-                min-height: 280px;
+            .flashcard-scene {
+                min-height: 300px;
             }
 
-            .card-front .card-content {
-                font-size: 1.05rem;
+            .flashcard {
+                min-height: 300px;
             }
 
-            .card-back .card-content {
-                font-size: 0.9rem;
+            .flashcard-face {
+                min-height: 300px;
+                padding: 2em 1.5em;
+            }
+
+            .flashcard-front .card-text {
+                font-size: 13pt;
+            }
+
+            .flashcard-back .card-text {
+                font-size: 11pt;
             }
 
             .controls {
-                gap: 0.5rem;
+                gap: 0.6em;
             }
 
             .controls button {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.8rem;
+                padding: 0.6em 1.2em;
+                font-size: 10pt;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
+    <div class="header-container">
         <h1>N-gram Language Models &mdash; Flashcards</h1>
-        <a href="ngram_language_models-light.html" class="article-link" data-article="ngram_language_models">&larr; Back to article</a>
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
-            <span class="icon">&#9728;</span>
-            <span class="icon">&#9790;</span>
-            <span class="knob"></span>
-        </button>
+        <div class="theme-toggle">
+            <span class="toggle-label">Theme</span>
+            <div class="toggle-switch" onclick="toggleTheme()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
     </div>
 
-    <div class="card-scene" id="cardScene">
-        <div class="card" id="card">
-            <div class="card-face card-front">
-                <div class="card-label">Question</div>
-                <div class="card-content" id="frontContent"></div>
-                <div class="card-hint">Click to reveal answer</div>
+    <a href="ngram_language_models-light.html" class="back-link article-link" data-article="ngram_language_models">&larr; Back to article</a>
+
+    <div class="card-counter" id="cardCounter">Card 1 of 25</div>
+
+    <div class="flashcard-scene" id="flashcardScene" onclick="flipCard()">
+        <div class="flashcard" id="flashcard">
+            <div class="flashcard-face flashcard-front">
+                <div class="face-label">Question</div>
+                <div class="card-text" id="frontText"></div>
+                <div class="tap-hint">Click to reveal answer</div>
             </div>
-            <div class="card-face card-back">
-                <div class="card-label">Answer</div>
-                <div class="card-content" id="backContent"></div>
-                <div class="card-hint">Click to return to question</div>
+            <div class="flashcard-face flashcard-back">
+                <div class="face-label">Answer</div>
+                <div class="card-text" id="backText"></div>
+                <div class="tap-hint">Click to see question</div>
             </div>
         </div>
     </div>
 
     <div class="controls">
-        <button id="prevBtn" aria-label="Previous card">&larr; Prev</button>
-        <span class="card-counter" id="cardCounter">Card 1 of 25</span>
-        <button id="nextBtn" aria-label="Next card">Next &rarr;</button>
-        <button id="shuffleBtn" aria-label="Shuffle cards">Shuffle</button>
+        <button id="prevBtn" onclick="prevCard()">&larr; Previous</button>
+        <button class="shuffle-btn" onclick="shuffleDeck()">Shuffle</button>
+        <button id="nextBtn" onclick="nextCard()">Next &rarr;</button>
     </div>
 
+    <footer>
+        <p>Stephen Fitz &middot; 2026</p>
+    </footer>
+
     <script>
-    (function () {
-        /* ── Flashcard data ── */
-        const flashcards = [
+        // Flashcard data
+        var cards = [
             {
                 front: "What is a language model?",
                 back: "A model that assigns probabilities to sequences of words: \\(P(w_1, w_2, \\ldots, w_n)\\). Language models power speech recognition, machine translation, spelling correction, and text generation."
@@ -446,115 +567,110 @@
             }
         ];
 
-        /* ── State ── */
-        let deck = flashcards.map((c, i) => i);
-        let pos = 0;
-        let isFlipped = false;
+        var currentIndex = 0;
+        var deck = cards.map(function(_, i) { return i; });
 
-        /* ── DOM refs ── */
-        const cardEl = document.getElementById('card');
-        const cardScene = document.getElementById('cardScene');
-        const frontContent = document.getElementById('frontContent');
-        const backContent = document.getElementById('backContent');
-        const counter = document.getElementById('cardCounter');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const shuffleBtn = document.getElementById('shuffleBtn');
-        const themeToggle = document.getElementById('themeToggle');
-        const articleLink = document.querySelector('.article-link');
+        // Theme management
+        var savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.body.classList.add('dark');
+        }
+        updateArticleLink();
 
-        /* ── Theme ── */
-        function applyTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            if (articleLink) {
-                articleLink.href = theme === 'dark'
-                    ? 'ngram_language_models-dark.html'
-                    : 'ngram_language_models-light.html';
+        function toggleTheme() {
+            var isDark = document.body.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
             }
+            updateArticleLink();
         }
 
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        applyTheme(savedTheme);
+        function updateArticleLink() {
+            var isDark = document.body.classList.contains('dark');
+            var theme = isDark ? 'dark' : 'light';
+            document.querySelectorAll('.article-link').forEach(function(link) {
+                var article = link.getAttribute('data-article');
+                link.href = article + '-' + theme + '.html';
+            });
+        }
 
-        themeToggle.addEventListener('click', function () {
-            const current = document.documentElement.getAttribute('data-theme') || 'light';
-            applyTheme(current === 'dark' ? 'light' : 'dark');
-        });
-
-        /* ── Card rendering ── */
+        // Card rendering
         function renderCard() {
-            const idx = deck[pos];
-            const fc = flashcards[idx];
+            var card = cards[deck[currentIndex]];
+            document.getElementById('frontText').innerHTML = card.front;
+            document.getElementById('backText').innerHTML = card.back;
+            document.getElementById('cardCounter').textContent = 'Card ' + (currentIndex + 1) + ' of ' + deck.length;
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            document.getElementById('nextBtn').disabled = currentIndex === deck.length - 1;
 
-            /* Unflip without animation if currently flipped */
-            if (isFlipped) {
-                cardEl.style.transition = 'none';
-                cardEl.classList.remove('flipped');
-                /* force reflow */
-                void cardEl.offsetHeight;
-                cardEl.style.transition = '';
-                isFlipped = false;
-            }
+            // Reset flip
+            document.getElementById('flashcard').classList.remove('is-flipped');
 
-            frontContent.innerHTML = fc.front;
-            backContent.innerHTML = fc.back;
-
-            counter.textContent = 'Card ' + (pos + 1) + ' of ' + deck.length;
-            prevBtn.disabled = pos === 0;
-            nextBtn.disabled = pos === deck.length - 1;
-
-            /* Typeset MathJax on the front face (some questions might have math) */
-            if (window.MathJax && MathJax.typesetPromise) {
-                MathJax.typesetPromise([frontContent]).catch(function () {});
+            // Typeset MathJax
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('frontText'), document.getElementById('backText')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
             }
         }
 
-        /* ── Flip ── */
-        cardScene.addEventListener('click', function () {
-            isFlipped = !isFlipped;
-            cardEl.classList.toggle('flipped');
-
-            if (isFlipped && window.MathJax && MathJax.typesetPromise) {
-                MathJax.typesetPromise([backContent]).catch(function () {});
+        function flipCard() {
+            document.getElementById('flashcard').classList.toggle('is-flipped');
+            // Re-render MathJax on flip to ensure back side renders
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('backText')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
             }
-        });
+        }
 
-        /* ── Navigation ── */
-        prevBtn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            if (pos > 0) { pos--; renderCard(); }
-        });
-
-        nextBtn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            if (pos < deck.length - 1) { pos++; renderCard(); }
-        });
-
-        /* Keyboard navigation */
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'ArrowLeft' && pos > 0) { pos--; renderCard(); }
-            else if (e.key === 'ArrowRight' && pos < deck.length - 1) { pos++; renderCard(); }
-            else if (e.key === ' ' || e.key === 'Enter') {
-                e.preventDefault();
-                cardScene.click();
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCard();
             }
-        });
+        }
 
-        /* ── Shuffle (Fisher-Yates) ── */
-        shuffleBtn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            for (let i = deck.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                const tmp = deck[i]; deck[i] = deck[j]; deck[j] = tmp;
+        function nextCard() {
+            if (currentIndex < deck.length - 1) {
+                currentIndex++;
+                renderCard();
             }
-            pos = 0;
+        }
+
+        function shuffleDeck() {
+            // Fisher-Yates shuffle
+            for (var i = deck.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = deck[i];
+                deck[i] = deck[j];
+                deck[j] = temp;
+            }
+            currentIndex = 0;
             renderCard();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                prevCard();
+            } else if (e.key === 'ArrowRight') {
+                nextCard();
+            } else if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                flipCard();
+            }
         });
 
-        /* ── Init ── */
+        // Initial render
         renderCard();
-    })();
     </script>
 </body>
 </html>
