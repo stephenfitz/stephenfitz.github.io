@@ -335,7 +335,7 @@
 
     <div class="controls">
         <button id="prevBtn" aria-label="Previous card">&larr; Prev</button>
-        <span class="card-counter" id="cardCounter">Card 1 of 20</span>
+        <span class="card-counter" id="cardCounter">Card 1 of 25</span>
         <button id="nextBtn" aria-label="Next card">Next &rarr;</button>
         <button id="shuffleBtn" aria-label="Shuffle cards">Shuffle</button>
     </div>
@@ -402,7 +402,7 @@
             },
             {
                 front: "What is a standard basis vector?",
-                back: "The k-th standard basis vector \\(\\vec{e}_k\\) has a 1 in position k and 0 everywhere else. These vectors form the standard basis of \u211d\u207f."
+                back: "The k-th standard basis vector \\(\\vec{e}_k\\) has a 1 in position k and 0 everywhere else."
             },
             {
                 front: "Why is matrix multiplication defined with the \u2018rows by columns\u2019 rule?",
@@ -410,7 +410,7 @@
             },
             {
                 front: "What does it mean that the range of A is the span of its columns?",
-                back: "Since Ax is a linear combination of A\u2019s columns (column-space view), every output of the linear map A is some linear combination of its columns. The set of all possible outputs is the column space."
+                back: "Since Ax is a linear combination of A\u2019s columns (column-space view), every output of the linear map A is some linear combination of its columns. The set of all possible outputs is the span of A\u2019s columns."
             },
             {
                 front: "How many scalar multiplications does the triple loop perform for 50\u00d7200 \u00d7 200\u00d720?",
@@ -423,6 +423,26 @@
             {
                 front: "Why is understanding matrix multiplication important for deep learning?",
                 back: "Every forward pass through a linear layer, every attention computation, and every gradient update is fundamentally a matrix product. Understanding the structure is essential; efficient implementation calls down to BLAS/GPU kernels."
+            },
+            {
+                front: "If A is n\u00d7m and B is m\u00d7l, what are the dimensions of the product AB?",
+                back: "The product AB is an n\u00d7l matrix. The shared dimension m (columns of A = rows of B) is summed over and disappears in the result."
+            },
+            {
+                front: "What are the two equivalent views of the matrix-vector product, and how do they differ?",
+                back: "The \u2018row times column\u2019 (inner product) definition and the \u2018linear combination of columns\u2019 view. They are algebraically equivalent but offer different geometric insights. The column view makes it immediately clear that the range of A is the span of its columns."
+            },
+            {
+                front: "What speedup does broadcasting provide over the elementwise (two-loop) implementation?",
+                back: "About 4\u00d7 speedup \u2014 from 0.027s to 0.0074s (3.8\u00d7 relative to BLAS). Only one Python loop remains, iterating over the 50 rows of A."
+            },
+            {
+                front: "What is the Einstein summation execution time relative to BLAS?",
+                back: "0.00223s, or 1.2\u00d7 relative to BLAS. np.einsum can optimize the contraction order and memory access patterns internally."
+            },
+            {
+                front: "What is the five-step performance progression for matrix multiplication in Python?",
+                back: "Triple nested loops (0.54s) \u2192 elementwise with one loop removed (0.027s, ~20\u00d7) \u2192 broadcasting with two loops removed (0.0074s, ~4\u00d7) \u2192 Einstein summation (0.0022s) \u2192 BLAS (0.0019s, 282\u00d7 total speedup)."
             }
         ];
 

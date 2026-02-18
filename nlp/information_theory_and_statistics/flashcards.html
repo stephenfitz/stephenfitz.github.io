@@ -559,11 +559,11 @@
             },
             {
                 front: "What is the difference between micro and macro averaging?",
-                back: "Micro-averaged: aggregate TP, FP, FN across all classes, then compute metrics (treats each instance equally). Macro-averaged: compute metrics for each class separately, then average (treats each class equally)."
+                back: "Micro-averaged: aggregate TP, FP, FN across all classes, then compute metrics. Macro-averaged: compute metrics for each class separately, then average."
             },
             {
                 front: "What is the MAP estimate?",
-                back: "Maximum a posteriori: \\(\\hat{\\theta}_{\\text{MAP}} = \\arg\\max_\\theta p(\\theta \\mid \\mathcal{D}) = \\arg\\max_\\theta p(\\mathcal{D} \\mid \\theta) p(\\theta)\\). Unlike MLE, it incorporates the prior p(\u03b8)."
+                back: "Maximum a posteriori: \\(\\hat{\\theta}_{\\text{MAP}} = \\arg\\max_\\theta p(\\theta \\mid \\mathcal{D}) = \\arg\\max_\\theta p(\\mathcal{D} \\mid \\theta) p(\\theta)\\). It incorporates the prior p(\u03b8), weighting the likelihood by prior beliefs about the parameters."
             }
         ];
 

@@ -353,7 +353,7 @@
     <!-- Controls -->
     <div class="controls">
         <button id="prev-btn">&larr; Prev</button>
-        <span class="card-counter" id="card-counter">Card 1 of 18</span>
+        <span class="card-counter" id="card-counter">Card 1 of 25</span>
         <button id="next-btn">Next &rarr;</button>
         <button id="shuffle-btn">Shuffle</button>
     </div>
@@ -384,7 +384,7 @@
             },
             {
                 front: "Why are tensor derivatives often sparse?",
-                back: "Because each output component typically depends on only a small subset of the parameters. For y = xW, output y\u2C7C only depends on column j of W, making the derivative tensor mostly zeros."
+                back: "Because each output component depends on only a subset of the parameters. For y = xW, output y\u2C7C only depends on column j of W, making the derivative tensor mostly zeros."
             },
             {
                 front: "What does the chain rule look like for tensor derivatives?",
@@ -408,7 +408,7 @@
             },
             {
                 front: "What does \u2018reduce along the right axes\u2019 mean in tensor calculus?",
-                back: "Apply summation to collapse intermediate tensors into usable forms. For example, the chain rule involves summing over shared indices to produce the final derivative, similar to contracting tensor indices."
+                back: "Apply summation to collapse intermediate tensors into usable forms. For example, the chain rule involves summing over shared indices to produce the final derivative."
             },
             {
                 front: "What is the reduced representation G\u1D62\u2C7C for the derivative tensor \u2202y/\u2202W?",
@@ -427,12 +427,40 @@
                 back: "For y = xW (row vectors), \\(y_3 = \\sum_j x_j W_{j,3}\\), so \\(\\frac{\\partial y_3}{\\partial x_7} = W_{7,3}\\). Collecting all components gives the transpose W\u1D40 because the row/column indices are swapped."
             },
             {
-                front: "What happens when you differentiate Y = XW with respect to W?",
-                back: "This produces a 4-dimensional tensor (2 output indices from Y, 2 parameter indices from W). The result is sparse \u2014 \u2202Y_{a,b}/\u2202W_{c,d} is nonzero only when d = b, and equals X_{a,c}."
+                front: "In batch computation Y = XW, why is \u2202Y\u2090,\u2090/\u2202X\u2090,\u2090 nonzero only when a = c?",
+                back: "Because rows correspond to independent examples. Row a of Y depends only on row a of X, so changing X\u2090,\u2090 with c \u2260 a has no effect on Y\u2090,\u2090."
             },
             {
-                front: "What is the connection between \u2018index notation\u2019 and tensor derivatives?",
+                front: "What is the connection between component-wise reasoning and tensor derivatives?",
                 back: "Working component-wise (fixing specific indices like i,j,k) turns tensor calculus into ordinary scalar calculus. The tensor result is then assembled from the scalar components \u2014 careful bookkeeping of indices and shapes is the key skill."
+            },
+            {
+                front: "What role does tensor calculus play in modern deep learning?",
+                back: "Tensor calculus \u2014 and in particular, derivatives of vectors, matrices, and higher-order tensors \u2014 is one of a small number of mathematical primitives repeated at enormous scale that modern deep learning is built on."
+            },
+            {
+                front: "In the matrix\u2013vector product y = Wx, what are the dimensions of x, W, and y?",
+                back: "x \u2208 \u211D\u1D30 is a column vector, W \u2208 \u211D\u1D9C\u00D7\u1D30 is a matrix, and y \u2208 \u211D\u1D9C is a column vector."
+            },
+            {
+                front: "What determines whether the Jacobian of a linear transformation is W or W\u1D40?",
+                back: "The orientation of vectors. For column vectors (y = Wx), the Jacobian is W. For row vectors (y = xW), the Jacobian is W\u1D40."
+            },
+            {
+                front: "In the row-vector product y = xW, what are the dimensions?",
+                back: "x \u2208 \u211D\u00B9\u02E3\u1D30, W \u2208 \u211D\u1D30\u02E3\u1D9C, and y \u2208 \u211D\u00B9\u02E3\u1D9C."
+            },
+            {
+                front: "In batch computation Y = XW, what is the per-row Jacobian \u2202Y\u1D62,:/\u2202X\u1D62,:?",
+                back: "W\u1D40. The same parameters W are applied independently to every example in the batch, so each row sees the same Jacobian."
+            },
+            {
+                front: "How do you apply the \u2018introduce intermediate variables\u2019 principle to y = VWx?",
+                back: "Define m = Wx and y = Vm. This breaks the two-layer computation into simple steps, each of which can be differentiated independently and then combined via the chain rule."
+            },
+            {
+                front: "Why is reducing the derivative tensor \u2202y/\u2202W to a matrix G essential?",
+                back: "The full derivative tensor is highly sparse (most entries are zero). Summarizing it as the matrix G\u1D62,\u2C7C = x\u2C7C captures all nontrivial information and is essential for efficient implementations of backpropagation."
             }
         ];
 

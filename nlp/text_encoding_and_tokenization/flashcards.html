@@ -408,7 +408,7 @@
             },
             {
                 front: "What is Byte-Pair Encoding (BPE)?",
-                back: "Originally a compression algorithm (Gage, 1994), adapted for NLP (Sennrich, 2016). Training: start with characters/bytes, repeatedly merge the most frequent adjacent pair. Inference: apply learned merges in order to new text."
+                back: "Originally a compression algorithm (Gage, 1994), adapted for NLP tokenization by Sennrich et al. (2016). Training: start with characters/bytes, repeatedly merge the most frequent adjacent pair. Inference: apply learned merges in order to new text."
             },
             {
                 front: "Walk through BPE merging for \u2018low\u2019 corpus.",
@@ -456,7 +456,7 @@
             },
             {
                 front: "What is the Basic Multilingual Plane (BMP)?",
-                back: "Unicode Plane 0 (U+0000\u2013U+FFFF) containing the most common characters. Plane 1 has emoji and historic scripts. Plane 2 has rare CJK characters. Most everyday text uses only BMP characters."
+                back: "Unicode Plane 0 (U+0000\u2013U+FFFF) containing the most common characters. Plane 1 (U+10000\u2013U+1FFFF) has emoji and historic scripts. Plane 2 (U+20000\u2013U+2FFFF) has rare CJK characters."
             },
             {
                 front: "What tradeoff does vocabulary size create?",

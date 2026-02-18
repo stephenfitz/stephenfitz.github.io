@@ -398,15 +398,15 @@
             },
             {
                 front: "What is the difference between parametric and nonparametric models?",
-                back: "Parametric: fixed number of parameters (linear regression, neural nets with fixed architecture). Fast, interpretable. Nonparametric: complexity grows with data (k-NN, kernel methods, GPs). Flexible, fewer assumptions, more data-hungry."
+                back: "Parametric: fixed number of parameters (linear regression, neural nets with fixed architecture). Fast, interpretable. Nonparametric: complexity grows with data (k-NN, kernel density estimation, GPs). Flexible, fewer assumptions, more data-hungry."
             },
             {
                 front: "What is the kernel trick in SVMs?",
-                back: "Implicitly maps data to a high-dimensional feature space for nonlinear decision boundaries, without explicitly computing the transformation. Common kernels: linear, polynomial, RBF (Gaussian)."
+                back: "Implicitly maps data to a high-dimensional feature space for nonlinear decision boundaries. Common kernels: linear, polynomial, RBF (Gaussian)."
             },
             {
                 front: "What is gradient boosting?",
-                back: "Sequentially adds trees that correct errors of the ensemble (XGBoost, LightGBM). Often achieves state-of-the-art on tabular data. Each new tree fits the residual errors of the current ensemble."
+                back: "Sequentially adds trees that correct errors of the ensemble (XGBoost, LightGBM). Often achieves state-of-the-art on tabular data."
             },
             {
                 front: "What is Naive Bayes?",
@@ -414,7 +414,7 @@
             },
             {
                 front: "What is dropout?",
-                back: "A regularization technique for neural networks that randomly zeros activations during training. Forces the network to learn redundant representations and prevents co-adaptation of neurons."
+                back: "A regularization technique for neural networks that randomly zeros activations during training."
             },
             {
                 front: "What makes deep learning different from classical ML?",
@@ -422,11 +422,11 @@
             },
             {
                 front: "What is SGD (Stochastic Gradient Descent)?",
-                back: "Updates parameters using gradients computed on mini-batches: \\(\\theta \\leftarrow \\theta - \\eta \\nabla_\\theta L\\). More efficient than full-batch gradient descent. Adam optimizer adds adaptive learning rates with momentum."
+                back: "Updates parameters using gradients computed on mini-batches: \\(\\theta \\leftarrow \\theta - \\eta \\nabla_\\theta L\\). Adam optimizer adds adaptive learning rates with momentum. Most common optimizer in practice."
             },
             {
                 front: "What is the hinge loss?",
-                back: "\\(L(y, \\hat{y}) = \\max(0, 1 - y \\cdot \\hat{y})\\) \u2014 used in SVMs. Zero loss when the prediction is correct with sufficient margin. A differentiable surrogate for the 0-1 classification loss."
+                back: "\\(L(y, \\hat{y}) = \\max(0, 1 - y \\cdot \\hat{y})\\) \u2014 used in SVMs. A differentiable surrogate for the 0-1 classification loss."
             },
             {
                 front: "What is a random forest?",
