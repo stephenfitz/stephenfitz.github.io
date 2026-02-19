@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+
+.reveal {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 28px;
+    color: #d4d4d4;
+}
+
+.reveal .slides {
+    text-align: left;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #e8e8e8;
+    text-transform: none;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.reveal h1 { font-size: 1.8em; color: #f0f0f0; }
+.reveal h2 { font-size: 1.4em; color: #ddd; }
+.reveal h3 { font-size: 1.15em; color: #ccc; }
+
+.reveal p { margin: 0 0 0.5em 0; }
+
+.reveal ul, .reveal ol {
+    display: block;
+    margin: 0.3em 0 0.6em 0;
+}
+
+.reveal li { margin-bottom: 0.3em; }
+
+.reveal blockquote {
+    width: 90%;
+    margin: 0.5em auto;
+    padding: 0.4em 0.8em;
+    border-left: 4px solid #777;
+    color: #bbb;
+    background-color: #333;
+    font-style: italic;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+.reveal blockquote p:last-child { margin-bottom: 0; }
+
+.reveal code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.85em;
+    background-color: #3a3a3a;
+    padding: 0.15em 0.3em;
+    border-radius: 3px;
+    color: #d0d0d0;
+    border: 1px solid #555;
+}
+
+.reveal pre {
+    width: 100%;
+    font-size: 0.55em;
+    box-shadow: none;
+}
+
+.reveal pre code {
+    display: block;
+    background: #222;
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 12px;
+    max-height: 400px;
+    line-height: 1.45;
+    overflow: auto;
+    color: #d0d0d0;
+}
+
+.reveal img {
+    display: block;
+    max-width: 55%;
+    max-height: 450px;
+    margin: 0.5em auto;
+    border: 2px solid #666;
+    border-radius: 4px;
+    padding: 6px;
+    background-color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.reveal img + em, .reveal :has(> img) + p > em:only-child {
+    display: block;
+    text-align: center;
+    font-size: 0.65em;
+    color: #aaa;
+    margin-top: 0.3em;
+}
+
+.reveal table {
+    border-collapse: collapse;
+    margin: 0.5em auto;
+    font-size: 0.75em;
+}
+
+.reveal th, .reveal td {
+    border: 1px solid #555;
+    padding: 6px 10px;
+    text-align: left;
+}
+
+.reveal th {
+    background-color: #3a3a3a;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+.reveal tr:nth-child(even) { background-color: #2e2e2e; }
+.reveal tr:nth-child(odd) { background-color: #333; }
+
+.reveal a { color: #bbb; text-decoration: underline; text-decoration-color: #666; }
+
+.reveal .katex { font-size: 1.0em; color: #e8e8e8; }
+.reveal .katex-display { margin: 0.5em 0; }
+
+.reveal .slide-number {
+    color: #999;
+    font-size: 14px;
+}
+
+.reveal .controls .navigate-left,
+.reveal .controls .navigate-right,
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-down {
+    color: #888;
+}
+
+.reveal .progress span { background: #888; }
+
+body { background-color: #1a1a1a; }
+.reveal .slide-background { background-color: #2a2a2a; }
+
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+<h1>On Science</h1>
+<p>What makes a discipline a science?</p>
+            </section>
+            <section>
+<h2>Overview</h2>
+<ul>
+<li>The "scientific method" is not enough to define science</li>
+<li>Scientific explanation, not method, is what matters</li>
+<li>Hempel's nomological-deductive model</li>
+<li>What differentiates scientific disciplines</li>
+<li>AI as a scientific discipline</li>
+</ul>
+            </section>
+            <section>
+<h2>The Scientific Method Is Not Enough</h2>
+<ul>
+<li>Many activities follow something resembling the scientific method:<ul>
+<li>Market research, quality control, A/B testing, engineering trial-and-error</li>
+</ul>
+</li>
+<li>These are methodologically "scientific" but remain <strong>pragmatic and instrumental</strong></li>
+<li>The central question has never been just <em>how</em> we investigate</li>
+<li>It is <em>what kind of explanations</em> we produce</li>
+</ul>
+            </section>
+            <section>
+<h2>From Method to Explanation</h2>
+<blockquote>
+<p>What distinguishes science is not primarily a method, but the kind of explanations it aims to deliver.</p>
+</blockquote>
+<ul>
+<li>A discipline is scientific if it attempts to provide <strong>scientific explanations</strong> of a class of phenomena</li>
+<li>But what counts as a scientific explanation?</li>
+</ul>
+            </section>
+            <section>
+<h2>Hempel's Nomological-Deductive Model</h2>
+<ul>
+<li><strong>Carl Hempel</strong>: central figure in 20th-century philosophy of science</li>
+<li><em>Nomological</em> comes from Greek <em>nomos</em>, meaning <em>law</em></li>
+<li>In its ideal form, a scientific explanation has:<ul>
+<li>One or more <strong>universal laws</strong></li>
+<li><strong>Initial or boundary conditions</strong></li>
+<li>The phenomenon <strong>deduced</strong> as a logical consequence</li>
+</ul>
+</li>
+</ul>
+            </section>
+            <section>
+<h2>The Ideal: Deduction from Laws</h2>
+<blockquote>
+<p>An explanation is scientific in nature if it frames an observation under question as an instance of a universal law.</p>
+</blockquote>
+<ul>
+<li>Classic examples from physics:<ul>
+<li>Kepler's laws and Newtonian mechanics explain planetary motion</li>
+<li>Gas laws explain macroscopic thermodynamic behavior</li>
+<li>Maxwell's equations explain electromagnetic phenomena</li>
+</ul>
+</li>
+<li>Explanation is tightly linked to <strong>deduction from general laws</strong></li>
+</ul>
+            </section>
+            <section>
+<h2>Explanation Sketches</h2>
+<ul>
+<li>Most successful sciences do <strong>not</strong> operate in the idealized nomological-deductive way</li>
+<li>In biology, psychology, medicine, economics, we rely on:<ul>
+<li>Statistical regularities</li>
+<li>Probabilistic models</li>
+<li>Empirical generalizations</li>
+</ul>
+</li>
+<li>These provide likelihoods, tendencies, and patterns --- not certainty</li>
+<li>Hempel called these <strong>explanation sketches</strong></li>
+</ul>
+            </section>
+            <section>
+<h2>Science Without Universal Laws</h2>
+<blockquote>
+<p>Being a science does not require possessing universal laws. It requires systematically <em>searching</em> for lawful structure in a domain.</p>
+</blockquote>
+<ul>
+<li>Explanation sketches are explanatory in practice</li>
+<li>They fall short of full law-based deduction</li>
+<li>But the <strong>systematic search</strong> for lawful structure is what matters</li>
+</ul>
+            </section>
+            <section>
+<h2>What Differentiates Scientific Disciplines?</h2>
+<p>Three dimensions distinguish scientific fields:</p>
+<ol>
+<li><strong>The class of phenomena</strong> they attempt to explain</li>
+<li><strong>The tools</strong> they use to search for laws or regularities</li>
+<li>
+<p><strong>The language</strong> in which explanations are expressed</p>
+</li>
+<li>
+<p>Physics, chemistry, biology differ not just in subject matter but in:</p>
+<ul>
+<li>What counts as an admissible observation</li>
+<li>What kinds of abstractions are allowed</li>
+<li>What formal languages describe explanations</li>
+</ul>
+</li>
+</ol>
+            </section>
+            <section>
+<h2>AI as a Scientific Discipline</h2>
+<ul>
+<li>Parts of AI produce <strong>genuinely nomological-deductive explanations</strong>:<ul>
+<li>Convergence theorems in optimization</li>
+<li>Generalization bounds in learning theory</li>
+<li>Computational complexity results</li>
+<li>Formal properties of algorithms</li>
+</ul>
+</li>
+<li>Much of modern AI relies on <strong>statistical explanation sketches</strong>:<ul>
+<li>Empirical scaling laws</li>
+<li>Performance trends in large models</li>
+<li>Observed regularities in representation learning</li>
+</ul>
+</li>
+</ul>
+            </section>
+            <section>
+<h2>AI Straddles Both Sides</h2>
+<ul>
+<li>AI produces both deductive results and statistical explanation sketches</li>
+<li>This places AI in the same category as biology, medicine, and psychology</li>
+<li>Sciences that are <em>in the process</em> of discovering their laws</li>
+<li>Not a defect --- a characteristic shared by many mature sciences</li>
+</ul>
+            </section>
+            <section>
+<h2>The Phenomena of AI: Substrate-Free Intelligence</h2>
+<ul>
+<li>AI is concerned with <strong>substrate-free cognitive processes</strong>:<ul>
+<li>Reasoning, learning, perception, memory</li>
+<li>Planning, language, decision-making</li>
+</ul>
+</li>
+<li>Studied <strong>independently</strong> of any particular biological or physical implementation</li>
+<li>Physics abstracts across instances of the same kind of physical system</li>
+<li>AI abstracts in a different direction: intelligence as an <strong>organizational property</strong></li>
+</ul>
+            </section>
+            <section>
+<h2>Substrate Independence</h2>
+<ul>
+<li>The same functional patterns can be realized across very different substrates<ul>
+<li>Brains, silicon chips, cellular automata</li>
+</ul>
+</li>
+<li>AI targets behaviors that are <strong>multiply realizable</strong></li>
+<li>Physics seeks <strong>substrate-specific</strong> laws of nature</li>
+<li>AI seeks <strong>substrate-independent</strong> laws of organization (computation + representation)</li>
+</ul>
+            </section>
+            <section>
+<h2>The Language of Explanation in AI</h2>
+<p>AI's explanatory language is a hybrid drawn from several mature sciences:</p>
+<ul>
+<li><strong>Geometry and Topology</strong>: high-dimensional vector spaces, manifolds, embeddings</li>
+<li><strong>Information Theory and Statistics</strong>: entropy, mutual information, Bayesian inference</li>
+<li><strong>Tensor Computation and Linear Algebra</strong>: multilinear maps, spectral properties, backpropagation</li>
+</ul>
+            </section>
+            <section>
+<h2>Geometry and Topology of Representations</h2>
+<ul>
+<li>High-dimensional real vector spaces</li>
+<li>Submanifolds induced by learned representations</li>
+<li>Linear separability and curvature</li>
+<li>Topological and geometric structure of embeddings</li>
+<li>This geometric viewpoint underlies modern <strong>representation learning</strong></li>
+</ul>
+            </section>
+            <section>
+<h2>Information Theory and Statistics</h2>
+<ul>
+<li>Entropy, mutual information, likelihood</li>
+<li>Generalization bounds</li>
+<li>Bayesian inference</li>
+<li>Probabilistic modeling</li>
+<li>These provide the dominant framework for <strong>learning and uncertainty</strong></li>
+</ul>
+            </section>
+            <section>
+<h2>Tensor Computation and Linear Algebra</h2>
+<ul>
+<li>Multilinear maps</li>
+<li>Spectral properties</li>
+<li>Optimization in parameter space</li>
+<li>Backpropagation as structured tensor calculus</li>
+<li>This is the <strong>computational substrate</strong> of modern deep learning</li>
+</ul>
+            </section>
+            <section>
+<h2>Conclusion: Science Without Laws?</h2>
+<ul>
+<li>AI is a science not because it follows a method, but because:<ul>
+<li>It targets a well-defined class of phenomena</li>
+<li>It systematically searches for lawful structure</li>
+<li>It expresses its explanations in formal, cumulative languages</li>
+</ul>
+</li>
+<li>Whether AI will discover deep, universal laws of intelligence remains open</li>
+<li>But the scientific character of the enterprise is already clear</li>
+</ul>
+            </section>
+            <section>
+<h2>Summary</h2>
+<ul>
+<li>Science is defined by the <strong>kind of explanations</strong> it produces, not just its methods</li>
+<li>Hempel's model: explanation = deduction from laws + initial conditions</li>
+<li><strong>Explanation sketches</strong> (statistical, partial) are legitimate scientific practice</li>
+<li>Disciplines differ by phenomena, tools, and explanatory language</li>
+<li>AI studies <strong>substrate-free intelligence</strong> using geometry, information theory, and algebra</li>
+<li>AI is scientific: it systematically searches for the laws of intelligence</li>
+</ul>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            transition: 'none',
+            slideNumber: false,
+            center: true,
+            width: 1200,
+            height: 700,
+            margin: 0.06,
+            hash: true,
+            plugins: [ RevealHighlight ]
+        });
+
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false,
+            trust: true,
+            strict: false,
+            macros: {
+                "\\logit": "\\operatorname{logit}",
+                "\\softmax": "\\operatorname{softmax}",
+                "\\sigmoid": "\\operatorname{sigmoid}",
+                "\\sgn": "\\operatorname{sgn}",
+                "\\sign": "\\operatorname{sign}",
+                "\\argmax": "\\operatorname{argmax}",
+                "\\argmin": "\\operatorname{argmin}",
+                "\\Var": "\\operatorname{Var}",
+                "\\Cov": "\\operatorname{Cov}",
+                "\\Corr": "\\operatorname{Corr}",
+                "\\E": "\\mathbb{E}",
+                "\\P": "\\mathbb{P}",
+                "\\R": "\\mathbb{R}",
+                "\\N": "\\mathbb{N}",
+                "\\Z": "\\mathbb{Z}",
+                "\\C": "\\mathbb{C}",
+                "\\ind": "\\mathbb{1}",
+                "\\KL": "\\operatorname{KL}",
+                "\\Tr": "\\operatorname{Tr}",
+                "\\tr": "\\operatorname{tr}",
+                "\\diag": "\\operatorname{diag}",
+                "\\rank": "\\operatorname{rank}",
+                "\\relu": "\\operatorname{ReLU}",
+                "\\gelu": "\\operatorname{GELU}",
+                "\\selu": "\\operatorname{SELU}"
+            }
+        });
+    </script>
+</body>
+</html>

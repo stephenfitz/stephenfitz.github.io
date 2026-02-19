@@ -325,9 +325,6 @@
             <a href="history/history-light.html" class="button article-link" data-article="history">
                 Read Article →
             </a>
-            <a href="history/slides-light.html" class="button slides-link" data-slides="history">
-                View Slides
-            </a>
             <a href="history/flashcards.html" class="button">
                 Study Flashcards 🗂️
             </a>
@@ -342,9 +339,6 @@
         <div class="button-group">
             <a href="science/science-light.html" class="button article-link" data-article="science">
                 Read Article →
-            </a>
-            <a href="science/slides-light.html" class="button slides-link" data-slides="science">
-                View Slides
             </a>
             <a href="science/flashcards.html" class="button">
                 Study Flashcards 🗂️
@@ -361,9 +355,6 @@
             <a href="matrix_computations/matrix_computations-light.html" class="button article-link" data-article="matrix_computations">
                 Read Article →
             </a>
-            <a href="matrix_computations/slides-light.html" class="button slides-link" data-slides="matrix_computations">
-                View Slides
-            </a>
             <a href="matrix_computations/flashcards.html" class="button">
                 Study Flashcards 🗂️
             </a>
@@ -378,9 +369,6 @@
         <div class="button-group">
             <a href="tensor_derivatives/tensor_derivatives-light.html" class="button article-link" data-article="tensor_derivatives">
                 Read Article →
-            </a>
-            <a href="tensor_derivatives/slides-light.html" class="button slides-link" data-slides="tensor_derivatives">
-                View Slides
             </a>
             <a href="tensor_derivatives/flashcards.html" class="button">
                 Study Flashcards 🗂️
@@ -397,9 +385,6 @@
             <a href="information_theory_and_statistics/information_theory_and_statistics-light.html" class="button article-link" data-article="information_theory_and_statistics">
                 Read Article →
             </a>
-            <a href="information_theory_and_statistics/slides-light.html" class="button slides-link" data-slides="information_theory_and_statistics">
-                View Slides
-            </a>
             <a href="information_theory_and_statistics/flashcards.html" class="button">
                 Study Flashcards 🗂️
             </a>
@@ -414,9 +399,6 @@
         <div class="button-group">
             <a href="learning_theory/machine_learning-light.html" class="button article-link" data-article="machine_learning">
                 Read Article →
-            </a>
-            <a href="machine_learning/slides-light.html" class="button slides-link" data-slides="machine_learning">
-                View Slides
             </a>
             <a href="machine_learning/flashcards.html" class="button">
                 Study Flashcards 🗂️
@@ -433,9 +415,6 @@
             <a href="text_encoding_and_tokenization/text_encoding_and_tokenization-light.html" class="button article-link" data-article="text_encoding_and_tokenization">
                 Read Article →
             </a>
-            <a href="text_encoding_and_tokenization/slides-light.html" class="button slides-link" data-slides="text_encoding_and_tokenization">
-                View Slides
-            </a>
             <a href="text_encoding_and_tokenization/flashcards.html" class="button">
                 Study Flashcards 🗂️
             </a>
@@ -450,9 +429,6 @@
         <div class="button-group">
             <a href="regular_expressions/regular_expressions-light.html" class="button article-link" data-article="regular_expressions">
                 Read Article →
-            </a>
-            <a href="regular_expressions/slides-light.html" class="button slides-link" data-slides="regular_expressions">
-                View Slides
             </a>
             <a href="regular_expressions/flashcards.html" class="button">
                 Study Flashcards 🗂️
@@ -469,41 +445,8 @@
             <a href="ngram_language_models/ngram_language_models-light.html" class="button article-link" data-article="ngram_language_models">
                 Read Article →
             </a>
-            <a href="ngram_language_models/slides-light.html" class="button slides-link" data-slides="ngram_language_models">
-                View Slides
-            </a>
             <a href="ngram_language_models/flashcards.html" class="button">
                 Study Flashcards 🗂️
-            </a>
-        </div>
-    </div>
-
-    <div class="article-card">
-        <div class="article-title">Hidden Markov Models</div>
-        <div class="article-summary">
-            A comprehensive treatment of Hidden Markov Models for sequence labeling. Develops HMMs from Markov chain foundations, derives the three fundamental algorithms (Forward for evaluation, Viterbi for decoding, Baum-Welch for learning), and applies the framework to part-of-speech tagging. Includes discussion of limitations and the transition to discriminative models like CRFs.
-        </div>
-        <div class="button-group">
-            <a href="hidden_markov_models/hidden_markov_models-light.html" class="button article-link" data-article="hidden_markov_models">
-                Read Article →
-            </a>
-            <a href="hidden_markov_models/slides-light.html" class="button slides-link" data-slides="hidden_markov_models">
-                View Slides
-            </a>
-            <a href="hidden_markov_models/flashcards.html" class="button">
-                Study Flashcards 🗂️
-            </a>
-        </div>
-    </div>
-
-    <div class="article-card">
-        <div class="article-title">Multiple Choice Quiz 1</div>
-        <div class="article-summary">
-            33 multiple choice questions covering material from Matrix Computations through Hidden Markov Models. Test your understanding of linear algebra, tensor derivatives, information theory, machine learning, text encoding, regular expressions, n-gram language models, and HMMs. Interactive format with immediate feedback on each question.
-        </div>
-        <div class="button-group">
-            <a href="quiz1.html" class="button">
-                Take Quiz 1
             </a>
         </div>
     </div>
@@ -552,12 +495,6 @@
             document.querySelectorAll('.article-link').forEach(link => {
                 const article = link.getAttribute('data-article');
                 link.href = `${article}/${article}-${theme}.html`;
-            });
-
-            // Update all slides links
-            document.querySelectorAll('.slides-link').forEach(link => {
-                const slides = link.getAttribute('data-slides');
-                link.href = `${slides}/slides-${theme}.html`;
             });
         }
     </script>

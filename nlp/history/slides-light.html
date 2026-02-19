@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+
+.reveal {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 28px;
+    color: #2a2a2a;
+}
+
+.reveal .slides {
+    text-align: left;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #1a1a1a;
+    text-transform: none;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.reveal h1 { font-size: 1.8em; }
+.reveal h2 { font-size: 1.4em; color: #333; }
+.reveal h3 { font-size: 1.15em; color: #444; }
+
+.reveal p { margin: 0 0 0.5em 0; }
+
+.reveal ul, .reveal ol {
+    display: block;
+    margin: 0.3em 0 0.6em 0;
+}
+
+.reveal li { margin-bottom: 0.3em; }
+
+.reveal blockquote {
+    width: 90%;
+    margin: 0.5em auto;
+    padding: 0.4em 0.8em;
+    border-left: 4px solid #aaa;
+    color: #555;
+    background-color: #fafafa;
+    font-style: italic;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+.reveal blockquote p:last-child { margin-bottom: 0; }
+
+.reveal code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.85em;
+    background-color: #f5f5f5;
+    padding: 0.15em 0.3em;
+    border-radius: 3px;
+    color: #3a3a3a;
+    border: 1px solid #ddd;
+}
+
+.reveal pre {
+    width: 100%;
+    font-size: 0.55em;
+    box-shadow: none;
+}
+
+.reveal pre code {
+    display: block;
+    background: #f8f8f8;
+    border: 1px solid #d5d5d5;
+    border-radius: 6px;
+    padding: 12px;
+    max-height: 400px;
+    line-height: 1.45;
+    overflow: auto;
+    color: #2a2a2a;
+}
+
+.reveal img {
+    display: block;
+    max-width: 55%;
+    max-height: 450px;
+    margin: 0.5em auto;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    padding: 6px;
+    background-color: #fafafa;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.reveal img + em, .reveal :has(> img) + p > em:only-child {
+    display: block;
+    text-align: center;
+    font-size: 0.65em;
+    color: #666;
+    margin-top: 0.3em;
+}
+
+.reveal table {
+    border-collapse: collapse;
+    margin: 0.5em auto;
+    font-size: 0.75em;
+}
+
+.reveal th, .reveal td {
+    border: 1px solid #bbb;
+    padding: 6px 10px;
+    text-align: left;
+}
+
+.reveal th {
+    background-color: #e8e8e8;
+    font-weight: 600;
+    color: #2a2a2a;
+}
+
+.reveal tr:nth-child(even) { background-color: #f5f5f5; }
+
+.reveal a { color: #444; text-decoration: underline; text-decoration-color: #999; }
+
+.reveal .katex { font-size: 1.0em; }
+.reveal .katex-display { margin: 0.5em 0; }
+
+.reveal .slide-number {
+    color: #666;
+    font-size: 14px;
+}
+
+.reveal .controls .navigate-left,
+.reveal .controls .navigate-right,
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-down {
+    color: #888;
+}
+
+.reveal .progress span { background: #888; }
+
+body { background-color: #f5f5f5; }
+.reveal .slide-background { background-color: white; }
+
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+<h1>Historical Foundations of Computing, AI, and Natural Language Processing</h1>
+<p>Background historical notes for a modern introduction to <em>Natural Language Processing</em></p>
+            </section>
+            <section>
+<h2>Outline</h2>
+<ul>
+<li><strong>Part I:</strong> A Brief History of Computing</li>
+<li><strong>Part II:</strong> A Brief History of Artificial Intelligence</li>
+<li><strong>Part III:</strong> A Brief History of Linguistics and NLP</li>
+</ul>
+            </section>
+            <section>
+<h2>Part I: A Brief History of Computing</h2>
+            </section>
+            <section>
+<h3>Ancient Algorithms: Plimpton-322 (c. 1800 BCE)</h3>
+<p><img alt="Plimpton-322 tablet" src="../../articles/history/figures/plimpton_322_tablet.png" /></p>
+            </section>
+            <section>
+<ul>
+<li>Babylonian clay tablet listing Pythagorean triples ($a^2 + b^2 = c^2$)</li>
+<li>Used for computing land areas for taxation</li>
+<li>Pre-computed output of a systematic generation algorithm</li>
+<li>Demonstrates algorithmic thinking millennia before modern computing</li>
+</ul>
+            </section>
+            <section>
+<h3>The Euclidean Algorithm (c. 300 BCE)</h3>
+<ul>
+<li>Computes the greatest common divisor (GCD) of two numbers</li>
+<li>Repeatedly replace the larger number by the remainder when divided by the smaller</li>
+<li>One of the oldest algorithms still in use today</li>
+<li>Lamé's analysis (1844) marked the beginning of <strong>computational complexity theory</strong></li>
+</ul>
+            </section>
+            <section>
+<h3>The Euclidean Algorithm (c. 300 BCE)</h3>
+<p><img alt="Euclidean algorithm flowchart" src="../../articles/history/figures/euclidean_algorithm_flowchart.png" /></p>
+            </section>
+            <section>
+<h3>Al-Khwarizmi (c. 780-850 CE)</h3>
+<ul>
+<li>Persian mathematician at the House of Wisdom in Baghdad</li>
+<li>His name gives us the word <strong>"algorithm"</strong> (from Latinized "Algoritmi")</li>
+<li>His book <em>al-Jabr</em> gives us the word <strong>"algebra"</strong></li>
+<li>Formalized solving equations with variables rather than specific numbers</li>
+</ul>
+            </section>
+            <section>
+<h3>Al-Khwarizmi (c. 780-850 CE)</h3>
+<p><img alt="Al-Khwarizmi" src="../../articles/history/figures/al_khwarizmi.png" /></p>
+            </section>
+            <section>
+<h3>The Jacquard Loom (1801)</h3>
+<ul>
+<li><strong>Earliest programmable machine</strong> --- used punched cards to control weaving patterns</li>
+<li>Allowed ordinary workers to produce designs that previously required master weavers</li>
+<li>Led to one of the first instances of technological unemployment and industrial sabotage</li>
+<li>The punched card concept would prove far more consequential than Jacquard imagined</li>
+</ul>
+            </section>
+            <section>
+<h3>The Jacquard Loom (1801)</h3>
+<p><img alt="Jacquard loom punch cards" src="../../articles/history/figures/jacquard_loom_punchcards.png" /></p>
+            </section>
+            <section>
+<h3>Babbage and Lovelace: The Analytical Engine</h3>
+<ul>
+<li><strong>Charles Babbage</strong> (1791-1871) designed a mechanical computer using punched cards</li>
+<li><strong>Ada Lovelace</strong> (1815-1852) developed some of the first algorithms for a computing machine</li>
+<li>Invented foundational programming concepts:<ul>
+<li>Loops and conditional branching</li>
+<li>Separation of data and operations</li>
+<li>The concept of a general-purpose machine</li>
+</ul>
+</li>
+</ul>
+            </section>
+            <section>
+<h3>Babbage and Lovelace: The Analytical Engine</h3>
+<p><img alt="Babbage's Analytical Engine" src="../../articles/history/figures/babbage_analytical_engine.png" /></p>
+            </section>
+            <section>
+<h3>The Hollerith Tabulating Machine (1890)</h3>
+<ul>
+<li><strong>Herman Hollerith</strong> invented it to process the U.S. Census</li>
+<li>Punched cards sized to match dollar bills (reusing money-sorting equipment)</li>
+<li>The 80-column format is the origin of the <strong>80-character line limit</strong> in programming</li>
+<li>Hollerith's company later became <strong>IBM</strong></li>
+</ul>
+            </section>
+            <section>
+<h3>The Hollerith Tabulating Machine (1890)</h3>
+<p><img alt="Hollerith Tabulating Machine" src="../../articles/history/figures/hollerith_tabulating_machine.png" /></p>
+            </section>
+            <section>
+<h3>Alan Turing and the Foundations of Computing</h3>
+<ul>
+<li>Introduced the <strong>Turing machine</strong> (1936) --- an abstract device that can simulate any algorithm</li>
+<li><strong>Church-Turing Thesis</strong>: any algorithmic computation can be expressed as a Turing machine</li>
+<li>Proved some problems are <strong>undecidable</strong> (e.g., the Halting Problem)</li>
+<li>Established fundamental limits on what can be computed</li>
+</ul>
+            </section>
+            <section>
+<h3>Alan Turing and the Foundations of Computing</h3>
+<p><img alt="Alan Turing" src="../../articles/history/figures/alan_turing.jpg" /></p>
+            </section>
+            <section>
+<h3>The Electronic Era: Wartime Computing</h3>
+<ul>
+<li>World War II accelerated computer development dramatically</li>
+<li>Three drivers of innovation:<ul>
+<li><strong>Ballistics calculations</strong>: artillery trajectories</li>
+<li><strong>Code-breaking</strong>: Turing's work at Bletchley Park on Enigma</li>
+<li><strong>Nuclear weapons</strong>: modeling for the Manhattan Project</li>
+</ul>
+</li>
+<li>Led to first electronic computers including ENIAC (1945)</li>
+</ul>
+            </section>
+            <section>
+<h3>The Mainframe Era</h3>
+<ul>
+<li>Stored both data and programs electronically</li>
+<li>Key innovations:<ul>
+<li><strong>Subroutines</strong> and the <strong>stack</strong> for procedural programming</li>
+<li><strong>Machine language</strong> and <strong>assembly language</strong></li>
+<li><strong>Batch processing</strong>: programs submitted as punch card decks</li>
+</ul>
+</li>
+<li>The first computer "bug" --- an actual moth found in the Harvard Mark II (1947)</li>
+</ul>
+            </section>
+            <section>
+<h3>The Mainframe Era</h3>
+<p><img alt="First computer bug" src="../../articles/history/figures/first_computer_bug.png" /></p>
+            </section>
+            <section>
+<h3>From Terminals to Personal Computers</h3>
+<ul>
+<li><strong>Time-sharing</strong> (1960s): multiple users sharing one computer simultaneously</li>
+<li><strong>CRT terminals</strong> replaced teletypes, enabling on-screen text editing</li>
+<li><strong>Minicomputers</strong> (1960s) to <strong>microcomputers</strong> (1970s) to <strong>PCs</strong> (1980s)</li>
+<li><strong>Moore's Law</strong> (1965): transistor count doubles every ~2 years --- enabling modern AI</li>
+</ul>
+            </section>
+            <section>
+<h3>From Terminals to Personal Computers</h3>
+<p><img alt="IBM PC" src="../../articles/history/figures/ibm_pc.png" /></p>
+            </section>
+            <section>
+<h2>Part II: A Brief History of Artificial Intelligence</h2>
+            </section>
+            <section>
+<h3>The Birth of AI (1956)</h3>
+<ul>
+<li><strong>Dartmouth Summer Research Project</strong> formally established the field</li>
+<li>John McCarthy's founding conjecture:</li>
+</ul>
+<blockquote>
+<p>"Every aspect of learning or any other feature of intelligence can in principle be so precisely described that a machine can be made to simulate it."</p>
+</blockquote>
+<ul>
+<li>Key attendees: McCarthy, Minsky, Shannon, Newell, Simon</li>
+</ul>
+            </section>
+            <section>
+<h3>The Birth of AI (1956)</h3>
+<p><img alt="John McCarthy" src="../../articles/history/figures/john_mccarthy.jpg" /></p>
+            </section>
+            <section>
+<h3>Good Old-Fashioned AI (1950s-1970s)</h3>
+<ul>
+<li><strong>GOFAI</strong>: symbolic reasoning and logic-based systems</li>
+<li>Core technique: <strong>search algorithms</strong> --- systematically exploring possible solutions</li>
+<li>Key achievements:<ul>
+<li><strong>Logic Theorist</strong> (1956): proved mathematical theorems</li>
+<li><strong>General Problem Solver</strong> (1959): universal problem-solving attempt</li>
+<li><strong>ELIZA</strong> (1966): early chatbot simulating a psychotherapist</li>
+</ul>
+</li>
+</ul>
+            </section>
+            <section>
+<h3>Good Old-Fashioned AI (1950s-1970s)</h3>
+<p><img alt="ELIZA" src="../../articles/history/figures/eliza.png" /></p>
+            </section>
+            <section>
+<h3>The Limits of Search</h3>
+<ul>
+<li>Most interesting AI problems are <strong>NP-complete</strong></li>
+<li><strong>Combinatorial explosion</strong>: search spaces grow exponentially</li>
+<li>Deeper theoretical barriers:<ul>
+<li><strong>Undecidability</strong>: some problems have no algorithmic solution</li>
+<li><strong>Computational irreducibility</strong>: no shortcuts to predict behavior</li>
+<li><strong>Chaos theory</strong>: sensitive dependence on initial conditions</li>
+</ul>
+</li>
+</ul>
+            </section>
+            <section>
+<h3>Expert Systems (1970s-1980s)</h3>
+<ul>
+<li>Shifted from general problem-solving to domain-specific knowledge</li>
+<li>Prominent systems:<ul>
+<li><strong>MYCIN</strong>: diagnosed bacterial infections</li>
+<li><strong>DENDRAL</strong>: identified chemical compounds</li>
+<li><strong>XCON</strong>: configured computer systems at DEC</li>
+</ul>
+</li>
+<li>Limited by the <strong>knowledge acquisition bottleneck</strong> --- difficulty of encoding expertise as rules</li>
+</ul>
+            </section>
+            <section>
+<h3>The Logic Tradition</h3>
+<ul>
+<li>AI's emphasis on logical reasoning drew on a long heritage:<ul>
+<li><strong>Aristotle</strong>: formalized syllogistic reasoning</li>
+<li><strong>George Boole</strong> (1850s): algebraized logic</li>
+<li><strong>Frege</strong> (1879): first formal predicate calculus</li>
+<li><strong>First-order logic</strong>: foundation for knowledge representation</li>
+</ul>
+</li>
+<li>Expert systems combined logic with knowledge bases but remained <strong>brittle</strong></li>
+</ul>
+            </section>
+            <section>
+<h3>The Logic Tradition</h3>
+<p><img alt="George Boole" src="../../articles/history/figures/george_boole.jpg" /></p>
+            </section>
+            <section>
+<h3>Rodney Brooks and the Robotics Revolution (1980s)</h3>
+<blockquote>
+<p>"The world is its own best model."</p>
+</blockquote>
+<ul>
+<li>Challenged classical AI's emphasis on internal representation</li>
+<li><strong>Subsumption architecture</strong>: layered reactive behaviors, no central world model</li>
+<li>Intelligence emerging from interaction with the environment</li>
+<li>Led to practical robots like the Roomba</li>
+</ul>
+            </section>
+            <section>
+<h3>Rodney Brooks and the Robotics Revolution (1980s)</h3>
+<p><img alt="Shakey the Robot" src="../../articles/history/figures/shakey_robot.jpg" /></p>
+            </section>
+            <section>
+<h3>The Machine Learning Turn (1990s-2000s)</h3>
+<ul>
+<li>Fundamental shift: from hand-coding rules to <strong>learning from data</strong></li>
+<li>Key methods:<ul>
+<li><strong>Support Vector Machines</strong>: powerful classifiers with theoretical guarantees</li>
+<li><strong>Random Forests</strong>: ensemble methods combining decision trees</li>
+<li><strong>Bayesian networks</strong>: probabilistic graphical models</li>
+</ul>
+</li>
+<li><strong>Deep Blue</strong> defeated Kasparov (1997) --- but still relied on search, not learning</li>
+</ul>
+            </section>
+            <section>
+<h3>The Machine Learning Turn (1990s-2000s)</h3>
+<p><img alt="Deep Blue" src="../../articles/history/figures/deep_blue.jpg" /></p>
+            </section>
+            <section>
+<h3>The Deep Learning Revolution (2010s)</h3>
+<ul>
+<li>Neural networks returned with massive datasets, GPU computing, and new architectures</li>
+<li>Milestones:<ul>
+<li><strong>AlexNet</strong> (2012): sparked the deep learning revolution in vision</li>
+<li><strong>AlphaGo</strong> (2016): defeated world Go champion Lee Sedol</li>
+<li><strong>GPT/BERT</strong> (2018): transformed NLP through large-scale pretraining</li>
+</ul>
+</li>
+</ul>
+            </section>
+            <section>
+<h3>The Deep Learning Revolution (2010s)</h3>
+<p><img alt="AlphaGo vs. Lee Sedol" src="../../articles/history/figures/alphago_lee_sedol.jpg" /></p>
+            </section>
+            <section>
+<h2>Part III: A Brief History of Linguistics and NLP</h2>
+            </section>
+            <section>
+<h3>Historical Linguistics (19th Century)</h3>
+<ul>
+<li>Modern linguistics emerged in 19th-century Germany</li>
+<li>Dominant paradigm: understanding languages through their <strong>history and evolution</strong></li>
+<li>Key developments:<ul>
+<li>Reconstruction of <strong>Proto-Indo-European</strong></li>
+<li>The <strong>comparative method</strong> for identifying language relationships</li>
+<li>Explanation meant <em>historical</em> explanation</li>
+</ul>
+</li>
+</ul>
+            </section>
+            <section>
+<h3>The Saussurean Turn (c. 1900)</h3>
+<ul>
+<li><strong>Ferdinand de Saussure</strong> (1857-1913) shifted to <strong>synchronic linguistics</strong></li>
+<li>Studying language as a system at a single point in time</li>
+<li>Key concepts:<ul>
+<li><strong>Langue vs. parole</strong>: abstract system vs. individual speech acts</li>
+<li><strong>Signifier and signified</strong>: arbitrary relationship between form and meaning</li>
+<li><strong>Structure</strong>: language as a system of differences</li>
+</ul>
+</li>
+</ul>
+            </section>
+            <section>
+<h3>The Saussurean Turn (c. 1900)</h3>
+<p><img alt="Saussure" src="../../articles/history/figures/saussure.jpg" /></p>
+            </section>
+            <section>
+<h3>American Structuralism (1920s-1950s)</h3>
+<ul>
+<li><strong>Edward Sapir</strong> (1884-1939): relationship between language, culture, and thought</li>
+<li><strong>Leonard Bloomfield</strong> (1887-1949): rigorous, behaviorist methodology</li>
+<li><strong>Zellig Harris</strong>: the linguist's goal is to account for how language departs from equiprobability</li>
+<li><strong>George Zipf</strong>: discovered quantitative regularities (Zipf's Law)</li>
+</ul>
+            </section>
+            <section>
+<h3>American Structuralism (1920s-1950s)</h3>
+<p><img alt="Edward Sapir" src="../../articles/history/figures/edward_sapir.jpg" /></p>
+            </section>
+            <section>
+<h3>The Chomskyan Revolution (1957)</h3>
+<ul>
+<li>Noam Chomsky's <em>Syntactic Structures</em> transformed linguistics</li>
+<li>Key ideas:<ul>
+<li><strong>Formal grammars</strong>: precise mathematical specifications</li>
+<li><strong>Generative grammar</strong>: rules generating all and only grammatical sentences</li>
+<li><strong>Competence vs. performance</strong></li>
+<li><strong>Innateness</strong>: humans possess innate language-specific knowledge</li>
+</ul>
+</li>
+</ul>
+            </section>
+            <section>
+<h3>The Chomskyan Revolution (1957)</h3>
+<p><img alt="Noam Chomsky" src="../../articles/history/figures/noam_chomsky.jpg" /></p>
+            </section>
+            <section>
+<h3>The Chomsky Hierarchy</h3>
+<ul>
+<li>Classified formal grammars by computational power:<ul>
+<li><strong>Regular grammars</strong> (finite-state automata)</li>
+<li><strong>Context-free grammars</strong></li>
+<li><strong>Context-sensitive grammars</strong></li>
+<li><strong>Unrestricted grammars</strong> (Turing machines)</li>
+</ul>
+</li>
+<li>Natural language syntax requires at least context-free power</li>
+<li>Brought <strong>algorithmic thinking</strong> to mainstream linguistics</li>
+</ul>
+            </section>
+            <section>
+<h3>Early NLP: Machine Translation (1950s-1960s)</h3>
+<ul>
+<li>First major goal of computational linguistics, driven by Cold War</li>
+<li><strong>Georgetown-IBM experiment</strong> (1954): demonstrated Russian-to-English translation</li>
+<li>Warren Weaver's memorandum (1949): translation as a <strong>code-breaking problem</strong></li>
+<li>Optimistic predictions that high-quality MT was imminent</li>
+</ul>
+            </section>
+            <section>
+<h3>Early NLP: Machine Translation (1950s-1960s)</h3>
+<p><img alt="Warren Weaver" src="../../articles/history/figures/512px-Warren_Weaver.jpg" /></p>
+            </section>
+            <section>
+<h3>The ALPAC Report (1966)</h3>
+<ul>
+<li>Assessed ten years of MT research --- concluded MT had <strong>not lived up to its promises</strong></li>
+<li>Recommended:<ul>
+<li>Increased support for basic linguistics research</li>
+<li>Computational tools to aid human translators</li>
+<li>Skepticism about fully automatic translation</li>
+</ul>
+</li>
+<li>MT funding largely dried up for over a decade --- the <strong>first AI Winter</strong></li>
+</ul>
+            </section>
+            <section>
+<h3>Rule-Based NLP (1960s-1980s)</h3>
+<ul>
+<li>NLP shifted to hand-crafted linguistic rules</li>
+<li><strong>SHRDLU</strong> (1970): natural language understanding in a "blocks world"</li>
+<li>Parsing algorithms, morphological analyzers</li>
+<li>Limitations: <strong>brittle</strong>, labor-intensive, domain-specific</li>
+</ul>
+            </section>
+            <section>
+<h3>Rule-Based NLP (1960s-1980s)</h3>
+<p><img alt="SHRDLU" src="../../articles/history/figures/shrdlu_blocks_world.png" /></p>
+            </section>
+            <section>
+<h3>Information Theory and Language</h3>
+<ul>
+<li><strong>Claude Shannon's</strong> information theory (1948) provided crucial tools:<ul>
+<li><strong>Entropy</strong>: measure of uncertainty or information content</li>
+<li><strong>N-gram models</strong>: predicting next symbol from previous $n-1$ symbols</li>
+<li><strong>Perplexity</strong>: evaluating how well a model predicts a sequence</li>
+</ul>
+</li>
+<li>Shannon showed English has significant statistical redundancy</li>
+</ul>
+            </section>
+            <section>
+<h3>Information Theory and Language</h3>
+<p><img alt="Claude Shannon" src="../../articles/history/figures/claude_shannon.jpg" /></p>
+            </section>
+            <section>
+<h3>The Statistical Revolution (1990s)</h3>
+<ul>
+<li>Paradigm shift from rules to learning from data</li>
+<li>Key methods:<ul>
+<li><strong>N-gram language models</strong></li>
+<li><strong>Hidden Markov Models (HMMs)</strong> for speech recognition and POS tagging</li>
+<li><strong>Statistical parsing</strong> from treebanks</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>"Every time I fire a linguist, our system performance improves." --- Fred Jelinek, IBM</p>
+</blockquote>
+            </section>
+            <section>
+<h3>Principles of Statistical NLP</h3>
+<ul>
+<li>Three key principles emerged:<ol>
+<li><strong>Robustness</strong>: work on real data, not toy examples</li>
+<li><strong>Language-independence</strong>: learn from data, be portable across languages</li>
+<li><strong>Quantitative evaluation</strong>: measure performance objectively</li>
+</ol>
+</li>
+<li>Enabled by linguistic resources:<ul>
+<li><strong>Brown Corpus</strong> (1967), <strong>Penn Treebank</strong> (1990s)</li>
+<li><strong>Linguistic Data Consortium</strong></li>
+</ul>
+</li>
+</ul>
+            </section>
+            <section>
+<h3>Machine Learning Methods for NLP (2000s)</h3>
+<ul>
+<li>ML became central to NLP:<ul>
+<li><strong>Conditional Random Fields</strong>: sequence labeling</li>
+<li><strong>Maximum Entropy models</strong>: flexible classifiers</li>
+<li><strong>Latent Semantic Analysis</strong>: hidden semantic structure</li>
+</ul>
+</li>
+<li>Shared tasks drove progress:<ul>
+<li><strong>CoNLL</strong>, <strong>SemEval</strong>, <strong>WMT</strong> competitions</li>
+</ul>
+</li>
+</ul>
+            </section>
+            <section>
+<h3>Word Embeddings (2013)</h3>
+<ul>
+<li><strong>Word2Vec</strong> (Mikolov et al., 2013) revolutionized word representation</li>
+<li>Words as dense vectors in continuous space</li>
+<li>Semantic relationships encoded geometrically:<ul>
+<li>king - man + woman $\approx$ queen</li>
+</ul>
+</li>
+<li><strong>GloVe</strong> (2014): similar results from global co-occurrence statistics</li>
+<li>Dense vectors replaced hand-engineered sparse features across NLP</li>
+</ul>
+            </section>
+            <section>
+<h3>The Neural Era (2014-2017)</h3>
+<ul>
+<li>Neural architectures transformed sequence modeling:<ul>
+<li><strong>RNNs</strong>: process sequences step by step</li>
+<li><strong>LSTMs</strong>: handle long-range dependencies</li>
+<li><strong>Sequence-to-sequence</strong>: encoder-decoder for translation</li>
+</ul>
+</li>
+<li><strong>Attention mechanisms</strong> (Bahdanau et al., 2014): focus on relevant input parts</li>
+<li>Neural MT surpassed statistical MT; Google deployed neural translation in 2016</li>
+</ul>
+            </section>
+            <section>
+<h3>The Transformer (2017)</h3>
+<ul>
+<li>"Attention Is All You Need" (Vaswani et al., 2017)</li>
+<li>Key innovations:<ul>
+<li><strong>Self-attention</strong> replaces recurrence entirely</li>
+<li><strong>Parallel processing</strong> enables much faster training</li>
+<li><strong>Multi-head attention</strong>, positional encodings, residual connections</li>
+</ul>
+</li>
+<li>Scales effectively to very large models</li>
+</ul>
+            </section>
+            <section>
+<h3>BERT and GPT (2018)</h3>
+<ul>
+<li>The Transformer enabled two paradigms:<ul>
+<li><strong>BERT</strong>: bidirectional pretraining for language understanding</li>
+<li><strong>GPT</strong>: autoregressive language modeling</li>
+</ul>
+</li>
+<li>Pretrain on massive text, then fine-tune on downstream tasks</li>
+<li>Numerous variants: RoBERTa, XLNet, T5, and many more</li>
+<li>Transformed virtually every NLP benchmark</li>
+</ul>
+            </section>
+            <section>
+<h3>The Large Language Model Era (2020-Present)</h3>
+<ul>
+<li>Scaling Transformers revealed <strong>emergent capabilities</strong>:<ul>
+<li><strong>GPT-3</strong> (2020): 175B parameters, few-shot learning</li>
+<li><strong>ChatGPT</strong> (2022): conversational AI reaches mainstream adoption</li>
+<li><strong>GPT-4, Claude, Gemini</strong>: multimodal understanding and reasoning</li>
+</ul>
+</li>
+<li>New capabilities:<ul>
+<li>In-context learning, chain-of-thought reasoning, instruction following</li>
+</ul>
+</li>
+</ul>
+            </section>
+            <section>
+<h3>Current Frontiers and Open Questions</h3>
+<ul>
+<li><strong>Understanding vs. pattern matching</strong>: do LLMs truly understand language?</li>
+<li><strong>Alignment</strong>: ensuring AI systems behave according to human values</li>
+<li><strong>Interpretability</strong>: what computations occur inside these models?</li>
+<li><strong>Linguistic competence</strong>: what do LLMs reveal about the nature of language?</li>
+<li>The rationalism vs. empiricism debate remains unresolved</li>
+</ul>
+            </section>
+            <section>
+<h2>Converging Histories</h2>
+<ul>
+<li>Algorithms developed millennia ago laid the groundwork for computational thinking</li>
+<li>Formalization of logic and computation enabled both AI and the hardware to run it</li>
+<li>Linguistics provided theoretical understanding; information theory provided mathematical tools</li>
+<li>Today's LLMs represent a convergence: massive compute, neural architectures, statistical learning, and linguistic benchmarks</li>
+<li>Each generation has built upon --- and sometimes rejected --- the previous one</li>
+</ul>
+            </section>
+            <section>
+<h2>Summary</h2>
+<ul>
+<li><strong>Computing</strong>: from ancient algorithms to electronic computers and Moore's Law</li>
+<li><strong>AI</strong>: from symbolic reasoning to machine learning to deep learning</li>
+<li><strong>NLP</strong>: from historical linguistics through rule-based and statistical methods to Transformers and LLMs</li>
+<li>Understanding this history helps appreciate both how far we have come and the enduring questions that remain</li>
+</ul>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            transition: 'none',
+            slideNumber: false,
+            center: true,
+            width: 1200,
+            height: 700,
+            margin: 0.06,
+            hash: true,
+            plugins: [ RevealHighlight ]
+        });
+
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false,
+            trust: true,
+            strict: false,
+            macros: {
+                "\\logit": "\\operatorname{logit}",
+                "\\softmax": "\\operatorname{softmax}",
+                "\\sigmoid": "\\operatorname{sigmoid}",
+                "\\sgn": "\\operatorname{sgn}",
+                "\\sign": "\\operatorname{sign}",
+                "\\argmax": "\\operatorname{argmax}",
+                "\\argmin": "\\operatorname{argmin}",
+                "\\Var": "\\operatorname{Var}",
+                "\\Cov": "\\operatorname{Cov}",
+                "\\Corr": "\\operatorname{Corr}",
+                "\\E": "\\mathbb{E}",
+                "\\P": "\\mathbb{P}",
+                "\\R": "\\mathbb{R}",
+                "\\N": "\\mathbb{N}",
+                "\\Z": "\\mathbb{Z}",
+                "\\C": "\\mathbb{C}",
+                "\\ind": "\\mathbb{1}",
+                "\\KL": "\\operatorname{KL}",
+                "\\Tr": "\\operatorname{Tr}",
+                "\\tr": "\\operatorname{tr}",
+                "\\diag": "\\operatorname{diag}",
+                "\\rank": "\\operatorname{rank}",
+                "\\relu": "\\operatorname{ReLU}",
+                "\\gelu": "\\operatorname{GELU}",
+                "\\selu": "\\operatorname{SELU}"
+            }
+        });
+    </script>
+</body>
+</html>

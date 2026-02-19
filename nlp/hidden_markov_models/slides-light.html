@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+
+.reveal {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 28px;
+    color: #2a2a2a;
+}
+
+.reveal .slides {
+    text-align: left;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #1a1a1a;
+    text-transform: none;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.reveal h1 { font-size: 1.8em; }
+.reveal h2 { font-size: 1.4em; color: #333; }
+.reveal h3 { font-size: 1.15em; color: #444; }
+
+.reveal p { margin: 0 0 0.5em 0; }
+
+.reveal ul, .reveal ol {
+    display: block;
+    margin: 0.3em 0 0.6em 0;
+}
+
+.reveal li { margin-bottom: 0.3em; }
+
+.reveal blockquote {
+    width: 90%;
+    margin: 0.5em auto;
+    padding: 0.4em 0.8em;
+    border-left: 4px solid #aaa;
+    color: #555;
+    background-color: #fafafa;
+    font-style: italic;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+.reveal blockquote p:last-child { margin-bottom: 0; }
+
+.reveal code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.85em;
+    background-color: #f5f5f5;
+    padding: 0.15em 0.3em;
+    border-radius: 3px;
+    color: #3a3a3a;
+    border: 1px solid #ddd;
+}
+
+.reveal pre {
+    width: 100%;
+    font-size: 0.55em;
+    box-shadow: none;
+}
+
+.reveal pre code {
+    display: block;
+    background: #f8f8f8;
+    border: 1px solid #d5d5d5;
+    border-radius: 6px;
+    padding: 12px;
+    max-height: 400px;
+    line-height: 1.45;
+    overflow: auto;
+    color: #2a2a2a;
+}
+
+.reveal img {
+    display: block;
+    max-width: 55%;
+    max-height: 450px;
+    margin: 0.5em auto;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    padding: 6px;
+    background-color: #fafafa;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.reveal img + em, .reveal :has(> img) + p > em:only-child {
+    display: block;
+    text-align: center;
+    font-size: 0.65em;
+    color: #666;
+    margin-top: 0.3em;
+}
+
+.reveal table {
+    border-collapse: collapse;
+    margin: 0.5em auto;
+    font-size: 0.75em;
+}
+
+.reveal th, .reveal td {
+    border: 1px solid #bbb;
+    padding: 6px 10px;
+    text-align: left;
+}
+
+.reveal th {
+    background-color: #e8e8e8;
+    font-weight: 600;
+    color: #2a2a2a;
+}
+
+.reveal tr:nth-child(even) { background-color: #f5f5f5; }
+
+.reveal a { color: #444; text-decoration: underline; text-decoration-color: #999; }
+
+.reveal .katex { font-size: 1.0em; }
+.reveal .katex-display { margin: 0.5em 0; }
+
+.reveal .slide-number {
+    color: #666;
+    font-size: 14px;
+}
+
+.reveal .controls .navigate-left,
+.reveal .controls .navigate-right,
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-down {
+    color: #888;
+}
+
+.reveal .progress span { background: #888; }
+
+body { background-color: #f5f5f5; }
+.reveal .slide-background { background-color: white; }
+
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+<h1>Hidden Markov Models</h1>
+            </section>
+            <section>
+<h2>Outline</h2>
+<ul>
+<li>Markov chains</li>
+<li>From Markov chains to HMMs</li>
+<li>The three fundamental problems</li>
+<li>Problem 1: Forward algorithm (evaluation)</li>
+<li>Problem 2: Viterbi algorithm (decoding)</li>
+<li>Problem 3: Baum-Welch algorithm (learning)</li>
+<li>Application: part-of-speech tagging</li>
+<li>Limitations and beyond</li>
+</ul>
+            </section>
+            <section>
+<h2>Part I: Markov Chains</h2>
+            </section>
+            <section>
+<h2>Sequences of Random Variables</h2>
+<p>A sequence $Q_1, Q_2, \ldots, Q_T$ taking values from states $\mathcal{S} = \{s_1, \ldots, s_N\}$</p>
+<p>Joint probability by chain rule:</p>
+<p>$$P(Q_1, \ldots, Q_T) = P(Q_1) \cdot P(Q_2 \mid Q_1) \cdot P(Q_3 \mid Q_1, Q_2) \cdots$$</p>
+<p>Conditioning on full history becomes intractable</p>
+            </section>
+            <section>
+<h2>The Markov Property</h2>
+<p>$$P(Q_t \mid Q_1, \ldots, Q_{t-1}) = P(Q_t \mid Q_{t-1})$$</p>
+<p>The future is conditionally independent of the past given the present</p>
+<p>Joint probability simplifies to:</p>
+<p>$$P(Q_1, \ldots, Q_T) = P(Q_1) \prod_{t=2}^{T} P(Q_t \mid Q_{t-1})$$</p>
+            </section>
+            <section>
+<h2>Markov Chain Components</h2>
+<p><img alt="markov model" src="../../articles/hidden_markov_models/figures/mm.png" /></p>
+            </section>
+            <section>
+<h2>Formal Definition</h2>
+<p><strong>States</strong>: finite set $\mathcal{S} = \{s_1, \ldots, s_N\}$</p>
+<p><strong>Transitions</strong>: $N \times N$ matrix $A$ where $a_{ij} = P(Q_t = s_j \mid Q_{t-1} = s_i)$</p>
+<p><strong>Initial distribution</strong>: $\boldsymbol{\pi}$ where $\pi_i = P(Q_1 = s_i)$</p>
+<p>Each row of $A$ sums to 1; entries of $\boldsymbol{\pi}$ sum to 1</p>
+            </section>
+            <section>
+<h2>Example: Weather</h2>
+<p>States: Hot (H), Cold (C), Warm (W)</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>H</th>
+<th>C</th>
+<th>W</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>H</strong></td>
+<td>0.6</td>
+<td>0.1</td>
+<td>0.3</td>
+</tr>
+<tr>
+<td><strong>C</strong></td>
+<td>0.1</td>
+<td>0.8</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td><strong>W</strong></td>
+<td>0.3</td>
+<td>0.1</td>
+<td>0.6</td>
+</tr>
+</tbody>
+</table>
+<p>Initial: $\boldsymbol{\pi} = (0.1, 0.7, 0.2)$</p>
+            </section>
+            <section>
+<h2>Computing Sequence Probability</h2>
+<p>$$P(H, H, C, C) = \pi_H \cdot a_{HH} \cdot a_{HC} \cdot a_{CC}$$</p>
+<p>$$= 0.1 \times 0.6 \times 0.1 \times 0.8 = 0.0048$$</p>
+            </section>
+            <section>
+<h2>Markov Chains as Language Models</h2>
+<p>A Markov chain where states are words = <strong>bigram language model</strong></p>
+<ul>
+<li>Transition $a_{ij}$ = $P(w_j \mid w_i)$</li>
+<li>Generating text = random walk through the state space</li>
+</ul>
+            </section>
+            <section>
+<h2>Part II: Hidden Markov Models</h2>
+            </section>
+            <section>
+<h2>The Need for Hidden States</h2>
+<p><img alt="hidden markov model" src="../../articles/hidden_markov_models/figures/hmm.png" /></p>
+            </section>
+            <section>
+<h2>Observable vs. Hidden</h2>
+<p>Many problems have <strong>hidden</strong> states we cannot observe directly:</p>
+<ul>
+<li><strong>POS tagging</strong>: observe words, not tags</li>
+<li><strong>Speech recognition</strong>: observe audio, not words</li>
+<li><strong>Gene finding</strong>: observe DNA bases, not gene boundaries</li>
+</ul>
+<p>Observations provide noisy evidence about hidden states</p>
+            </section>
+            <section>
+<h2>HMM Definition</h2>
+<p><strong>States</strong>: $\mathcal{S} = \{s_1, \ldots, s_N\}$ (hidden)</p>
+<p><strong>Observations</strong>: $\mathcal{V} = \{v_1, \ldots, v_M\}$</p>
+<p><strong>Transitions</strong>: $a_{ij} = P(Q_t = s_j \mid Q_{t-1} = s_i)$</p>
+<p><strong>Emissions</strong>: $b_i(k) = P(O_t = v_k \mid Q_t = s_i)$</p>
+<p><strong>Initial</strong>: $\pi_i = P(Q_1 = s_i)$</p>
+            </section>
+            <section>
+<h2>Two Independence Assumptions</h2>
+<p><strong>Markov assumption</strong>: current state depends only on previous state</p>
+<p>$$P(Q_t \mid Q_1, \ldots, Q_{t-1}) = P(Q_t \mid Q_{t-1})$$</p>
+<p><strong>Output independence</strong>: current observation depends only on current state</p>
+<p>$$P(O_t \mid Q_1, \ldots, Q_T, O_1, \ldots, O_T) = P(O_t \mid Q_t)$$</p>
+            </section>
+            <section>
+<h2>Graphical Model Structure</h2>
+<p>$$Q_1 \rightarrow Q_2 \rightarrow Q_3 \rightarrow \cdots \rightarrow Q_T$$
+$$\downarrow \quad\quad\quad \downarrow \quad\quad\quad \downarrow \quad\quad\quad\quad\quad\quad\quad \downarrow$$
+$$O_1 \quad\quad\quad O_2 \quad\quad\quad O_3 \quad\quad \cdots \quad\quad O_T$$</p>
+<p>States form Markov chain horizontally; each generates one observation vertically</p>
+            </section>
+            <section>
+<h2>Generative Process</h2>
+<ol>
+<li>Sample $Q_1 \sim \boldsymbol{\pi}$</li>
+<li>Sample $O_1 \sim B_{Q_1}$</li>
+<li>For $t = 2, \ldots, T$:<ul>
+<li>Sample $Q_t \sim A_{Q_{t-1}}$</li>
+<li>Sample $O_t \sim B_{Q_t}$</li>
+</ul>
+</li>
+</ol>
+<p>Only $\mathbf{O}$ is observed; $\mathbf{Q}$ remains hidden</p>
+            </section>
+            <section>
+<h2>Joint Probability</h2>
+<p>$$P(\mathbf{o}, \mathbf{q} \mid \lambda) = \pi_{q_1} \prod_{t=1}^{T} b_{q_t}(o_t) \prod_{t=2}^{T} a_{q_{t-1}, q_t}$$</p>
+<p>First product: <strong>emissions</strong> (observations given states)</p>
+<p>Second product: <strong>transitions</strong> (state dynamics)</p>
+            </section>
+            <section>
+<h2>Part III: The Three Problems</h2>
+            </section>
+            <section>
+<h2>Three Fundamental Problems</h2>
+<p><strong>Problem 1 (Evaluation)</strong>: Given $\mathbf{o}$, compute $P(\mathbf{o} \mid \lambda)$</p>
+<p><strong>Problem 2 (Decoding)</strong>: Given $\mathbf{o}$, find best state sequence $\mathbf{q}^*$</p>
+<p><strong>Problem 3 (Learning)</strong>: Given $\mathbf{o}$, find best parameters $\lambda^*$</p>
+            </section>
+            <section>
+<h2>Part IV: The Forward Algorithm</h2>
+            </section>
+            <section>
+<h2>The Naive Approach</h2>
+<p>Marginalize over all state sequences:</p>
+<p>$$P(\mathbf{o} \mid \lambda) = \sum_{\mathbf{q}} P(\mathbf{o}, \mathbf{q} \mid \lambda)$$</p>
+<p>With $N$ states, length $T$: $N^T$ sequences</p>
+<p>POS tagger with 45 tags, 20 words: $45^{20} \approx 10^{33}$</p>
+            </section>
+            <section>
+<h2>Forward Variable</h2>
+<p>Define $\alpha_t(i)$: probability of seeing $o_1, \ldots, o_t$ and being in state $s_i$ at time $t$</p>
+<p>$$\alpha_t(i) = P(O_1 = o_1, \ldots, O_t = o_t, Q_t = s_i \mid \lambda)$$</p>
+            </section>
+            <section>
+<h2>Forward Recursion</h2>
+<p><strong>Initialization</strong>: $\alpha_1(i) = \pi_i \cdot b_i(o_1)$</p>
+<p><strong>Recursion</strong>:</p>
+<p>$$\alpha_t(j) = \left[ \sum_{i=1}^{N} \alpha_{t-1}(i) \cdot a_{ij} \right] \cdot b_j(o_t)$$</p>
+<p><strong>Termination</strong>: $P(\mathbf{o} \mid \lambda) = \sum_{i=1}^{N} \alpha_T(i)$</p>
+            </section>
+            <section>
+<h2>Why It Works</h2>
+<p>The Markov property lets us factor:</p>
+<p>$$P(Q_t = j, o_{1:t}) = \sum_i P(Q_{t-1} = i, o_{1:t-1}) \cdot a_{ij} \cdot b_j(o_t)$$</p>
+<p>Only need $\alpha_{t-1}(\cdot)$, not entire history</p>
+            </section>
+            <section>
+<h2>Complexity</h2>
+<ul>
+<li><strong>Naive</strong>: $O(N^T)$ — exponential</li>
+<li><strong>Forward</strong>: $O(N^2 T)$ — polynomial</li>
+</ul>
+<p>For each of $T$ steps, compute $N$ values, each summing over $N$ states</p>
+            </section>
+            <section>
+<h2>The Backward Algorithm</h2>
+<p>Define $\beta_t(i) = P(o_{t+1}, \ldots, o_T \mid Q_t = s_i, \lambda)$</p>
+<p><strong>Initialization</strong>: $\beta_T(i) = 1$</p>
+<p><strong>Recursion</strong>:</p>
+<p>$$\beta_t(i) = \sum_{j=1}^{N} a_{ij} \cdot b_j(o_{t+1}) \cdot \beta_{t+1}(j)$$</p>
+            </section>
+            <section>
+<h2>Forward-Backward Identity</h2>
+<p>For any time $t$:</p>
+<p>$$P(\mathbf{o} \mid \lambda) = \sum_{i=1}^{N} \alpha_t(i) \cdot \beta_t(i)$$</p>
+<p>Forward and backward together give rich state information</p>
+            </section>
+            <section>
+<h2>Part V: The Viterbi Algorithm</h2>
+            </section>
+            <section>
+<h2>The Decoding Problem</h2>
+<p>Find most probable state sequence:</p>
+<p>$$\mathbf{q}^* = \arg\max_{\mathbf{q}} P(\mathbf{q} \mid \mathbf{o}, \lambda)$$</p>
+<p>For POS tagging: find the best tag sequence for observed words</p>
+            </section>
+            <section>
+<h2>Viterbi Variable</h2>
+<p>$v_t(j)$: probability of the <strong>best path</strong> ending in state $j$ at time $t$</p>
+<p>$$v_t(j) = \max_{q_1, \ldots, q_{t-1}} P(q_1, \ldots, q_{t-1}, Q_t = j, o_1, \ldots, o_t)$$</p>
+            </section>
+            <section>
+<h2>Viterbi Recursion</h2>
+<p><strong>Initialization</strong>: $v_1(j) = \pi_j \cdot b_j(o_1)$</p>
+<p><strong>Recursion</strong>:</p>
+<p>$$v_t(j) = \max_{i} \left[ v_{t-1}(i) \cdot a_{ij} \right] \cdot b_j(o_t)$$</p>
+<p>$$\text{bp}_t(j) = \arg\max_{i} \left[ v_{t-1}(i) \cdot a_{ij} \right]$$</p>
+            </section>
+            <section>
+<h2>Termination and Backtracking</h2>
+<p><strong>Termination</strong>:</p>
+<p>$$q_T^* = \arg\max_i v_T(i)$$</p>
+<p><strong>Backtracking</strong> ($t = T-1, \ldots, 1$):</p>
+<p>$$q_t^* = \text{bp}_{t+1}(q_{t+1}^*)$$</p>
+<p>Follow backpointers to recover optimal path</p>
+            </section>
+            <section>
+<h2>Forward vs. Viterbi</h2>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Operation</th>
+<th>Computes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Forward</td>
+<td>$\sum_i \alpha_{t-1}(i) \cdot a_{ij}$</td>
+<td>Total probability</td>
+</tr>
+<tr>
+<td>Viterbi</td>
+<td>$\max_i v_{t-1}(i) \cdot a_{ij}$</td>
+<td>Best path probability</td>
+</tr>
+</tbody>
+</table>
+<p>Identical structure — only <strong>sum vs. max</strong> differs</p>
+<p>Both $O(N^2 T)$</p>
+            </section>
+            <section>
+<h2>Log-Space Computation</h2>
+<p>Products of small probabilities → numerical underflow</p>
+<p>Work in log-space:</p>
+<p>$$\log v_t(j) = \max_i [\log v_{t-1}(i) + \log a_{ij}] + \log b_j(o_t)$$</p>
+<p>Products become sums; max is unchanged</p>
+            </section>
+            <section>
+<h2>Viterbi Lattice Example</h2>
+<p><img alt="The Viterbi lattice for &quot;Janet will back the bill.&quot; Blue nodes indicate viable tags; highlighted path shows optimal sequence." src="../../articles/hidden_markov_models/figures/viterbi_lattice.png" /></p>
+            </section>
+            <section>
+<h2>Part VI: Learning (Baum-Welch)</h2>
+            </section>
+            <section>
+<h2>The Learning Problem</h2>
+<p>Find parameters maximizing likelihood:</p>
+<p>$$\lambda^* = \arg\max_\lambda P(\mathbf{o} \mid \lambda)$$</p>
+            </section>
+            <section>
+<h2>Supervised Learning</h2>
+<p>If both states and observations are known, just count:</p>
+<p><strong>Transitions</strong>: $\hat{a}_{ij} = \frac{C(s_i \to s_j)}{C(s_i)}$</p>
+<p><strong>Emissions</strong>: $\hat{b}_i(k) = \frac{C(s_i \text{ emits } v_k)}{C(s_i)}$</p>
+<p>Standard relative frequency = MLE</p>
+            </section>
+            <section>
+<h2>Unsupervised: The Challenge</h2>
+<p>When states are hidden, we can't count transitions!</p>
+<p>$$P(\mathbf{o} \mid \lambda) = \sum_{\mathbf{q}} P(\mathbf{o}, \mathbf{q} \mid \lambda)$$</p>
+<p>Sum over hidden states → no closed-form solution</p>
+<p>This is a <strong>latent variable</strong> problem</p>
+            </section>
+            <section>
+<h2>Baum-Welch = EM for HMMs</h2>
+<p><strong>E-step</strong>: Use current $\lambda$ to compute <strong>expected counts</strong></p>
+<p><strong>M-step</strong>: Re-estimate parameters from expected counts</p>
+<p>Iterate until convergence</p>
+            </section>
+            <section>
+<h2>State Posterior</h2>
+<p>Probability of being in state $i$ at time $t$:</p>
+<p>$$\gamma_t(i) = P(Q_t = s_i \mid \mathbf{o}, \lambda) = \frac{\alpha_t(i) \cdot \beta_t(i)}{\sum_j \alpha_t(j) \cdot \beta_t(j)}$$</p>
+<p>Uses both forward and backward variables — hence "forward-backward"</p>
+            </section>
+            <section>
+<h2>Transition Posterior</h2>
+<p>Probability of transition $i \to j$ at time $t$:</p>
+<p>$$\xi_t(i, j) = \frac{\alpha_t(i) \cdot a_{ij} \cdot b_j(o_{t+1}) \cdot \beta_{t+1}(j)}{P(\mathbf{o} \mid \lambda)}$$</p>
+            </section>
+            <section>
+<h2>Parameter Re-estimation</h2>
+<p><strong>Transitions</strong>:</p>
+<p>$$\hat{a}_{ij} = \frac{\sum_{t=1}^{T-1} \xi_t(i, j)}{\sum_{t=1}^{T-1} \gamma_t(i)}$$</p>
+<p><strong>Emissions</strong>:</p>
+<p>$$\hat{b}_i(k) = \frac{\sum_{t: o_t = v_k} \gamma_t(i)}{\sum_{t=1}^{T} \gamma_t(i)}$$</p>
+            </section>
+            <section>
+<h2>Convergence Properties</h2>
+<ul>
+<li>Each iteration <strong>increases</strong> (or maintains) likelihood</li>
+<li>Converges to a <strong>local maximum</strong></li>
+<li><strong>Not guaranteed</strong> to find global maximum</li>
+<li>Run multiple times with different initializations</li>
+</ul>
+            </section>
+            <section>
+<h2>Part VII: POS Tagging</h2>
+            </section>
+            <section>
+<h2>HMM Formulation</h2>
+<p><strong>States</strong>: tag set (NN, VB, DT, JJ, ...)</p>
+<p><strong>Observations</strong>: words</p>
+<p><strong>Goal</strong>: find tag sequence maximizing $P(\mathbf{t} \mid \mathbf{w})$</p>
+            </section>
+            <section>
+<h2>The Noisy Channel</h2>
+<p>$$\hat{t}_{1:n} = \arg\max_{t_{1:n}} \prod_{i=1}^{n} \underbrace{P(w_i \mid t_i)}_{\text{emission}} \cdot \underbrace{P(t_i \mid t_{i-1})}_{\text{transition}}$$</p>
+<p>Exactly the Viterbi decoding problem!</p>
+            </section>
+            <section>
+<h2>Example Transitions</h2>
+<p>From the Wall Street Journal corpus:</p>
+<ul>
+<li>$P(\text{VB} \mid \text{MD}) = 0.80$ — verbs after modals</li>
+<li>$P(\text{NN} \mid \text{DT}) = 0.47$ — nouns after determiners</li>
+<li>$P(\text{JJ} \mid \text{DT}) = 0.22$ — adjectives after determiners</li>
+</ul>
+            </section>
+            <section>
+<h2>Example Emissions</h2>
+<ul>
+<li>$P(\text{will} \mid \text{MD}) = 0.31$ — "will" as modal</li>
+<li>$P(\text{will} \mid \text{NN}) = 0.002$ — "will" as noun</li>
+<li>$P(\text{the} \mid \text{DT}) = 0.51$ — "the" as determiner</li>
+</ul>
+            </section>
+            <section>
+<h2>Tagging "Janet will back the bill"</h2>
+<ul>
+<li>"Janet" → NNP (proper noun, emission dominates)</li>
+<li>"will" → MD ($P(\text{VB} \mid \text{MD}) = 0.80$ is high)</li>
+<li>"back" → VB (follows modal)</li>
+<li>"the" → DT (unambiguous)</li>
+<li>"bill" → NN (follows determiner)</li>
+</ul>
+<p>Viterbi path: <strong>NNP → MD → VB → DT → NN</strong></p>
+            </section>
+            <section>
+<h2>Handling Unknown Words</h2>
+<ul>
+<li><strong>Smoothing</strong>: add small mass to unseen word-tag pairs</li>
+<li><strong>Suffix features</strong>: -ed (past), -ing (gerund), -ly (adverb)</li>
+<li><strong>Capitalization</strong>: likely proper noun</li>
+<li><strong>Contains hyphen</strong>: likely adjective or compound</li>
+</ul>
+            </section>
+            <section>
+<h2>Performance</h2>
+<p>HMM taggers: <strong>96-97% accuracy</strong> on English</p>
+<p>Most errors on:</p>
+<ul>
+<li>Ambiguous words ("that" as DT vs. IN vs. WDT)</li>
+<li>Unknown words</li>
+<li>Rare constructions</li>
+</ul>
+            </section>
+            <section>
+<h2>Part VIII: Limitations and Beyond</h2>
+            </section>
+            <section>
+<h2>Independence Assumptions</h2>
+<p><strong>Output independence</strong>: each word depends only on its tag</p>
+<ul>
+<li>But "bank" after "river" → noun; after "will" → verb</li>
+</ul>
+<p><strong>First-order Markov</strong>: tag depends only on previous tag</p>
+<ul>
+<li>But longer dependencies exist in language</li>
+</ul>
+            </section>
+            <section>
+<h2>Feature Limitations</h2>
+<p>HMMs cannot easily incorporate:</p>
+<ul>
+<li>Capitalization</li>
+<li>Word shape</li>
+<li>Prefix/suffix patterns</li>
+<li>Surrounding words</li>
+<li>Domain-specific cues</li>
+</ul>
+            </section>
+            <section>
+<h2>Conditional Random Fields</h2>
+<p>CRFs model $P(\mathbf{t} \mid \mathbf{w})$ directly with arbitrary features:</p>
+<p>$$P(\mathbf{t} \mid \mathbf{w}) = \frac{1}{Z(\mathbf{w})} \exp\left(\sum_t \sum_k \lambda_k f_k(t_{t-1}, t_t, \mathbf{w}, t)\right)$$</p>
+<p>Allow capitalization, word shape, surrounding context</p>
+            </section>
+            <section>
+<h2>Neural Sequence Models</h2>
+<ul>
+<li><strong>BiLSTM-CRF</strong>: neural features + structured prediction</li>
+<li><strong>Transformers</strong> (BERT): near-human performance</li>
+<li>Learn features automatically from data</li>
+<li>Capture long-range dependencies</li>
+</ul>
+            </section>
+            <section>
+<h2>The Progression</h2>
+<p><strong>HMMs</strong> → strong assumptions, tractable</p>
+<p><strong>CRFs</strong> → rich features, discriminative</p>
+<p><strong>Neural</strong> → learned features, long-range context</p>
+<p>Recurring theme: relax assumptions as data and compute allow</p>
+            </section>
+            <section>
+<h2>Summary</h2>
+<ul>
+<li><strong>Markov chains</strong>: states + transitions + initial distribution</li>
+<li><strong>HMMs</strong>: add hidden states and emission probabilities</li>
+<li><strong>Forward algorithm</strong>: $P(\mathbf{o} \mid \lambda)$ in $O(N^2 T)$</li>
+<li><strong>Viterbi</strong>: best state sequence in $O(N^2 T)$</li>
+<li><strong>Baum-Welch</strong>: EM for parameter learning</li>
+<li><strong>POS tagging</strong>: 96-97% accuracy</li>
+<li><strong>Limitations</strong>: independence assumptions, feature constraints</li>
+<li>CRFs and neural models address these limitations</li>
+</ul>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            transition: 'none',
+            slideNumber: false,
+            center: true,
+            width: 1200,
+            height: 700,
+            margin: 0.06,
+            hash: true,
+            plugins: [ RevealHighlight ]
+        });
+
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false,
+            trust: true,
+            strict: false,
+            macros: {
+                "\\logit": "\\operatorname{logit}",
+                "\\softmax": "\\operatorname{softmax}",
+                "\\sigmoid": "\\operatorname{sigmoid}",
+                "\\sgn": "\\operatorname{sgn}",
+                "\\sign": "\\operatorname{sign}",
+                "\\argmax": "\\operatorname{argmax}",
+                "\\argmin": "\\operatorname{argmin}",
+                "\\Var": "\\operatorname{Var}",
+                "\\Cov": "\\operatorname{Cov}",
+                "\\Corr": "\\operatorname{Corr}",
+                "\\E": "\\mathbb{E}",
+                "\\P": "\\mathbb{P}",
+                "\\R": "\\mathbb{R}",
+                "\\N": "\\mathbb{N}",
+                "\\Z": "\\mathbb{Z}",
+                "\\C": "\\mathbb{C}",
+                "\\ind": "\\mathbb{1}",
+                "\\KL": "\\operatorname{KL}",
+                "\\Tr": "\\operatorname{Tr}",
+                "\\tr": "\\operatorname{tr}",
+                "\\diag": "\\operatorname{diag}",
+                "\\rank": "\\operatorname{rank}",
+                "\\relu": "\\operatorname{ReLU}",
+                "\\gelu": "\\operatorname{GELU}",
+                "\\selu": "\\operatorname{SELU}"
+            }
+        });
+    </script>
+</body>
+</html>

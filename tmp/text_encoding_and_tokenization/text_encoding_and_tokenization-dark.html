@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+
+@page {
+    size: letter;
+    margin: 0.75in;
+}
+
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    html { background-color: #1a1a1a; }
+    body {
+        max-width: 100%;
+        margin: 0;
+        padding: 0.5in;
+        box-shadow: none;
+        border-radius: 0;
+    }
+}
+
+html {
+    background-color: #1a1a1a;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 12pt;
+    line-height: 1.6;
+    color: #d4d4d4;
+    max-width: 850px;
+    margin: 2rem auto;
+    padding: 3rem;
+    background-color: #2a2a2a;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #e8e8e8;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.3;
+    page-break-after: avoid;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 24pt;
+    border-bottom: 2px solid #666;
+    padding-bottom: 0.3em;
+    color: #f0f0f0;
+    font-weight: 700;
+}
+
+h2 { font-size: 18pt; color: #ddd; }
+h3 { font-size: 14pt; color: #ccc; }
+h4 { font-size: 12pt; color: #bbb; }
+h5 { font-size: 11pt; color: #aaa; }
+h6 { font-size: 11pt; font-style: italic; color: #999; }
+
+body > h1:first-child {
+    text-align: center;
+    border-bottom: 3px solid #888;
+    margin-top: 0;
+    font-size: 26pt;
+    letter-spacing: 0.02em;
+}
+
+/* Paragraphs */
+p {
+    margin: 0 0 0.8em 0;
+    text-align: justify;
+    hyphens: auto;
+}
+
+/* Links */
+a {
+    color: #bbb;
+    text-decoration: underline;
+    text-decoration-color: #666;
+}
+
+a:hover {
+    color: #e8e8e8;
+    text-decoration-color: #999;
+}
+
+/* Code */
+code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.9em;
+    background-color: #3a3a3a;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    color: #d0d0d0;
+    border: 1px solid #555;
+}
+
+pre {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 9pt;
+    line-height: 1.45;
+    background-color: #222;
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 16px;
+    overflow-x: auto;
+    page-break-inside: avoid;
+    color: #d0d0d0;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+    border: none;
+}
+
+/* Blockquotes */
+blockquote {
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    border-left: 4px solid #777;
+    color: #bbb;
+    background-color: #333;
+    font-style: italic;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* Lists */
+ul, ol {
+    margin: 0.5em 0 1em 0;
+    padding-left: 2em;
+}
+
+li { margin-bottom: 0.25em; }
+
+li > ul, li > ol {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+}
+
+th, td {
+    border: 1px solid #555;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #3a3a3a;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+tr:nth-child(even) { background-color: #2e2e2e; }
+tr:nth-child(odd) { background-color: #333; }
+
+/* Horizontal rule */
+hr {
+    border: none;
+    border-top: 2px solid #555;
+    margin: 1.5em 0;
+}
+
+/* Math */
+.math-display {
+    display: block;
+    text-align: center;
+    margin: 1em 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline { display: inline; }
+
+.katex {
+    font-size: 1.1em;
+    color: #e8e8e8;
+}
+.katex-display { margin: 0.75em 0; }
+.katex-display > .katex { text-align: center; }
+
+/* Images */
+img {
+    display: block;
+    width: 50%;
+    max-width: 50%;
+    height: auto;
+    margin: 1.5em auto 0.5em auto;
+    border: 2px solid #666;
+    border-radius: 4px;
+    padding: 8px;
+    background-color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Image captions */
+img + em {
+    display: block;
+    text-align: center;
+    font-size: 0.9em;
+    color: #aaa;
+    margin: 0.5em auto 1.5em auto;
+    max-width: 60%;
+    font-style: italic;
+}
+
+p > img {
+    display: block;
+    margin: 1.5em auto;
+}
+
+    </style>
+</head>
+<body>
+<h1 id="text-encoding-and-tokenization">Text Encoding and Tokenization</h1>
+<p>Before text can be processed by a language model, it must be converted from human-readable characters into numerical representations. This article covers the foundational layers of this transformation: character encoding (how characters become bytes), text corpora (what data models learn from), and tokenization (how text is segmented into units for modeling).</p>
+<hr />
+<h2 id="character-encoding-from-characters-to-bytes">Character Encoding: From Characters to Bytes</h2>
+<h3 id="ascii-the-beginning">ASCII: The Beginning</h3>
+<p><strong>ASCII</strong> (American Standard Code for Information Interchange), developed in the 1960s, was the first widely adopted character encoding. It uses 7 bits to represent 128 characters:</p>
+<ul>
+<li>0–31: Control characters (newline, tab, carriage return, etc.)</li>
+<li>32–126: Printable characters (letters, digits, punctuation)</li>
+<li>127: Delete</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Decimal</th>
+<th>Hex</th>
+<th>Character</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>32</td>
+<td>0x20</td>
+<td>(space)</td>
+</tr>
+<tr>
+<td>48–57</td>
+<td>0x30–0x39</td>
+<td>0–9</td>
+</tr>
+<tr>
+<td>65–90</td>
+<td>0x41–0x5A</td>
+<td>A–Z</td>
+</tr>
+<tr>
+<td>97–122</td>
+<td>0x61–0x7A</td>
+<td>a–z</td>
+</tr>
+</tbody>
+</table>
+<p>ASCII works well for English text but cannot represent accented characters (é, ñ), non-Latin scripts (中文, العربية, हिन्दी), or symbols like € or emoji.</p>
+<p>The 8th bit in a byte was initially unused, leading to various incompatible <strong>extended ASCII</strong> encodings (ISO-8859-1 for Western European, ISO-8859-5 for Cyrillic, etc.). This fragmentation made international text exchange problematic.</p>
+<h3 id="unicode-a-universal-character-set">Unicode: A Universal Character Set</h3>
+<p><strong>Unicode</strong> aims to assign a unique number (called a <strong>code point</strong>) to every character in every writing system. Code points are written as U+XXXX in hexadecimal.</p>
+<table>
+<thead>
+<tr>
+<th>Code Point</th>
+<th>Character</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>U+0041</td>
+<td>A</td>
+<td>Latin Capital Letter A</td>
+</tr>
+<tr>
+<td>U+00E9</td>
+<td>é</td>
+<td>Latin Small Letter E with Acute</td>
+</tr>
+<tr>
+<td>U+4E2D</td>
+<td>中</td>
+<td>CJK Unified Ideograph (zhōng)</td>
+</tr>
+<tr>
+<td>U+1F600</td>
+<td>😀</td>
+<td>Grinning Face</td>
+</tr>
+</tbody>
+</table>
+<p>Unicode currently defines over 150,000 characters across 161 scripts. The code point space extends to U+10FFFF (over 1.1 million possible code points), organized into 17 <strong>planes</strong> of 65,536 code points each:</p>
+<ul>
+<li><strong>Plane 0</strong> (U+0000–U+FFFF): Basic Multilingual Plane (BMP) — most common characters</li>
+<li><strong>Plane 1</strong> (U+10000–U+1FFFF): Supplementary Multilingual Plane — emoji, historic scripts</li>
+<li><strong>Plane 2</strong> (U+20000–U+2FFFF): Supplementary Ideographic Plane — rare CJK characters</li>
+</ul>
+<p>Unicode defines <em>what</em> characters exist and their code points. The <em>encoding</em> determines how code points are represented as bytes.</p>
+<hr />
+<h2 id="unicode-encodings-utf-8-utf-16-utf-32">Unicode Encodings: UTF-8, UTF-16, UTF-32</h2>
+<h3 id="utf-32-fixed-width">UTF-32: Fixed Width</h3>
+<p><strong>UTF-32</strong> uses exactly 4 bytes (32 bits) per character. Simple but wasteful—ASCII text uses 4x the space it needs.</p>
+<pre><code>'A' (U+0041)  → 00 00 00 41
+'中' (U+4E2D) → 00 00 4E 2D
+'😀' (U+1F600) → 00 01 F6 00
+</code></pre>
+<p>Advantages: Random access (character $n$ is at byte $4n$), simple implementation.</p>
+<p>Disadvantages: Inefficient for ASCII-heavy text, not backward compatible with ASCII.</p>
+<h3 id="utf-16-variable-width-2-or-4-bytes">UTF-16: Variable Width (2 or 4 bytes)</h3>
+<p><strong>UTF-16</strong> uses 2 bytes for BMP characters (U+0000–U+FFFF) and 4 bytes for characters outside the BMP (using <strong>surrogate pairs</strong>).</p>
+<pre><code>'A' (U+0041)  → 00 41
+'中' (U+4E2D) → 4E 2D
+'😀' (U+1F600) → D8 3D DE 00  (surrogate pair)
+</code></pre>
+<p>UTF-16 was designed when Unicode was expected to fit in 16 bits. It's used internally by Java, JavaScript, and Windows, but the variable width complicates string operations.</p>
+<h3 id="utf-8-the-modern-standard">UTF-8: The Modern Standard</h3>
+<p><strong>UTF-8</strong> is a variable-width encoding using 1–4 bytes per character, designed for backward compatibility with ASCII.</p>
+<table>
+<thead>
+<tr>
+<th>Code Point Range</th>
+<th>Bytes</th>
+<th>Byte Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>U+0000–U+007F</td>
+<td>1</td>
+<td><code>0xxxxxxx</code></td>
+</tr>
+<tr>
+<td>U+0080–U+07FF</td>
+<td>2</td>
+<td><code>110xxxxx 10xxxxxx</code></td>
+</tr>
+<tr>
+<td>U+0800–U+FFFF</td>
+<td>3</td>
+<td><code>1110xxxx 10xxxxxx 10xxxxxx</code></td>
+</tr>
+<tr>
+<td>U+10000–U+10FFFF</td>
+<td>4</td>
+<td><code>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</code></td>
+</tr>
+</tbody>
+</table>
+<p>The leading bits indicate the byte's role:</p>
+<ul>
+<li><code>0xxxxxxx</code>: Single-byte character (ASCII)</li>
+<li><code>110xxxxx</code>: First byte of 2-byte sequence</li>
+<li><code>1110xxxx</code>: First byte of 3-byte sequence</li>
+<li><code>11110xxx</code>: First byte of 4-byte sequence</li>
+<li><code>10xxxxxx</code>: Continuation byte</li>
+</ul>
+<p><strong>Example: Encoding 'é' (U+00E9)</strong></p>
+<p>Binary of 0xE9 = 11101001 (needs 8 bits, so 2-byte encoding)</p>
+<p>Template: <code>110xxxxx 10xxxxxx</code></p>
+<p>Fill in bits: <code>110</code> + <code>00011</code> + <code>10</code> + <code>101001</code> = <code>11000011 10101001</code> = <code>C3 A9</code></p>
+<pre><code>'é' (U+00E9) → C3 A9
+</code></pre>
+<p><strong>Example: Encoding '中' (U+4E2D)</strong></p>
+<p>Binary of 0x4E2D = 0100 111000 101101 (needs 16 bits, so 3-byte encoding)</p>
+<p>Template: <code>1110xxxx 10xxxxxx 10xxxxxx</code></p>
+<p>Fill in: <code>1110</code> + <code>0100</code> + <code>10</code> + <code>111000</code> + <code>10</code> + <code>101101</code> = <code>11100100 10111000 10101101</code> = <code>E4 B8 AD</code></p>
+<pre><code>'中' (U+4E2D) → E4 B8 AD
+</code></pre>
+<p><strong>Example: Encoding '😀' (U+1F600)</strong></p>
+<p>Binary of 0x1F600 = 0 00011111 01100000 0000 (needs 21 bits, so 4-byte encoding)</p>
+<p>Template: <code>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</code></p>
+<pre><code>'😀' (U+1F600) → F0 9F 98 80
+</code></pre>
+<h3 id="why-utf-8-dominates">Why UTF-8 Dominates</h3>
+<p>UTF-8 has become the dominant encoding on the web (over 98% of websites) for several reasons:</p>
+<ul>
+<li><strong>ASCII compatibility</strong>: ASCII files are valid UTF-8</li>
+<li><strong>Efficiency</strong>: Compact for Latin text, reasonable for other scripts</li>
+<li><strong>Self-synchronizing</strong>: Can find character boundaries by examining any byte</li>
+<li><strong>No byte-order issues</strong>: Unlike UTF-16/32, no need for byte-order marks (BOM)</li>
+<li><strong>Robustness</strong>: Invalid sequences are detectable</li>
+</ul>
+<p>For NLP, UTF-8 means that a "byte-level" model sees ASCII characters as single bytes but non-ASCII characters as multi-byte sequences. This has implications for tokenization strategies.</p>
+<hr />
+<h2 id="text-corpora-for-language-modeling">Text Corpora for Language Modeling</h2>
+<h3 id="classical-n-gram-corpora">Classical N-gram Corpora</h3>
+<p>Before deep learning, statistical language models were trained on carefully curated corpora:</p>
+<p><strong>Brown Corpus (1961)</strong> — The first major machine-readable corpus of English. Contains about 1 million words from 500 texts across 15 genres (news, fiction, academic, etc.). Groundbreaking for its time, now tiny by modern standards.</p>
+<p><strong>Penn Treebank (1993)</strong> — Approximately 1 million words of Wall Street Journal text with syntactic annotations. Standard benchmark for parsing and language modeling through the 2000s.</p>
+<p><strong>British National Corpus (1994)</strong> — 100 million words of British English from diverse sources including spoken transcripts. Larger scale but still modest.</p>
+<p><strong>Google N-grams (2006)</strong> — N-gram counts from over 1 trillion words of web text. Released n-gram frequency tables rather than raw text. Enabled research on very large scale statistics.</p>
+<p><strong>1 Billion Word Benchmark (2013)</strong> — Approximately 1 billion words of news text, preprocessed and shuffled. Standard benchmark for neural language models in the mid-2010s.</p>
+<p>These corpora enabled research on n-gram models, which estimate:</p>
+$$
+P(w_n \mid w_1, \ldots, w_{n-1}) \approx P(w_n \mid w_{n-k}, \ldots, w_{n-1})
+$$
+<p>using counts from the training corpus with smoothing techniques (Kneser-Ney, Good-Turing) to handle unseen n-grams.</p>
+<h3 id="modern-llm-training-data">Modern LLM Training Data</h3>
+<p>Contemporary large language models train on vastly larger and more diverse data:</p>
+<p><strong>Common Crawl</strong> — Petabytes of web pages crawled since 2008. Raw crawls require extensive filtering and deduplication. Forms the base of many training datasets.</p>
+<p><strong>The Pile (2020)</strong> — 800GB diverse dataset combining 22 sources: books, Wikipedia, GitHub, arXiv, Stack Exchange, patents, and more. Designed for research reproducibility.</p>
+<p><strong>C4 (Colossal Clean Crawled Corpus)</strong> — ~750GB of cleaned English web text filtered from Common Crawl. Used to train T5.</p>
+<p><strong>RefinedWeb (2023)</strong> — Multi-trillion token dataset created through aggressive filtering and deduplication of Common Crawl. Used for Falcon models.</p>
+<p><strong>RedPajama (2023)</strong> — Open reproduction of the LLaMA training dataset: 1.2 trillion tokens from Common Crawl, C4, GitHub, Wikipedia, books, arXiv, and Stack Exchange.</p>
+<p>Modern training corpora are 1,000–10,000x larger than classical corpora, with GPT-4 class models reportedly trained on over 10 trillion tokens. The shift from curated corpora to filtered web crawls fundamentally changed the data landscape.</p>
+<hr />
+<h2 id="tokenization">Tokenization</h2>
+<h3 id="why-tokenize">Why Tokenize?</h3>
+<p>Language models need discrete input units. The choice of units involves tradeoffs:</p>
+<p><strong>Character-level</strong>: Vocabulary of ~100–300 characters. Very long sequences (a word becomes 5+ tokens). Struggles to learn word-level patterns.</p>
+<p><strong>Word-level</strong>: Natural linguistic units. Huge vocabulary (100K+ for good coverage). Cannot handle misspellings, neologisms, or morphologically rich languages. What about "don't"? "New York"?</p>
+<p><strong>Subword-level</strong>: Compromise between characters and words. Vocabulary of 30K–100K tokens. Common words are single tokens; rare words split into pieces. Handles unknown words gracefully.</p>
+<p>Modern LLMs universally use subword tokenization, with <strong>Byte-Pair Encoding (BPE)</strong> and its variants being the dominant approach.</p>
+<hr />
+<h2 id="byte-pair-encoding-bpe">Byte-Pair Encoding (BPE)</h2>
+<h3 id="the-algorithm">The Algorithm</h3>
+<p>BPE was originally a data compression algorithm (Gage, 1994), adapted for NLP tokenization by Sennrich et al. (2016).</p>
+<p><strong>Training (vocabulary construction):</strong></p>
+<ol>
+<li>Start with a base vocabulary of all individual characters (or bytes)</li>
+<li>Count all adjacent pairs of tokens in the corpus</li>
+<li>Merge the most frequent pair into a new token</li>
+<li>Repeat steps 2–3 until reaching desired vocabulary size</li>
+</ol>
+<p><strong>Inference (tokenization):</strong></p>
+<p>Apply learned merges in order of frequency to new text.</p>
+<h3 id="detailed-example">Detailed Example</h3>
+<p><strong>Corpus</strong>: "low low low low low lowest lowest newer newer newer wider wider wider"</p>
+<p><strong>Step 0</strong>: Split into characters (with end-of-word marker <code>_</code>)</p>
+<pre><code>Vocabulary: {l, o, w, e, s, t, n, r, i, d, _}
+
+Tokens:
+  l o w _ (×5)
+  l o w e s t _ (×2)
+  n e w e r _ (×3)
+  w i d e r _ (×3)
+</code></pre>
+<p><strong>Step 1</strong>: Count pairs, find most frequent</p>
+<table>
+<thead>
+<tr>
+<th>Pair</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>l o</td>
+<td>7</td>
+</tr>
+<tr>
+<td>o w</td>
+<td>7</td>
+</tr>
+<tr>
+<td>w _</td>
+<td>5</td>
+</tr>
+<tr>
+<td>e r</td>
+<td>6</td>
+</tr>
+<tr>
+<td>r _</td>
+<td>6</td>
+</tr>
+<tr>
+<td>e s</td>
+<td>2</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<p>Most frequent: <code>l o</code> and <code>o w</code> (tied at 7). Pick <code>l o</code>.</p>
+<p>Merge <code>l o</code> → <code>lo</code></p>
+<pre><code>Vocabulary: {l, o, w, e, s, t, n, r, i, d, _, lo}
+
+Tokens:
+  lo w _ (×5)
+  lo w e s t _ (×2)
+  n e w e r _ (×3)
+  w i d e r _ (×3)
+</code></pre>
+<p><strong>Step 2</strong>: Recount pairs</p>
+<table>
+<thead>
+<tr>
+<th>Pair</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lo w</td>
+<td>7</td>
+</tr>
+<tr>
+<td>w _</td>
+<td>5</td>
+</tr>
+<tr>
+<td>e r</td>
+<td>6</td>
+</tr>
+<tr>
+<td>r _</td>
+<td>6</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<p>Most frequent: <code>lo w</code> (7). Merge → <code>low</code></p>
+<pre><code>Vocabulary: {..., lo, low}
+
+Tokens:
+  low _ (×5)
+  low e s t _ (×2)
+  n e w e r _ (×3)
+  w i d e r _ (×3)
+</code></pre>
+<p><strong>Step 3</strong>: Recount</p>
+<table>
+<thead>
+<tr>
+<th>Pair</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>low _</td>
+<td>5</td>
+</tr>
+<tr>
+<td>e r</td>
+<td>6</td>
+</tr>
+<tr>
+<td>r _</td>
+<td>6</td>
+</tr>
+<tr>
+<td>low e</td>
+<td>2</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<p>Most frequent: <code>e r</code> (6). Merge → <code>er</code></p>
+<pre><code>Vocabulary: {..., low, er}
+
+Tokens:
+  low _ (×5)
+  low e s t _ (×2)
+  n e w er _ (×3)
+  w i d er _ (×3)
+</code></pre>
+<p><strong>Step 4</strong>: Most frequent is now <code>er _</code> (6). Merge → <code>er_</code></p>
+<pre><code>Tokens:
+  low _ (×5)
+  low e s t _ (×2)
+  n e w er_ (×3)
+  w i d er_ (×3)
+</code></pre>
+<p><strong>Continuing</strong>: The algorithm continues, eventually learning merges like:</p>
+<ul>
+<li><code>low _</code> → <code>low_</code></li>
+<li><code>low e</code> → <code>lowe</code></li>
+<li><code>lowe s</code> → <code>lowes</code></li>
+<li><code>lowes t</code> → <code>lowest</code></li>
+<li><code>n e</code> → <code>ne</code></li>
+<li><code>ne w</code> → <code>new</code></li>
+<li><code>new er_</code> → <code>newer_</code></li>
+<li>etc.</li>
+</ul>
+<p>After enough iterations, common words become single tokens while rare words remain segmented.</p>
+<h3 id="tokenizing-new-text">Tokenizing New Text</h3>
+<p>Given the learned merge rules (in order), tokenize "lower":</p>
+<ol>
+<li>Start: <code>l o w e r</code></li>
+<li>Apply merge <code>l o</code> → <code>lo</code>: <code>lo w e r</code></li>
+<li>Apply merge <code>lo w</code> → <code>low</code>: <code>low e r</code></li>
+<li>Apply merge <code>e r</code> → <code>er</code>: <code>low er</code></li>
+<li>No more applicable merges</li>
+</ol>
+<p>Result: <code>["low", "er"]</code></p>
+<p>The word "lower" wasn't in training, but BPE segments it into meaningful pieces.</p>
+<h3 id="byte-level-bpe">Byte-Level BPE</h3>
+<p>GPT-2 introduced <strong>byte-level BPE</strong>: instead of starting with characters, start with the 256 possible byte values. This guarantees any text can be tokenized (no unknown characters) and handles UTF-8 naturally.</p>
+<p>The base vocabulary is 256 bytes. Merges then create multi-byte tokens. A token might represent:</p>
+<ul>
+<li>A single ASCII character: <code>t</code> (byte 0x74)</li>
+<li>Multiple ASCII characters: <code>the</code> (bytes 0x74 0x68 0x65)</li>
+<li>Part of a UTF-8 sequence: the continuation bytes of a Chinese character</li>
+</ul>
+<p>This elegantly handles multilingual text without explicit Unicode handling.</p>
+<hr />
+<h2 id="other-tokenization-methods">Other Tokenization Methods</h2>
+<h3 id="wordpiece">WordPiece</h3>
+<p><strong>WordPiece</strong> (used by BERT) is similar to BPE but selects merges differently. Instead of choosing the most frequent pair, it chooses the pair that maximizes the likelihood of the training data under a simple probabilistic criterion:</p>
+$$
+\text{score}(x, y) = \frac{\text{freq}(xy)}{\text{freq}(x) \cdot \text{freq}(y)}
+$$
+
+<p>This favors merges that co-occur more often than expected under independence.</p>
+<p>WordPiece uses a special prefix (##) to indicate continuation of a word:</p>
+<pre><code>&quot;tokenization&quot; →  [&quot;token&quot;, &quot;##ization&quot;]
+</code></pre>
+<h3 id="unigram-language-model">Unigram Language Model</h3>
+<p><strong>Unigram</strong> (as implemented in SentencePiece) works in the opposite direction from BPE and WordPiece. Instead of starting with characters and <em>merging</em>, it starts with a large vocabulary and <em>prunes</em> it.</p>
+<ul>
+<li>Start with a very large vocabulary of candidate tokens (all substrings up to some maximum length).</li>
+<li>Train a <strong>unigram language model</strong>, where each token $ t $ has a probability $ P(t) $, and the probability of a string is defined by summing over all possible segmentations (computed efficiently via dynamic programming):</li>
+</ul>
+$$
+P(x) = \sum_{\text{segmentations } s} \prod_{t \in s} P(t)
+$$
+<ul>
+<li>For each token, estimate how much the <strong>total corpus log-likelihood</strong> would decrease if that token were removed from the vocabulary.</li>
+<li>Remove the tokens whose removal causes the <em>smallest</em> decrease in corpus likelihood (i.e., tokens that contribute the least).</li>
+<li>Repeat until the desired vocabulary size is reached.</li>
+</ul>
+<p>Because tokenization is solved with dynamic programming (e.g., Viterbi) rather than greedy matching, <strong>Unigram can find the globally optimal tokenization given a fixed vocabulary</strong>, not just a left-to-right greedy one.</p>
+<p>Intuitively, tokens must “earn their keep”: if removing a token barely hurts the model’s ability to explain the corpus, it is pruned as redundant.</p>
+<h3 id="sentencepiece">SentencePiece</h3>
+<p><strong>SentencePiece</strong> is a tokenizer library that implements both BPE and Unigram with several practical features:</p>
+<ul>
+<li>Treats input as raw bytes or Unicode characters (language-independent)</li>
+<li>Includes whitespace as a normal symbol (no pre-tokenization required)</li>
+<li>Fully deterministic tokenization</li>
+<li>Widely used in modern models</li>
+</ul>
+<p>It is used by T5, LLaMA, XLNet, and many multilingual models.</p>
+<h3 id="comparison">Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Core idea</th>
+<th>Optimization style</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BPE</td>
+<td>Merge frequent pairs</td>
+<td>Greedy, local</td>
+<td>GPT-2, GPT-3, GPT-4</td>
+</tr>
+<tr>
+<td>WordPiece</td>
+<td>Merge by likelihood ratio</td>
+<td>Greedy, local</td>
+<td>BERT, DistilBERT</td>
+</tr>
+<tr>
+<td>Unigram</td>
+<td>Remove least useful tokens</td>
+<td>Global likelihood</td>
+<td>T5, ALBERT, XLNet</td>
+</tr>
+</tbody>
+</table>
+<p>All three produce broadly similar vocabularies in practice. The choice mainly reflects modeling philosophy (greedy vs probabilistic) and tooling rather than a strict quality hierarchy.</p>
+<hr />
+<h2 id="practical-considerations">Practical Considerations</h2>
+<h3 id="vocabulary-size">Vocabulary Size</h3>
+<p>Typical vocabulary sizes:</p>
+<ul>
+<li>GPT-2: 50,257 tokens</li>
+<li>BERT: 30,522 tokens (WordPiece)</li>
+<li>GPT-4: ~100,000 tokens</li>
+<li>LLaMA: 32,000 tokens</li>
+</ul>
+<p>Larger vocabularies mean shorter sequences (fewer tokens per text) but more parameters in the embedding layer. There's a tradeoff between sequence length and model size.</p>
+<h3 id="tokenization-artifacts">Tokenization Artifacts</h3>
+<p>Subword tokenization can create surprising behaviors:</p>
+<p><strong>Inconsistent arithmetic</strong>: "1000" and "1001" may tokenize differently, making arithmetic harder for models.</p>
+<p><strong>Whitespace sensitivity</strong>: " hello" (with leading space) and "hello" may produce different tokens.</p>
+<p><strong>Language bias</strong>: Tokenizers trained primarily on English may fragment other languages into many more tokens, reducing effective context length for non-English text.</p>
+<p><strong>Prompt sensitivity</strong>: Minor prompt changes can shift token boundaries, affecting model behavior.</p>
+<h3 id="special-tokens">Special Tokens</h3>
+<p>Tokenizers include special tokens for model-specific purposes:</p>
+<ul>
+<li><code>[PAD]</code>: Padding for batch processing</li>
+<li><code>[UNK]</code>: Unknown token (rare with BPE)</li>
+<li><code>[CLS]</code>: Classification token (BERT)</li>
+<li><code>[SEP]</code>: Separator between segments</li>
+<li><code>[BOS]</code>, <code>[EOS]</code>: Beginning/end of sequence</li>
+<li><code>&lt;|endoftext|&gt;</code>: GPT's end-of-document marker</li>
+</ul>
+<hr />
+<h2 id="summary">Summary</h2>
+<p>Text processing for language models involves multiple encoding layers:</p>
+<p><strong>Character encoding</strong> converts characters to bytes. UTF-8 dominates, providing ASCII compatibility with universal Unicode coverage through variable-width encoding (1–4 bytes per character).</p>
+<p><strong>Text corpora</strong> have grown from millions of words (Brown Corpus) to trillions of tokens (modern LLM training sets), shifting from curated collections to filtered web crawls.</p>
+<p><strong>Tokenization</strong> segments text into model inputs. Subword methods like BPE balance vocabulary size against sequence length, handling rare words by decomposition while keeping common words intact. Starting from individual bytes or characters, BPE iteratively merges frequent pairs to build a vocabulary that efficiently represents the training distribution.</p>
+<p>These layers form the foundation connecting raw text to the numerical inputs that language models process.</p>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false,
+            trust: true,
+            strict: false,
+            macros: {
+                "\\logit": "\\operatorname{logit}",
+                "\\softmax": "\\operatorname{softmax}",
+                "\\sigmoid": "\\operatorname{sigmoid}",
+                "\\sgn": "\\operatorname{sgn}",
+                "\\sign": "\\operatorname{sign}",
+                "\\argmax": "\\operatorname{argmax}",
+                "\\argmin": "\\operatorname{argmin}",
+                "\\Var": "\\operatorname{Var}",
+                "\\Cov": "\\operatorname{Cov}",
+                "\\Corr": "\\operatorname{Corr}",
+                "\\E": "\\mathbb{E}",
+                "\\P": "\\mathbb{P}",
+                "\\R": "\\mathbb{R}",
+                "\\N": "\\mathbb{N}",
+                "\\Z": "\\mathbb{Z}",
+                "\\C": "\\mathbb{C}",
+                "\\ind": "\\mathbb{1}",
+                "\\KL": "\\operatorname{KL}",
+                "\\Tr": "\\operatorname{Tr}",
+                "\\tr": "\\operatorname{tr}",
+                "\\diag": "\\operatorname{diag}",
+                "\\rank": "\\operatorname{rank}",
+                "\\relu": "\\operatorname{ReLU}",
+                "\\gelu": "\\operatorname{GELU}",
+                "\\selu": "\\operatorname{SELU}"
+            }
+        });
+    });
+</script>
+</body>
+</html>

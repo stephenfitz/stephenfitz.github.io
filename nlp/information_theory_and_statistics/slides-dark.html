@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+
+.reveal {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 28px;
+    color: #d4d4d4;
+}
+
+.reveal .slides {
+    text-align: left;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #e8e8e8;
+    text-transform: none;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.reveal h1 { font-size: 1.8em; color: #f0f0f0; }
+.reveal h2 { font-size: 1.4em; color: #ddd; }
+.reveal h3 { font-size: 1.15em; color: #ccc; }
+
+.reveal p { margin: 0 0 0.5em 0; }
+
+.reveal ul, .reveal ol {
+    display: block;
+    margin: 0.3em 0 0.6em 0;
+}
+
+.reveal li { margin-bottom: 0.3em; }
+
+.reveal blockquote {
+    width: 90%;
+    margin: 0.5em auto;
+    padding: 0.4em 0.8em;
+    border-left: 4px solid #777;
+    color: #bbb;
+    background-color: #333;
+    font-style: italic;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+.reveal blockquote p:last-child { margin-bottom: 0; }
+
+.reveal code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.85em;
+    background-color: #3a3a3a;
+    padding: 0.15em 0.3em;
+    border-radius: 3px;
+    color: #d0d0d0;
+    border: 1px solid #555;
+}
+
+.reveal pre {
+    width: 100%;
+    font-size: 0.55em;
+    box-shadow: none;
+}
+
+.reveal pre code {
+    display: block;
+    background: #222;
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 12px;
+    max-height: 400px;
+    line-height: 1.45;
+    overflow: auto;
+    color: #d0d0d0;
+}
+
+.reveal img {
+    display: block;
+    max-width: 55%;
+    max-height: 450px;
+    margin: 0.5em auto;
+    border: 2px solid #666;
+    border-radius: 4px;
+    padding: 6px;
+    background-color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.reveal img + em, .reveal :has(> img) + p > em:only-child {
+    display: block;
+    text-align: center;
+    font-size: 0.65em;
+    color: #aaa;
+    margin-top: 0.3em;
+}
+
+.reveal table {
+    border-collapse: collapse;
+    margin: 0.5em auto;
+    font-size: 0.75em;
+}
+
+.reveal th, .reveal td {
+    border: 1px solid #555;
+    padding: 6px 10px;
+    text-align: left;
+}
+
+.reveal th {
+    background-color: #3a3a3a;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+.reveal tr:nth-child(even) { background-color: #2e2e2e; }
+.reveal tr:nth-child(odd) { background-color: #333; }
+
+.reveal a { color: #bbb; text-decoration: underline; text-decoration-color: #666; }
+
+.reveal .katex { font-size: 1.0em; color: #e8e8e8; }
+.reveal .katex-display { margin: 0.5em 0; }
+
+.reveal .slide-number {
+    color: #999;
+    font-size: 14px;
+}
+
+.reveal .controls .navigate-left,
+.reveal .controls .navigate-right,
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-down {
+    color: #888;
+}
+
+.reveal .progress span { background: #888; }
+
+body { background-color: #1a1a1a; }
+.reveal .slide-background { background-color: #2a2a2a; }
+
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+<h1>Information Theory and Statistics</h1>
+            </section>
+            <section>
+<h2>Outline</h2>
+<ul>
+<li>Random variables and probability distributions</li>
+<li>Expectation and variance</li>
+<li>Common distributions</li>
+<li>Sampling and empirical distributions</li>
+<li>Bayes' theorem and Bayesian modeling</li>
+<li>Maximum likelihood estimation</li>
+<li>Entropy</li>
+<li>Cross-entropy and KL divergence</li>
+<li>Perplexity</li>
+<li>Precision, recall, and F-measure</li>
+<li>Statistical significance testing</li>
+</ul>
+            </section>
+            <section>
+<h2>Part I: Random Variables</h2>
+            </section>
+            <section>
+<h2>Random Variables</h2>
+<p>A <strong>random variable</strong> maps outcomes to numbers</p>
+<ul>
+<li><strong>Discrete</strong>: countable values (words, integers)</li>
+<li><strong>Continuous</strong>: uncountable values (real numbers)</li>
+</ul>
+<p>Convention: capital $X$ for the variable, lowercase $x$ for realized values</p>
+            </section>
+            <section>
+<h2>Probability Mass Function</h2>
+<p>For discrete $X$:</p>
+<p>$$p(x) = P(X = x)$$</p>
+<p>Requirements: $p(x) \geq 0$ and $\sum_x p(x) = 1$</p>
+            </section>
+            <section>
+<h2>Probability Density Function</h2>
+<p>For continuous $X$:</p>
+<p>$$P(a \leq X \leq b) = \int_a^b f(x) \, dx$$</p>
+<p>Requirements: $f(x) \geq 0$ and $\int_{-\infty}^{\infty} f(x) \, dx = 1$</p>
+            </section>
+            <section>
+<h2>Joint, Marginal, Conditional</h2>
+<p><strong>Joint</strong>: $p(x, y) = P(X = x, Y = y)$</p>
+<p><strong>Marginal</strong>: $p(x) = \sum_y p(x, y)$</p>
+<p><strong>Conditional</strong>: $p(y \mid x) = \frac{p(x, y)}{p(x)}$</p>
+<p><strong>Independence</strong>: $p(x, y) = p(x) \, p(y)$</p>
+            </section>
+            <section>
+<h2>Part II: Expectation and Variance</h2>
+            </section>
+            <section>
+<h2>Expected Value</h2>
+<p>$$\E[X] = \sum_x x \, p(x) \quad \text{(discrete)}$$</p>
+<p>$$\E[X] = \int_{-\infty}^{\infty} x \, f(x) \, dx \quad \text{(continuous)}$$</p>
+<p><strong>Linearity</strong>: $\E[aX + bY] = a\E[X] + b\E[Y]$</p>
+            </section>
+            <section>
+<h2>Variance</h2>
+<p>$$\Var(X) = \E[(X - \E[X])^2] = \E[X^2] - (\E[X])^2$$</p>
+<p>Standard deviation: $\sigma = \sqrt{\Var(X)}$</p>
+<ul>
+<li>$\Var(aX + b) = a^2 \Var(X)$</li>
+<li>Independent $X, Y$: $\Var(X + Y) = \Var(X) + \Var(Y)$</li>
+</ul>
+            </section>
+            <section>
+<h2>Part III: Common Distributions</h2>
+            </section>
+            <section>
+<h2>Bernoulli and Binomial</h2>
+<p><strong>Bernoulli</strong>: single binary trial</p>
+<p>$$P(X = 1) = p, \quad P(X = 0) = 1 - p$$</p>
+<p>$\E[X] = p$, $\Var(X) = p(1-p)$</p>
+<p><strong>Binomial</strong>: $n$ independent trials</p>
+<p>$$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}$$</p>
+            </section>
+            <section>
+<h2>Categorical and Multinomial</h2>
+<p><strong>Categorical</strong>: one of $K$ values with probabilities $p_1, \ldots, p_K$</p>
+<p><strong>Multinomial</strong>: counts of $K$ categories over $n$ trials</p>
+<p>$$\Pr(X_1 = x_1, \ldots, X_K = x_K) = \frac{n!}{x_1! \cdots x_K!} \prod_{k=1}^K p_k^{x_k}$$</p>
+            </section>
+            <section>
+<h2>Gaussian (Normal)</h2>
+<p>$$f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$</p>
+<p>Written $X \sim \mathcal{N}(\mu, \sigma^2)$</p>
+<p>Standard normal: $\mu = 0$, $\sigma^2 = 1$</p>
+            </section>
+            <section>
+<h2>Part IV: Sampling</h2>
+            </section>
+            <section>
+<h2>The Sampling Process</h2>
+<p><strong>Sampling</strong>: drawing observations from a distribution</p>
+<p>i.i.d. samples: $x_i \stackrel{\text{iid}}{\sim} p$</p>
+<p><strong>Empirical distribution</strong>:</p>
+<p>$$\hat{p}(x) = \frac{1}{n} \sum_{i=1}^n \mathbf{1}[x_i = x]$$</p>
+<p>Approximates true distribution as $n \to \infty$</p>
+            </section>
+            <section>
+<h2>Sample Statistics</h2>
+<p><strong>Sample mean</strong>: $\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$</p>
+<p><strong>Sample variance</strong>: $s^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2$</p>
+<p>The $n - 1$ (Bessel's correction) makes $s^2$ unbiased for $\sigma^2$</p>
+            </section>
+            <section>
+<h2>Part V: Bayesian Modeling</h2>
+            </section>
+            <section>
+<h2>Bayes' Theorem</h2>
+<p>$$p(\theta \mid x) = \frac{p(x \mid \theta) \, p(\theta)}{p(x)}$$</p>
+<ul>
+<li>$p(\theta)$: <strong>prior</strong> — belief before data</li>
+<li>$p(x \mid \theta)$: <strong>likelihood</strong> — probability of data given parameters</li>
+<li>$p(\theta \mid x)$: <strong>posterior</strong> — updated belief after data</li>
+<li>$p(x)$: <strong>marginal likelihood</strong> (evidence)</li>
+</ul>
+            </section>
+            <section>
+<h2>Bayesian Inference</h2>
+<p>Treat parameters as random variables:</p>
+<p>$$p(\theta \mid \mathcal{D}) \propto p(\mathcal{D} \mid \theta) \, p(\theta)$$</p>
+<p>Posterior combines prior knowledge with evidence from data</p>
+            </section>
+            <section>
+<h2>Point Estimates</h2>
+<p><strong>MAP</strong> (maximum a posteriori):</p>
+<p>$$\hat{\theta}_{\text{MAP}} = \argmax_\theta \, p(\mathcal{D} \mid \theta) \, p(\theta)$$</p>
+<p><strong>Posterior mean</strong>:</p>
+<p>$$\hat{\theta}_{\text{mean}} = \E[\theta \mid \mathcal{D}]$$</p>
+            </section>
+            <section>
+<h2>Part VI: Maximum Likelihood Estimation</h2>
+            </section>
+            <section>
+<h2>The Likelihood Function</h2>
+<p>Given i.i.d. data $\mathcal{D} = \{x_1, \ldots, x_n\}$:</p>
+<p>$$\mathcal{L}(\theta) = \prod_{i=1}^n p(x_i \mid \theta)$$</p>
+<p><strong>Log-likelihood</strong>:</p>
+<p>$$\ell(\theta) = \sum_{i=1}^n \log p(x_i \mid \theta)$$</p>
+            </section>
+            <section>
+<h2>The MLE</h2>
+<p>$$\hat{\theta}_{\text{MLE}} = \argmax_\theta \, \ell(\theta)$$</p>
+<p>Maximizing likelihood = maximizing log-likelihood ($\log$ is monotonic)</p>
+            </section>
+            <section>
+<h2>Example: Bernoulli MLE</h2>
+<p>$n$ coin flips, $k$ heads:</p>
+<p>$$\ell(p) = k \log p + (n-k) \log(1-p)$$</p>
+<p>Set derivative to zero:</p>
+<p>$$\frac{k}{p} - \frac{n-k}{1-p} = 0 \implies \hat{p}_{\text{MLE}} = \frac{k}{n}$$</p>
+<p>The empirical frequency</p>
+            </section>
+            <section>
+<h2>Properties of MLE</h2>
+<p>Under regularity conditions:</p>
+<ul>
+<li><strong>Consistent</strong>: converges to true parameter as $n \to \infty$</li>
+<li><strong>Asymptotically normal</strong>: sampling distribution approaches Gaussian</li>
+<li><strong>Asymptotically efficient</strong>: lowest variance among consistent estimators</li>
+</ul>
+            </section>
+            <section>
+<h2>Part VII: Entropy</h2>
+            </section>
+            <section>
+<h2>Definition of Entropy</h2>
+<p>$$H(X) = -\sum_x p(x) \log p(x) = \E[-\log p(X)]$$</p>
+<p>Base 2 → <strong>bits</strong>; base $e$ → <strong>nats</strong></p>
+<p>Convention: $0 \log 0 = 0$</p>
+            </section>
+            <section>
+<h2>Interpretations</h2>
+<p><strong>Uncertainty</strong>: how unpredictable is $X$?</p>
+<ul>
+<li>Deterministic → $H = 0$</li>
+<li>Uniform over $K$ outcomes → $H = \log K$ (maximum)</li>
+</ul>
+<p><strong>Surprisal</strong>: $-\log p(x)$ = information content of outcome $x$</p>
+<p><strong>Compression</strong>: minimum average bits to encode samples from $p$</p>
+            </section>
+            <section>
+<h2>Properties of Entropy</h2>
+<ul>
+<li>$H(X) \geq 0$, with equality iff $X$ is deterministic</li>
+<li>$H(X) \leq \log |\mathcal{X}|$, with equality iff uniform</li>
+<li><strong>Chain rule</strong>: $H(X, Y) = H(X) + H(Y \mid X)$</li>
+</ul>
+            </section>
+            <section>
+<h2>Conditional Entropy</h2>
+<p>$$H(Y \mid X) = -\sum_{x,y} p(x,y) \log p(y \mid x)$$</p>
+<p>Remaining uncertainty in $Y$ after observing $X$</p>
+            </section>
+            <section>
+<h2>Part VIII: Cross-Entropy and KL Divergence</h2>
+            </section>
+            <section>
+<h2>Cross-Entropy</h2>
+<p>$$H(p, q) = -\sum_x p(x) \log q(x)$$</p>
+<p>Average bits to encode samples from $p$ using code optimized for $q$</p>
+<p>Always: $H(p, q) \geq H(p)$, with equality iff $p = q$</p>
+            </section>
+            <section>
+<h2>Cross-Entropy as Loss</h2>
+<p>In ML: $p$ = true distribution, $q$ = model prediction</p>
+<p>For single example with true label $y$:</p>
+<p>$$\mathcal{L} = -\log q(y)$$</p>
+<p>Negative log-likelihood of the correct class</p>
+<p>Minimizing cross-entropy = training the model to match truth</p>
+            </section>
+            <section>
+<h2>KL Divergence</h2>
+<p>$$D_{\text{KL}}(p \| q) = \sum_x p(x) \log \frac{p(x)}{q(x)} = H(p, q) - H(p)$$</p>
+<ul>
+<li>Non-negative: $D_{\text{KL}}(p \| q) \geq 0$</li>
+<li>Zero iff $p = q$</li>
+<li><strong>Not symmetric</strong>: $D_{\text{KL}}(p \| q) \neq D_{\text{KL}}(q \| p)$</li>
+</ul>
+            </section>
+            <section>
+<h2>Minimizing Cross-Entropy = Minimizing KL</h2>
+<p>Since $H(p)$ is constant w.r.t. model parameters:</p>
+<p>$$\argmin_q H(p, q) = \argmin_q D_{\text{KL}}(p \| q)$$</p>
+<p>This is why cross-entropy loss works</p>
+            </section>
+            <section>
+<h2>Part IX: Perplexity</h2>
+            </section>
+            <section>
+<h2>Definition</h2>
+<p>$$\text{PPL} = p(w_1, \ldots, w_N)^{-1/N} = \exp(H)$$</p>
+<p>where $H$ is cross-entropy (in nats) on the test data</p>
+            </section>
+            <section>
+<h2>Interpretation</h2>
+<p><strong>Effective vocabulary size</strong> the model is uncertain about at each step</p>
+<ul>
+<li>PPL = 1: perfect prediction</li>
+<li>PPL = 100: uncertain among ~100 words</li>
+<li>PPL = $|V|$: equivalent to random guessing</li>
+</ul>
+<p><strong>Lower is better</strong></p>
+            </section>
+            <section>
+<h2>Relation to Entropy</h2>
+<p>In bits: $\text{PPL} = 2^H$</p>
+<p>In nats: $\text{PPL} = e^H$</p>
+            </section>
+            <section>
+<h2>Part X: Precision, Recall, F-Measure</h2>
+            </section>
+            <section>
+<h2>The Confusion Matrix</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Predicted +</th>
+<th>Predicted −</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Actual +</strong></td>
+<td>TP</td>
+<td>FN</td>
+</tr>
+<tr>
+<td><strong>Actual −</strong></td>
+<td>FP</td>
+<td>TN</td>
+</tr>
+</tbody>
+</table>
+            </section>
+            <section>
+<h2>Precision</h2>
+<p>$$\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}$$</p>
+<p>Of all predicted positives, how many are correct?</p>
+<p>High precision → few false positives</p>
+            </section>
+            <section>
+<h2>Recall</h2>
+<p>$$\text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}$$</p>
+<p>Of all actual positives, how many were found?</p>
+<p>High recall → few false negatives</p>
+            </section>
+            <section>
+<h2>The Precision-Recall Trade-off</h2>
+<p>Increasing threshold → higher precision, lower recall</p>
+<p>Decreasing threshold → higher recall, lower precision</p>
+<p>Often in tension — cannot maximize both simultaneously</p>
+            </section>
+            <section>
+<h2>F-Measure</h2>
+<p>Harmonic mean of precision and recall:</p>
+<p>$$F_1 = \frac{2 \cdot \text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}$$</p>
+<p>Penalizes extreme imbalances: low precision or low recall → low $F_1$</p>
+            </section>
+            <section>
+<h2>Generalized F-Score</h2>
+<p>$$F_\beta = \frac{(1 + \beta^2) \cdot \text{Precision} \cdot \text{Recall}}{\beta^2 \cdot \text{Precision} + \text{Recall}}$$</p>
+<ul>
+<li>$F_2$: weights recall higher</li>
+<li>$F_{0.5}$: weights precision higher</li>
+</ul>
+<p><strong>Multi-class</strong>: micro-average (aggregate counts) or macro-average (average per-class)</p>
+            </section>
+            <section>
+<h2>Part XI: Significance Testing</h2>
+            </section>
+            <section>
+<h2>Hypothesis Testing Framework</h2>
+<ol>
+<li><strong>Null hypothesis</strong> $H_0$: default assumption (no effect)</li>
+<li><strong>Alternative hypothesis</strong> $H_1$: what we want to show</li>
+<li>Compute <strong>test statistic</strong> from data</li>
+<li>How likely is this statistic under $H_0$?</li>
+<li>Reject $H_0$ if sufficiently unlikely</li>
+</ol>
+            </section>
+            <section>
+<h2>P-Values</h2>
+<p>$$p\text{-value} = P(\text{data as extreme or more} \mid H_0)$$</p>
+<p>Small $p$-value → evidence against $H_0$</p>
+<p><strong>Not</strong> the probability that $H_0$ is true!</p>
+            </section>
+            <section>
+<h2>Significance Level and Errors</h2>
+<p>Reject $H_0$ if $p < \alpha$ (typically $\alpha = 0.05$)</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>$H_0$ True</th>
+<th>$H_0$ False</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reject</strong></td>
+<td>Type I (false +)</td>
+<td>Correct</td>
+</tr>
+<tr>
+<td><strong>Fail to reject</strong></td>
+<td>Correct</td>
+<td>Type II (false −)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Power</strong> = $1 - \beta$ = probability of correctly rejecting false $H_0$</p>
+            </section>
+            <section>
+<h2>Common Tests</h2>
+<p><strong>t-test</strong>: compare means (assumes approx. normal)</p>
+<p><strong>Paired t-test</strong>: paired observations (before/after)</p>
+<p><strong>Chi-squared</strong>: independence in contingency tables</p>
+<p><strong>Permutation test</strong>: non-parametric, empirical null distribution</p>
+            </section>
+            <section>
+<h2>Multiple Comparisons</h2>
+<p>With $m$ tests at level $\alpha$:</p>
+<p>$$P(\text{at least one false positive}) = 1 - (1-\alpha)^m$$</p>
+<p><strong>Bonferroni correction</strong>: use $\alpha/m$ per test</p>
+            </section>
+            <section>
+<h2>Confidence Intervals</h2>
+<p>A 95% CI: if we repeated the experiment many times, 95% of intervals contain the true parameter</p>
+<p>$$\bar{x} \pm z_{\alpha/2} \frac{\sigma}{\sqrt{n}}$$</p>
+<p>For 95%: $z_{\alpha/2} = 1.96$</p>
+            </section>
+            <section>
+<h2>Summary</h2>
+<ul>
+<li><strong>Random variables</strong>: discrete (PMF) and continuous (PDF)</li>
+<li><strong>Expectation</strong>: linear; <strong>variance</strong>: measures spread</li>
+<li><strong>Bayes' theorem</strong>: posterior $\propto$ likelihood $\times$ prior</li>
+<li><strong>MLE</strong>: $\argmax_\theta \sum_i \log p(x_i \mid \theta)$</li>
+<li><strong>Entropy</strong>: $H = -\sum p \log p$ — uncertainty measure</li>
+<li><strong>Cross-entropy</strong>: $H(p, q) = -\sum p \log q$ — the loss function</li>
+<li><strong>KL divergence</strong>: $D_{\text{KL}} = H(p, q) - H(p)$ — distributional gap</li>
+<li><strong>Perplexity</strong>: $\exp(H)$ — effective vocabulary size</li>
+<li><strong>Precision/Recall/F1</strong>: classification evaluation</li>
+<li><strong>Significance testing</strong>: p-values quantify evidence against $H_0$</li>
+</ul>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            transition: 'none',
+            slideNumber: false,
+            center: true,
+            width: 1200,
+            height: 700,
+            margin: 0.06,
+            hash: true,
+            plugins: [ RevealHighlight ]
+        });
+
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false,
+            trust: true,
+            strict: false,
+            macros: {
+                "\\logit": "\\operatorname{logit}",
+                "\\softmax": "\\operatorname{softmax}",
+                "\\sigmoid": "\\operatorname{sigmoid}",
+                "\\sgn": "\\operatorname{sgn}",
+                "\\sign": "\\operatorname{sign}",
+                "\\argmax": "\\operatorname{argmax}",
+                "\\argmin": "\\operatorname{argmin}",
+                "\\Var": "\\operatorname{Var}",
+                "\\Cov": "\\operatorname{Cov}",
+                "\\Corr": "\\operatorname{Corr}",
+                "\\E": "\\mathbb{E}",
+                "\\P": "\\mathbb{P}",
+                "\\R": "\\mathbb{R}",
+                "\\N": "\\mathbb{N}",
+                "\\Z": "\\mathbb{Z}",
+                "\\C": "\\mathbb{C}",
+                "\\ind": "\\mathbb{1}",
+                "\\KL": "\\operatorname{KL}",
+                "\\Tr": "\\operatorname{Tr}",
+                "\\tr": "\\operatorname{tr}",
+                "\\diag": "\\operatorname{diag}",
+                "\\rank": "\\operatorname{rank}",
+                "\\relu": "\\operatorname{ReLU}",
+                "\\gelu": "\\operatorname{GELU}",
+                "\\selu": "\\operatorname{SELU}"
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+
+.reveal {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 28px;
+    color: #2a2a2a;
+}
+
+.reveal .slides {
+    text-align: left;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #1a1a1a;
+    text-transform: none;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.reveal h1 { font-size: 1.8em; }
+.reveal h2 { font-size: 1.4em; color: #333; }
+.reveal h3 { font-size: 1.15em; color: #444; }
+
+.reveal p { margin: 0 0 0.5em 0; }
+
+.reveal ul, .reveal ol {
+    display: block;
+    margin: 0.3em 0 0.6em 0;
+}
+
+.reveal li { margin-bottom: 0.3em; }
+
+.reveal blockquote {
+    width: 90%;
+    margin: 0.5em auto;
+    padding: 0.4em 0.8em;
+    border-left: 4px solid #aaa;
+    color: #555;
+    background-color: #fafafa;
+    font-style: italic;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+.reveal blockquote p:last-child { margin-bottom: 0; }
+
+.reveal code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.85em;
+    background-color: #f5f5f5;
+    padding: 0.15em 0.3em;
+    border-radius: 3px;
+    color: #3a3a3a;
+    border: 1px solid #ddd;
+}
+
+.reveal pre {
+    width: 100%;
+    font-size: 0.55em;
+    box-shadow: none;
+}
+
+.reveal pre code {
+    display: block;
+    background: #f8f8f8;
+    border: 1px solid #d5d5d5;
+    border-radius: 6px;
+    padding: 12px;
+    max-height: 400px;
+    line-height: 1.45;
+    overflow: auto;
+    color: #2a2a2a;
+}
+
+.reveal img {
+    display: block;
+    max-width: 55%;
+    max-height: 450px;
+    margin: 0.5em auto;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    padding: 6px;
+    background-color: #fafafa;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.reveal img + em, .reveal :has(> img) + p > em:only-child {
+    display: block;
+    text-align: center;
+    font-size: 0.65em;
+    color: #666;
+    margin-top: 0.3em;
+}
+
+.reveal table {
+    border-collapse: collapse;
+    margin: 0.5em auto;
+    font-size: 0.75em;
+}
+
+.reveal th, .reveal td {
+    border: 1px solid #bbb;
+    padding: 6px 10px;
+    text-align: left;
+}
+
+.reveal th {
+    background-color: #e8e8e8;
+    font-weight: 600;
+    color: #2a2a2a;
+}
+
+.reveal tr:nth-child(even) { background-color: #f5f5f5; }
+
+.reveal a { color: #444; text-decoration: underline; text-decoration-color: #999; }
+
+.reveal .katex { font-size: 1.0em; }
+.reveal .katex-display { margin: 0.5em 0; }
+
+.reveal .slide-number {
+    color: #666;
+    font-size: 14px;
+}
+
+.reveal .controls .navigate-left,
+.reveal .controls .navigate-right,
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-down {
+    color: #888;
+}
+
+.reveal .progress span { background: #888; }
+
+body { background-color: #f5f5f5; }
+.reveal .slide-background { background-color: white; }
+
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+<h1>Tensor Derivatives</h1>
+<p>Derivatives of vectors, matrices, and higher-order tensors in deep learning</p>
+            </section>
+            <section>
+<h2>Overview</h2>
+<ul>
+<li>Why tensor derivatives matter for deep learning</li>
+<li>The key strategy: reduce to scalar components</li>
+<li>Matrix-vector product and the Jacobian</li>
+<li>Derivatives with respect to matrices</li>
+<li>Sparsity and reduced representations</li>
+<li>Batch computation</li>
+<li>The chain rule for multiple layers</li>
+</ul>
+            </section>
+            <section>
+<h2>Why Tensor Derivatives Matter</h2>
+<ul>
+<li>Deep learning is <strong>gradient-based optimization of parameters</strong></li>
+<li>Every training step involves derivatives of:<ul>
+<li>Vectors with respect to vectors</li>
+<li>Vectors with respect to matrices</li>
+<li>Matrices with respect to matrices</li>
+<li>Higher-order tensors in batch settings</li>
+</ul>
+</li>
+<li>Scalar calculus alone is not enough</li>
+</ul>
+            </section>
+            <section>
+<h2>The Key Strategy</h2>
+<blockquote>
+<p>To compute derivatives of tensor expressions, reduce the problem to derivatives of <em>individual scalar components</em>.</p>
+</blockquote>
+<ul>
+<li>Understand the scalar structure first</li>
+<li>The tensor result becomes almost automatic</li>
+<li>Three principles: intermediate variables, component-wise, reduce along axes</li>
+</ul>
+            </section>
+            <section>
+<h2>First Example: Matrix-Vector Product</h2>
+<p>$$\vec{y} = W\vec{x}$$</p>
+<ul>
+<li>$\vec{x} \in \R^D$ (column vector), $W \in \R^{C \times D}$ (matrix), $\vec{y} \in \R^C$ (column vector)</li>
+<li>What does $\frac{\partial \vec{y}}{\partial \vec{x}}$ mean?</li>
+<li>It is the matrix of all partial derivatives $\frac{\partial y_i}{\partial x_j}$</li>
+<li>Result: a $C \times D$ matrix --- the <strong>Jacobian</strong></li>
+</ul>
+            </section>
+            <section>
+<h2>Computing a Single Component</h2>
+<ul>
+<li>The $i$-th component: $y_i = \sum_{j=1}^D W_{i,j} x_j$</li>
+<li>Fix indices, e.g. compute $\frac{\partial y_3}{\partial x_7}$:</li>
+</ul>
+<p>$$\frac{\partial}{\partial x_7}\left(W_{3,1}x_1 + \cdots + W_{3,7}x_7 + \cdots\right) = W_{3,7}$$</p>
+<ul>
+<li>In general:</li>
+</ul>
+<p>$$\frac{\partial y_i}{\partial x_j} = W_{i,j}$$</p>
+            </section>
+            <section>
+<h2>The Full Jacobian</h2>
+<p>$$\frac{\partial \vec{y}}{\partial \vec{x}} = \begin{bmatrix} W_{1,1} & \cdots & W_{1,D} \\ \vdots & \ddots & \vdots \\ W_{C,1} & \cdots & W_{C,D} \end{bmatrix} = W$$</p>
+<ul>
+<li>Hence:</li>
+</ul>
+<p>$$\frac{\partial}{\partial \vec{x}}(W\vec{x}) = W$$</p>
+<ul>
+<li>This result appears constantly in <strong>backpropagation</strong></li>
+</ul>
+            </section>
+            <section>
+<h2>Row-Vector Variant</h2>
+<p>$$\vec{y} = \vec{x}W$$</p>
+<ul>
+<li>$\vec{x} \in \R^{1 \times D}$, $W \in \R^{D \times C}$, $\vec{y} \in \R^{1 \times C}$</li>
+<li>Single component: $y_3 = \sum_{j=1}^D x_j W_{j,3}$</li>
+<li>Then: $\frac{\partial y_3}{\partial x_7} = W_{7,3}$</li>
+<li>Assembling all components:</li>
+</ul>
+<p>$$\frac{\partial \vec{y}}{\partial \vec{x}} = W^\top$$</p>
+<ul>
+<li>The orientation of vectors determines whether $W$ or $W^\top$ appears</li>
+</ul>
+            </section>
+            <section>
+<h2>Derivative with Respect to a Matrix</h2>
+<p>$$\vec{y} = \vec{x}W \quad \Rightarrow \quad \frac{\partial \vec{y}}{\partial W} = \text{?}$$</p>
+<ul>
+<li>This is a <strong>3-dimensional tensor</strong>:<ul>
+<li>One axis indexes components of $\vec{y}$</li>
+<li>Two axes index components of $W$</li>
+</ul>
+</li>
+<li>Since $y_3 = \sum_j x_j W_{j,3}$:<ul>
+<li>$\frac{\partial y_3}{\partial W_{7,8}} = 0$ (wrong column)</li>
+<li>$\frac{\partial y_3}{\partial W_{2,3}} = x_2$ (correct column)</li>
+</ul>
+</li>
+</ul>
+            </section>
+            <section>
+<h2>General Rule for Matrix Derivatives</h2>
+<p>$$\frac{\partial y_j}{\partial W_{i,j}} = x_i \quad \text{(all other entries are zero)}$$</p>
+<ul>
+<li>The derivative tensor $F_{i,j,k} = \frac{\partial y_i}{\partial W_{j,k}}$ is nonzero only when $i = k$</li>
+<li>And $F_{i,j,i} = x_j$</li>
+<li>This tensor is highly <strong>sparse</strong></li>
+</ul>
+            </section>
+            <section>
+<h2>Sparsity and Reduced Representations</h2>
+<ul>
+<li>The full derivative tensor has shape $(C, D, C)$ --- mostly zeros</li>
+<li>We can summarize the nontrivial part as a matrix: $G_{i,j} = F_{i,j,i}$</li>
+<li>Such reductions are essential for <strong>efficient backpropagation</strong></li>
+<li>In practice, we never materialize the full tensor</li>
+</ul>
+            </section>
+            <section>
+<h2>Batch Computation</h2>
+<ul>
+<li>In practice: batch of $N$ inputs, $X \in \R^{N \times D}$</li>
+</ul>
+<p>$$Y = XW, \quad Y \in \R^{N \times C}$$</p>
+<ul>
+<li>Element: $Y_{i,j} = \sum_{k=1}^D X_{i,k} W_{k,j}$</li>
+<li>$\frac{\partial Y_{a,b}}{\partial X_{c,d}}$ is nonzero only when $a = c$ (rows are independent examples)</li>
+<li>For each row:</li>
+</ul>
+<p>$$\frac{\partial Y_{i,:}}{\partial X_{i,:}} = W^\top$$</p>
+            </section>
+            <section>
+<h2>Multiple Layers and the Chain Rule</h2>
+<p>$$\vec{y} = VW\vec{x}$$</p>
+<ul>
+<li>Let $\vec{m} = W\vec{x}$, then $\vec{y} = V\vec{m}$</li>
+<li>Chain rule:</li>
+</ul>
+<p>$$\frac{\partial \vec{y}}{\partial \vec{x}} = \frac{\partial \vec{y}}{\partial \vec{m}} \cdot \frac{\partial \vec{m}}{\partial \vec{x}}$$</p>
+            </section>
+            <section>
+<h2>Chain Rule: Component Form</h2>
+<p>$$\frac{\partial y_i}{\partial x_j} = \sum_{k=1}^M \frac{\partial y_i}{\partial m_k} \cdot \frac{\partial m_k}{\partial x_j} = \sum_{k=1}^M V_{i,k} \, W_{k,j}$$</p>
+<ul>
+<li>This is exactly the matrix product $(VW)_{i,j}$</li>
+<li>Therefore:</li>
+</ul>
+<p>$$\frac{\partial \vec{y}}{\partial \vec{x}} = VW$$</p>
+<ul>
+<li><strong>Backpropagation</strong> = repeated application of this idea</li>
+</ul>
+            </section>
+            <section>
+<h2>Summary: Three Principles</h2>
+<ol>
+<li><strong>Introduce intermediate variables</strong> --- break long expressions into simple steps</li>
+<li><strong>Work component-wise</strong> --- always start from a single scalar derivative</li>
+<li>
+<p><strong>Reduce along the right axes</strong> --- apply summation to collapse intermediate tensors</p>
+</li>
+<li>
+<p>Reduce tensor calculus to scalar reasoning + careful bookkeeping of indices and shapes</p>
+</li>
+<li>This directly maps to reasoning about backpropagation in complex architectures</li>
+</ol>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            transition: 'none',
+            slideNumber: false,
+            center: true,
+            width: 1200,
+            height: 700,
+            margin: 0.06,
+            hash: true,
+            plugins: [ RevealHighlight ]
+        });
+
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false,
+            trust: true,
+            strict: false,
+            macros: {
+                "\\logit": "\\operatorname{logit}",
+                "\\softmax": "\\operatorname{softmax}",
+                "\\sigmoid": "\\operatorname{sigmoid}",
+                "\\sgn": "\\operatorname{sgn}",
+                "\\sign": "\\operatorname{sign}",
+                "\\argmax": "\\operatorname{argmax}",
+                "\\argmin": "\\operatorname{argmin}",
+                "\\Var": "\\operatorname{Var}",
+                "\\Cov": "\\operatorname{Cov}",
+                "\\Corr": "\\operatorname{Corr}",
+                "\\E": "\\mathbb{E}",
+                "\\P": "\\mathbb{P}",
+                "\\R": "\\mathbb{R}",
+                "\\N": "\\mathbb{N}",
+                "\\Z": "\\mathbb{Z}",
+                "\\C": "\\mathbb{C}",
+                "\\ind": "\\mathbb{1}",
+                "\\KL": "\\operatorname{KL}",
+                "\\Tr": "\\operatorname{Tr}",
+                "\\tr": "\\operatorname{tr}",
+                "\\diag": "\\operatorname{diag}",
+                "\\rank": "\\operatorname{rank}",
+                "\\relu": "\\operatorname{ReLU}",
+                "\\gelu": "\\operatorname{GELU}",
+                "\\selu": "\\operatorname{SELU}"
+            }
+        });
+    </script>
+</body>
+</html>

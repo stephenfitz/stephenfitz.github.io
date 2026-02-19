@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+
+@page {
+    size: letter;
+    margin: 0.75in;
+}
+
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    html { background-color: #1a1a1a; }
+    body {
+        max-width: 100%;
+        margin: 0;
+        padding: 0.5in;
+        box-shadow: none;
+        border-radius: 0;
+    }
+}
+
+html {
+    background-color: #1a1a1a;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 12pt;
+    line-height: 1.6;
+    color: #d4d4d4;
+    max-width: 850px;
+    margin: 2rem auto;
+    padding: 3rem;
+    background-color: #2a2a2a;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #e8e8e8;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.3;
+    page-break-after: avoid;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 24pt;
+    border-bottom: 2px solid #666;
+    padding-bottom: 0.3em;
+    color: #f0f0f0;
+    font-weight: 700;
+}
+
+h2 { font-size: 18pt; color: #ddd; }
+h3 { font-size: 14pt; color: #ccc; }
+h4 { font-size: 12pt; color: #bbb; }
+h5 { font-size: 11pt; color: #aaa; }
+h6 { font-size: 11pt; font-style: italic; color: #999; }
+
+body > h1:first-child {
+    text-align: center;
+    border-bottom: 3px solid #888;
+    margin-top: 0;
+    font-size: 26pt;
+    letter-spacing: 0.02em;
+}
+
+/* Paragraphs */
+p {
+    margin: 0 0 0.8em 0;
+    text-align: justify;
+    hyphens: auto;
+}
+
+/* Links */
+a {
+    color: #bbb;
+    text-decoration: underline;
+    text-decoration-color: #666;
+}
+
+a:hover {
+    color: #e8e8e8;
+    text-decoration-color: #999;
+}
+
+/* Code */
+code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.9em;
+    background-color: #3a3a3a;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    color: #d0d0d0;
+    border: 1px solid #555;
+}
+
+pre {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 9pt;
+    line-height: 1.45;
+    background-color: #222;
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 16px;
+    overflow-x: auto;
+    page-break-inside: avoid;
+    color: #d0d0d0;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+    border: none;
+}
+
+/* Blockquotes */
+blockquote {
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    border-left: 4px solid #777;
+    color: #bbb;
+    background-color: #333;
+    font-style: italic;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* Lists */
+ul, ol {
+    margin: 0.5em 0 1em 0;
+    padding-left: 2em;
+}
+
+li { margin-bottom: 0.25em; }
+
+li > ul, li > ol {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+}
+
+th, td {
+    border: 1px solid #555;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #3a3a3a;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+tr:nth-child(even) { background-color: #2e2e2e; }
+tr:nth-child(odd) { background-color: #333; }
+
+/* Horizontal rule */
+hr {
+    border: none;
+    border-top: 2px solid #555;
+    margin: 1.5em 0;
+}
+
+/* Math */
+.math-display {
+    display: block;
+    text-align: center;
+    margin: 1em 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline { display: inline; }
+
+.katex {
+    font-size: 1.1em;
+    color: #e8e8e8;
+}
+.katex-display { margin: 0.75em 0; }
+.katex-display > .katex { text-align: center; }
+
+/* Images */
+img {
+    display: block;
+    width: 50%;
+    max-width: 50%;
+    height: auto;
+    margin: 1.5em auto 0.5em auto;
+    border: 2px solid #666;
+    border-radius: 4px;
+    padding: 8px;
+    background-color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Image captions */
+img + em {
+    display: block;
+    text-align: center;
+    font-size: 0.9em;
+    color: #aaa;
+    margin: 0.5em auto 1.5em auto;
+    max-width: 60%;
+    font-style: italic;
+}
+
+p > img {
+    display: block;
+    margin: 1.5em auto;
+}
+
+    </style>
+</head>
+<body>
+<h1 id="machine-learning">Machine Learning</h1>
+<p>This article provides a self-contained introduction to the fundamental concepts underlying machine learning and deep learning. We cover the core definitions, the bias-variance tradeoff, learning theory, model families, and a survey of major algorithms.</p>
+<hr />
+<h2 id="what-is-machine-learning">What Is Machine Learning?</h2>
+<p><strong>Machine learning</strong> is the study of algorithms that improve their performance at some task through experience. More formally:</p>
+<blockquote>
+<p>A computer program is said to <em>learn</em> from experience $E$ with respect to some class of tasks $T$ and performance measure $P$, if its performance at tasks in $T$, as measured by $P$, improves with experience $E$. — Tom Mitchell (1997)</p>
+</blockquote>
+<p>The key distinction from traditional programming:</p>
+<ul>
+<li><strong>Traditional programming</strong>: Human writes rules; program applies rules to data to produce output</li>
+<li><strong>Machine learning</strong>: Human provides data and desired outputs; algorithm learns rules</li>
+</ul>
+<p>This shift is powerful when:</p>
+<ul>
+<li>The rules are too complex to articulate (e.g., recognizing faces)</li>
+<li>The rules change over time (e.g., spam detection)</li>
+<li>The problem requires personalization (e.g., recommendation systems)</li>
+</ul>
+<hr />
+<h2 id="the-learning-setup">The Learning Setup</h2>
+<h3 id="training-validation-and-test-sets">Training, Validation, and Test Sets</h3>
+<p>In supervised learning, we have a dataset of input-output pairs $\{(x_i, y_i)\}_{i=1}^n$. We partition this data into three sets:</p>
+<p><strong>Training set</strong> (~60-80% of data): Used to fit model parameters. The model sees these examples during learning.</p>
+<p><strong>Validation set</strong> (~10-20% of data): Used to tune hyperparameters and select among models. The model does not train on these examples, but we use them to make decisions about the model.</p>
+<p><strong>Test set</strong> (~10-20% of data): Used only for final evaluation. Held out until the very end to provide an unbiased estimate of generalization performance.</p>
+<p>The separation is crucial: if we tune hyperparameters on the test set, our test performance estimate becomes optimistically biased.</p>
+<h3 id="cross-validation">Cross-Validation</h3>
+<p>When data is limited, <strong>k-fold cross-validation</strong> makes efficient use of available samples:</p>
+<ol>
+<li>Partition data into $k$ equal folds</li>
+<li>For each fold $i$: train on all folds except $i$, validate on fold $i$</li>
+<li>Average performance across all $k$ validation results</li>
+</ol>
+<p>Common choices are $k = 5$ or $k = 10$. Leave-one-out cross-validation ($k = n$) uses maximum training data but is computationally expensive.</p>
+<hr />
+<h2 id="generalization-training-error-vs-test-error">Generalization: Training Error vs. Test Error</h2>
+<p>The goal of learning is <strong>generalization</strong>: performing well on unseen data, not just memorizing the training set.</p>
+<p><strong>Training error</strong> (or empirical risk): The error on the training set.</p>
+$$
+\hat{R}(f) = \frac{1}{n} \sum_{i=1}^n L(f(x_i), y_i)
+$$
+
+<p><strong>Test error</strong> (or generalization error, or risk): The expected error on new data drawn from the same distribution.</p>
+$$
+R(f) = \E_{(x,y) \sim P}[L(f(x), y)]
+$$
+
+<p>A fundamental fact of learning theory:</p>
+<blockquote>
+<p>Training error is generally an optimistic estimate of test error.</p>
+</blockquote>
+<p>As model complexity increases:</p>
+<ul>
+<li>Training error tends to decrease (the model fits the training data better)</li>
+<li>Test error initially decreases, then increases (the model starts fitting noise)</li>
+</ul>
+<p>The gap between training and test error reflects <strong>overfitting</strong>. The point of minimum test error represents the optimal model complexity for the given amount of data.</p>
+<hr />
+<h2 id="overfitting-and-underfitting">Overfitting and Underfitting</h2>
+<p><img alt="Training error vs. generalization error as a function of model complexity" src="figures/underfitting_overfitting.png" /></p>
+<p><strong>Underfitting</strong> occurs when the model is too simple to capture the underlying pattern:</p>
+<ul>
+<li>High training error</li>
+<li>High test error</li>
+<li>The model has high <strong>bias</strong></li>
+</ul>
+<p><strong>Overfitting</strong> occurs when the model is too complex and fits noise in the training data:</p>
+<ul>
+<li>Low training error</li>
+<li>High test error (large gap from training error)</li>
+<li>The model has high <strong>variance</strong></li>
+</ul>
+<p>Signs of overfitting:</p>
+<ul>
+<li>Training accuracy much higher than validation accuracy</li>
+<li>Performance degrades as training continues (in iterative methods)</li>
+<li>Model makes confident but incorrect predictions on new data</li>
+</ul>
+<p>Remedies for overfitting:</p>
+<ul>
+<li>More training data</li>
+<li>Simpler model (fewer parameters)</li>
+<li>Regularization</li>
+<li>Early stopping</li>
+<li>Dropout (in neural networks)</li>
+<li>Data augmentation</li>
+</ul>
+<hr />
+<h2 id="the-bias-variance-tradeoff">The Bias-Variance Tradeoff</h2>
+<p><img alt="The bias-variance decomposition of test error" src="figures/bias_variance.png" /></p>
+<p>For squared error loss, the expected test error decomposes into three terms:</p>
+$$
+\E[(y - \hat{f}(x))^2] = \text{Bias}^2 + \text{Variance} + \text{Irreducible Error}
+$$
+
+<p><strong>Bias</strong>: Error from incorrect assumptions in the model. A high-bias model misses relevant relationships.</p>
+$$
+\text{Bias}[\hat{f}(x)] = \E[\hat{f}(x)] - f(x)
+$$
+
+<p><strong>Variance</strong>: Error from sensitivity to fluctuations in the training set. A high-variance model fits noise.</p>
+$$
+\text{Var}[\hat{f}(x)] = \E[(\hat{f}(x) - \E[\hat{f}(x)])^2]
+$$
+
+<p><strong>Irreducible error</strong>: Noise inherent in the problem that no model can eliminate.</p>
+<p>The tradeoff:</p>
+<ul>
+<li>Simple models: high bias, low variance</li>
+<li>Complex models: low bias, high variance</li>
+</ul>
+<p>The optimal model balances these to minimize total error. This tradeoff is fundamental and cannot be escaped—reducing bias typically increases variance and vice versa.</p>
+<hr />
+<h2 id="the-curse-of-dimensionality">The Curse of Dimensionality</h2>
+<p>As the number of input dimensions $d$ increases, several problems emerge:</p>
+<p><strong>Data sparsity</strong>: The volume of the space grows exponentially with dimension. To maintain the same density of points, we need exponentially more data. In high dimensions, most of the space is empty.</p>
+<p><strong>Distance concentration</strong>: In high dimensions, distances between random points become nearly equal. The ratio of the nearest to farthest neighbor approaches 1:</p>
+$$
+\lim_{d \to \infty} \frac{\text{dist}_{\max} - \text{dist}_{\min}}{\text{dist}_{\min}} \to 0
+$$
+
+<p>This makes distance-based methods (k-nearest neighbors, clustering) less meaningful.</p>
+<h3 id="the-parameter-search-perspective">The Parameter Search Perspective</h3>
+<p>Consider searching for optimal parameters in a $d$-dimensional space. If you search half the range of each parameter, how much of the total space do you cover?</p>
+<p>In 1D, searching half the range covers 50% of possible values. In 2D, searching half of each axis covers only $0.5 \times 0.5 = 25\%$ of the area. In general, searching fraction $f$ of each axis covers $f^d$ of the total volume.</p>
+<p><img alt="Volume covered when searching half of each parameter range" src="figures/curse_dim_volume.png" /></p>
+<p>The table below shows how quickly coverage collapses:</p>
+<table>
+<thead>
+<tr>
+<th>Dimensions</th>
+<th>Volume covered (searching 50% of each axis)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>50%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>25%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>12.5%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>3.1%</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0.098%</td>
+</tr>
+<tr>
+<td>20</td>
+<td>0.000095%</td>
+</tr>
+</tbody>
+</table>
+<p>Conversely, to cover a fixed fraction of the volume, you must search nearly the entire range of each axis. The table below shows the fraction of each axis needed to cover just 50% of the total volume:</p>
+<table>
+<thead>
+<tr>
+<th>Dimensions</th>
+<th>Fraction of each axis needed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>50.0%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>70.7%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>87.1%</td>
+</tr>
+<tr>
+<td>10</td>
+<td>93.3%</td>
+</tr>
+<tr>
+<td>20</td>
+<td>96.6%</td>
+</tr>
+<tr>
+<td>100</td>
+<td>99.3%</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Fraction of each axis needed to cover 50% of volume" src="figures/curse_dim_fraction.png" /></p>
+<p>In 100 dimensions, you must search 99.3% of each axis just to cover half the space. This is why grid search becomes hopeless in high dimensions.</p>
+<h3 id="volume-concentration-near-the-boundary">Volume Concentration Near the Boundary</h3>
+<p>Another counterintuitive property of high-dimensional spaces: most of the volume of a hypersphere is concentrated near its surface.</p>
+<p>The volume of a $d$-dimensional ball of radius $r$ is proportional to $r^d$. The fraction of volume within radius $(1-\epsilon)r$ compared to the full ball is:</p>
+$$
+\frac{((1-\epsilon)r)^d}{r^d} = (1-\epsilon)^d
+$$
+
+<p>For $\epsilon = 0.01$ (the inner 99% of the radius) in $d = 100$ dimensions:</p>
+$$
+(0.99)^{100} \approx 0.366
+$$
+
+<p>Only 37% of the volume lies in the inner 99% of the radius—the remaining 63% is in the thin outer shell. In high dimensions, almost all points are near the boundary.</p>
+<p><strong>Implications for learning</strong>:</p>
+<ul>
+<li>Need exponentially more data as dimensions grow</li>
+<li>Many algorithms break down in high dimensions</li>
+<li>Feature selection and dimensionality reduction become essential</li>
+<li>Regularization becomes more important</li>
+</ul>
+<p>Modern deep learning partially addresses this through learned representations that discover lower-dimensional structure in high-dimensional data.</p>
+<hr />
+<h2 id="learning-theory-vc-dimension">Learning Theory: VC Dimension</h2>
+<p><strong>Vapnik-Chervonenkis (VC) dimension</strong> quantifies the capacity of a hypothesis class—its ability to fit arbitrary labelings of data.</p>
+<p><strong>Definition</strong>: The VC dimension of a hypothesis class $\mathcal{H}$ is the largest number of points that can be <strong>shattered</strong> by $\mathcal{H}$. A set of points is shattered if, for every possible labeling of those points, there exists some hypothesis in $\mathcal{H}$ that achieves zero training error.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li>Linear classifiers in $\R^d$: VC dimension = $d + 1$</li>
+<li>The set of all intervals on $\R$: VC dimension = 2</li>
+<li>The set of all functions: VC dimension = $\infty$</li>
+</ul>
+<p>A linear classifier in 2D can shatter any 3 points in general position—for all $2^3 = 8$ possible labelings, there exists a line that separates the two classes:</p>
+<p><img alt="A linear classifier can shatter 3 points in 2D" src="figures/vc_dim_linear_3points_gray.png" /></p>
+<p>However, no linear classifier can shatter 4 points. For any configuration of 4 points, there exists at least one labeling (such as an "XOR" pattern) that no line can separate. This is why linear classifiers in 2D have VC dimension 3.</p>
+<p><img alt="A linear classifier cannot shatter 4 points in 2D" src="figures/vc_dim_linear_4points_gray.png" /></p>
+<p>Different hypothesis classes have different VC dimensions. For example, axis-aligned rectangles in 2D can shatter 4 points (one at each corner):</p>
+<p><img alt="Axis-aligned rectangles can shatter 4 points" src="figures/vc_dim_rectangle_4points_gray.png" /></p>
+<h3 id="pac-learning-theory">PAC Learning Theory</h3>
+<p>VC dimension is central to <strong>Probably Approximately Correct (PAC) learning theory</strong>, developed by Leslie Valiant in 1984. PAC learning asks: how many samples do we need to learn a concept with high probability?</p>
+<p>In PAC learning, we distinguish between two kinds of error:</p>
+<ul>
+<li><strong>True (population) risk</strong> $R(h)$: the expected error of a hypothesis under the unknown data-generating distribution  </li>
+<li><strong>Empirical risk</strong> $\hat{R}(h)$: the error measured on a finite training sample  </li>
+</ul>
+<p>Formally, if $(x,y)\sim \mathcal{D}$ and $\ell$ is a loss function (typically 0–1 loss in classical PAC learning),</p>
+$$
+R(h) = \mathbb{E}_{(x,y)\sim \mathcal{D}}[\ell(h(x),y)]
+$$
+<p>This quantity is not directly observable; learning algorithms only have access to $\hat{R}(h)$.</p>
+<p>A hypothesis class $\mathcal{H}$ is <strong>PAC-learnable</strong> if there exists an algorithm that, for any target concept $c \in \mathcal{H}$, any distribution over inputs, and any $\epsilon, \delta > 0$, outputs a hypothesis $h$ satisfying:</p>
+$$
+P(R(h) \leq \epsilon) \geq 1 - \delta
+$$
+<p>where the probability is taken over the random draw of the training sample, using a number of samples polynomial in $1/\epsilon$, $1/\delta$, and the complexity of $\mathcal{H}$.</p>
+<p>The fundamental theorem of PAC learning states that a hypothesis class is PAC-learnable if and only if it has finite VC dimension. The sample complexity is:</p>
+$$
+n = O\left(\frac{h + \log(1/\delta)}{\epsilon^2}\right)
+$$
+<p>where $h$ is the VC dimension.</p>
+<p><strong>Why it matters</strong>: VC dimension appears in generalization bounds, which relate empirical performance to true performance. For a hypothesis class with VC dimension $h$, with probability at least $1 - \delta$:</p>
+$$
+R(f) \leq \hat{R}(f) + O\left(\sqrt{\frac{h \log(n/h) + \log(1/\delta)}{n}}\right)
+$$
+
+<p>This bound says:</p>
+<ul>
+<li>Test error ≤ training error + complexity penalty  </li>
+<li>The penalty decreases as $n$ grows (more data helps)  </li>
+<li>The penalty increases with VC dimension (more complex models need more data)  </li>
+<li>Models with infinite VC dimension (e.g. neural networks) require different analysis  </li>
+</ul>
+<hr />
+<h2 id="parametric-vs-nonparametric-models">Parametric vs. Nonparametric Models</h2>
+<p><strong>Parametric models</strong> have a fixed number of parameters regardless of training set size:</p>
+<ul>
+<li>Linear regression: $d + 1$ parameters</li>
+<li>Logistic regression: $d + 1$ parameters</li>
+<li>Neural network with fixed architecture: fixed number of weights</li>
+</ul>
+<p>Advantages: Fast prediction, interpretable, less prone to overfitting with small data.</p>
+<p>Disadvantages: Strong assumptions about functional form; may underfit if assumptions are wrong.</p>
+<p><strong>Nonparametric models</strong> have complexity that grows with the training set:</p>
+<ul>
+<li>k-Nearest Neighbors: stores all training points</li>
+<li>Kernel density estimation: one kernel per data point</li>
+<li>Gaussian processes: complexity scales with data</li>
+<li>Decision trees (to some extent): can grow with data</li>
+</ul>
+<p>Advantages: Flexible, fewer assumptions, can capture complex patterns.</p>
+<p>Disadvantages: Computationally expensive at prediction time, need more data, can overfit.</p>
+<p>The distinction is somewhat fluid—a neural network has fixed parameters but can approximate any function given enough capacity.</p>
+<hr />
+<h2 id="loss-functions">Loss Functions</h2>
+<h3 id="the-negative-log-likelihood-loss">The Negative Log-Likelihood Loss</h3>
+<p>For probabilistic models, the standard loss is the <strong>negative log-likelihood</strong> (NLL), also called <strong>cross-entropy loss</strong>.</p>
+<p>If the model outputs a probability distribution $p_\theta(y \mid x)$, the loss for a single example is:</p>
+$$
+L(\theta; x, y) = -\log p_\theta(y \mid x)
+$$
+
+<p><strong>Properties of NLL loss</strong>:</p>
+<ul>
+<li>Minimum is 0 (achieved when $p_\theta(y \mid x) = 1$)</li>
+<li>Approaches $\infty$ as $p_\theta(y \mid x) \to 0$</li>
+<li>Heavily penalizes confident wrong predictions</li>
+<li>Corresponds to maximum likelihood estimation</li>
+</ul>
+<p>For a correct prediction with probability $p$:</p>
+<table>
+<thead>
+<tr>
+<th>$p$</th>
+<th>$-\log p$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>0.9</td>
+<td>0.11</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>0.69</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>2.30</td>
+</tr>
+<tr>
+<td>0.01</td>
+<td>4.61</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Negative log-likelihood loss as a function of predicted probability" src="figures/nll_loss.png" /></p>
+<p>The steep increase as $p \to 0$ makes NLL particularly sensitive to confident mistakes.</p>
+<h3 id="other-common-losses">Other Common Losses</h3>
+<p><strong>Mean Squared Error</strong> (regression):</p>
+$$
+L(y, \hat{y}) = (y - \hat{y})^2
+$$
+
+<p><strong>Hinge loss</strong> (SVM):</p>
+$$
+L(y, \hat{y}) = \max(0, 1 - y \cdot \hat{y})
+$$
+
+<p><strong>0-1 loss</strong> (classification error):</p>
+$$
+L(y, \hat{y}) = \mathbf{1}[y \neq \hat{y}]
+$$
+
+<p>The 0-1 loss is what we often care about, but it's non-differentiable and hard to optimize directly. Cross-entropy and hinge loss are differentiable surrogates.</p>
+<hr />
+<h2 id="learning-paradigms">Learning Paradigms</h2>
+<h3 id="supervised-learning">Supervised Learning</h3>
+<p>The model learns from labeled examples $(x, y)$:</p>
+<ul>
+<li><strong>Classification</strong>: $y$ is a discrete label (spam/not spam, digit 0-9)</li>
+<li><strong>Regression</strong>: $y$ is continuous (house price, temperature)</li>
+</ul>
+<p>The model learns a mapping $f: X \to Y$ that generalizes to new inputs.</p>
+<h3 id="unsupervised-learning">Unsupervised Learning</h3>
+<p>The model learns from unlabeled data $\{x_i\}$:</p>
+<ul>
+<li><strong>Clustering</strong>: Group similar examples (k-means, hierarchical clustering)</li>
+<li><strong>Dimensionality reduction</strong>: Find lower-dimensional representations (PCA, autoencoders)</li>
+<li><strong>Density estimation</strong>: Model the data distribution $p(x)$</li>
+<li><strong>Anomaly detection</strong>: Identify unusual examples</li>
+</ul>
+<p>No explicit labels; the model discovers structure in the data.</p>
+<h3 id="self-supervised-learning">Self-Supervised Learning</h3>
+<p>The model creates its own supervision from unlabeled data:</p>
+<ul>
+<li><strong>Language modeling</strong>: Predict the next word given previous words</li>
+<li><strong>Masked prediction</strong>: Predict masked portions of input (BERT)</li>
+<li><strong>Contrastive learning</strong>: Learn that augmented views of the same image are similar</li>
+</ul>
+<p>Self-supervised learning has driven recent advances in NLP and computer vision by enabling learning from massive unlabeled datasets.</p>
+<h3 id="reinforcement-learning">Reinforcement Learning</h3>
+<p>The model learns from interaction with an environment:</p>
+<ul>
+<li>Takes actions, receives rewards</li>
+<li>Goal: maximize cumulative reward</li>
+<li>No explicit supervision; learns from trial and error</li>
+</ul>
+<p>Applications: game playing, robotics, recommendation systems.</p>
+<hr />
+<h2 id="generative-vs-discriminative-models">Generative vs. Discriminative Models</h2>
+<p><strong>Discriminative models</strong> learn the conditional distribution $p(y \mid x)$ or a decision boundary directly:</p>
+<ul>
+<li>Logistic regression</li>
+<li>Support vector machines</li>
+<li>Neural network classifiers</li>
+</ul>
+<p>They answer: "Given input $x$, what is the label $y$?"</p>
+<p><strong>Generative models</strong> learn the joint distribution $p(x, y) = p(x \mid y) p(y)$ or just $p(x)$:</p>
+<ul>
+<li>Naive Bayes</li>
+<li>Gaussian mixture models</li>
+<li>Variational autoencoders</li>
+<li>Large language models</li>
+</ul>
+<p>They can answer: "What does a typical example of class $y$ look like?" and can generate new samples.</p>
+<p><strong>Comparison</strong>:</p>
+<ul>
+<li>Discriminative models often achieve better classification accuracy</li>
+<li>Generative models can handle missing data, detect outliers, and generate samples</li>
+<li>Generative models make stronger assumptions about data distribution</li>
+</ul>
+<hr />
+<h2 id="classical-machine-learning-models">Classical Machine Learning Models</h2>
+<h3 id="linear-models">Linear Models</h3>
+<p><strong>Linear regression</strong>: $\hat{y} = w^\top x + b$, minimizes squared error.</p>
+<p><strong>Logistic regression</strong>: $p(y=1 \mid x) = \sigma(w^\top x + b)$, for binary classification.</p>
+<p><strong>Softmax regression</strong>: Generalizes logistic regression to multiple classes.</p>
+<p>Linear models are interpretable, fast, and work well when the true relationship is approximately linear or when combined with good features.</p>
+<h3 id="support-vector-machines">Support Vector Machines</h3>
+<p>SVMs find the maximum-margin hyperplane separating classes. Key ideas:</p>
+<ul>
+<li><strong>Margin</strong>: Distance from decision boundary to nearest points</li>
+<li><strong>Support vectors</strong>: The points closest to the boundary</li>
+<li><strong>Kernel trick</strong>: Implicitly map to high-dimensional space for nonlinear boundaries</li>
+</ul>
+<p>Common kernels: linear, polynomial, RBF (Gaussian).</p>
+<h3 id="decision-trees-and-ensembles">Decision Trees and Ensembles</h3>
+<p><strong>Decision trees</strong>: Recursively partition the feature space based on feature thresholds. Interpretable but prone to overfitting.</p>
+<p><strong>Random forests</strong>: Ensemble of trees trained on bootstrap samples with random feature subsets. Reduces variance through averaging.</p>
+<p><strong>Gradient boosting</strong> (XGBoost, LightGBM): Sequentially add trees that correct errors of the ensemble. Often achieves state-of-the-art on tabular data.</p>
+<h3 id="naive-bayes">Naive Bayes</h3>
+<p>Assumes features are conditionally independent given the class:</p>
+$$
+p(y \mid x) \propto p(y) \prod_{j=1}^d p(x_j \mid y)
+$$
+
+<p>Despite the naive independence assumption, works surprisingly well for text classification.</p>
+<h3 id="k-nearest-neighbors">k-Nearest Neighbors</h3>
+<p>Classifies based on the majority label among the $k$ nearest training examples. Simple, nonparametric, but slow at prediction time and struggles in high dimensions.</p>
+<hr />
+<h2 id="deep-learning-a-brief-overview">Deep Learning: A Brief Overview</h2>
+<h3 id="what-makes-deep-learning-different">What Makes Deep Learning Different</h3>
+<p><strong>Deep learning</strong> uses neural networks with many layers to learn hierarchical representations. Key differences from classical ML:</p>
+<ul>
+<li><strong>Automatic feature learning</strong>: No manual feature engineering</li>
+<li><strong>End-to-end training</strong>: Raw inputs to final outputs</li>
+<li><strong>Scale</strong>: Benefits from massive data and compute</li>
+<li><strong>Representation learning</strong>: Intermediate layers capture useful abstractions</li>
+</ul>
+<h3 id="neural-network-basics">Neural Network Basics</h3>
+<p>A neural network is a composition of layers:</p>
+$$
+f(x) = f_L(f_{L-1}(\cdots f_1(x)))
+$$
+
+<p>Each layer typically applies a linear transformation followed by a nonlinear activation:</p>
+$$
+h^{(l)} = \sigma(W^{(l)} h^{(l-1)} + b^{(l)})
+$$
+
+<p>Common activations: ReLU, sigmoid, tanh, GELU.</p>
+<h3 id="major-architectures">Major Architectures</h3>
+<p><strong>Feedforward networks (MLPs)</strong>: Fully connected layers. Universal approximators but don't exploit structure.</p>
+<p><strong>Convolutional Neural Networks (CNNs)</strong>: Exploit spatial structure through local connectivity and weight sharing. Dominant in computer vision.</p>
+<p><strong>Recurrent Neural Networks (RNNs)</strong>: Process sequences by maintaining hidden state. Includes LSTM and GRU variants that handle long-range dependencies.</p>
+<p><strong>Transformers</strong>: Use self-attention to process sequences in parallel. Foundation of modern NLP (BERT, GPT) and increasingly vision (ViT).</p>
+<h3 id="training-deep-networks">Training Deep Networks</h3>
+<p><strong>Backpropagation</strong>: Efficiently computes gradients via the chain rule.</p>
+<p><strong>Stochastic Gradient Descent (SGD)</strong>: Updates parameters using gradients on mini-batches:</p>
+$$
+\theta \leftarrow \theta - \eta \nabla_\theta L
+$$
+
+<p><strong>Adam</strong>: Adaptive learning rates with momentum. Most common optimizer in practice.</p>
+<p><strong>Regularization techniques</strong>:</p>
+<ul>
+<li>Weight decay (L2 regularization)</li>
+<li>Dropout: Randomly zero activations during training</li>
+<li>Batch normalization: Normalize activations within mini-batches</li>
+<li>Data augmentation: Artificially expand training set</li>
+</ul>
+<h3 id="why-deep-learning-works">Why Deep Learning Works</h3>
+<p>Several factors explain deep learning's success:</p>
+<ul>
+<li><strong>Compositionality</strong>: Complex functions built from simple parts</li>
+<li><strong>Distributed representations</strong>: Information encoded across many neurons</li>
+<li><strong>Overparameterization</strong>: More parameters than data points, yet still generalizes (a phenomenon still being understood theoretically)</li>
+<li><strong>Implicit regularization</strong>: SGD dynamics favor simple solutions</li>
+<li><strong>Hardware</strong>: GPUs enable training of large models</li>
+</ul>
+<hr />
+<h2 id="summary">Summary</h2>
+<p>Machine learning is the study of algorithms that improve through experience. Key concepts include:</p>
+<ul>
+<li><strong>Generalization</strong>: The goal is performance on unseen data, not memorization</li>
+<li><strong>Train/validation/test split</strong>: Essential for unbiased evaluation</li>
+<li><strong>Bias-variance tradeoff</strong>: Simple models underfit; complex models overfit</li>
+<li><strong>Curse of dimensionality</strong>: High dimensions require exponentially more data</li>
+<li><strong>VC dimension</strong>: Quantifies model capacity and appears in generalization bounds</li>
+<li><strong>Parametric vs. nonparametric</strong>: Fixed complexity vs. complexity growing with data</li>
+<li><strong>Loss functions</strong>: Negative log-likelihood for probabilistic models; surrogates for classification</li>
+<li><strong>Learning paradigms</strong>: Supervised, unsupervised, self-supervised, reinforcement</li>
+<li><strong>Generative vs. discriminative</strong>: Modeling $p(x,y)$ vs. $p(y \mid x)$</li>
+<li><strong>Classical models</strong>: Linear models, SVMs, trees, ensembles, naive Bayes, k-NN</li>
+<li><strong>Deep learning</strong>: Hierarchical representation learning through neural networks</li>
+</ul>
+<p>These foundations underlie all modern machine learning systems, from simple classifiers to large language models.</p>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false,
+            trust: true,
+            strict: false,
+            macros: {
+                "\\logit": "\\operatorname{logit}",
+                "\\softmax": "\\operatorname{softmax}",
+                "\\sigmoid": "\\operatorname{sigmoid}",
+                "\\sgn": "\\operatorname{sgn}",
+                "\\sign": "\\operatorname{sign}",
+                "\\argmax": "\\operatorname{argmax}",
+                "\\argmin": "\\operatorname{argmin}",
+                "\\Var": "\\operatorname{Var}",
+                "\\Cov": "\\operatorname{Cov}",
+                "\\Corr": "\\operatorname{Corr}",
+                "\\E": "\\mathbb{E}",
+                "\\P": "\\mathbb{P}",
+                "\\R": "\\mathbb{R}",
+                "\\N": "\\mathbb{N}",
+                "\\Z": "\\mathbb{Z}",
+                "\\C": "\\mathbb{C}",
+                "\\ind": "\\mathbb{1}",
+                "\\KL": "\\operatorname{KL}",
+                "\\Tr": "\\operatorname{Tr}",
+                "\\tr": "\\operatorname{tr}",
+                "\\diag": "\\operatorname{diag}",
+                "\\rank": "\\operatorname{rank}",
+                "\\relu": "\\operatorname{ReLU}",
+                "\\gelu": "\\operatorname{GELU}",
+                "\\selu": "\\operatorname{SELU}"
+            }
+        });
+    });
+</script>
+</body>
+</html>

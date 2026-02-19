@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+
+@page {
+    size: letter;
+    margin: 0.75in;
+}
+
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    html { background-color: #1a1a1a; }
+    body {
+        max-width: 100%;
+        margin: 0;
+        padding: 0.5in;
+        box-shadow: none;
+        border-radius: 0;
+    }
+}
+
+html {
+    background-color: #1a1a1a;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 12pt;
+    line-height: 1.6;
+    color: #d4d4d4;
+    max-width: 850px;
+    margin: 2rem auto;
+    padding: 3rem;
+    background-color: #2a2a2a;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #e8e8e8;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.3;
+    page-break-after: avoid;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 24pt;
+    border-bottom: 2px solid #666;
+    padding-bottom: 0.3em;
+    color: #f0f0f0;
+    font-weight: 700;
+}
+
+h2 { font-size: 18pt; color: #ddd; }
+h3 { font-size: 14pt; color: #ccc; }
+h4 { font-size: 12pt; color: #bbb; }
+h5 { font-size: 11pt; color: #aaa; }
+h6 { font-size: 11pt; font-style: italic; color: #999; }
+
+body > h1:first-child {
+    text-align: center;
+    border-bottom: 3px solid #888;
+    margin-top: 0;
+    font-size: 26pt;
+    letter-spacing: 0.02em;
+}
+
+/* Paragraphs */
+p {
+    margin: 0 0 0.8em 0;
+    text-align: justify;
+    hyphens: auto;
+}
+
+/* Links */
+a {
+    color: #bbb;
+    text-decoration: underline;
+    text-decoration-color: #666;
+}
+
+a:hover {
+    color: #e8e8e8;
+    text-decoration-color: #999;
+}
+
+/* Code */
+code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.9em;
+    background-color: #3a3a3a;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    color: #d0d0d0;
+    border: 1px solid #555;
+}
+
+pre {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 9pt;
+    line-height: 1.45;
+    background-color: #222;
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 16px;
+    overflow-x: auto;
+    page-break-inside: avoid;
+    color: #d0d0d0;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+    border: none;
+}
+
+/* Blockquotes */
+blockquote {
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    border-left: 4px solid #777;
+    color: #bbb;
+    background-color: #333;
+    font-style: italic;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* Lists */
+ul, ol {
+    margin: 0.5em 0 1em 0;
+    padding-left: 2em;
+}
+
+li { margin-bottom: 0.25em; }
+
+li > ul, li > ol {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+}
+
+th, td {
+    border: 1px solid #555;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #3a3a3a;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+tr:nth-child(even) { background-color: #2e2e2e; }
+tr:nth-child(odd) { background-color: #333; }
+
+/* Horizontal rule */
+hr {
+    border: none;
+    border-top: 2px solid #555;
+    margin: 1.5em 0;
+}
+
+/* Math */
+.math-display {
+    display: block;
+    text-align: center;
+    margin: 1em 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline { display: inline; }
+
+.katex {
+    font-size: 1.1em;
+    color: #e8e8e8;
+}
+.katex-display { margin: 0.75em 0; }
+.katex-display > .katex { text-align: center; }
+
+/* Images */
+img {
+    display: block;
+    width: 50%;
+    max-width: 50%;
+    height: auto;
+    margin: 1.5em auto 0.5em auto;
+    border: 2px solid #666;
+    border-radius: 4px;
+    padding: 8px;
+    background-color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Image captions */
+img + em {
+    display: block;
+    text-align: center;
+    font-size: 0.9em;
+    color: #aaa;
+    margin: 0.5em auto 1.5em auto;
+    max-width: 60%;
+    font-style: italic;
+}
+
+p > img {
+    display: block;
+    margin: 1.5em auto;
+}
+
+    </style>
+</head>
+<body>
+<h1 id="regular-expressions">Regular Expressions</h1>
+<p>Regular expressions (regex) are a formal language for describing patterns in text. They provide a concise, declarative way to match, extract, and transform strings. In NLP, regular expressions serve as fundamental tools for text preprocessing, tokenization, pattern extraction, and data cleaning—tasks that precede nearly every modeling pipeline.</p>
+<p>This article covers regex syntax comprehensively, from basic literal matching through advanced features like lookahead assertions, with attention to NLP applications throughout.</p>
+<hr />
+<h2 id="foundations">Foundations</h2>
+<h3 id="what-regular-expressions-are">What Regular Expressions Are</h3>
+<p>A regular expression is a sequence of characters that defines a search pattern. The pattern can match:</p>
+<ul>
+<li><strong>Exact strings</strong>: <code>cat</code> matches the literal text "cat"</li>
+<li><strong>Character classes</strong>: <code>[aeiou]</code> matches any vowel</li>
+<li><strong>Repetitions</strong>: <code>a+</code> matches one or more 'a' characters</li>
+<li><strong>Alternatives</strong>: <code>cat|dog</code> matches "cat" or "dog"</li>
+<li><strong>Complex structures</strong>: <code>\b[A-Z][a-z]+\b</code> matches capitalized words</li>
+</ul>
+<p>Regular expressions originated in formal language theory (Kleene, 1956) and were first implemented in Unix tools like <code>grep</code>, <code>sed</code>, and <code>awk</code>. Today they're built into virtually every programming language.</p>
+<h3 id="regex-in-nlp-pipelines">Regex in NLP Pipelines</h3>
+<p>Regular expressions appear throughout NLP workflows:</p>
+<p><strong>Preprocessing</strong>: Normalizing whitespace, removing HTML tags, standardizing punctuation</p>
+<pre><code># Remove HTML tags
+&lt;[^&gt;]+&gt;  →  (empty string)
+
+# Normalize whitespace
+\s+  →  (single space)
+</code></pre>
+<p><strong>Tokenization</strong>: Splitting text into words, sentences, or other units</p>
+<pre><code># Simple word tokenization
+\b\w+\b
+
+# Sentence boundary detection
+[.!?]+\s+(?=[A-Z])
+</code></pre>
+<p><strong>Pattern extraction</strong>: Finding emails, URLs, dates, monetary amounts</p>
+<pre><code># Email pattern
+[\w.+-]+@[\w-]+\.[\w.-]+
+
+# Date pattern (MM/DD/YYYY)
+\d{1,2}/\d{1,2}/\d{4}
+</code></pre>
+<p><strong>Text normalization</strong>: Standardizing formats, expanding contractions</p>
+<pre><code># Contractions
+(\w+)'ll  →  \1 will
+(\w+)n't  →  \1 not
+</code></pre>
+<hr />
+<h2 id="literal-characters-and-metacharacters">Literal Characters and Metacharacters</h2>
+<h3 id="literal-matching">Literal Matching</h3>
+<p>Most characters match themselves literally:</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cat</code></td>
+<td>"cat" in "the cat sat"</td>
+</tr>
+<tr>
+<td><code>123</code></td>
+<td>"123" in "room 123"</td>
+</tr>
+<tr>
+<td><code>hello world</code></td>
+<td>"hello world" exactly</td>
+</tr>
+</tbody>
+</table>
+<p>Matching is case-sensitive by default: <code>Cat</code> does not match "cat".</p>
+<h3 id="metacharacters">Metacharacters</h3>
+<p>Certain characters have special meaning in regex. These <strong>metacharacters</strong> are:</p>
+<pre><code>.  ^  $  *  +  ?  {  }  [  ]  \  |  (  )
+</code></pre>
+<p>To match a metacharacter literally, escape it with a backslash:</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\.</code></td>
+<td>A literal period</td>
+</tr>
+<tr>
+<td><code>\$</code></td>
+<td>A literal dollar sign</td>
+</tr>
+<tr>
+<td><code>&lt;!--MATH29430c191f064eaf90d1ead6b520a514END--&gt;</code></td>
+<td></td>
+</tr>
+<tr>
+<td>- <code>\</code> — escape character: use <code>\\</code></td>
+<td></td>
+</tr>
+<tr>
+<td>- <code>^</code> — negation if first: use <code>\^</code> or place not first</td>
+<td></td>
+</tr>
+<tr>
+<td>- <code>-</code> — range operator: use <code>\-</code> or place first/last</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong>: <code>[-a-z]</code> or <code>[a-z-]</code> matches lowercase letters or hyphen.</p>
+<h3 id="posix-character-classes">POSIX Character Classes</h3>
+<p>Some regex engines support POSIX classes (inside brackets):</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[:alpha:]</code></td>
+<td>Alphabetic characters</td>
+</tr>
+<tr>
+<td><code>[:digit:]</code></td>
+<td>Digits</td>
+</tr>
+<tr>
+<td><code>[:alnum:]</code></td>
+<td>Alphanumeric</td>
+</tr>
+<tr>
+<td><code>[:space:]</code></td>
+<td>Whitespace</td>
+</tr>
+<tr>
+<td><code>[:punct:]</code></td>
+<td>Punctuation</td>
+</tr>
+<tr>
+<td><code>[:upper:]</code></td>
+<td>Uppercase letters</td>
+</tr>
+<tr>
+<td><code>[:lower:]</code></td>
+<td>Lowercase letters</td>
+</tr>
+</tbody>
+</table>
+<p>Usage: <code>[[:alpha:]]</code> matches any letter. Python's <code>re</code> module does not support POSIX classes directly; use shorthand or explicit ranges instead.</p>
+<hr />
+<h2 id="anchors">Anchors</h2>
+<p>Anchors match positions in the string rather than characters. They have zero width—they don't consume any characters.</p>
+<h3 id="start-and-end-anchors">Start and End Anchors</h3>
+<table>
+<thead>
+<tr>
+<th>Anchor</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>^</code></td>
+<td>Start of string (or line in multiline mode)</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>End of string (or line in multiline mode)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Matches</th>
+<th>Does not match</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>^The</code></td>
+<td>"The cat"</td>
+<td>"See The cat"</td>
+</tr>
+<tr>
+<td><code>end$</code></td>
+<td>"the end"</td>
+<td>"the end."</td>
+</tr>
+<tr>
+<td><code>^only$</code></td>
+<td>"only" (entire string)</td>
+<td>"only one"</td>
+</tr>
+</tbody>
+</table>
+<p><strong>NLP application</strong>: <code>^[A-Z]</code> checks if a sentence starts with a capital letter. <code>[.!?]$</code> checks if text ends with terminal punctuation.</p>
+<h3 id="word-boundaries">Word Boundaries</h3>
+<table>
+<thead>
+<tr>
+<th>Anchor</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\b</code></td>
+<td>Word boundary (between <code>\w</code> and <code>\W</code>)</td>
+</tr>
+<tr>
+<td><code>\B</code></td>
+<td>Non-word boundary</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Matches in "cat catalog"</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\bcat\b</code></td>
+<td>"cat" only</td>
+</tr>
+<tr>
+<td><code>cat</code></td>
+<td>"cat" and "cat" in "catalog"</td>
+</tr>
+<tr>
+<td><code>\bcat</code></td>
+<td>"cat" and "cat" at start of "catalog"</td>
+</tr>
+<tr>
+<td><code>cat\b</code></td>
+<td>"cat" only</td>
+</tr>
+</tbody>
+</table>
+<p><strong>NLP application</strong>: Word boundaries are essential for matching whole words. Without <code>\b</code>, searching for "the" would match inside "other", "them", "weather".</p>
+<pre><code class="language-python"># Find all instances of the word &quot;the&quot; (not &quot;other&quot;, &quot;them&quot;, etc.)
+pattern = r'\bthe\b'
+</code></pre>
+<h3 id="string-anchors">String Anchors</h3>
+<p>Some engines distinguish string vs. line anchors:</p>
+<table>
+<thead>
+<tr>
+<th>Anchor</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\A</code></td>
+<td>Start of string only (ignores multiline mode)</td>
+</tr>
+<tr>
+<td><code>\Z</code></td>
+<td>End of string only</td>
+</tr>
+<tr>
+<td><code>\z</code></td>
+<td>Absolute end (before final newline, if any)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="quantifiers">Quantifiers</h2>
+<p>Quantifiers specify how many times the preceding element should match.</p>
+<h3 id="basic-quantifiers">Basic Quantifiers</h3>
+<table>
+<thead>
+<tr>
+<th>Quantifier</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*</code></td>
+<td>Zero or more</td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>One or more</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>Zero or one (optional)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ab*c</code></td>
+<td>"ac", "abc", "abbc", "abbbc", ...</td>
+</tr>
+<tr>
+<td><code>ab+c</code></td>
+<td>"abc", "abbc", "abbbc", ... (not "ac")</td>
+</tr>
+<tr>
+<td><code>ab?c</code></td>
+<td>"ac", "abc" only</td>
+</tr>
+<tr>
+<td><code>colou?r</code></td>
+<td>"color", "colour"</td>
+</tr>
+</tbody>
+</table>
+<h3 id="specific-counts">Specific Counts</h3>
+<p>Curly braces specify exact repetition counts:</p>
+<table>
+<thead>
+<tr>
+<th>Quantifier</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{n}</code></td>
+<td>Exactly n times</td>
+</tr>
+<tr>
+<td><code>{n,}</code></td>
+<td>n or more times</td>
+</tr>
+<tr>
+<td><code>{n,m}</code></td>
+<td>Between n and m times (inclusive)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a{3}</code></td>
+<td>"aaa" exactly</td>
+</tr>
+<tr>
+<td><code>a{2,4}</code></td>
+<td>"aa", "aaa", "aaaa"</td>
+</tr>
+<tr>
+<td><code>a{2,}</code></td>
+<td>"aa", "aaa", "aaaa", ...</td>
+</tr>
+<tr>
+<td><code>\d{3}-\d{4}</code></td>
+<td>"555-1234" (phone number fragment)</td>
+</tr>
+<tr>
+<td><code>\b\w{3,5}\b</code></td>
+<td>Words of 3–5 characters</td>
+</tr>
+</tbody>
+</table>
+<h3 id="greedy-vs-lazy-quantifiers">Greedy vs. Lazy Quantifiers</h3>
+<p>By default, quantifiers are <strong>greedy</strong>—they match as much as possible while still allowing the overall pattern to match.</p>
+<pre><code>Pattern: &lt;.*&gt;
+Text:    &lt;b&gt;bold&lt;/b&gt;
+Match:   &lt;b&gt;bold&lt;/b&gt;  (entire string, not just &lt;b&gt;)
+</code></pre>
+<p>Adding <code>?</code> after a quantifier makes it <strong>lazy</strong> (or reluctant)—it matches as little as possible:</p>
+<table>
+<thead>
+<tr>
+<th>Greedy</th>
+<th>Lazy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*</code></td>
+<td><code>*?</code></td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td><code>+?</code></td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td><code>??</code></td>
+</tr>
+<tr>
+<td><code>{n,m}</code></td>
+<td><code>{n,m}?</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code>Pattern: &lt;.*?&gt;
+Text:    &lt;b&gt;bold&lt;/b&gt;
+Matches: &lt;b&gt; and &lt;/b&gt;  (separately)
+</code></pre>
+<p><strong>NLP application</strong>: When extracting content from HTML or XML, lazy quantifiers prevent over-matching:</p>
+<pre><code class="language-python"># Extract text between tags (lazy)
+pattern = r'&lt;title&gt;(.*?)&lt;/title&gt;'
+</code></pre>
+<h3 id="possessive-quantifiers">Possessive Quantifiers</h3>
+<p>Some regex engines support <strong>possessive</strong> quantifiers (<code>*+</code>, <code>++</code>, <code>?+</code>, <code>{n,m}+</code>) that never backtrack. Python's <code>re</code> module does not support these, but the <code>regex</code> module does.</p>
+<hr />
+<h2 id="grouping-and-capturing">Grouping and Capturing</h2>
+<p>Parentheses serve two purposes: grouping elements and capturing matched text.</p>
+<h3 id="basic-groups">Basic Groups</h3>
+<p>Parentheses group elements for quantification:</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(ab)+</code></td>
+<td>"ab", "abab", "ababab", ...</td>
+</tr>
+<tr>
+<td><code>(ha)+</code></td>
+<td>"ha", "haha", "hahaha", ...</td>
+</tr>
+<tr>
+<td><code>(\d{3})-(\d{4})</code></td>
+<td>"555-1234" (captures "555" and "1234")</td>
+</tr>
+</tbody>
+</table>
+<h3 id="capturing-groups">Capturing Groups</h3>
+<p>By default, parentheses create <strong>capturing groups</strong>. The matched text is stored and can be referenced later.</p>
+<pre><code class="language-python">import re
+match = re.search(r'(\d{3})-(\d{4})', 'Call 555-1234')
+print(match.group(0))  # '555-1234' (entire match)
+print(match.group(1))  # '555' (first group)
+print(match.group(2))  # '1234' (second group)
+</code></pre>
+<p>Groups are numbered left-to-right by opening parenthesis:</p>
+<pre><code>Pattern: ((a)(b(c)))
+Groups:   12  3 4
+</code></pre>
+<h3 id="named-groups">Named Groups</h3>
+<p>Named groups improve readability:</p>
+<pre><code class="language-python">pattern = r'(?P&lt;area&gt;\d{3})-(?P&lt;number&gt;\d{4})'
+match = re.search(pattern, 'Call 555-1234')
+print(match.group('area'))    # '555'
+print(match.group('number'))  # '1234'
+</code></pre>
+<p>Syntax: <code>(?P&lt;name&gt;...)</code> in Python; <code>(?&lt;name&gt;...)</code> in many other engines.</p>
+<p><strong>NLP application</strong>: Named groups make pattern extraction self-documenting:</p>
+<pre><code class="language-python"># Extract date components
+date_pattern = r'(?P&lt;month&gt;\d{1,2})/(?P&lt;day&gt;\d{1,2})/(?P&lt;year&gt;\d{4})'
+</code></pre>
+<h3 id="non-capturing-groups">Non-Capturing Groups</h3>
+<p>When grouping is needed without capturing, use <code>(?:...)</code>:</p>
+<pre><code class="language-python"># Group for quantification, but don't capture
+pattern = r'(?:https?://)?www\.\w+\.\w+'
+</code></pre>
+<p>Non-capturing groups are slightly faster and don't clutter match results.</p>
+<h3 id="backreferences">Backreferences</h3>
+<p>Backreferences match the same text that a capturing group matched:</p>
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\1</code>, <code>\2</code>, ...</td>
+<td>Match same text as group 1, 2, ...</td>
+</tr>
+<tr>
+<td><code>(?P=name)</code></td>
+<td>Match same text as named group</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(\w+) \1</code></td>
+<td>"the the", "is is" (repeated words)</td>
+</tr>
+<tr>
+<td><code>(['"])(.*?)\1</code></td>
+<td>Quoted strings with matching quotes</td>
+</tr>
+<tr>
+<td><code>&lt;(\w+)&gt;.*?&lt;/\1&gt;</code></td>
+<td>Matching HTML open/close tags</td>
+</tr>
+</tbody>
+</table>
+<p><strong>NLP application</strong>: Finding repeated words (a common error):</p>
+<pre><code class="language-python">pattern = r'\b(\w+)\s+\1\b'  # Matches &quot;the the&quot;, &quot;is is&quot;, etc.
+</code></pre>
+<hr />
+<h2 id="alternation">Alternation</h2>
+<p>The pipe <code>|</code> matches either the expression before or after it:</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cat\|dog</code></td>
+<td>"cat" or "dog"</td>
+</tr>
+<tr>
+<td><code>gray\|grey</code></td>
+<td>"gray" or "grey"</td>
+</tr>
+<tr>
+<td><code>Mon\|Tue\|Wed</code></td>
+<td>"Mon", "Tue", or "Wed"</td>
+</tr>
+</tbody>
+</table>
+<p>Alternation has low precedence. To limit its scope, use parentheses:</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gray\|grey</code></td>
+<td>"gray" or "grey"</td>
+</tr>
+<tr>
+<td><code>gr(a\|e)y</code></td>
+<td>"gray" or "grey" (equivalent)</td>
+</tr>
+<tr>
+<td><code>I love (cats\|dogs)</code></td>
+<td>"I love cats" or "I love dogs"</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Without parentheses</strong>:</p>
+<pre><code>Pattern: I love cats|dogs
+Matches: &quot;I love cats&quot; or &quot;dogs&quot; (not &quot;I love dogs&quot;)
+</code></pre>
+<p><strong>NLP application</strong>: Matching multiple variants of a concept:</p>
+<pre><code class="language-python"># Match various ways to express uncertainty
+uncertain = r'\b(maybe|perhaps|possibly|might|could be)\b'
+</code></pre>
+<hr />
+<h2 id="lookahead-and-lookbehind">Lookahead and Lookbehind</h2>
+<p>Lookaround assertions check what comes before or after a position without consuming characters. They're zero-width, like anchors.</p>
+<h3 id="lookahead">Lookahead</h3>
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Name</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(?=...)</code></td>
+<td>Positive lookahead</td>
+<td>What follows must match</td>
+</tr>
+<tr>
+<td><code>(?!...)</code></td>
+<td>Negative lookahead</td>
+<td>What follows must not match</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\d+(?=%)</code></td>
+<td>Digits followed by % (but % not in match)</td>
+</tr>
+<tr>
+<td><code>q(?!u)</code></td>
+<td>'q' not followed by 'u'</td>
+</tr>
+<tr>
+<td><code>\b\w+(?=ing\b)</code></td>
+<td>Base of words ending in "ing"</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-python"># Find amounts with dollar sign after
+pattern = r'\d+(?=\$)'
+text = &quot;Prices: 10&lt;!--MATHc304f585c7364f348da4b64c8df3d797END--&gt; 30 cents&quot;
+# Matches: ['10', '20']
+</code></pre>
+<h3 id="lookbehind">Lookbehind</h3>
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Name</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(?&lt;=...)</code></td>
+<td>Positive lookbehind</td>
+<td>What precedes must match</td>
+</tr>
+<tr>
+<td><code>(?&lt;!...)</code></td>
+<td>Negative lookbehind</td>
+<td>What precedes must not match</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`(?&lt;=\$)\d+` | Digits preceded by $</td>
+<td></td>
+</tr>
+<tr>
+<td><code>(?&lt;!un)happy</code></td>
+<td>"happy" not preceded by "un"</td>
+</tr>
+<tr>
+<td><code>(?&lt;=Mr\. )\w+</code></td>
+<td>Name after "Mr. "</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Limitation</strong>: In many regex engines (including Python's <code>re</code>), lookbehind must be fixed-width. You cannot use <code>*</code>, <code>+</code>, or <code>{n,m}</code> inside lookbehind. The <code>regex</code> module removes this restriction.</p>
+<h3 id="nlp-applications-of-lookaround">NLP Applications of Lookaround</h3>
+<p><strong>Tokenization without consuming delimiters</strong>:</p>
+<pre><code class="language-python"># Split on word boundaries, keeping all characters
+pattern = r'(?&lt;=\w)(?=\W)|(?&lt;=\W)(?=\w)'
+</code></pre>
+<p><strong>Context-sensitive matching</strong>:</p>
+<pre><code class="language-python"># Find &quot;bank&quot; when it means financial institution (preceded by &quot;$&quot; or &quot;money&quot;)
+pattern = r'(?&lt;=\$|money\s)\bbank\b'
+</code></pre>
+<p><strong>Sentence boundary detection</strong>:</p>
+<pre><code class="language-python"># Period followed by space and capital letter
+pattern = r'(?&lt;=[.!?])\s+(?=[A-Z])'
+</code></pre>
+<hr />
+<h2 id="flags-and-modifiers">Flags and Modifiers</h2>
+<p>Flags modify how the regex engine interprets patterns.</p>
+<h3 id="common-flags">Common Flags</h3>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Python constant</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>i</code></td>
+<td><code>re.IGNORECASE</code></td>
+<td>Case-insensitive matching</td>
+</tr>
+<tr>
+<td><code>m</code></td>
+<td><code>re.MULTILINE</code></td>
+<td><code>^</code> and <code>$</code> match line boundaries</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td><code>re.DOTALL</code></td>
+<td><code>.</code> matches newline</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td><code>re.VERBOSE</code></td>
+<td>Allow whitespace and comments</td>
+</tr>
+</tbody>
+</table>
+<h3 id="case-insensitive-matching">Case-Insensitive Matching</h3>
+<pre><code class="language-python">import re
+pattern = r'the'
+text = &quot;The THE the&quot;
+re.findall(pattern, text, re.IGNORECASE)  # ['The', 'THE', 'the']
+</code></pre>
+<p><strong>NLP application</strong>: Matching words regardless of capitalization is often needed, especially at sentence boundaries.</p>
+<h3 id="multiline-mode">Multiline Mode</h3>
+<p>Without <code>MULTILINE</code>, <code>^</code> and <code>$</code> match only string start/end:</p>
+<pre><code class="language-python">text = &quot;Line 1\nLine 2\nLine 3&quot;
+
+# Default: ^ matches string start only
+re.findall(r'^Line', text)  # ['Line']
+
+# Multiline: ^ matches each line start
+re.findall(r'^Line', text, re.MULTILINE)  # ['Line', 'Line', 'Line']
+</code></pre>
+<h3 id="dotall-mode">Dotall Mode</h3>
+<p>Without <code>DOTALL</code>, <code>.</code> does not match newlines:</p>
+<pre><code class="language-python">text = &quot;&lt;tag&gt;\ncontent\n&lt;/tag&gt;&quot;
+
+# Default: . doesn't match newline
+re.search(r'&lt;tag&gt;.*&lt;/tag&gt;', text)  # None
+
+# Dotall: . matches everything including newline
+re.search(r'&lt;tag&gt;.*&lt;/tag&gt;', text, re.DOTALL)  # Match found
+</code></pre>
+<h3 id="verbose-mode">Verbose Mode</h3>
+<p>Verbose mode allows whitespace and comments for readability:</p>
+<pre><code class="language-python">phone_pattern = re.compile(r'''
+    ^                 # Start of string
+    (?:\+1[-.\s]?)?   # Optional country code
+    $?               # Optional opening paren
+    (\d{3})           # Area code
+    $?               # Optional closing paren
+    [-.\s]?           # Optional separator
+    (\d{3})           # Exchange
+    [-.\s]?           # Optional separator
+    (\d{4})           # Subscriber number
+    $                 # End of string
+''', re.VERBOSE)
+</code></pre>
+<p><strong>NLP application</strong>: Complex patterns for entity extraction benefit greatly from verbose formatting.</p>
+<h3 id="combining-flags">Combining Flags</h3>
+<p>Use the bitwise OR operator:</p>
+<pre><code class="language-python">pattern = re.compile(r'pattern', re.IGNORECASE | re.MULTILINE | re.DOTALL)
+</code></pre>
+<h3 id="inline-flags">Inline Flags</h3>
+<p>Flags can be set within the pattern:</p>
+<pre><code class="language-python">r'(?i)pattern'      # Case-insensitive
+r'(?im)pattern'     # Case-insensitive + multiline
+r'(?i:pattern)'     # Flag applies only to group
+</code></pre>
+<hr />
+<h2 id="unicode-and-internationalization">Unicode and Internationalization</h2>
+<p>NLP often requires processing text in multiple languages. Regex Unicode support is essential.</p>
+<h3 id="unicode-character-properties">Unicode Character Properties</h3>
+<p>The <code>\p{...}</code> syntax matches characters by Unicode property (supported in Python's <code>regex</code> module, not <code>re</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\p{L}</code></td>
+<td>Any letter (any script)</td>
+</tr>
+<tr>
+<td><code>\p{Lu}</code></td>
+<td>Uppercase letter</td>
+</tr>
+<tr>
+<td><code>\p{Ll}</code></td>
+<td>Lowercase letter</td>
+</tr>
+<tr>
+<td><code>\p{N}</code></td>
+<td>Any number</td>
+</tr>
+<tr>
+<td><code>\p{P}</code></td>
+<td>Punctuation</td>
+</tr>
+<tr>
+<td><code>\p{Z}</code></td>
+<td>Separator (space, line, paragraph)</td>
+</tr>
+<tr>
+<td><code>\p{Script=Greek}</code></td>
+<td>Greek letters</td>
+</tr>
+<tr>
+<td><code>\p{Script=Han}</code></td>
+<td>Chinese characters</td>
+</tr>
+</tbody>
+</table>
+<p><strong>NLP application</strong>: Multilingual tokenization requires matching letters from all scripts:</p>
+<pre><code class="language-python">import regex
+# Match words in any language
+pattern = r'\p{L}+'
+text = &quot;Hello 世界 مرحبا мир&quot;
+regex.findall(pattern, text)  # ['Hello', '世界', 'مرحبا', 'мир']
+</code></pre>
+<h3 id="pythons-re-and-unicode">Python's re and Unicode</h3>
+<p>Python's <code>re</code> module has limited Unicode support:</p>
+<ul>
+<li><code>\w</code>, <code>\d</code>, <code>\s</code> match only ASCII by default</li>
+<li>Use <code>re.UNICODE</code> flag or <code>(?u)</code> for broader matching</li>
+<li>For full Unicode properties, use the third-party <code>regex</code> module</li>
+</ul>
+<pre><code class="language-python">import re
+
+# ASCII only by default
+re.findall(r'\w+', 'café naïve')  # ['caf', 'na', 've'] in some contexts
+
+# With Unicode flag
+re.findall(r'\w+', 'café naïve', re.UNICODE)  # ['café', 'naïve']
+</code></pre>
+<h3 id="matching-specific-scripts">Matching Specific Scripts</h3>
+<p>Without <code>\p{...}</code>, use Unicode ranges:</p>
+<pre><code class="language-python"># Chinese characters (CJK Unified Ideographs)
+chinese = r'[\u4e00-\u9fff]+'
+
+# Arabic
+arabic = r'[\u0600-\u06ff]+'
+
+# Cyrillic
+cyrillic = r'[\u0400-\u04ff]+'
+</code></pre>
+<hr />
+<h2 id="the-python-re-module">The Python <code>re</code> Module</h2>
+<h3 id="core-functions">Core Functions</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>re.search(pattern, string)</code></td>
+<td>Find first match anywhere in string</td>
+</tr>
+<tr>
+<td><code>re.match(pattern, string)</code></td>
+<td>Match at beginning of string only</td>
+</tr>
+<tr>
+<td><code>re.fullmatch(pattern, string)</code></td>
+<td>Match entire string</td>
+</tr>
+<tr>
+<td><code>re.findall(pattern, string)</code></td>
+<td>Return list of all matches</td>
+</tr>
+<tr>
+<td><code>re.finditer(pattern, string)</code></td>
+<td>Return iterator of match objects</td>
+</tr>
+<tr>
+<td><code>re.sub(pattern, repl, string)</code></td>
+<td>Replace matches</td>
+</tr>
+<tr>
+<td><code>re.split(pattern, string)</code></td>
+<td>Split string by pattern</td>
+</tr>
+<tr>
+<td><code>re.compile(pattern)</code></td>
+<td>Compile pattern for reuse</td>
+</tr>
+</tbody>
+</table>
+<h3 id="match-objects">Match Objects</h3>
+<p><code>search()</code>, <code>match()</code>, and <code>finditer()</code> return match objects:</p>
+<pre><code class="language-python">match = re.search(r'(\w+)@(\w+)\.(\w+)', 'contact: user@example.com')
+
+match.group(0)   # 'user@example.com' (entire match)
+match.group(1)   # 'user'
+match.group(2)   # 'example'
+match.group(3)   # 'com'
+match.groups()   # ('user', 'example', 'com')
+match.start()    # Starting position of match
+match.end()      # Ending position of match
+match.span()     # (start, end) tuple
+</code></pre>
+<h3 id="substitution">Substitution</h3>
+<p><code>re.sub()</code> replaces matches with a replacement string:</p>
+<pre><code class="language-python"># Simple replacement
+re.sub(r'\d+', 'NUM', 'Room 123, Floor 4')  # 'Room NUM, Floor NUM'
+
+# Using backreferences
+re.sub(r'(\w+), (\w+)', r'\2 \1', 'Doe, John')  # 'John Doe'
+
+# Using a function
+def double(match):
+    return str(int(match.group()) * 2)
+
+re.sub(r'\d+', double, '3 cats and 4 dogs')  # '6 cats and 8 dogs'
+</code></pre>
+<p><strong>NLP application</strong>: Text normalization through substitution:</p>
+<pre><code class="language-python"># Expand contractions
+text = &quot;I can't don't won't&quot;
+text = re.sub(r&quot;can't&quot;, &quot;cannot&quot;, text)
+text = re.sub(r&quot;n't&quot;, &quot; not&quot;, text)
+# Result: &quot;I cannot do not will not&quot;
+</code></pre>
+<h3 id="splitting">Splitting</h3>
+<p><code>re.split()</code> splits a string by pattern:</p>
+<pre><code class="language-python">re.split(r'\s+', 'one   two\tthree')  # ['one', 'two', 'three']
+re.split(r'[,;]\s*', 'a, b; c,d')     # ['a', 'b', 'c', 'd']
+
+# Keep delimiters using capturing group
+re.split(r'([.!?])', 'Hi! Bye.')      # ['Hi', '!', ' Bye', '.', '']
+</code></pre>
+<h3 id="compilation">Compilation</h3>
+<p>Compile patterns that are used repeatedly:</p>
+<pre><code class="language-python">email_pattern = re.compile(r'[\w.+-]+@[\w-]+\.[\w.-]+')
+
+# Use compiled pattern
+email_pattern.search(text)
+email_pattern.findall(text)
+email_pattern.sub('[EMAIL]', text)
+</code></pre>
+<p>Compilation improves performance when a pattern is used multiple times.</p>
+<hr />
+<h2 id="common-nlp-patterns">Common NLP Patterns</h2>
+<h3 id="tokenization">Tokenization</h3>
+<p><strong>Word tokenization</strong> (simple):</p>
+<pre><code class="language-python">pattern = r'\b\w+\b'
+tokens = re.findall(pattern, text)
+</code></pre>
+<p><strong>Word tokenization</strong> (with punctuation handling):</p>
+<pre><code class="language-python"># Match words or punctuation sequences
+pattern = r&quot;\w+|[^\w\s]+&quot;
+</code></pre>
+<p><strong>Sentence tokenization</strong>:</p>
+<pre><code class="language-python"># Split on sentence-ending punctuation followed by space and capital
+pattern = r'(?&lt;=[.!?])\s+(?=[A-Z])'
+sentences = re.split(pattern, text)
+</code></pre>
+<h3 id="text-cleaning">Text Cleaning</h3>
+<p><strong>Remove HTML tags</strong>:</p>
+<pre><code class="language-python">clean = re.sub(r'&lt;[^&gt;]+&gt;', '', html_text)
+</code></pre>
+<p><strong>Remove URLs</strong>:</p>
+<pre><code class="language-python">clean = re.sub(r'https?://\S+|www\.\S+', '', text)
+</code></pre>
+<p><strong>Remove extra whitespace</strong>:</p>
+<pre><code class="language-python">clean = re.sub(r'\s+', ' ', text).strip()
+</code></pre>
+<p><strong>Remove non-alphabetic characters</strong>:</p>
+<pre><code class="language-python">clean = re.sub(r'[^a-zA-Z\s]', '', text)
+</code></pre>
+<h3 id="entity-extraction">Entity Extraction</h3>
+<p><strong>Email addresses</strong>:</p>
+<pre><code class="language-python">pattern = r'\b[\w.+-]+@[\w-]+\.[\w.-]+\b'
+</code></pre>
+<p><strong>URLs</strong>:</p>
+<pre><code class="language-python">pattern = r'https?://(?:[\w-]+\.)+[\w-]+(?:/[\w./?%&amp;=-]*)?'
+</code></pre>
+<p><strong>Phone numbers</strong> (US format):</p>
+<pre><code class="language-python">pattern = r'&lt;!--MATH0de5655a8373478fa36e383e807976e9END--&gt;?[-.\s]?\d{3}[-.\s]?\d{4}'
+</code></pre>
+<p><strong>Dates</strong>:</p>
+<pre><code class="language-python"># MM/DD/YYYY or MM-DD-YYYY
+pattern = r'\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b'
+
+# Month DD, YYYY
+pattern = r'\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2},?\s+\d{4}\b'
+</code></pre>
+<p><strong>Monetary amounts</strong>:</p>
+<pre><code class="language-python">pattern = r'\$\d+(?:,\d{3})*(?:\.\d{2})?'
+</code></pre>
+<p><strong>Hashtags and mentions</strong>:</p>
+<pre><code class="language-python">hashtags = re.findall(r'#\w+', tweet)
+mentions = re.findall(r'@\w+', tweet)
+</code></pre>
+<h3 id="text-normalization">Text Normalization</h3>
+<p><strong>Lowercase with special handling</strong>:</p>
+<pre><code class="language-python"># Keep acronyms uppercase
+def smart_lower(text):
+    return re.sub(r'\b([A-Z])([a-z]+)\b', lambda m: m.group().lower(), text)
+</code></pre>
+<p><strong>Expand contractions</strong>:</p>
+<pre><code class="language-python">contractions = {
+    r&quot;won't&quot;: &quot;will not&quot;,
+    r&quot;can't&quot;: &quot;cannot&quot;,
+    r&quot;n't&quot;: &quot; not&quot;,
+    r&quot;'re&quot;: &quot; are&quot;,
+    r&quot;'s&quot;: &quot; is&quot;,
+    r&quot;'d&quot;: &quot; would&quot;,
+    r&quot;'ll&quot;: &quot; will&quot;,
+    r&quot;'ve&quot;: &quot; have&quot;,
+    r&quot;'m&quot;: &quot; am&quot;,
+}
+
+def expand_contractions(text):
+    for pattern, replacement in contractions.items():
+        text = re.sub(pattern, replacement, text, flags=re.IGNORECASE)
+    return text
+</code></pre>
+<h3 id="language-detection-heuristics">Language Detection Heuristics</h3>
+<p><strong>Check for script presence</strong>:</p>
+<pre><code class="language-python">has_chinese = bool(re.search(r'[\u4e00-\u9fff]', text))
+has_arabic = bool(re.search(r'[\u0600-\u06ff]', text))
+has_cyrillic = bool(re.search(r'[\u0400-\u04ff]', text))
+</code></pre>
+<hr />
+<h2 id="performance-considerations">Performance Considerations</h2>
+<h3 id="catastrophic-backtracking">Catastrophic Backtracking</h3>
+<p>Certain patterns can cause exponential matching time. This happens when the regex engine tries many combinations before failing.</p>
+<p><strong>Dangerous pattern</strong>:</p>
+<pre><code class="language-python"># Matching nested quotes - vulnerable to backtracking
+pattern = r'&quot;.*&quot;.*&quot;'
+</code></pre>
+<p><strong>Problematic input</strong>: <code>"aaaaaaaaaaaaaaaaaaaaa</code> (no closing quote)</p>
+<p>The engine tries every possible way to divide the 'a's between the two <code>.*</code> before failing.</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>Use possessive quantifiers (in <code>regex</code> module): <code>".*+".*+"</code></li>
+<li>Use atomic groups: <code>"(?&gt;.*)"(?&gt;.*)"</code></li>
+<li>Use negated character classes: <code>"[^"]*"[^"]*"</code></li>
+<li>Use lazy quantifiers: <code>".*?".*?"</code></li>
+</ol>
+<h3 id="compile-frequently-used-patterns">Compile Frequently Used Patterns</h3>
+<pre><code class="language-python"># Slow: recompiles on each call
+for text in large_corpus:
+    matches = re.findall(r'\b\w+\b', text)
+
+# Fast: compile once
+word_pattern = re.compile(r'\b\w+\b')
+for text in large_corpus:
+    matches = word_pattern.findall(text)
+</code></pre>
+<h3 id="prefer-specific-over-general">Prefer Specific Over General</h3>
+<p>More specific patterns are faster:</p>
+<pre><code class="language-python"># Slow: .* tries many possibilities
+re.search(r'.*@.*\.com', email)
+
+# Faster: specific character classes
+re.search(r'[\w.+-]+@[\w-]+\.com', email)
+</code></pre>
+<h3 id="anchor-when-possible">Anchor When Possible</h3>
+<p>Anchors reduce the search space:</p>
+<pre><code class="language-python"># Slow: tries at every position
+re.search(r'\d{4}-\d{2}-\d{2}', text)
+
+# Faster when you know it's at the start
+re.match(r'\d{4}-\d{2}-\d{2}', text)
+</code></pre>
+<h3 id="avoid-recomputation">Avoid Recomputation</h3>
+<pre><code class="language-python"># Inefficient: repeated matching
+if re.search(pattern, text):
+    match = re.search(pattern, text)
+    process(match)
+
+# Efficient: single match
+match = re.search(pattern, text)
+if match:
+    process(match)
+</code></pre>
+<hr />
+<h2 id="regular-expressions-and-formal-language-theory">Regular Expressions and Formal Language Theory</h2>
+<p>Regular expressions are closely connected to finite automata—one of the foundational concepts in theoretical computer science.</p>
+<h3 id="formal-definition">Formal Definition</h3>
+<p>A <strong>regular expression</strong> over an alphabet $\Sigma$ is defined recursively:</p>
+<ol>
+<li>$\emptyset$ (empty set) is a regular expression</li>
+<li>$\varepsilon$ (empty string) is a regular expression</li>
+<li>For any $a \in \Sigma$, $a$ is a regular expression</li>
+<li>If $R$ and $S$ are regular expressions, so are:</li>
+<li>$RS$ (concatenation)</li>
+<li>$R|S$ (alternation/union)</li>
+<li>$R^*$ (Kleene star: zero or more)</li>
+</ol>
+<h3 id="equivalence-with-finite-automata">Equivalence with Finite Automata</h3>
+<p>Regular expressions are exactly as powerful as <strong>deterministic finite automata (DFA)</strong> and <strong>nondeterministic finite automata (NFA)</strong>. Every regex can be converted to an NFA (Thompson's construction), which can be converted to a DFA (subset construction).</p>
+<p>The <strong>regular languages</strong> are the languages describable by regular expressions—the simplest class in the Chomsky hierarchy.</p>
+<p>The figure below shows a DFA that accepts all binary strings containing an even number of 0s. State $S_1$ is both the start state (indicated by the incoming arrow) and the accepting state (indicated by the double circle). The automaton remains in the same state on input 1, but toggles between $S_1$ and $S_2$ on input 0. Since $S_1$ represents "even number of 0s seen" and the automaton starts there, strings like <code>""</code> (empty), <code>"1"</code>, <code>"11"</code>, <code>"00"</code>, <code>"1001"</code>, and <code>"010010"</code> are accepted, while <code>"0"</code>, <code>"10"</code>, and <code>"001"</code> are rejected. The corresponding regular expression is <code>1*(01*01*)*</code>—any number of 1s, followed by any number of pairs of 0s (each possibly surrounded by 1s).</p>
+<p><img alt="A DFA accepting binary strings with an even number of 0s" src="figures/fsa.png" /></p>
+<h3 id="limitations">Limitations</h3>
+<p>Regular expressions cannot match:</p>
+<ul>
+<li><strong>Nested structures</strong>: Balanced parentheses, matching HTML tags with nesting</li>
+<li><strong>Cross-serial dependencies</strong>: $\{a^n b^n : n \geq 0\}$</li>
+<li><strong>Back-references to arbitrary-length matches</strong>: Though practical regex engines add this as a non-regular extension</li>
+</ul>
+<p><strong>Example</strong>: No true regular expression can match strings with balanced parentheses like <code>((()))</code> while rejecting <code>((())</code>.</p>
+<p>Practical regex engines (Perl, Python, etc.) extend beyond formal regular languages with features like backreferences and lookaround, making them computationally more powerful but also potentially slower.</p>
+<hr />
+<h2 id="summary">Summary</h2>
+<p>Regular expressions provide a powerful, declarative language for pattern matching in text. Key concepts include:</p>
+<p><strong>Basic elements</strong>: Literal characters match themselves; metacharacters (<code>. ^ $ * + ? { } [ ] \ | ( )</code>) have special meaning and must be escaped for literal matching.</p>
+<p><strong>Character classes</strong>: <code>[abc]</code> matches any character in the set; <code>[^abc]</code> matches any character not in the set; ranges like <code>[a-z]</code> specify contiguous sequences; shorthand classes (<code>\d</code>, <code>\w</code>, <code>\s</code>) provide convenient notation.</p>
+<p><strong>Anchors</strong>: <code>^</code> and <code>$</code> match positions at line/string boundaries; <code>\b</code> matches word boundaries; these match positions, not characters.</p>
+<p><strong>Quantifiers</strong>: <code>*</code> (zero or more), <code>+</code> (one or more), <code>?</code> (optional), <code>{n,m}</code> (specific counts); by default greedy, add <code>?</code> for lazy matching.</p>
+<p><strong>Groups</strong>: Parentheses group elements and capture matches; <code>(?:...)</code> groups without capturing; <code>(?P&lt;name&gt;...)</code> creates named groups; backreferences (<code>\1</code>, <code>(?P=name)</code>) match previously captured text.</p>
+<p><strong>Lookaround</strong>: <code>(?=...)</code> and <code>(?!...)</code> check what follows without consuming; <code>(?&lt;=...)</code> and <code>(?&lt;!...)</code> check what precedes.</p>
+<p><strong>Flags</strong>: <code>IGNORECASE</code> for case-insensitive matching; <code>MULTILINE</code> for line-based anchors; <code>DOTALL</code> for dot matching newlines; <code>VERBOSE</code> for readable patterns.</p>
+<p>For NLP applications, regular expressions excel at tokenization, text cleaning, pattern extraction, and normalization. Understanding both their power and limitations—particularly around nested structures and performance pitfalls—enables effective use in text processing pipelines.</p>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false,
+            trust: true,
+            strict: false,
+            macros: {
+                "\\logit": "\\operatorname{logit}",
+                "\\softmax": "\\operatorname{softmax}",
+                "\\sigmoid": "\\operatorname{sigmoid}",
+                "\\sgn": "\\operatorname{sgn}",
+                "\\sign": "\\operatorname{sign}",
+                "\\argmax": "\\operatorname{argmax}",
+                "\\argmin": "\\operatorname{argmin}",
+                "\\Var": "\\operatorname{Var}",
+                "\\Cov": "\\operatorname{Cov}",
+                "\\Corr": "\\operatorname{Corr}",
+                "\\E": "\\mathbb{E}",
+                "\\P": "\\mathbb{P}",
+                "\\R": "\\mathbb{R}",
+                "\\N": "\\mathbb{N}",
+                "\\Z": "\\mathbb{Z}",
+                "\\C": "\\mathbb{C}",
+                "\\ind": "\\mathbb{1}",
+                "\\KL": "\\operatorname{KL}",
+                "\\Tr": "\\operatorname{Tr}",
+                "\\tr": "\\operatorname{tr}",
+                "\\diag": "\\operatorname{diag}",
+                "\\rank": "\\operatorname{rank}",
+                "\\relu": "\\operatorname{ReLU}",
+                "\\gelu": "\\operatorname{GELU}",
+                "\\selu": "\\operatorname{SELU}"
+            }
+        });
+    });
+</script>
+</body>
+</html>

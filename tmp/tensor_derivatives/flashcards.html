@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tensor Derivatives — Flashcards</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            startup: {
+                typeset: false
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Light theme (default) */
+        html {
+            background-color: #f5f5f5;
+            transition: background-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #2a2a2a;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 3rem;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Dark theme */
+        html.dark {
+            background-color: #1a1a1a;
+        }
+
+        body.dark {
+            color: #d4d4d4;
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+        }
+
+        /* Header */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5em;
+            padding-bottom: 0.5em;
+            border-bottom: 3px solid #666;
+            flex-wrap: wrap;
+            gap: 1em;
+        }
+
+        body.dark .header-container {
+            border-color: #888;
+        }
+
+        h1 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 24pt;
+            color: #1a1a1a;
+            letter-spacing: 0.02em;
+            font-weight: 700;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        body.dark h1 {
+            color: #f0f0f0;
+        }
+
+        /* Theme toggle switch */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.8em;
+        }
+
+        .toggle-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #666;
+        }
+
+        body.dark .toggle-label {
+            color: #aaa;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background-color: #bbb;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            border: 2px solid #999;
+        }
+
+        body.dark .toggle-switch {
+            background-color: #666;
+            border-color: #888;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        body.dark .toggle-slider {
+            transform: translateX(30px);
+            background-color: #2a2a2a;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+
+        .toggle-slider::before {
+            content: '\2600';
+            color: #2a2a2a;
+        }
+
+        body.dark .toggle-slider::before {
+            content: '\263E';
+            color: #c0c8d8;
+        }
+
+        /* Article back link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2em;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #2a2a2a;
+        }
+
+        body.dark .back-link {
+            color: #aaa;
+        }
+
+        body.dark .back-link:hover {
+            color: #e8e8e8;
+        }
+
+        /* Card counter */
+        .card-counter {
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            color: #888;
+            margin-bottom: 1.5em;
+        }
+
+        body.dark .card-counter {
+            color: #999;
+        }
+
+        /* Flashcard container */
+        .flashcard-scene {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 680px;
+            min-height: 340px;
+            margin: 0 auto 2em auto;
+            cursor: pointer;
+        }
+
+        .flashcard {
+            position: relative;
+            width: 100%;
+            min-height: 340px;
+            transition: transform 0.6s ease;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-face {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 340px;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2.5em 2.5em;
+            border-radius: 10px;
+            border: 1px solid #d5d5d5;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body.dark .flashcard-face {
+            border-color: #555;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+        }
+
+        .flashcard-front {
+            background-color: #fafafa;
+        }
+
+        body.dark .flashcard-front {
+            background-color: #333;
+        }
+
+        .flashcard-back {
+            background-color: #f0f4f8;
+            transform: rotateY(180deg);
+        }
+
+        body.dark .flashcard-back {
+            background-color: #2f3640;
+        }
+
+        .flashcard-face .face-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 9pt;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #aaa;
+            margin-bottom: 1em;
+            font-weight: 600;
+        }
+
+        body.dark .flashcard-face .face-label {
+            color: #777;
+        }
+
+        .flashcard-front .card-text {
+            font-size: 14pt;
+            line-height: 1.5;
+            text-align: center;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        body.dark .flashcard-front .card-text {
+            color: #e8e8e8;
+        }
+
+        .flashcard-back .card-text {
+            font-size: 12pt;
+            line-height: 1.6;
+            text-align: center;
+            color: #2a2a2a;
+        }
+
+        body.dark .flashcard-back .card-text {
+            color: #d4d4d4;
+        }
+
+        .tap-hint {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 9pt;
+            color: #bbb;
+            margin-top: 1.2em;
+        }
+
+        body.dark .tap-hint {
+            color: #666;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            font-weight: 500;
+            padding: 0.7em 1.8em;
+            border-radius: 4px;
+            border: 2px solid #1a1a1a;
+            background-color: #e8e8e8;
+            color: #2a2a2a;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        body.dark .controls button {
+            background-color: #1a1a1a;
+            color: #e8e8e8;
+            border-color: #666;
+        }
+
+        .controls button:hover {
+            background-color: #f5f5f5;
+            border-color: #666;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        body.dark .controls button:hover {
+            background-color: #000;
+            border-color: #888;
+            box-shadow: 0 2px 8px rgba(102,102,102,0.4);
+        }
+
+        .controls button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .controls button:disabled:hover {
+            background-color: #e8e8e8;
+            border-color: #1a1a1a;
+            transform: none;
+            box-shadow: none;
+        }
+
+        body.dark .controls button:disabled:hover {
+            background-color: #1a1a1a;
+            border-color: #666;
+        }
+
+        .shuffle-btn {
+            border-style: dashed !important;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 3em;
+            padding-top: 1.5em;
+            border-top: 2px solid #ccc;
+            text-align: center;
+            color: #888;
+            font-size: 9pt;
+        }
+
+        body.dark footer {
+            border-color: #555;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            body {
+                padding: 2em 1.5em;
+                margin: 1rem;
+            }
+
+            h1 {
+                font-size: 18pt;
+            }
+
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .flashcard-scene {
+                min-height: 300px;
+            }
+
+            .flashcard {
+                min-height: 300px;
+            }
+
+            .flashcard-face {
+                min-height: 300px;
+                padding: 2em 1.5em;
+            }
+
+            .flashcard-front .card-text {
+                font-size: 13pt;
+            }
+
+            .flashcard-back .card-text {
+                font-size: 11pt;
+            }
+
+            .controls {
+                gap: 0.6em;
+            }
+
+            .controls button {
+                padding: 0.6em 1.2em;
+                font-size: 10pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <h1>Tensor Derivatives &mdash; Flashcards</h1>
+        <div class="theme-toggle">
+            <span class="toggle-label">Theme</span>
+            <div class="toggle-switch" onclick="toggleTheme()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </div>
+
+    <a href="tensor_derivatives-light.html" class="back-link article-link" data-article="tensor_derivatives">&larr; Back to article</a>
+
+    <div class="card-counter" id="cardCounter">Card 1 of 25</div>
+
+    <div class="flashcard-scene" id="flashcardScene" onclick="flipCard()">
+        <div class="flashcard" id="flashcard">
+            <div class="flashcard-face flashcard-front">
+                <div class="face-label">Question</div>
+                <div class="card-text" id="frontText"></div>
+                <div class="tap-hint">Click to reveal answer</div>
+            </div>
+            <div class="flashcard-face flashcard-back">
+                <div class="face-label">Answer</div>
+                <div class="card-text" id="backText"></div>
+                <div class="tap-hint">Click to see question</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" onclick="prevCard()">&larr; Previous</button>
+        <button class="shuffle-btn" onclick="shuffleDeck()">Shuffle</button>
+        <button id="nextBtn" onclick="nextCard()">Next &rarr;</button>
+    </div>
+
+    <footer>
+        <p>Stephen Fitz &middot; 2026</p>
+    </footer>
+
+    <script>
+        // Flashcard data
+        var cards = [
+            {
+                front: "What is the key strategy for computing tensor derivatives?",
+                back: "Reduce the problem to derivatives of individual scalar components. Once you understand the scalar structure, the tensor result becomes almost automatic."
+            },
+            {
+                front: "What is the Jacobian of y = Wx with respect to x?",
+                back: "\\(\\frac{\\partial \\vec{y}}{\\partial \\vec{x}} = W\\) — The Jacobian is the C×D matrix where \\(\\frac{\\partial y_i}{\\partial x_j} = W_{i,j}\\). Each entry of the Jacobian equals the corresponding entry of W."
+            },
+            {
+                front: "How do you compute a single component \u2202y\u2083/\u2202x\u2087 for y = Wx?",
+                back: "Since \\(y_3 = \\sum_j W_{3,j} x_j\\), only the term \\(W_{3,7} x_7\\) depends on \\(x_7\\), so \\(\\frac{\\partial y_3}{\\partial x_7} = W_{3,7}\\)."
+            },
+            {
+                front: "What is the Jacobian of y = xW (row vector case)?",
+                back: "\\(\\frac{\\partial \\vec{y}}{\\partial \\vec{x}} = W^T\\) — The transpose appears because the orientation of vectors is different. With row vectors, \\(\\frac{\\partial y_3}{\\partial x_7} = W_{7,3}\\)."
+            },
+            {
+                front: "What is the derivative \u2202y/\u2202W for y = xW?",
+                back: "A three-dimensional tensor (one axis for y components, two for W components). It is highly sparse: \\(\\frac{\\partial y_j}{\\partial W_{i,j}} = x_i\\), and all other entries are zero."
+            },
+            {
+                front: "Why are tensor derivatives often sparse?",
+                back: "Because each output component depends on only a subset of the parameters. For y = xW, output y\u2C7C only depends on column j of W, making the derivative tensor mostly zeros."
+            },
+            {
+                front: "What does the chain rule look like for tensor derivatives?",
+                back: "For \\(\\vec{y} = V\\vec{m}\\) and \\(\\vec{m} = W\\vec{x}\\): \\(\\frac{\\partial y_i}{\\partial x_j} = \\sum_k \\frac{\\partial y_i}{\\partial m_k} \\frac{\\partial m_k}{\\partial x_j} = \\sum_k V_{i,k} W_{k,j} = (VW)_{i,j}\\)"
+            },
+            {
+                front: "What is the Jacobian of y = VWx?",
+                back: "\\(\\frac{\\partial \\vec{y}}{\\partial \\vec{x}} = VW\\) — The chain rule for tensor derivatives gives the matrix product, which is why backpropagation involves repeated matrix multiplications."
+            },
+            {
+                front: "How do batch computations affect derivatives?",
+                back: "For Y = XW with batch X \u2208 \u211D\u1D3A\u02E3\u1D30, \\(\\frac{\\partial Y_{a,b}}{\\partial X_{c,d}}\\) is nonzero only when a = c (rows correspond to independent examples). For each row, the derivative is W\u1D40."
+            },
+            {
+                front: "What three principles suffice for working with tensor derivatives?",
+                back: "1) Introduce intermediate variables \u2014 break long expressions into simple steps. 2) Work component-wise \u2014 start from a single scalar derivative. 3) Reduce along the right axes \u2014 apply summation to collapse intermediate tensors."
+            },
+            {
+                front: "Why does deep learning require tensor derivatives?",
+                back: "Modern deep learning is gradient-based optimization of parameters. Every training step involves computing derivatives of vectors w.r.t. vectors, vectors w.r.t. matrices, matrices w.r.t. matrices, and higher-order tensors in batch settings."
+            },
+            {
+                front: "What does \u2018reduce along the right axes\u2019 mean in tensor calculus?",
+                back: "Apply summation to collapse intermediate tensors into usable forms. For example, the chain rule involves summing over shared indices to produce the final derivative."
+            },
+            {
+                front: "What is the reduced representation G\u1D62\u2C7C for the derivative tensor \u2202y/\u2202W?",
+                back: "Since the full tensor F_{i,j,k} = \u2202y\u1D62/\u2202W_{j,k} has nonzero entries only when i = k, we can summarize it as G_{i,j} = F_{i,j,i} = x\u2C7C. This reduction is essential for efficient backpropagation."
+            },
+            {
+                front: "How does backpropagation relate to the chain rule for tensor derivatives?",
+                back: "Backpropagation is repeated application of the chain rule: \\(\\frac{\\partial \\vec{y}}{\\partial \\vec{x}} = \\frac{\\partial \\vec{y}}{\\partial \\vec{m}} \\frac{\\partial \\vec{m}}{\\partial \\vec{x}}\\), where each factor is a Jacobian matrix. The chain becomes a product of matrices."
+            },
+            {
+                front: "What is a Jacobian matrix?",
+                back: "The matrix of all partial derivatives \\(\\frac{\\partial y_i}{\\partial x_j}\\) for a vector-valued function y(x). If y \u2208 \u211D\u1D9C and x \u2208 \u211D\u1D30, the Jacobian is a C\u00D7D matrix."
+            },
+            {
+                front: "Why does the transpose W\u1D40 appear when differentiating row-vector products?",
+                back: "For y = xW (row vectors), \\(y_3 = \\sum_j x_j W_{j,3}\\), so \\(\\frac{\\partial y_3}{\\partial x_7} = W_{7,3}\\). Collecting all components gives the transpose W\u1D40 because the row/column indices are swapped."
+            },
+            {
+                front: "In batch computation Y = XW, why is \u2202Y\u2090,\u2090/\u2202X\u2090,\u2090 nonzero only when a = c?",
+                back: "Because rows correspond to independent examples. Row a of Y depends only on row a of X, so changing X\u2090,\u2090 with c \u2260 a has no effect on Y\u2090,\u2090."
+            },
+            {
+                front: "What is the connection between component-wise reasoning and tensor derivatives?",
+                back: "Working component-wise (fixing specific indices like i,j,k) turns tensor calculus into ordinary scalar calculus. The tensor result is then assembled from the scalar components \u2014 careful bookkeeping of indices and shapes is the key skill."
+            },
+            {
+                front: "What role does tensor calculus play in modern deep learning?",
+                back: "Tensor calculus \u2014 and in particular, derivatives of vectors, matrices, and higher-order tensors \u2014 is one of a small number of mathematical primitives repeated at enormous scale that modern deep learning is built on."
+            },
+            {
+                front: "In the matrix\u2013vector product y = Wx, what are the dimensions of x, W, and y?",
+                back: "x \u2208 \u211D\u1D30 is a column vector, W \u2208 \u211D\u1D9C\u00D7\u1D30 is a matrix, and y \u2208 \u211D\u1D9C is a column vector."
+            },
+            {
+                front: "What determines whether the Jacobian of a linear transformation is W or W\u1D40?",
+                back: "The orientation of vectors. For column vectors (y = Wx), the Jacobian is W. For row vectors (y = xW), the Jacobian is W\u1D40."
+            },
+            {
+                front: "In the row-vector product y = xW, what are the dimensions?",
+                back: "x \u2208 \u211D\u00B9\u02E3\u1D30, W \u2208 \u211D\u1D30\u02E3\u1D9C, and y \u2208 \u211D\u00B9\u02E3\u1D9C."
+            },
+            {
+                front: "In batch computation Y = XW, what is the per-row Jacobian \u2202Y\u1D62,:/\u2202X\u1D62,:?",
+                back: "W\u1D40. The same parameters W are applied independently to every example in the batch, so each row sees the same Jacobian."
+            },
+            {
+                front: "How do you apply the \u2018introduce intermediate variables\u2019 principle to y = VWx?",
+                back: "Define m = Wx and y = Vm. This breaks the two-layer computation into simple steps, each of which can be differentiated independently and then combined via the chain rule."
+            },
+            {
+                front: "Why is reducing the derivative tensor \u2202y/\u2202W to a matrix G essential?",
+                back: "The full derivative tensor is highly sparse (most entries are zero). Summarizing it as the matrix G\u1D62,\u2C7C = x\u2C7C captures all nontrivial information and is essential for efficient implementations of backpropagation."
+            }
+        ];
+
+        var currentIndex = 0;
+        var deck = cards.map(function(_, i) { return i; });
+
+        // Theme management
+        var savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.body.classList.add('dark');
+        }
+        updateArticleLink();
+
+        function toggleTheme() {
+            var isDark = document.body.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateArticleLink();
+        }
+
+        function updateArticleLink() {
+            var isDark = document.body.classList.contains('dark');
+            var theme = isDark ? 'dark' : 'light';
+            document.querySelectorAll('.article-link').forEach(function(link) {
+                var article = link.getAttribute('data-article');
+                link.href = article + '-' + theme + '.html';
+            });
+        }
+
+        // Card rendering
+        function renderCard() {
+            var card = cards[deck[currentIndex]];
+            document.getElementById('frontText').innerHTML = card.front;
+            document.getElementById('backText').innerHTML = card.back;
+            document.getElementById('cardCounter').textContent = 'Card ' + (currentIndex + 1) + ' of ' + deck.length;
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            document.getElementById('nextBtn').disabled = currentIndex === deck.length - 1;
+
+            // Reset flip
+            document.getElementById('flashcard').classList.remove('is-flipped');
+
+            // Typeset MathJax
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('frontText'), document.getElementById('backText')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
+            }
+        }
+
+        function flipCard() {
+            document.getElementById('flashcard').classList.toggle('is-flipped');
+            // Re-render MathJax on flip to ensure back side renders
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('backText')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCard();
+            }
+        }
+
+        function nextCard() {
+            if (currentIndex < deck.length - 1) {
+                currentIndex++;
+                renderCard();
+            }
+        }
+
+        function shuffleDeck() {
+            // Fisher-Yates shuffle
+            for (var i = deck.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = deck[i];
+                deck[i] = deck[j];
+                deck[j] = temp;
+            }
+            currentIndex = 0;
+            renderCard();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                prevCard();
+            } else if (e.key === 'ArrowRight') {
+                nextCard();
+            } else if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                flipCard();
+            }
+        });
+
+        // Initial render
+        renderCard();
+    </script>
+</body>
+</html>

@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>N-gram Language Models — Flashcards</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            startup: {
+                typeset: false
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Light theme (default) */
+        html {
+            background-color: #f5f5f5;
+            transition: background-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #2a2a2a;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 3rem;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Dark theme */
+        html.dark {
+            background-color: #1a1a1a;
+        }
+
+        body.dark {
+            color: #d4d4d4;
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+        }
+
+        /* Header */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5em;
+            padding-bottom: 0.5em;
+            border-bottom: 3px solid #666;
+            flex-wrap: wrap;
+            gap: 1em;
+        }
+
+        body.dark .header-container {
+            border-color: #888;
+        }
+
+        h1 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 24pt;
+            color: #1a1a1a;
+            letter-spacing: 0.02em;
+            font-weight: 700;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        body.dark h1 {
+            color: #f0f0f0;
+        }
+
+        /* Theme toggle switch */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.8em;
+        }
+
+        .toggle-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #666;
+        }
+
+        body.dark .toggle-label {
+            color: #aaa;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background-color: #bbb;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            border: 2px solid #999;
+        }
+
+        body.dark .toggle-switch {
+            background-color: #666;
+            border-color: #888;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        body.dark .toggle-slider {
+            transform: translateX(30px);
+            background-color: #2a2a2a;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+
+        .toggle-slider::before {
+            content: '\2600';
+            color: #2a2a2a;
+        }
+
+        body.dark .toggle-slider::before {
+            content: '\263E';
+            color: #c0c8d8;
+        }
+
+        /* Article back link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2em;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #2a2a2a;
+        }
+
+        body.dark .back-link {
+            color: #aaa;
+        }
+
+        body.dark .back-link:hover {
+            color: #e8e8e8;
+        }
+
+        /* Card counter */
+        .card-counter {
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            color: #888;
+            margin-bottom: 1.5em;
+        }
+
+        body.dark .card-counter {
+            color: #999;
+        }
+
+        /* Flashcard container */
+        .flashcard-scene {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 680px;
+            min-height: 340px;
+            margin: 0 auto 2em auto;
+            cursor: pointer;
+        }
+
+        .flashcard {
+            position: relative;
+            width: 100%;
+            min-height: 340px;
+            transition: transform 0.6s ease;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-face {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 340px;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2.5em 2.5em;
+            border-radius: 10px;
+            border: 1px solid #d5d5d5;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body.dark .flashcard-face {
+            border-color: #555;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+        }
+
+        .flashcard-front {
+            background-color: #fafafa;
+        }
+
+        body.dark .flashcard-front {
+            background-color: #333;
+        }
+
+        .flashcard-back {
+            background-color: #f0f4f8;
+            transform: rotateY(180deg);
+        }
+
+        body.dark .flashcard-back {
+            background-color: #2f3640;
+        }
+
+        .flashcard-face .face-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 9pt;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #aaa;
+            margin-bottom: 1em;
+            font-weight: 600;
+        }
+
+        body.dark .flashcard-face .face-label {
+            color: #777;
+        }
+
+        .flashcard-front .card-text {
+            font-size: 14pt;
+            line-height: 1.5;
+            text-align: center;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        body.dark .flashcard-front .card-text {
+            color: #e8e8e8;
+        }
+
+        .flashcard-back .card-text {
+            font-size: 12pt;
+            line-height: 1.6;
+            text-align: center;
+            color: #2a2a2a;
+        }
+
+        body.dark .flashcard-back .card-text {
+            color: #d4d4d4;
+        }
+
+        .tap-hint {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 9pt;
+            color: #bbb;
+            margin-top: 1.2em;
+        }
+
+        body.dark .tap-hint {
+            color: #666;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            font-weight: 500;
+            padding: 0.7em 1.8em;
+            border-radius: 4px;
+            border: 2px solid #1a1a1a;
+            background-color: #e8e8e8;
+            color: #2a2a2a;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        body.dark .controls button {
+            background-color: #1a1a1a;
+            color: #e8e8e8;
+            border-color: #666;
+        }
+
+        .controls button:hover {
+            background-color: #f5f5f5;
+            border-color: #666;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        body.dark .controls button:hover {
+            background-color: #000;
+            border-color: #888;
+            box-shadow: 0 2px 8px rgba(102,102,102,0.4);
+        }
+
+        .controls button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .controls button:disabled:hover {
+            background-color: #e8e8e8;
+            border-color: #1a1a1a;
+            transform: none;
+            box-shadow: none;
+        }
+
+        body.dark .controls button:disabled:hover {
+            background-color: #1a1a1a;
+            border-color: #666;
+        }
+
+        .shuffle-btn {
+            border-style: dashed !important;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 3em;
+            padding-top: 1.5em;
+            border-top: 2px solid #ccc;
+            text-align: center;
+            color: #888;
+            font-size: 9pt;
+        }
+
+        body.dark footer {
+            border-color: #555;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            body {
+                padding: 2em 1.5em;
+                margin: 1rem;
+            }
+
+            h1 {
+                font-size: 18pt;
+            }
+
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .flashcard-scene {
+                min-height: 300px;
+            }
+
+            .flashcard {
+                min-height: 300px;
+            }
+
+            .flashcard-face {
+                min-height: 300px;
+                padding: 2em 1.5em;
+            }
+
+            .flashcard-front .card-text {
+                font-size: 13pt;
+            }
+
+            .flashcard-back .card-text {
+                font-size: 11pt;
+            }
+
+            .controls {
+                gap: 0.6em;
+            }
+
+            .controls button {
+                padding: 0.6em 1.2em;
+                font-size: 10pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <h1>N-gram Language Models &mdash; Flashcards</h1>
+        <div class="theme-toggle">
+            <span class="toggle-label">Theme</span>
+            <div class="toggle-switch" onclick="toggleTheme()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </div>
+
+    <a href="ngram_language_models-light.html" class="back-link article-link" data-article="ngram_language_models">&larr; Back to article</a>
+
+    <div class="card-counter" id="cardCounter">Card 1 of 25</div>
+
+    <div class="flashcard-scene" id="flashcardScene" onclick="flipCard()">
+        <div class="flashcard" id="flashcard">
+            <div class="flashcard-face flashcard-front">
+                <div class="face-label">Question</div>
+                <div class="card-text" id="frontText"></div>
+                <div class="tap-hint">Click to reveal answer</div>
+            </div>
+            <div class="flashcard-face flashcard-back">
+                <div class="face-label">Answer</div>
+                <div class="card-text" id="backText"></div>
+                <div class="tap-hint">Click to see question</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" onclick="prevCard()">&larr; Previous</button>
+        <button class="shuffle-btn" onclick="shuffleDeck()">Shuffle</button>
+        <button id="nextBtn" onclick="nextCard()">Next &rarr;</button>
+    </div>
+
+    <footer>
+        <p>Stephen Fitz &middot; 2026</p>
+    </footer>
+
+    <script>
+        // Flashcard data
+        var cards = [
+            {
+                front: "What is a language model?",
+                back: "A model that assigns probabilities to sequences of words: \\(P(w_1, w_2, \\ldots, w_n)\\). Language models power speech recognition, machine translation, spelling correction, and text generation."
+            },
+            {
+                front: "How does the chain rule decompose a joint probability of words?",
+                back: "\\(P(w_1, \\ldots, w_n) = \\prod_{i=1}^n P(w_i \\mid w_1, \\ldots, w_{i-1})\\) \u2014 converts the joint into a product of conditional probabilities, each predicting the next word given all previous words. This is exact, not an approximation."
+            },
+            {
+                front: "What is the Markov assumption in language modeling?",
+                back: "\\(P(w_i \\mid w_1, \\ldots, w_{i-1}) \\approx P(w_i \\mid w_{i-k}, \\ldots, w_{i-1})\\) \u2014 the probability of the next word depends only on the previous k words, not the entire history. Makes estimation tractable."
+            },
+            {
+                front: "What is the difference between bigram, trigram, and 4-gram models?",
+                back: "Bigram (n=2): conditions on 1 previous word. Trigram (n=3): conditions on 2 previous words. 4-gram (n=4): conditions on 3 previous words. A bigram MODEL considers pairs of words."
+            },
+            {
+                front: "What is the MLE formula for bigram probabilities?",
+                back: "\\(P_{\\text{MLE}}(w_i \\mid w_{i-1}) = \\frac{C(w_{i-1}, w_i)}{C(w_{i-1})}\\) \u2014 count of the bigram divided by count of the context word. This is the relative frequency estimator."
+            },
+            {
+                front: "Why is sparsity the fundamental problem with n-gram MLE?",
+                back: "Most n-grams never appear in training, yielding probability 0. A single zero makes the entire sentence probability zero (multiplicative). With V=50,000 words: bigrams cover 10\u201330%, trigrams 0.1\u20131%, 4-grams 0.001%."
+            },
+            {
+                front: "What is Laplace (add-one) smoothing?",
+                back: "\\(P_{\\text{Laplace}}(w_i \\mid w_{i-1}) = \\frac{C(w_{i-1}, w_i) + 1}{C(w_{i-1}) + |V|}\\). Adds 1 to every count. Bayesian interpretation: uniform Dirichlet prior. Problem: over-smooths, discounts seen events too heavily."
+            },
+            {
+                front: "What is add-k smoothing?",
+                back: "\\(P_{\\text{add-}k}(w_i \\mid w_{i-1}) = \\frac{C(w_{i-1}, w_i) + k}{C(w_{i-1}) + k|V|}\\) where k < 1. Generalizes Laplace. k chosen to minimize validation perplexity. Typical k: 0.01\u20130.5."
+            },
+            {
+                front: "What is the key insight of Good-Turing smoothing?",
+                back: "N-grams seen once (hapax legomena) provide information about unseen n-grams. The total probability mass for unseen events equals N\u2081/N \u2014 the fraction of tokens that are singletons."
+            },
+            {
+                front: "What is the Good-Turing adjusted count formula?",
+                back: "\\(r^* = (r+1) \\frac{N_{r+1}}{N_r}\\) where N_r is the number of n-grams appearing exactly r times. For unseen (r=0): \\(0^* = N_1/N_0\\)."
+            },
+            {
+                front: "What is back-off in language modeling?",
+                back: "When we lack evidence for a high-order n-gram, consult lower-order statistics. If we\u2019ve never seen \u2018colorless green ideas,\u2019 use bigram P(ideas|green) or unigram P(ideas) instead."
+            },
+            {
+                front: "What is Stupid Back-off?",
+                back: "Uses MLE when counts exist, backs off to shorter context with factor \u03bb \u2248 0.4 when count is zero. Scores don\u2019t sum to 1 (not true probabilities \u2014 hence \u2018stupid\u2019). Fast and effective at web scale (used by Google)."
+            },
+            {
+                front: "What is Katz Back-off?",
+                back: "Combines Good-Turing discounting with normalized back-off. Uses adjusted counts C* for seen n-grams and a normalization factor \u03b1 to distribute remaining mass via lower-order model. Probabilities properly sum to 1."
+            },
+            {
+                front: "What is interpolation in language modeling?",
+                back: "\\(P_{\\text{interp}}(w_i \\mid w_{i-2}, w_{i-1}) = \\lambda_3 P_3 + \\lambda_2 P_2 + \\lambda_1 P_1\\) \u2014 combines all n-gram orders simultaneously with weights summing to 1, rather than backing off only when counts are zero."
+            },
+            {
+                front: "What is absolute discounting?",
+                back: "Subtracts a fixed discount d \u2248 0.75 from each non-zero count. Empirical finding (Church & Gale, 1991): the optimal discount is approximately constant across count values. \\(d = \\frac{N_1}{N_1 + 2N_2}\\)"
+            },
+            {
+                front: "What is Kneser-Ney smoothing?",
+                back: "Combines absolute discounting with continuation probability \u2014 uses how many distinct contexts a word appears in, rather than raw frequency, for the back-off distribution. The modified variant (Modified Kneser-Ney) consistently achieves the best perplexity among classical smoothing methods."
+            },
+            {
+                front: "What is continuation probability?",
+                back: "\\(P_{\\text{continuation}}(w) \\propto |\\{v : C(v,w) > 0\\}|\\) \u2014 counts distinct contexts word w follows. \u2018Francisco\u2019 follows few contexts (mainly \u2018San\u2019), so low continuation probability. \u2018the\u2019 follows many contexts, so high."
+            },
+            {
+                front: "Why does Kneser-Ney treat \u2018Francisco\u2019 differently from standard smoothing?",
+                back: "Standard unigram gives \u2018Francisco\u2019 high probability (frequent word). But Kneser-Ney uses continuation probability \u2014 \u2018Francisco\u2019 appears in very few distinct contexts (mainly after \u2018San\u2019), so its back-off probability is low."
+            },
+            {
+                front: "What is perplexity in language modeling?",
+                back: "\\(\\text{PP} = P(w_1,\\ldots,w_N)^{-1/N} = 2^{H}\\) where H is cross-entropy in bits. Interpreted as effective vocabulary size of uncertainty. Lower = better. Typical: unigram ~950, bigram ~170, trigram ~100."
+            },
+            {
+                front: "Why is the end-of-sentence token (EOS) mathematically essential?",
+                back: "Without EOS, probabilities over all sentences sum to \u221e (each length-n class sums to 1, and there are infinitely many lengths). With EOS, the model defines a proper distribution: total probability = 1 over all finite sentences."
+            },
+            {
+                front: "What is a deficient model?",
+                back: "A model that assigns total probability less than 1 to finite sentences, with \u2018missing\u2019 mass going to infinite sequences. Models without EOS, or with P(EOS|w) = 0 for some w, are deficient."
+            },
+            {
+                front: "How does BOS differ from EOS?",
+                back: "BOS (beginning of sentence) is a conditioning context \u2014 never predicted, only conditioned on. It appears on the right side of |. EOS is predicted \u2014 appears on the left side. BOS unifies the initial distribution with conditional distributions."
+            },
+            {
+                front: "Why do interpolation weights often outperform back-off?",
+                back: "Lower-order models provide useful signal even when higher-order counts exist. Interpolation gives smooth degradation and regularization rather than abrupt transitions. Weights learned via EM on held-out data."
+            },
+            {
+                front: "What is Modified Kneser-Ney?",
+                back: "Uses different discount values for counts 1, 2, and \u22653 instead of a single discount. Consistently achieves the best perplexity among classical smoothing methods. The discounts are estimated from N\u2081, N\u2082, N\u2083, N\u2084 statistics."
+            },
+            {
+                front: "Why should perplexity include the EOS prediction?",
+                back: "PP = P(w\u2081,...,w\u2099,EOS)^{-1/(n+1)} with n+1 counting EOS. Excluding EOS would favor longer sentences since the model never has to predict when to stop. Two models with identical per-word predictions could get different scores."
+            }
+        ];
+
+        var currentIndex = 0;
+        var deck = cards.map(function(_, i) { return i; });
+
+        // Theme management
+        var savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.body.classList.add('dark');
+        }
+        updateArticleLink();
+
+        function toggleTheme() {
+            var isDark = document.body.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateArticleLink();
+        }
+
+        function updateArticleLink() {
+            var isDark = document.body.classList.contains('dark');
+            var theme = isDark ? 'dark' : 'light';
+            document.querySelectorAll('.article-link').forEach(function(link) {
+                var article = link.getAttribute('data-article');
+                link.href = article + '-' + theme + '.html';
+            });
+        }
+
+        // Card rendering
+        function renderCard() {
+            var card = cards[deck[currentIndex]];
+            document.getElementById('frontText').innerHTML = card.front;
+            document.getElementById('backText').innerHTML = card.back;
+            document.getElementById('cardCounter').textContent = 'Card ' + (currentIndex + 1) + ' of ' + deck.length;
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            document.getElementById('nextBtn').disabled = currentIndex === deck.length - 1;
+
+            // Reset flip
+            document.getElementById('flashcard').classList.remove('is-flipped');
+
+            // Typeset MathJax
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('frontText'), document.getElementById('backText')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
+            }
+        }
+
+        function flipCard() {
+            document.getElementById('flashcard').classList.toggle('is-flipped');
+            // Re-render MathJax on flip to ensure back side renders
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('backText')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCard();
+            }
+        }
+
+        function nextCard() {
+            if (currentIndex < deck.length - 1) {
+                currentIndex++;
+                renderCard();
+            }
+        }
+
+        function shuffleDeck() {
+            // Fisher-Yates shuffle
+            for (var i = deck.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = deck[i];
+                deck[i] = deck[j];
+                deck[j] = temp;
+            }
+            currentIndex = 0;
+            renderCard();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                prevCard();
+            } else if (e.key === 'ArrowRight') {
+                nextCard();
+            } else if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                flipCard();
+            }
+        });
+
+        // Initial render
+        renderCard();
+    </script>
+</body>
+</html>
