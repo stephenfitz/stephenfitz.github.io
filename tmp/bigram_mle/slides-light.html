@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+
+.reveal {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 28px;
+    color: #2a2a2a;
+}
+
+.reveal .slides {
+    text-align: left;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #1a1a1a;
+    text-transform: none;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.reveal h1 { font-size: 1.8em; }
+.reveal h2 { font-size: 1.4em; color: #333; }
+.reveal h3 { font-size: 1.15em; color: #444; }
+
+.reveal p { margin: 0 0 0.5em 0; }
+
+.reveal ul, .reveal ol {
+    display: block;
+    margin: 0.3em 0 0.6em 0;
+}
+
+.reveal li { margin-bottom: 0.3em; }
+
+.reveal blockquote {
+    width: 90%;
+    margin: 0.5em auto;
+    padding: 0.4em 0.8em;
+    border-left: 4px solid #aaa;
+    color: #555;
+    background-color: #fafafa;
+    font-style: italic;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+.reveal blockquote p:last-child { margin-bottom: 0; }
+
+.reveal code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.85em;
+    background-color: #f5f5f5;
+    padding: 0.15em 0.3em;
+    border-radius: 3px;
+    color: #3a3a3a;
+    border: 1px solid #ddd;
+}
+
+.reveal pre {
+    width: 100%;
+    font-size: 0.55em;
+    box-shadow: none;
+}
+
+.reveal pre code {
+    display: block;
+    background: #f8f8f8;
+    border: 1px solid #d5d5d5;
+    border-radius: 6px;
+    padding: 12px;
+    max-height: 400px;
+    line-height: 1.45;
+    overflow: auto;
+    color: #2a2a2a;
+}
+
+.reveal img {
+    display: block;
+    max-width: 55%;
+    max-height: 450px;
+    margin: 0.5em auto;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    padding: 6px;
+    background-color: #fafafa;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.reveal img + em, .reveal :has(> img) + p > em:only-child {
+    display: block;
+    text-align: center;
+    font-size: 0.65em;
+    color: #666;
+    margin-top: 0.3em;
+}
+
+.reveal table {
+    border-collapse: collapse;
+    margin: 0.5em auto;
+    font-size: 0.75em;
+}
+
+.reveal th, .reveal td {
+    border: 1px solid #bbb;
+    padding: 6px 10px;
+    text-align: left;
+}
+
+.reveal th {
+    background-color: #e8e8e8;
+    font-weight: 600;
+    color: #2a2a2a;
+}
+
+.reveal tr:nth-child(even) { background-color: #f5f5f5; }
+
+.reveal a { color: #444; text-decoration: underline; text-decoration-color: #999; }
+
+.reveal .katex { font-size: 1.0em; }
+.reveal .katex-display { margin: 0.5em 0; }
+
+.reveal .slide-number {
+    color: #666;
+    font-size: 14px;
+}
+
+.reveal .controls .navigate-left,
+.reveal .controls .navigate-right,
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-down {
+    color: #888;
+}
+
+.reveal .progress span { background: #888; }
+
+body { background-color: #f5f5f5; }
+.reveal .slide-background { background-color: white; }
+
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+<h1>Bigram MLE Derivation</h1>
+            </section>
+            <section>
+<h2>Outline</h2>
+<ul>
+<li>Bigram model and likelihood</li>
+<li>Rewriting with bigram counts</li>
+<li>Log-likelihood</li>
+<li>Constraints</li>
+<li>Lagrangian formulation</li>
+<li>Partial derivatives and stationarity</li>
+<li>Solving for the multiplier</li>
+<li>Final MLE result</li>
+<li>Why it's the global maximum</li>
+</ul>
+            </section>
+            <section>
+<h2>1) Bigram Model + Likelihood</h2>
+<p>Let the observed corpus be a sequence of tokens:</p>
+<p>$$(w_1, w_2, \ldots, w_T)$$</p>
+<p>A bigram model assumes:</p>
+<p>$$P(w_1, \ldots, w_T) = \prod_{t=2}^{T} P(w_t \mid w_{t-1})$$</p>
+<p>We want the MLE:</p>
+<p>$$\hat{\theta} = \arg\max_\theta \prod_{t=2}^{T} P_\theta(w_t \mid w_{t-1})$$</p>
+            </section>
+            <section>
+<h2>2) Rewrite Using Bigram Counts</h2>
+<p>Define the bigram count for a specific ordered pair $(a, b) \in V \times V$:</p>
+<p>$$C(a, b) = \#\{t \in \{2, \ldots, T\} : w_{t-1} = a,\ w_t = b\}$$</p>
+<p>Then the likelihood becomes:</p>
+<p>$$\prod_{t=2}^{T} P(w_t \mid w_{t-1}) = \prod_{a \in V} \prod_{b \in V} P(b \mid a)^{C(a,b)}$$</p>
+<p>Because each conditional probability $P(b \mid a)$ is multiplied once per time that transition occurs.</p>
+            </section>
+            <section>
+<h2>3) Take Logs</h2>
+<p>Maximizing likelihood is equivalent to maximizing log-likelihood:</p>
+<p>$$\ell(\theta) = \log \prod_{a,b} P(b \mid a)^{C(a,b)} = \sum_{a,b} C(a, b) \log P(b \mid a)$$</p>
+<p>So the optimization problem is:</p>
+<p>$$\max_{\{P(b|a)\}} \sum_{a \in V} \sum_{b \in V} C(a, b) \log P(b \mid a)$$</p>
+            </section>
+            <section>
+<h2>4) Constraints</h2>
+<p>For each context token $a$, the conditional distribution over next tokens must sum to 1:</p>
+<p>$$\sum_{b \in V} P(b \mid a) = 1 \qquad \forall a \in V$$</p>
+<p>(And implicitly $P(b \mid a) \geq 0$.)</p>
+            </section>
+            <section>
+<h2>5) Build the Lagrangian</h2>
+<p>Introduce a Lagrange multiplier $\lambda_a$ for each constraint.</p>
+<p>Define the Lagrangian:</p>
+<p>$$\mathcal{L} = \sum_{a \in V} \sum_{b \in V} C(a, b) \log P(b \mid a) + \sum_{a \in V} \lambda_a \left(1 - \sum_{b \in V} P(b \mid a)\right)$$</p>
+<p>This is the key step: one constraint per $a \to$ one $\lambda_a$.</p>
+            </section>
+            <section>
+<h2>6) Take Partial Derivatives</h2>
+<p>For each ordered pair $(a, b)$, differentiate with respect to the parameter $P(b \mid a)$.</p>
+<p>Only two terms depend on $P(b \mid a)$:</p>
+<ul>
+<li>$C(a, b) \log P(b \mid a)$</li>
+<li>$-\lambda_a P(b \mid a)$</li>
+</ul>
+<p>So:</p>
+<p>$$\frac{\partial \mathcal{L}}{\partial P(b \mid a)} = \frac{C(a, b)}{P(b \mid a)} - \lambda_a$$</p>
+<p>Set equal to 0 for stationarity:</p>
+<p>$$\frac{C(a, b)}{P(b \mid a)} - \lambda_a = 0$$</p>
+<p>Rearrange:</p>
+<p>$$\frac{C(a, b)}{P(b \mid a)} = \lambda_a \quad \Rightarrow \quad P(b \mid a) = \frac{C(a, b)}{\lambda_a}$$</p>
+<p>So for each fixed $a$, the distribution is proportional to counts.</p>
+            </section>
+            <section>
+<h2>7) Apply the Constraint</h2>
+<p>Now apply the constraint:</p>
+<p>$$\sum_{b \in V} P(b \mid a) = 1$$</p>
+<p>Substitute $P(b \mid a) = \frac{C(a,b)}{\lambda_a}$:</p>
+<p>$$\sum_{b \in V} \frac{C(a, b)}{\lambda_a} = 1$$</p>
+<p>Factor out $1/\lambda_a$:</p>
+<p>$$\frac{1}{\lambda_a} \sum_{b \in V} C(a, b) = 1$$</p>
+<p>Thus:</p>
+<p>$$\lambda_a = \sum_{b \in V} C(a, b)$$</p>
+<p>Define the unigram-as-context count:</p>
+<p>$$C(a) := \sum_{b \in V} C(a, b)$$</p>
+<p>So: $\lambda_a = C(a)$.</p>
+            </section>
+            <section>
+<h2>8) Final MLE</h2>
+<p>Plug back in:</p>
+<p>$$\hat{P}(b \mid a) = \frac{C(a, b)}{C(a)}$$</p>
+<p>This is exactly <strong>"relative frequency."</strong></p>
+            </section>
+            <section>
+<h2>9) Why This Is the Global Maximum</h2>
+<p>For each fixed $a$, the function</p>
+<p>$$\sum_b C(a, b) \log P(b \mid a)$$</p>
+<p>is <strong>concave</strong> in the vector $(P(b \mid a))_{b \in V}$ over the simplex.</p>
+<p>So the stationary point found by Lagrange multipliers is the <strong>global maximum</strong>.</p>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            transition: 'none',
+            slideNumber: false,
+            center: true,
+            width: 1200,
+            height: 700,
+            margin: 0.06,
+            hash: true,
+            plugins: [ RevealHighlight ]
+        });
+
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false,
+            trust: true,
+            strict: false,
+            macros: {
+                "\\logit": "\\operatorname{logit}",
+                "\\softmax": "\\operatorname{softmax}",
+                "\\sigmoid": "\\operatorname{sigmoid}",
+                "\\sgn": "\\operatorname{sgn}",
+                "\\sign": "\\operatorname{sign}",
+                "\\argmax": "\\operatorname{argmax}",
+                "\\argmin": "\\operatorname{argmin}",
+                "\\Var": "\\operatorname{Var}",
+                "\\Cov": "\\operatorname{Cov}",
+                "\\Corr": "\\operatorname{Corr}",
+                "\\E": "\\mathbb{E}",
+                "\\P": "\\mathbb{P}",
+                "\\R": "\\mathbb{R}",
+                "\\N": "\\mathbb{N}",
+                "\\Z": "\\mathbb{Z}",
+                "\\C": "\\mathbb{C}",
+                "\\ind": "\\mathbb{1}",
+                "\\KL": "\\operatorname{KL}",
+                "\\Tr": "\\operatorname{Tr}",
+                "\\tr": "\\operatorname{tr}",
+                "\\diag": "\\operatorname{diag}",
+                "\\rank": "\\operatorname{rank}",
+                "\\relu": "\\operatorname{ReLU}",
+                "\\gelu": "\\operatorname{GELU}",
+                "\\selu": "\\operatorname{SELU}"
+            }
+        });
+    </script>
+</body>
+</html>
