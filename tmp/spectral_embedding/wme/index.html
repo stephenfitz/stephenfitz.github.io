@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>nnd explore</title>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="css/main.css" media="screen" />
+<style>
+.sidenav {
+height: 20%;
+width: 0;
+position: fixed;
+z-index: 1;
+top: 0;
+left: 0;
+background-color: transparent;
+overflow-x: hidden;
+transition: 0.5s;
+padding-top: 60px;
+}
+.sidenav a {
+padding: 8px 8px 8px 32px;
+text-decoration: none;
+font-size: 25px;
+color: #818181;
+display: block;
+transition: 0.3s
+}
+.sidenav a:hover, .offcanvas a:focus{
+color: #f1f1f1;
+}
+.sidenav .closebtn {
+position: absolute;
+top: 0;
+left: 0px;
+font-size: 36px;
+}
+@media screen and (max-height: 450px) {
+.sidenav {padding-top: 15px;}
+.sidenav a {font-size: 18px;}
+}
+.sidenav2 {
+height: 60%;
+width: 0;
+position: fixed;
+z-index: 1;
+top: 0;
+right: 0;
+background-color: transparent;
+overflow-x: hidden;
+transition: 0.5s;
+padding-top: 60px;
+}
+.sidenav2 a {
+padding: 8px 8px 8px 32px;
+text-decoration: none;
+font-size: 25px;
+color: #818181;
+display: block;
+transition: 0.3s
+}
+.sidenav2 a:hover, .offcanvas a:focus{
+color: #f1f1f1;
+}
+.sidenav2 .closebtn {
+position: absolute;
+top: 0;
+right: 25px;
+font-size: 36px;
+margin-left: 50px;
+}
+#definitionBox, #wordList {
+height: 60px;
+resize: none;
+padding-left: 0px;
+display: inline-block;
+border: 0px solid #ccc;
+box-sizing: border-box;
+width: 100%;
+font-family:"Times New Roman", Times, serif;
+font-color: green;
+font-size: 20px;
+font-weight: bold;
+background-color: transparent;
+}
+input[type=button]:hover {
+background-color: #45a049;
+}
+input[type=text], select {
+width: 80%;
+padding: 12px 20px;
+margin: 0px 20px;
+display: inline-block;
+border: 5px solid #ccc;
+border-color: orange;
+box-sizing: border-box;
+}
+input[type=button] {
+width: 80%;
+background-color: #4CAF50;
+color: white;
+padding: 14px 20px;
+margin: 0px 20px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+}
+.node circle {
+stroke: #3EC3F0;
+stroke-width: 1px;
+fill: #3EC3F0;
+fill-opacity: 0.4px;
+opacity: 1.0;
+}
+text {
+font-family: "Century Gothic", sans-serif;
+font-size: 10px;
+letter-spacing: 1px;
+pointer-events: none;
+stroke : #808080;
+font-weight: 100;
+}
+text.shadow {
+/* stroke: blue;
+stroke-width: 1px;
+stroke-opacity: 0.5;*/
+/*text-shadow: 6px 4px 1px rgba(100, 100, 100, 0.22);*/
+}
+path {
+fill: none;
+stroke: #3EC3F0;
+stroke-width: 0.5px;
+stroke-opacity: 1.0;
+}
+body {
+background-color : white;
+}
+.dropdown {
+position: relative;
+display: block;
+margin: 10px auto;
+}
+.dropdown-content {
+display: none;
+position: absolute;
+background-color: #f9f9f9;
+min-width: 160px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+padding: 12px 16px;
+margin : 0px -12px ;
+width: 100%;
+z-index: 1;
+}
+.dropdown:hover .dropdown-content {
+display: block;
+}
+.icon-widget_special {
+display: block;
+width: 48px;
+height: 48px;
+margin: 5px auto 0px;
+background-repeat: no-repeat;
+background-position: 0 0;
+background-size: 48px;
+overflow: hidden;
+text-indent: -9999em;
+line-height: 200px;
+-webkit-transition: all .3s ease;
+-moz-transition: all .3s ease;
+transition: all .3s ease;
+}
+small
+{
+color:#ccc;
+}
+.icon-widget_special:hover {
+-webkit-transform: scale(1.1);
+-moz-transform: scale(1.1);
+transform: scale(1.1);
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+outline: none;
+}
+#seedWord {
+margin-top: 10px;
+width: 60%;
+height: 40px;
+border-color: #a6a6a6;
+border-radius: 4px;
+border: 0px solid;
+background-color: #f0f0f0;
+-webkit-box-shadow: 10px 10px 67px -2px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 67px -2px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 67px -2px rgba(0,0,0,0.75);
+}
+.dropbtn {
+background-color: #4CAF50;
+color: white;
+padding: 16px;
+font-size: 15px;
+border: none;
+cursor: pointer;
+width: 80%;
+height: 15%;
+}
+.modal {
+display: none;
+position: fixed;
+z-index: 1;
+padding-top: 50px;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+background-color: rgb(0,0,0);
+background-color: rgba(0,0,0,0.4);
+}
+.modal2 {
+display: none;
+position: fixed;
+z-index: 1;
+padding-top: 30%;
+padding-left: 20%;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+background-color: rgb(0,0,0);
+background-color: rgba(0,0,0,0.0);
+}
+.modal-content {
+position: relative;
+background-color: transparent;
+margin: auto;
+padding: 0;
+width: 80%;
+height: 500px;
+-webkit-animation-name: animatetop;
+-webkit-animation-duration: 0.4s;
+animation-name: animatetop;
+animation-duration: 0.4s
+}
+.modal-content2 {
+position: relative;
+background-color: grey;
+margin: auto;
+padding: 0;
+width: 200px;
+height: 200px;
+-webkit-animation-name: animatetop;
+-webkit-animation-duration: 0.4s;
+animation-name: animatetop;
+animation-duration: 0.4s
+}
+@-webkit-keyframes animatetop {
+from {top:-300px; opacity:0}
+to {top:0; opacity:1}
+}
+@keyframes animatetop {
+from {top:-300px; opacity:0}
+to {top:0; opacity:1}
+}
+.close {
+color: white;
+float: right;
+font-size: 28px;
+font-weight: bold;
+}
+.close:hover,
+.close:focus {
+color: #000;
+text-decoration: none;
+cursor: pointer;
+}
+.modal-header {
+padding: 2px 16px;
+background-color: #5cb85c;
+color: white;
+text-align: center ;
+}
+.modal-body {padding: 2px 16px;}
+.modal-footer {
+padding: 2px 16px;
+background-color: #5cb85c;
+color: white;
+}
+.slideshow-container {
+max-width: 1000px;
+position: relative;
+margin: auto;
+}
+.prev, .next {
+cursor: pointer;
+position: absolute;
+top: 0;
+top: 50%;
+width: auto;
+padding: 16px;
+margin-top: -22px;
+color: white;
+font-weight: bold;
+font-size: 18px;
+transition: 0.6s ease;
+border-radius: 0 3px 3px 0;
+}
+.next {
+right: 0;
+border-radius: 3px 0 0 3px;
+}
+.prev:hover, .next:hover {
+background-color: rgba(0,0,0,0.8);
+}
+.text {
+color: #f2f2f2;
+font-size: 15px;
+padding: -50 px 12px;
+position: absolute;
+bottom: 8px;
+width: 100%;
+text-align: center;
+}
+.numbertext {
+color: #f2f2f2;
+font-size: 12px;
+padding: 8px 12px;
+position: absolute;
+top: 0;
+}
+.dot {
+cursor:pointer;
+height: 13px;
+width: 13px;
+margin: 0 2px;
+background-color: #bbb;
+border-radius: 50%;
+display: inline-block;
+transition: background-color 0.6s ease;
+}
+.active, .dot:hover {
+background-color: #717171;
+}
+.fade {
+-webkit-animation-name: fade;
+-webkit-animation-duration: 1.5s;
+animation-name: fade;
+animation-duration: 1.5s;
+}
+@-webkit-keyframes fade {
+from {opacity: .4}
+to {opacity: 1}
+}
+@keyframes fade {
+from {opacity: .4}
+to {opacity: 1}
+}
+@media only screen and (max-width: 300px) {
+.slprev, .slnext,.text {font-size: 11px}
+}
+#page {
+display: none;
+}
+#loading {
+display: block;
+position: absolute;
+top: 0;
+left: 0;
+z-index: 100;
+width: 100vw;
+height: 100vh;
+background-color: white;
+background-size: 300px 300px;
+background-repeat: no-repeat;
+background-position: 50% 95%;
+text-align: center;
+font-color: black;
+font-weight: bold;
+}
+#sextext {
+font-size: 60px;
+font-color: black;
+text-align: center;
+font-weight: bold;
+/*border: solid 4px;*/
+background-color: white;
+margin-bottom: 10px;
+}
+#love {
+text-align: center;
+margin: auto;
+display: block;
+}
+#mySidenav {
+width: 250px;
+height: 200px;
+}
+#myProgress {
+position: fixed;
+bottom: 0;
+width: 94%;
+height: 30px;
+background-color: #0068BD;
+margin-left: 3%;
+border-radius: 7px 7px 7px 7px;
+-moz-border-radius: 7px 7px 7px 7px;
+-webkit-border-radius: 7px 7px 7px 7px;
+border: 10px solid #0078CD;
+margin-bottom: 10px;
+}
+#myBar {
+position: absolute;
+width: 100%;
+height: 100%;
+background-color: #1EA6F8;
+}
+#boxOver {
+position: fixed;
+bottom: 0;
+margin-bottom: 10px;
+margin-left: 3%;
+width: 95%;
+}
+#wordOver {
+bottom: 0px;
+position: fixed;
+margin-bottom: 100px;
+margin-left: 3%;
+}
+#eng {
+font: bold 12px Arial;
+text-decoration: none;
+color: #333333;
+}
+#eng:hover {
+color: blue;
+}
+#jap:hover {
+color: blue;
+}
+#copySeed {
+width: 59px;
+font-size: 34px;
+display: inline-block;
+border: 0px;
+margin-left: -21px;
+box-sizing: border-box;
+background-color: transparent;
+z-index: 1;
+}
+#lineOver {
+width: 47%;
+margin-left: 3%;
+position: fixed;
+bottom: 0px;
+margin-bottom: 80px;
+}
+#otherdefs {
+display: none;
+}
+.Cube {
+width: 80px;
+height: 80px;
+line-height: 80px;
+text-align: center;
+font-size: 50px;
+-webkit-transform-style: preserve-3d;
+transform-style: preserve-3d;
+-webkit-transition: -webkit-transform 0.5s 0.1s;
+transition: transform 0.5s 0.1s;
+perspective: 9999px;
+/* color: #333; */
+color: white;
+margin: -40px 0 0 -40px;
+margin: 0 auto;
+position: absolute;
+left: 50%;
+margin-left: -37px;
+top: 65px;
+opacity: 1;
+}
+.Cube.panelLoad {
+z-index: 11;
+top: 50%;
+margin-top: -60px;
+-webkit-animation: panel 2.2s infinite forwards;
+animation: panel 2.2s infinite forwards;
+}
+.Cube.panelLoad .cube-face {
+color: black;
+box-shadow: inset 0 0 0 1px #111, 0 0 1px 1px #111;
+}
+.Cube .cube-face {
+width: inherit;
+height: inherit;
+position: absolute;
+/* background: #d2e5ff; */
+background: white;
+box-shadow: inset 0 0 0 1px #333, 0 0 1px 1px #333;
+opacity: 1;
+}
+.Cube .cube-face-front {
+transform: translate3d(0, 0, 40px);
+-webkit-transform: translate3d(0, 0, 40px);
+font-size: 57px;
+}
+.Cube .cube-face-back {
+-webkit-transform: rotateY(180deg) translate3d(0, 0, 40px);
+transform: rotateY(180deg) translate3d(0, 0, 40px);
+}
+.Cube .cube-face-left {
+-webkit-transform: rotateY(-90deg) translate3d(0, 0, 40px);
+transform: rotateY(-90deg) translate3d(0, 0, 40px);
+}
+.Cube .cube-face-right {
+-webkit-transform: rotateY(90deg) translate3d(0, 0, 40px);
+transform: rotateY(90deg) translate3d(0, 0, 40px);
+}
+.Cube .cube-face-top {
+-webkit-transform: rotateX(90deg) translate3d(0, 0, 40px);
+transform: rotateX(90deg) translate3d(0, 0, 40px);
+}
+.Cube .cube-face-bottom {
+-webkit-transform: rotateX(-90deg) translate3d(0, 0, 40px);
+transform: rotateX(-90deg) translate3d(0, 0, 40px);
+}
+@-webkit-keyframes panel {
+0% {
+-webkit-transform: rotateY(0deg) rotateZ(0deg);
+}
+20% {
+-webkit-transform: rotateY(90deg) rotateZ(0deg);
+}
+40% {
+-webkit-transform: rotateX(45deg) rotateZ(45deg);
+}
+60% {
+-webkit-transform: rotateX(90deg) rotateY(180deg) rotateX(90deg);
+}
+80% {
+-webkit-transform: rotateX(310deg) rotateZ(230deg);
+}
+100% {
+-webkit-transform: rotateX(360deg) rotateZ(360deg);
+}
+}
+@keyframes panel {
+0% {
+-webkit-transform: rotateY(0deg) rotateZ(0deg);
+transform: rotateY(0deg) rotateZ(0deg);
+}
+20% {
+-webkit-transform: rotateY(90deg) rotateZ(0deg);
+transform: rotateY(90deg) rotateZ(0deg);
+}
+40% {
+-webkit-transform: rotateX(45deg) rotateZ(45deg);
+transform: rotateX(45deg) rotateZ(45deg);
+}
+60% {
+-webkit-transform: rotateX(90deg) rotateY(180deg) rotateX(90deg);
+transform: rotateX(90deg) rotateY(180deg) rotateX(90deg);
+}
+80% {
+-webkit-transform: rotateX(310deg) rotateZ(230deg);
+transform: rotateX(310deg) rotateZ(230deg);
+}
+100% {
+-webkit-transform: rotateX(360deg) rotateZ(360deg);
+transform: rotateX(360deg) rotateZ(360deg);
+}
+}
+#btnz{
+width: 60%;
+height: 40px;
+text-align: center;
+color: black;
+background-color: #f0f0f0;
+-webkit-box-shadow: 10px 6px 47px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 6px 47px 0px rgba(0,0,0,0.75);
+box-shadow: 10px 6px 47px 0px rgba(0,0,0,0.75);
+}
+#example {
+position: absolute;
+z-index: 100;
+left: 386px;
+top: 579px;
+}
+#ex {
+position: absolute;
+z-index: 100;
+left: 175px;
+bottom: 87px;
+}
+#ExampleInput {
+border: none;
+width: 1000px;
+font-style: italic;
+background-color: transparent;
+}
+</style>
+<script type="text/javascript">
+function resetGraph() {
+location.reload();
+}
+</script>
+<script type="text/javascript">
+function speak(text) {
+var u = new SpeechSynthesisUtterance();
+u.text = text;
+u.lang = 'en-US';
+u.onend = function () {
+// console.log('speech works');
+};
+u.onerror = function (e) {
+// console.log('speech error');
+};
+speechSynthesis.speak(u);
+}
+</script>
+</head>
+<div id="loading">
+<div class='Cube panelLoad'>
+<div class='cube-face cube-face-front'><img src="media/word.png" width="80%"></div>
+<div class='cube-face cube-face-back'><img src="media/word.png" width="80%"></div>
+<div class='cube-face cube-face-left'><img src="media/word.png" width="80%"></div>
+<div class='cube-face cube-face-right'><img src="media/word.png" width="80%"></div>
+<div class='cube-face cube-face-bottom'><img src="media/word.png" width="80%"></div>
+<div class='cube-face cube-face-top'><img src="media/word.png" width="80%"></div>
+</div>
+</div>
+</div>
+<body>
+<div id="mySidenav" class="sidenav">
+<input type="text" id="seedWord" class="seedWord"/>
+</div>
+<div id="page">
+<div id="textDiv"></div>
+<div id="textDiv2"></div>
+<div id="wrap">
+<div id="wordOver">
+<input type="text" id="copySeed" readonly="readonly" />
+<script>
+window.setInterval(function(){
+currentWord = document.getElementById('seedWord').value;
+}, 1000);
+</script>
+</div>
+<div id="lineOver">
+<hr>
+</div>
+<div id="boxOver">
+<textarea rows="3" cols="25" id="definitionBox"></textarea>
+</div>
+<div class="left" name="left" id="left">
+<script>
+var slideIndex = 1;
+function plusSlides(n) {
+if (slideIndex!=14) {
+showSlides(slideIndex += n);
+}
+else {
+modal.style.display = "none";
+}
+}
+function currentSlide(n) {
+showSlides(slideIndex = n);
+}
+function showSlides(n) {
+var i;
+var slides = document.getElementsByClassName("mySlides");
+var dots = document.getElementsByClassName("dot");
+if (n > slides.length) {slideIndex = 1}
+if (n < 1) {slideIndex = slides.length}
+for (i = 0; i < slides.length; i++) {
+slides[i].style.display = "none";
+}
+for (i = 0; i < dots.length; i++) {
+dots[i].className = dots[i].className.replace(" active", "");
+}
+slides[slideIndex-1].style.display = "block";
+dots[slideIndex-1].className += " active";
+}
+</script>
+</div>
+</div>
+</div>
+<script src="js/main.js"></script>
+</div>
+</div>
+<div style="clear: both;"> </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
