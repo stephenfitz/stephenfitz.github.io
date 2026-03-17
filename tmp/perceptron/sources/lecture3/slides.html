@@ -1,0 +1,1273 @@
+<!doctype html>
+<html>
+
+  <head>
+
+  <meta charset="utf-8">
+
+  <title>AIa</title>
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../common/reveal/dist/reset.css">
+  <link rel="stylesheet" href="../common/reveal/dist/reveal.css">
+  <link rel="stylesheet" href="../common/reveal/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="../common/reveal/plugin/highlight/monokai.css" id="highlight-theme">
+
+  <link rel="icon" type="image/x-icon" href="../common/media/logo.png">
+
+  </head>
+
+  <body>
+
+  <div class="reveal">
+
+    <div class="slides">
+
+    <section>
+
+      <section data-background="white">
+
+      <h5>introduction to artificial intelligence</h5>
+
+      <img src="../common/media/logo.gif" width="50%" style="border-style: none;">
+
+      </section>
+
+    </section>
+
+    <section>
+    
+      <section>
+      
+        <h3>perceptron</h3>
+
+        <img src="media/rosenblatt.jpg" width="80%" style="border-style: none;">
+      
+      </section>
+
+      <section data-background="white" data-background-transition="zoom">
+
+        <img src="media/perceptron_article.jpg" width="42%" style="border-style: none; padding: 2%;">
+
+      </section>
+
+      <section data-background="white">
+
+        <img src="media/perceptron_diagram_original.jpg" width="80%" style="border-style: none; padding: 2%;">
+
+      </section>
+
+      <section data-background="#3e88e8">
+      
+        <img class="fragment fade-right" src="media/icbm.jpg" width="40%" style="border-style: none; padding: 10px">
+        <img class="fragment fade-left" src="media/airplane.jpg" width="40%" style="border-style: none; padding: 10px">
+      
+      </section>
+      
+      <section data-background="white">
+
+        <img src="media/perceptron_hardware.jpeg" width="50%" style="border-style: none; padding: 2%;">
+
+      </section>
+
+      <section data-background="white" data-background-transition="zoom">
+
+        <div style="display: flex; flex-direction: row;">
+          <div style="width: 48%; display: flex; justify-content: center; align-items: center;">
+            <img src="media/frog.jpeg" style="border-style: none; padding: 2%;">
+          </div>
+          <div style="width: 48%; display: flex; justify-content: center; align-items: center;">
+            <img src="media/perceptron1958rosenblatt.png" style="border-style: none; padding: 2%;">
+          </div>
+        </div>
+
+      </section>
+
+      <section data-background="white">
+        <img src="media/perceptron_separable.gif" width="80%" style="border-style: none; padding: 2%;">
+      </section>
+
+      <section data-background="white">
+        <img src="media/perceptron_not_unique.png" width="60%" style="border-style: none; padding: 2%;">
+      </section>
+
+      <section data-background="white">
+        <img src="media/perceptron_unseparable.gif" width="80%" style="border-style: none; padding: 2%;">
+      </section>
+
+      <section>
+
+        <h3>Marvin Minsky on Perceptrons</h3>
+
+        <img src="media/perceptrons_book.jpg" width="50%" style="border-style: none; padding: 2%;">
+
+      </section>
+
+      <section>
+
+        <div style="display: flex; flex-direction: row;">
+          <div style="width: 75%; display: flex; justify-content: center; align-items: center;">
+            <p style="font-size: 18pt;">
+              Obviously linear separability is not a restriction of modern neural networks, which can learn arbitrarily continuous functions on compact subdomains of \( \mathbb{R}^n \) (assuming at least a single hidden layer and nonlinear activation neurons, as shown in the famous result known as the Universal Approximation Theorem). However, a widespread misinterpretation of perceptrons caused a long period of stagnation in neural network research, until their resurrection due to people like Hinton. Now Neural networks achieve state of the art results in all major areas of machine learning, beating advanced statistical models. This is known as the "deep learning revolution" of recent years, and it is just the beginning. New results come out every day, and it is an exciting field to be in. In order to understand neural networks, it is good to start with their ancestor - the perceptron. Its learning rule can be seen (up to a small difference) as stochastic sub-gradient descent on a "perceptron loss" function. Modern neural networks are trained using the back-propagation algorithm, which is also SGD on their loss functions. We will study increasingly more complex neural systems throughout this course. Perceptron is a basic building block of more advanced neural networks.
+            </p>
+          </div>
+          <div style="width: 25%; display: flex; justify-content: center; align-items: center;">
+            <img src="media/the_deep_learning_revolution.png" style="border-style: none; padding: 2%;">
+          </div>
+        </div>
+
+      </section>
+
+      <section data-background="white" data-transition="slide">
+
+        <h3>SVM</h3>
+
+        <p>
+          There is a classical machine learning algorithm inspired by perceptrons, known as Support Vector Machines, which extends to nonlinear decision boundaries and gives a unique solution (highest margin).
+        </p>
+
+        <img src="media/svm.png" width="50%" style="border-style: none; padding: 2%;">
+
+      </section>
+
+      <section data-background="white" data-transition="slide">
+
+        <h3>perceptron neuron</h3>
+
+        <img src="media/perceptron_diagram.png" style="border-style: none; padding: 2%;">
+
+      </section>
+
+      <section data-background="white">
+
+        <img src="media/perceptron_activation.png" width="50%" style="border-style: none; padding: 2%;">
+
+      </section>
+
+      <section data-background="white" data-transition="slide">
+
+        <h3>perceptron neuron</h3>
+
+        <ul>
+          <li class="fragment">inputs are real numbers (often the first input is a constant set to 1.0, to account for the bias term)</li>
+          <li class="fragment">the neuron computes a linear sum of inputs multiplied by weights</li>
+          <li class="fragment">the weights form an internal state of the neuron (learned from data)</li>
+          <li class="fragment">start with randomly initialized weights</li>
+          <li class="fragment">the activation function returns a binary choice (-1 or 1)</li>
+        </ul>
+
+      </section>
+
+      <section data-background="white" style="font-size: 28pt;">
+
+        <h3>perceptron neuron</h3>
+
+        <ul>
+          <li class="fragment">first compute the weighted sum: \( z = \sum\limits_i{w_i x_i} = \mathbf{w}^\intercal \mathbf{x} \)
+</li>
+          <li class="fragment">then pass it to the activation function:
+              \[ y = \sigma(z) = \begin{cases}
+                  -1 & z\leq \theta \\
+                  1 & z> \theta
+                 \end{cases}
+              \]</li>
+
+          <li class="fragment">usually we include the threshold in a dummy input
+              \[ y = \sigma(z) = \begin{cases}
+                  -1 & z\leq 0 \\
+                  1 & z> 0
+                 \end{cases}
+              \]</li>
+        </ul>
+
+      </section>
+
+      <section data-background="white" style="font-size:20pt;">
+
+        <h3>teaching a perceptron neuron (supervised learning)</h3>
+
+        <p>
+          We are given a dataset of examples \( D = \{ (x^{(1)}, t^{(1)}), (x^{(2)}, t^{(2)}), \dots, (x^{(n)}, t^{(n)}) \} \), where each x is an input (i.e. a vector of numbers representing a collection of inputs, which describe something), and each t is a label (representing the desired target output). This is called a training set.
+        </p>
+
+        <p class="fragment">
+          The goal is to train the neuron to recognize inputs from some coherent set. The goal of training is to get your neuron to produce predictions that agree with the ground truth labels on the training set.
+        </p>
+
+      </section>
+
+      <section data-background="white">
+
+        <h3>error(loss) function</h3>
+
+        <p>
+            \[
+            L_{\mathbf{w}}(\mathbf{x}^{(i)}, t^{(i)}) = max(0,−t^{(i)} \mathbf{w}^\intercal \mathbf{x}^{(i)})
+            \]
+        </p>
+
+        <p class="fragment">
+            Think why this loss function makes sense.
+        </p>
+
+      </section>
+
+      <section data-background="white">
+
+        <h3>learning rule</h3>
+
+        <p>
+          update the weights (component-wise: $i$) using each example label $t$, input $\mathbf{x}$ and predicted output $y$:
+          \[
+          w_i^{\text{new}} \longleftarrow w_i^{old} + \eta (t - y) x_i
+          \]
+        </p>
+
+        <p>
+
+          <ul style="font-size: 22pt;">
+          
+            <li class="fragment fade-right">
+          
+              \( \eta \) is an arbitrarily chosen hyper-parameter called the learning rate
+          
+            </li>
+
+            <li class="fragment fade-right">
+            
+              \( \mathbf{x} = \left( x_1, x_2, \dots, x_n \right) \) is the input to the neuron (one training example)
+            
+            </li>
+
+            <li class="fragment fade-right">
+            
+              \( y = \sigma \left( \sum\limits_{i = 1}^{n}{w_i x_i} \right) \in \left\{ -1, 1 \right\} \) is the output (prediction) of the neuron for the given input ($\sigma$ is the perceptron activation/transfer function)
+            </li>
+
+            <li class="fragment fade-right">
+            
+              \( t \in \left\{ -1, 1 \right\} \) is the training set label for the given input (desired target output)
+            
+            </li>
+          
+          </ul>
+
+        </p>
+
+      </section>
+
+      <section data-background="white" data-transition="slide" style="font-size: 20pt;">
+      
+        <table>
+          <tr>
+            <td class="fragment" style="text-align: center;">
+              <img src="media/xor_kernel_0.png" width="100%" style="border-style: none; padding: 1%;">
+              <div>\( \left( x, y \right) \)</div>
+            </td>
+            <td class="fragment" style="text-align: center;">
+              <img src="media/xor_kernel_1.png" width="100%" style="border-style: none; padding: 1%;">
+              <div>\( \left( x, y, 0 \right) \)</div>
+            </td>
+            <td class="fragment" style="text-align: center;">
+              <img src="media/xor_kernel_2.png" width="100%" style="border-style: none; padding: 1%;">
+              <div>\( \left( x, y, \left| x+y \right| \right) \)</div>
+            </td>
+          </tr>
+        </table>
+      
+      </section>
+
+    </section>
+    
+    <section>
+    
+      <section>
+      
+        <h3>proof of convergence in case of linearly separable data</h3>
+      
+      </section>
+
+      <section>
+      
+        <div class="r-stack">
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron1.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron2.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron3.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron4.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron5.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron6.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron7.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron8.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron9.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron10.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron11.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron12.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron13.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron14.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron15.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron16.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+          <div class="fragment current-visible" style="width:100%;">
+            <img src="media/perceptron17.jpg" width="100%" style="border-style: none; padding: 10px">
+          </div>
+        </div>
+      
+      </section>
+
+    </section>
+
+    <section>
+
+      <section>
+
+        <h2>example</h2>
+
+      </section>
+
+      <section data-transition="slide" data-background="white" data-background-transition="zoom" style="font-size: 24pt">
+
+        <h3>machine learning</h3>
+
+        <p>
+          This is our first example of a machine learning system (the predominant form of artificial intelligence). We will write a program that can learn from its experience, in order to become better at accomplishing perceptual tasks (classifying objects). In order to make our program learn we will build a single neuron inspired by one type of nervous cell found in animal brains. Although our program will simulate the learning process of just a single simple neuron (not an entire brain with complex neural structure as is done with modern deep learning systems), it is powerful enough to process various forms of perceptual input and capable of learning useful information from data.
+        </p>
+
+        <p class="fragment">
+          We will then teach this neuron to become better at its task by training it on a dataset of examples. Afterwards, our neuron can clasiffy objects that it has not seen during training.
+        </p>
+
+      </section>
+
+      <section data-background="White" data-transition="slide">
+
+        <p>
+          <img src="media/bio_neuron.png" width="50%" style="border-style: none; padding: 10px">
+        </p>
+
+        <p class="fragment">
+          <img src="media/perceptron_diagram.png" width="50%" style="border-style: none; padding: 10px">
+        </p>
+
+      </section>
+
+      <section data-background="white" data-transition="slide" style="font-size: 28pt;">
+
+        <h3>object classification</h3>
+
+        <p>
+          We will use our neuron as a base to peform supervised learning for a classification task of practical utility. We will write a Python program to train our neuron on a real dataset of examples sourced from a declassified US military program. Our code will accomplish a task involving decision making based on perceptual inputs:
+
+          <ul>
+            <li class="fragment">INPUT: sonar waves bouncing of underwater objects</li>
+            <li class="fragment">OUTPUT: was the object a mine?</li>
+          </ul>
+        </p>
+
+      </section>
+
+      <section data-transition="slide" data-background="white" data-background-transition="zoom">
+
+        <h3>the perceptron</h3>
+
+        <img src="media/perceptron_hardware.jpeg" style="border-style: none; padding: 10px">
+
+      </section>
+
+      <section data-background="white" data-transition="slide">
+
+        <p>
+          We will implement the Perceptron learning algorithm - a precursor to modern neural networks. The perceptron algorithm was invented in 1957 by Frank Rosenblatt, while working on a grant from the Office of Naval Research. It was originally implemented in hardware costing millions of dollars in today's currency.
+        </p>
+
+      </section>
+
+      <section data-background="white" data-transition="slide">
+
+        This was a military project funded by the the US Navy. Its applications included ballistic missile trajectory computation and the detection of sea mines.
+
+        <img src="media/sea_mine_german.jpg" style="border-style: none; padding: 10px">
+
+      </section>
+
+      <section data-background="white" data-transition="slide">
+
+        The military was interested in classifying various types of naval mines vs other objects encountered in the ocean waters. For this project we will focus on a binary choice between one type of underwater mine vs a rock.
+
+        <br>
+
+        <img src="media/sea_mines_types.png" width="50%" style="border-style: none; padding: 10px">
+
+      </section>
+
+      <section data-background="white" data-transition="slide">
+
+        We will be given a dataset of sonar waves bouncing off two types of underwater objects: rocks and naval mines. Our task is to make predictions based on the returning wave, as to which objects it encountered.
+
+        <img src="media/naval_mine.jpg" width="30%" style="border-style: none; padding: 10px">
+        <img src="media/rock.jpg" width="53.5%" style="border-style: none; padding: 10px">
+
+      </section>
+
+      <section data-background="white" data-transition="slide" style="font-size: 20pt;">
+
+        This is a real dataset made public by the Navy. The waves were preprocessed and stored as sequences of sonar amplitudes.
+
+        <br>
+
+        <img src="media/sonar_waves.png" width="50%" style="border-style: none; padding: 10px">
+
+      </section>
+
+      <section data-background="white" data-transition="slide">
+
+        <h3>mine example</h3>
+
+        <audio controls>
+          <source src="media/m.wav" type="audio/wav">
+        Your browser does not support the audio element.
+        </audio>
+
+      </section>
+
+      <section data-background="white" data-transition="slide">
+
+        <h3>rock exmaple</h3>
+
+        <audio controls>
+          <source src="media/r.wav" type="audio/wav">
+        Your browser does not support the audio element.
+        </audio>
+
+      </section>
+
+      <section data-background="white">
+      
+        <h3>dataset</h3>
+
+        <a href="./data/sonar_data.pkl">sonar_data.pkl</a>
+
+        <p>
+          Data is composed of a dictionary with two keys 'r' for rock and 'm' for mine. Each key contains a list of vectors representing the sonar waves returning from that object.
+        </p>
+      
+      </section>
+
+      <section data-background="white" data-transition="slide" style="font-size: 24pt;">
+
+          <h3>perceptron</h3>
+
+          <p>
+            We will implement a single layer perceptron. It can learn a decision boundary (a hyperplane) from a set of examples.
+          </p>
+
+        <img src="media/sep.gif" width="50%" style="border-style: none; padding: 10px">
+
+      </section>
+
+      <section data-background="white">
+
+        <a href="./code/index.html">code</a>
+
+      </section>
+
+    </section>
+
+    <!-- <section> -->
+
+    <!--   <section> -->
+    <!--     <h3>implementation</h3> -->
+    <!--       <img src="media/python.jpg" width="80%"> -->
+    <!--   </section> -->
+    
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 18pt"> -->
+
+    <!--     <h3>constructor</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         class Neuron: -->
+
+    <!--           def __init__(self): -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 18pt"> -->
+
+    <!--     <h3>constructor</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         class Neuron: -->
+
+    <!--           def __init__(self, dimension=1): -->
+
+    <!--             self._dim = dimension -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 18pt"> -->
+
+    <!--       <h3>constructor</h3> -->
+
+    <!--       <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--         <code class="Python" data-trim> -->
+
+    <!--           class Neuron: -->
+
+    <!--             def __init__(self, dimension=1, weights=None): -->
+
+    <!--               self._dim = dimension -->
+    <!--               self.w = weights or np.random.normal(size=self._dim) -->
+    <!--               self.w = np.array(weights) -->
+
+    <!--         </code> -->
+    <!--       </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 18pt"> -->
+
+    <!--     <h3>constructor</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         class Neuron: -->
+
+    <!--           def __init__(self, dimension=1, weights=None, bias=None): -->
+
+    <!--             self._dim = dimension -->
+    <!--             self.w = weights or np.random.normal(size=self._dim) -->
+    <!--             self.w = np.array(self.w) -->                                        
+    <!--             self.b = bias if bias is not None else np.random.normal() -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--     <p class="fragment"> -->
+    <!--       Why did we use an explicit conditional for bias instead of a boolean operator like in the case of weights? -->
+    <!--     </p> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 18pt"> -->
+
+    <!--     <h3>default value for activation?</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         class Neuron: -->
+
+    <!--           def __init__(self, dimension=1, weights=None, bias=None, activation=???): -->
+
+    <!--             self._dim = dimension -->
+    <!--             self.w = weights or np.random.normal(size=self._dim) -->
+    <!--             self.w = np.array(self.w) -->                                        
+    <!--             self.b = bias if bias is not None else np.random.normal() -->
+    <!--             self._a = activation -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 18pt"> -->
+
+    <!--     <h3>default value for activation?</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         class Neuron: -->
+
+    <!--           def __init__(self, dimension=1, weights=None, bias=None, activation=(lambda x: x)): -->
+
+    <!--             self._dim = dimension -->
+    <!--             self.w = weights or np.random.normal(size=self._dim) -->
+    <!--             self.w = np.array(self.w) -->                                        
+    <!--             self.b = bias if bias is not None else np.random.normal() -->
+    <!--             self._a = activation -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 26pt"> -->
+
+    <!--     <h3>common activation functions</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         def sigmoid(z): -->
+    <!--           return 1.0 / (1.0 + np.exp(-z)) -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--     <img src="media/sigmoid.png" width="50%" style="border-style: none; padding: 2%;"> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 26pt"> -->
+
+    <!--     <h3>common activation functions</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         def tanh(z): -->
+    <!--           return np.tanh(z) -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--     <img src="media/tanh.png" width="50%" style="border-style: none; padding: 2%;"> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 26pt"> -->
+
+    <!--     <h3>common activation functions</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         def relu(z): -->
+    <!--           return np.maximum(z, 0) -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--     <img src="media/relu.png" width="50%" style="border-style: none; padding: 2%;"> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 26pt"> -->
+
+    <!--     <h3>common activation functions</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         def perceptron(z): -->
+    <!--           return -1 if z<=0 else 1 -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--     <img src="media/sign.png" width="50%" style="border-style: none; padding: 2%;"> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 26pt"> -->
+
+    <!--     <h3>softmax</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         def softmax(z): -->
+    <!--           return np.exp(z) / np.sum(np.exp(z)) -->
+
+    <!--         print(softmax(np.array([1.01, 1.2]))) -->
+    <!--         print(np.sum(softmax(np.array([1.01, 1.2])))) -->
+
+    <!--       </code> -->
+
+    <!--       <code class="text fragment" data-trim> -->
+
+    <!--         [0.45264238 0.54735762] -->
+    <!--         1.0 -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 18pt"> -->
+
+    <!--     <h3>let's add an str method</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         class Neuron: -->
+
+    <!--           def __init__(self, dimension=1, weights=None, bias=None, activation=(lambda x: x)): -->
+
+    <!--             self._dim = dimension -->
+    <!--             self.w = weights or np.random.normal(size=self._dim) -->
+    <!--             self.w = np.array(self.w) -->                                        
+    <!--             self.b = bias if bias is not None else np.random.normal() -->
+    <!--             self._a = activation -->
+
+
+    <!--           def __str__(self): -->
+
+    <!--             return "Simple cell neuron\n\ -->
+    <!--             \tInput dimension: %d\n\ -->
+    <!--             \tBias: %f\n\ -->
+    <!--             \tWeights: %s\n\ -->
+    <!--             \tActivation: %s" % (self._dim, self.b, self.w, self._a.__name__) -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" style="font-size: 26pt"> -->
+
+    <!--     <h3>test it</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         neuron = Neuron(activation=sigmoid) -->
+    <!--         print(neuron) -->
+
+    <!--       </code> -->
+
+    <!--       <code class="text fragment" data-trim> -->
+
+    <!--         Simple cell neuron -->
+    <!--           Input dimension: 1 -->
+    <!--           Bias: 0.936585 -->
+    <!--           Weights: [0.8673789339927689] -->
+    <!--           Activation: sigmoid -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none"> -->
+
+    <!--     <h3>activating the neuron</h3> -->
+
+    <!--     <p> -->
+    <!--         We need one more thing to make our neuron functional. We need to actually process the inputs and generate the output. -->
+    <!--     </p> -->
+
+    <!--     <p class="fragment"> -->
+    <!--         We could write a method to do that, which would be called using dot notation on some vector of inputs. However, there is a better way. -->
+    <!--     </p> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none"> -->
+
+    <!--     <h3>callable objects</h3> -->
+
+    <!--     <p> -->
+    <!--         We can make any object into a callable (kind of like a function but with all the class functionality) by implementing the __call__ method. -->
+    <!--     </p> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none"> -->
+
+    <!--     <h3>callable objects</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         class Test_callable: -->
+
+    <!--           def __init__(self, c=0): -->
+
+    <!--             self.c = c -->
+
+    <!--           def __call__(self, x): -->
+
+    <!--             return x+c -->
+
+    <!--         tc = Test_callable(5) -->
+    <!--         print(tc(2)) -->
+
+    <!--       </code> -->
+
+    <!--       <code class="text fragment" data-trim> -->
+
+    <!--         7 -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 18pt"> -->
+
+    <!--     <h3>call a neuron</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         class Neuron: -->
+
+    <!--           def __init__(self, dimension=1, weights=None, bias=None, activation=(lambda x: x)): -->
+
+    <!--             self._dim = dimension -->
+    <!--             self.w = weights or np.random.normal(size=self._dim) -->
+    <!--             self.w = np.array(self.w) -->                                        
+    <!--             self.b = bias if bias is not None else np.random.normal() -->
+    <!--             self._a = activation -->
+
+
+    <!--           def __str__(self): -->
+
+    <!--             return "Simple cell neuron\n\ -->
+    <!--             \tInput dimension: %d\n\ -->
+    <!--             \tBias: %f\n\ -->
+    <!--             \tWeights: %s\n\ -->
+    <!--             \tActivation: %s" % (self._dim, self.b, self.w, self._a.__name__) -->
+
+    <!--           def __call__(self, x): -->
+
+    <!--             ??? -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 18pt"> -->
+
+    <!--     <h3>call a neuron</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         class Neuron: -->
+
+    <!--           def __init__(self, dimension=1, weights=None, bias=None, activation=(lambda x: x)): -->
+
+    <!--             self._dim = dimension -->
+    <!--             self.w = weights or np.random.normal(size=self._dim) -->
+    <!--             self.w = np.array(self.w) -->                                        
+    <!--             self.b = bias if bias is not None else np.random.normal() -->
+    <!--             self._a = activation -->
+
+
+    <!--           def __str__(self): -->
+
+    <!--             return "Simple cell neuron\n\ -->
+    <!--             \tInput dimension: %d\n\ -->
+    <!--             \tBias: %f\n\ -->
+    <!--             \tWeights: %s\n\ -->
+    <!--             \tActivation: %s" % (self._dim, self.b, self.w, self._a.__name__) -->
+
+    <!--           def __call__(self, x): -->
+
+    <!--             yhat = self._a(np.dot(self.w, np.array(x)) + self.b) -->
+    <!--             return yhat -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 18pt"> -->
+
+    <!--     <h3>call a neuron</h3> -->
+
+    <!--     <p> -->
+    <!--         Even better (exception handling). -->
+    <!--     </p> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         class Neuron: -->
+
+    <!--           def __init__(self, dimension=1, weights=None, bias=None, activation=(lambda x: x)): -->
+
+    <!--             self._dim = dimension -->
+    <!--             self.w = weights or np.random.normal(size=self._dim) -->
+    <!--             self.w = np.array(self.w) -->                                        
+    <!--             self.b = bias if bias is not None else np.random.normal() -->
+    <!--             self._a = activation -->
+
+
+    <!--           def __str__(self): -->
+
+    <!--             return "Simple cell neuron\n\ -->
+    <!--             \tInput dimension: %d\n\ -->
+    <!--             \tBias: %f\n\ -->
+    <!--             \tWeights: %s\n\ -->
+    <!--             \tActivation: %s" % (self._dim, self.b, self.w, self._a.__name__) -->
+
+    <!--           def __call__(self, x): -->
+
+    <!--             try: -->
+    <!--               assert len(x) == self._dim, "Input dimension must be %d!" % (self._dim) -->
+    <!--               yhat = self._a(np.dot(self.w, np.array(x)) + self.b) -->
+    <!--             except Exception as e: -->
+    <!--               print(e) -->
+    <!--             else: -->
+    <!--               return yhat -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none"> -->
+
+    <!--     <h3>logical gates</h3> -->
+
+    <!--     <p> -->
+    <!--         Let's use our neuron to design some simple logical gates in order to get used to working with this model of computation. -->
+
+    <!--         <ul> -->
+    <!--             <li class="fragment">and</li> -->
+    <!--             <li class="fragment">or</li> -->
+    <!--             <li class="fragment">nand</li> -->
+    <!--             <li class="fragment">not</li> -->
+    <!--         </ul> -->
+    <!--     </p> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 24pt"> -->
+
+    <!--     <h3>and gate</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python fragment" data-trim> -->
+
+    <!--         and_gate = Neuron(dimension=2, weights=[2, 2], bias=-3, activation=(lambda z: 0 if z <= 0 else 1)) -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 24pt"> -->
+
+    <!--     <h3>or gate</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python fragment" data-trim> -->
+
+    <!--         or_gate = Neuron(dimension=?, weights=?, bias=?, activation=?) -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <!-1- <section data-background="Black" data-transition="none" style="font-size: 24pt"> -1-> -->
+
+    <!--   <!-1-     <h3>or gate</h3> -1-> -->
+
+    <!--   <!-1-     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -1-> -->
+    <!--   <!-1-       <code class="Python fragment" data-trim> -1-> -->
+
+    <!--   <!-1-         or_gate = Neuron(dimension=2, weights=[2, 2], bias=-1, activation=(lambda z: 0 if z <= 0 else 1)) -1-> -->
+
+    <!--   <!-1-       </code> -1-> -->
+    <!--   <!-1-     </pre> -1-> -->
+
+    <!--   <!-1- </section> -1-> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 24pt"> -->
+
+    <!--     <h3>nand gate</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python fragment" data-trim> -->
+
+    <!--         nand_gate = Neuron(dimension=?, weights=?, bias=?, activation=?) -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <!-1- <section data-background="Black" data-transition="none" style="font-size: 24pt"> -1-> -->
+
+    <!--   <!-1-     <h3>nand gate</h3> -1-> -->
+
+    <!--   <!-1-     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -1-> -->
+    <!--   <!-1-       <code class="Python fragment" data-trim> -1-> -->
+
+    <!--   <!-1-         nand_gate = Neuron(dimension=2, weights=[-2, -2], bias=3, activation=(lambda z: 0 if z <= 0 else 1)) -1-> -->
+
+    <!--   <!-1-       </code> -1-> -->
+    <!--   <!-1-     </pre> -1-> -->
+
+    <!--   <!-1- </section> -1-> -->
+
+    <!--   <section data-background="Black" data-transition="none" style="font-size: 24pt"> -->
+
+    <!--     <h3>not gate</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python fragment" data-trim> -->
+
+    <!--         not_gate = Neuron(dimension=?, weights=?, bias=?, activation=?) -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <!-1- <section data-background="Black" data-transition="none" style="font-size: 24pt"> -1-> -->
+
+    <!--   <!-1-     <h3>not gate</h3> -1-> -->
+
+    <!--   <!-1-     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -1-> -->
+    <!--   <!-1-       <code class="Python fragment" data-trim> -1-> -->
+
+    <!--   <!-1-         not_gate = Neuron(dimension=1, weights=[-1], bias=1, activation=(lambda z: 0 if z <= 0 else 1)) -1-> -->
+
+    <!--   <!-1-       </code> -1-> -->
+    <!--   <!-1-     </pre> -1-> -->
+
+    <!--   <!-1- </section> -1-> -->
+
+    <!--   <section data-transition="slide" data-background="Black" data-background-transition="zoom" style="font-size: 20pt"> -->
+
+    <!--     <h3>code so far</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         class Neuron: -->
+
+    <!--           def __init__(self, dimension=1, weights=None, bias=None, activation=(lambda x: x)): -->
+
+    <!--             self._dim = dimension -->
+    <!--             self.w = weights or np.random.normal(size=self._dim) -->
+    <!--             self.w = np.array(self.w) -->                                        
+    <!--             self.b = bias if bias is not None else np.random.normal() -->
+    <!--             self._a = activation -->
+
+
+    <!--           def __str__(self): -->
+
+    <!--             return "Simple cell neuron\n\ -->
+    <!--             \tInput dimension: %d\n\ -->
+    <!--             \tBias: %f\n\ -->
+    <!--             \tWeights: %s\n\ -->
+    <!--             \tActivation: %s" % (self._dim, self.b, self.w, self._a.__name__) -->
+
+    <!--           def __call__(self, x): -->
+
+    <!--             yhat = self._a(np.dot(self.w, np.array(x)) + self.b) -->
+    <!--             return yhat -->
+
+    <!--           def predict(self, x): -->
+    <!--             return self(x) -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="slide" style="font-size: 26pt"> -->
+
+    <!--     <h3>loss function</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         def ploss(yhat, y): -->
+    <!--           return max(0, -yhat*y) -->
+
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="slide" style="font-size: 20pt"> -->
+
+    <!--     <h3>trainer class</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         class Trainer: -->
+
+    <!--           def __init__(self, dataset, model): -->
+
+    <!--             self.dataset = dataset -->
+    <!--             self.model = model -->
+    <!--             self.loss = ploss -->
+
+    <!--         </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="slide" style="font-size: 20pt"> -->
+
+    <!--     <h3>validate a model on some data</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         class Trainer: -->
+
+    <!--           def __init__(self, dataset, model): -->
+
+    <!--             self.dataset = dataset -->
+    <!--             self.model = model -->
+    <!--             self.loss = ploss -->
+
+    <!--           def cost(self, data): -->
+
+    <!--             return np.mean([self.loss(self.model.predict(x), y) for x, y in data]) -->
+              
+    <!--           def accuracy(self, data): -->
+
+    <!--             return 100*np.mean([1 if self.model.predict(x) == y else 0 for x, y in data]) -->
+    <!--       </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section data-background="Black" data-transition="slide" style="font-size: 20pt"> -->
+
+    <!--     <h3>train a model</h3> -->
+
+    <!--     <pre style="white-space: pre-wrap; background:none; border:none; box-shadow:none;"> -->
+    <!--       <code class="Python" data-trim> -->
+
+    <!--         class Trainer: -->
+
+    <!--           def __init__(self, dataset, model): -->
+
+    <!--             self.dataset = dataset -->
+    <!--             self.model = model -->
+    <!--             self.loss = ploss -->
+
+    <!--           def cost(self, data): -->
+
+    <!--             return np.mean([self.loss(self.model.predict(x), y) for x, y in data]) -->
+              
+    <!--           def accuracy(self, data): -->
+
+    <!--             return 100*np.mean([1 if self.model.predict(x) == y else 0 for x, y in data]) -->
+
+    <!--           def train(self, lr, ne): -->
+
+    <!--             print("training model on data...") -->
+    <!--             accuracy = self.accuracy(self.dataset) -->
+    <!--             print("initial accuracy: %.3f" % (accuracy)) -->
+
+    <!--             for epoch in range(ne): -->
+    <!--               for x, y in self.dataset: -->
+    <!--                 yhat = self.model(x) -->
+    <!--                 self.model.w += lr*(y - yhat)*x -->
+    <!--                 self.model.b += lr*(y - yhat) -->
+    <!--               accuracy = self.accuracy(self.dataset) -->
+    <!--               print('>epoch=%d, learning_rate=%.3f, accuracy=%.3f' % (epoch + 1, lr, accuracy)) -->
+
+    <!--             print("training complete") -->
+    <!--             print("final accuracy: %.3f" % (self.accuracy(self.dataset))) -->
+    <!--         </code> -->
+    <!--     </pre> -->
+
+    <!--   </section> -->
+
+    <!--   <section> -->
+      
+    <!--     <p> -->
+    <!--       The data set object should be an iterator! -->
+    <!--     </p> -->
+      
+    <!--   </section> -->
+
+    <!-- </section> -->
+
+    <!-- <section> -->
+
+    <!--   <section data-background="#d2e5ff"> -->
+
+    <!--   <link rel="stylesheet" href="../common/css/normalize.min.css"> -->
+    <!--   <link rel="stylesheet" href="../common/css/style.css"> -->
+    <!--   <div class='Cube panelLoad'> -->
+    <!--     <div class='cube-face cube-face-front'>?</div> -->
+    <!--     <div class='cube-face cube-face-back'><img src="../common/media/logo.png" width="50%"></div> -->
+    <!--     <div class='cube-face cube-face-left'><img src="../common/media/logo.png" width="50%"></div> -->
+    <!--     <div class='cube-face cube-face-right'><img src="../common/media/logo.png" width="50%"></div> -->
+    <!--     <div class='cube-face cube-face-bottom'><img src="../common/media/logo.png" width="50%"></div> -->
+    <!--     <div class='cube-face cube-face-top'><img src="../common/media/logo.png" width="50%"></div> -->
+    <!--   </div> -->
+
+    <!--   </section> -->
+
+    <!-- </section> -->
+    
+    </div>
+
+  </div>
+
+  <script src="../common/reveal/dist/reveal.js"></script>
+  <script src="../common/reveal/plugin/zoom/zoom.js"></script>
+  <script src="../common/reveal/plugin/notes/notes.js"></script>
+  <script src="../common/reveal/plugin/search/search.js"></script>
+  <script src="../common/reveal/plugin/markdown/markdown.js"></script>
+  <script src="../common/reveal/plugin/highlight/highlight.js"></script>
+  <script src="../common/reveal/plugin/math/math.js"></script>
+  <script src="../common/reveal/plugin/pointer/pointer.js"></script>
+  <script>
+    Reveal.initialize({
+    controls: true,
+    progress: true,
+    center: true,
+    hash: true,
+    plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath ]
+    });
+  </script>
+
+  </body>
+
+</html>
