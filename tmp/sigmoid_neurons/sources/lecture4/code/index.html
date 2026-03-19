@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2023-03-29 Wed 15:58 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="author" content="Res Cogitans" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="./script_html/css/simple.min.css" />
+</head>
+<body>
+<div id="content" class="content">
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<!-- <li><a href="#org8532636">1. derivation</a> -->
+<!-- <ul> -->
+<!-- <li><a href="#org116c5e4">1.1. inputs</a></li> -->
+<!-- <li><a href="#orgb690bd6">1.2. labels</a></li> -->
+<!-- <li><a href="#orgaa4402d">1.3. model</a></li> -->
+<!-- <li><a href="#org99d98aa">1.4. optimization objective</a></li> -->
+<!-- <li><a href="#org5234f5a">1.5. probabilistic interpretation</a></li> -->
+<!-- <li><a href="#orgfc474a5">1.6. loss measure</a></li> -->
+<!-- <li><a href="#orge80d1b4">1.7. log probability</a></li> -->
+<!-- <li><a href="#orgda7b424">1.8. log complement probability</a></li> -->
+<!-- <li><a href="#org1dd8590">1.9. loss gradient</a></li> -->
+<!-- <li><a href="#org689b83d">1.10. log probability partial derivative</a></li> -->
+<!-- <li><a href="#org9ad368e">1.11. loss derivative</a></li> -->
+<!-- <li><a href="#org47b767f">1.12. batch form of the loss gradient</a></li> -->
+<!-- <li><a href="#org13dd36b">1.13. update rule</a></li> -->
+<!-- </ul> -->
+<!-- </li> -->
+<li><a href="#org6bf2cd1">1. implementation</a>
+<ul>
+<li><a href="#org4f921c6">1.1. setup</a></li>
+<li><a href="#org385fa4c">1.2. data loader</a></li>
+<li><a href="#org615b297">1.3. model</a></li>
+<li><a href="#org65930b0">1.4. trainer</a></li>
+<li><a href="#org6a54ae7">1.5. test time</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<!-- <div id="outline-container-org8532636" class="outline-2"> -->
+<!-- <h2 id="org8532636"><span class="section-number-2">1.</span> derivation</h2> -->
+<!-- <div class="outline-text-2" id="text-1"> -->
+<!-- </div> -->
+<!-- <div id="outline-container-org116c5e4" class="outline-3"> -->
+<!-- <h3 id="org116c5e4"><span class="section-number-3">1.1.</span> inputs</h3> -->
+<!-- <div class="outline-text-3" id="text-1-1"> -->
+<!---->
+<!-- <div id="org83a5c8d" class="figure"> -->
+<!-- <p><img src="./img/nlr1.jpg" alt="nlr1.jpg" /> -->
+<!-- </p> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!---->
+<!---->
+<!-- <div id="outline-container-orgb690bd6" class="outline-3"> -->
+<!-- <h3 id="orgb690bd6"><span class="section-number-3">1.2.</span> labels</h3> -->
+<!-- <div class="outline-text-3" id="text-1-2"> -->
+<!---->
+<!-- <div id="org8a20111" class="figure"> -->
+<!-- <p><img src="./img/nlr2.jpg" alt="nlr2.jpg" /> -->
+<!-- </p> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!---->
+<!---->
+<!-- <div id="outline-container-orgaa4402d" class="outline-3"> -->
+<!-- <h3 id="orgaa4402d"><span class="section-number-3">1.3.</span> model</h3> -->
+<!-- <div class="outline-text-3" id="text-1-3"> -->
+<!---->
+<!-- <div id="org6375c6a" class="figure"> -->
+<!-- <p><img src="./img/nlr3.jpg" alt="nlr3.jpg" /> -->
+<!-- </p> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!---->
+<!---->
+<!-- <div id="outline-container-org99d98aa" class="outline-3"> -->
+<!-- <h3 id="org99d98aa"><span class="section-number-3">1.4.</span> optimization objective</h3> -->
+<!-- <div class="outline-text-3" id="text-1-4"> -->
+<!---->
+<!-- <div id="org3170dea" class="figure"> -->
+<!-- <p><img src="./img/nlr4.jpg" alt="nlr4.jpg" /> -->
+<!-- </p> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!---->
+<!---->
+<!-- <div id="outline-container-org5234f5a" class="outline-3"> -->
+<!-- <h3 id="org5234f5a"><span class="section-number-3">1.5.</span> probabilistic interpretation</h3> -->
+<!-- <div class="outline-text-3" id="text-1-5"> -->
+<!---->
+<!-- <div id="org1cad478" class="figure"> -->
+<!-- <p><img src="./img/nlr5.jpg" alt="nlr5.jpg" /> -->
+<!-- </p> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!---->
+<!---->
+<!-- <div id="outline-container-orgfc474a5" class="outline-3"> -->
+<!-- <h3 id="orgfc474a5"><span class="section-number-3">1.6.</span> loss measure</h3> -->
+<!-- <div class="outline-text-3" id="text-1-6"> -->
+<!---->
+<!-- <div id="org482f0f0" class="figure"> -->
+<!-- <p><img src="./img/nlr6.jpg" alt="nlr6.jpg" /> -->
+<!-- </p> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!---->
+<!---->
+<!-- <div id="outline-container-orge80d1b4" class="outline-3"> -->
+<!-- <h3 id="orge80d1b4"><span class="section-number-3">1.7.</span> log probability</h3> -->
+<!-- <div class="outline-text-3" id="text-1-7"> -->
+<!---->
+<!-- <div id="org2e4b955" class="figure"> -->
+<!-- <p><img src="./img/nlr7.jpg" alt="nlr7.jpg" /> -->
+<!-- </p> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!---->
+<!---->
+<!-- <div id="outline-container-orgda7b424" class="outline-3"> -->
+<!-- <h3 id="orgda7b424"><span class="section-number-3">1.8.</span> log complement probability</h3> -->
+<!-- <div class="outline-text-3" id="text-1-8"> -->
+<!---->
+<!-- <div id="org1a0f39f" class="figure"> -->
+<!-- <p><img src="./img/nlr8.jpg" alt="nlr8.jpg" /> -->
+<!-- </p> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!---->
+<!---->
+<!-- <div id="outline-container-org1dd8590" class="outline-3"> -->
+<!-- <h3 id="org1dd8590"><span class="section-number-3">1.9.</span> loss gradient</h3> -->
+<!-- <div class="outline-text-3" id="text-1-9"> -->
+<!---->
+<!-- <div id="orgbc5f6f1" class="figure"> -->
+<!-- <p><img src="./img/nlr9.jpg" alt="nlr9.jpg" /> -->
+<!-- </p> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!---->
+<!---->
+<!-- <div id="outline-container-org689b83d" class="outline-3"> -->
+<!-- <h3 id="org689b83d"><span class="section-number-3">1.10.</span> log probability partial derivative</h3> -->
+<!-- <div class="outline-text-3" id="text-1-10"> -->
+<!---->
+<!-- <div id="org336ed1f" class="figure"> -->
+<!-- <p><img src="./img/nlr10.jpg" alt="nlr10.jpg" /> -->
+<!-- </p> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!---->
+<!---->
+<!-- <div id="outline-container-org9ad368e" class="outline-3"> -->
+<!-- <h3 id="org9ad368e"><span class="section-number-3">1.11.</span> loss derivative</h3> -->
+<!-- <div class="outline-text-3" id="text-1-11"> -->
+<!---->
+<!-- <div id="orgc780055" class="figure"> -->
+<!-- <p><img src="./img/nlr11.jpg" alt="nlr11.jpg" /> -->
+<!-- </p> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!---->
+<!---->
+<!-- <div id="outline-container-org47b767f" class="outline-3"> -->
+<!-- <h3 id="org47b767f"><span class="section-number-3">1.12.</span> batch form of the loss gradient</h3> -->
+<!-- <div class="outline-text-3" id="text-1-12"> -->
+<!---->
+<!-- <div id="org979acc9" class="figure"> -->
+<!-- <p><img src="./img/nlr12.jpg" alt="nlr12.jpg" /> -->
+<!-- </p> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!---->
+<!---->
+<!-- <div id="outline-container-org13dd36b" class="outline-3"> -->
+<!-- <h3 id="org13dd36b"><span class="section-number-3">1.13.</span> update rule</h3> -->
+<!-- <div class="outline-text-3" id="text-1-13"> -->
+<!---->
+<!-- <div id="org289af2f" class="figure"> -->
+<!-- <p><img src="./img/nlr13.jpg" alt="nlr13.jpg" /> -->
+<!-- </p> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+
+
+<div id="outline-container-org6bf2cd1" class="outline-2">
+<h2 id="org6bf2cd1"><span class="section-number-2">1.</span> implementation</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org4f921c6" class="outline-3">
+<h3 id="org4f921c6"><span class="section-number-3">1.1.</span> setup</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+<pre><code>
+import numpy as np
+import pickle as pkl
+import matplotlib.pyplot as plt
+import random
+
+def sigmoid(z):
+
+  return 1.0 / (1.0 + np.exp(-z))
+
+def lrloss(yhat, y):
+
+  return 0.0 if yhat == y else -1.0*(y*np.log(yhat) + (1 - y)*np.log(1 - yhat))
+
+def lrpredict(model, x):
+
+  return 1.0 if model(x) &gt; 0.5 else 0.0
+
+print('done')
+
+</code></pre>
+</div>
+
+<pre>
+done
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-org385fa4c" class="outline-3">
+<h3 id="org385fa4c"><span class="section-number-3">1.2.</span> data loader</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+<pre><code>
+class CatData:
+
+  def __init__(self, data_file_path='./data/', data_file_name='cat_data.pkl'):
+
+    self.index = -1
+
+    with open('%s%s' % (data_file_path, data_file_name), mode='rb') as f:
+	cat_data = pkl.load(f)
+
+    self.data = [(np.reshape(vector, vector.size), 1) for vector in self.standardize(cat_data['train']['cat'])] + [(np.reshape(vector, vector.size), 0) for vector in self.standardize(cat_data['train']['no_cat'])]
+    self.shuffle()
+
+    self.train_mean = np.mean(np.concatenate((cat_data['train']['cat'], cat_data['train']['no_cat'])), axis=(0, 1, 2), keepdims=True).squeeze(0)
+    self.train_sd = np.std(np.concatenate((cat_data['train']['cat'], cat_data['train']['no_cat'])), axis=(0, 1, 2), keepdims=True).squeeze(0)
+
+  def __iter__(self):
+
+    return self
+
+  def __next__(self):
+
+    self.index += 1
+    if self.index == len(self.data):
+      self.index = -1
+      self.shuffle()
+      raise StopIteration
+    return self.data[self.index]
+
+  def __len__(self):
+
+    return len(self.data)
+
+  def __getitem__(self, i):
+
+    return self.data[i]
+
+  def shuffle(self):
+
+    random.shuffle(self.data)
+
+  def standardize(self, rgb_images):
+
+    mean = np.mean(rgb_images, axis=(0, 1, 2), keepdims=True)
+    sd = np.std(rgb_images, axis=(0, 1, 2), keepdims=True)
+    return (rgb_images - mean) / sd
+
+data = CatData()
+example = next(iter(data))
+print(f'This is a {"cat" if example[1] == 1 else "non-cat"}')
+image = example[0].reshape(64, 64, 3)
+plt.imshow(image)
+
+</code></pre>
+</div>
+
+<pre>
+This is a cat
+</pre>
+
+
+<div id="org1f0ff0c" class="figure">
+<p><img src="./.ob-jupyter/a9c2ae76aa8161d5e8d1834e581ccd62a2829fb8.png" alt="a9c2ae76aa8161d5e8d1834e581ccd62a2829fb8.png" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org615b297" class="outline-3">
+<h3 id="org615b297"><span class="section-number-3">1.3.</span> model</h3>
+<div class="outline-text-3" id="text-2-3">
+<div class="org-src-container">
+<pre><code>
+class CatModel:
+
+  def __init__(self, dimension=12288, weights=None, bias=None, activation=sigmoid, predict=lrpredict):
+
+    self._dim = dimension
+    self.w = weights or np.random.normal(size=self._dim)
+    self.w = np.array(self.w)*np.sqrt(1/dimension)
+    self.b = bias if bias is not None else np.random.normal()
+    self._a = activation
+    self.predict = predict.__get__(self)
+    self.train = True
+    self.train_mean = 0.0
+    self.train_sd = 1.0
+
+  def __str__(self):
+
+    return "Simple cell neuron\n\
+    \tInput dimension: %d\n\
+    \tBias: %f\n\
+    \tWeights: %s\n\
+    \tActivation: %s" % (self._dim, self.b, self.w, self._a.__name__)
+
+  def __call__(self, x):
+
+    if self.train:
+      yhat = self._a(np.dot(self.w, np.reshape(x, x.size)) + self.b)
+    else:
+      yhat = self._a(np.dot(self.w, np.reshape(self.preprocess(x), x.size)) + self.b)
+
+    return yhat
+
+  def preprocess(self, x):
+
+    return (x - self.train_mean) / self.train_sd
+
+  def load_model(self, file_path):
+
+    with open(file_path, mode='rb') as f:
+      mm = pkl.load(f)
+
+    self._dim = mm._dim
+    self.w = mm.w
+    self.b = mm.b
+    self._a = mm._a
+
+  def save_model(self):
+
+    f = open('results/cat_model.pkl','wb')
+    pkl.dump(self, f)
+    f.close
+
+model = CatModel()
+print(model)
+
+</code></pre>
+</div>
+
+<pre>
+Simple cell neuron
+    	Input dimension: 12288
+    	Bias: 0.284516
+    	Weights: [ 0.01214724 -0.00284609 -0.00045149 ... -0.00123027 -0.01461718
+ -0.00642048]
+    	Activation: sigmoid
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-org65930b0" class="outline-3">
+<h3 id="org65930b0"><span class="section-number-3">1.4.</span> trainer</h3>
+<div class="outline-text-3" id="text-2-4">
+<div class="org-src-container">
+<pre><code>
+class CatTrainer:
+
+  def __init__(self, dataset, model):
+
+    self.dataset = dataset
+    self.model = model
+    self.model.train_mean = self.dataset.train_mean
+    self.model.train_sd = self.dataset.train_sd
+    self.loss = lrloss
+
+  def accuracy(self, data):
+
+    return 100*np.mean([1 if self.model.predict(x) == y else 0 for x, y in data])
+
+  def train(self, lr, ne):
+
+    print("training model on data...")
+    accuracy = self.accuracy(self.dataset)
+    print("initial accuracy: %.3f" % (accuracy))
+
+    costs = []
+    accuracies = []
+
+    for epoch in range(1, ne+1):
+      J = 0
+      dw = 0
+      for x, y in self.dataset:
+	yhat = self.model(x)
+	J += self.loss(yhat, y)
+	dz = yhat - y
+	dw += x*dz
+      J /= len(self.dataset)
+      dw /= len(self.dataset)
+      self.model.w = self.model.w - lr*dw
+
+      accuracy = self.accuracy(self.dataset)
+      if epoch%10 == 0:
+	print('--&gt; epoch=%d, accuracy=%.3f' % (epoch, accuracy))
+      costs.append(J)
+      accuracies.append(accuracy)
+
+    print("training complete")
+    print("final accuracy: %.3f" % (self.accuracy(self.dataset)))
+
+    costs = np.mean(np.array([np.array(costs)[i:i+10] for i in range(len(costs)-10)]), axis=1).tolist()
+    accuracies = np.mean(np.array([np.array(accuracies)[i:i+10] for i in range(len(accuracies)-10)]), axis=1).tolist()
+
+    return (costs, accuracies)
+
+print('loading trainer')
+trainer = CatTrainer(data, model)
+
+print('training neuron')
+costs, accuracies = trainer.train(0.001, 500)
+
+print('saving model weights')
+model.save_model()
+
+print('done')
+
+</code></pre>
+</div>
+
+<pre>
+loading trainer
+training neuron
+training model on data...
+initial accuracy: 41.827
+--&gt; epoch=10, accuracy=58.852
+--&gt; epoch=20, accuracy=65.072
+--&gt; epoch=30, accuracy=70.813
+--&gt; epoch=40, accuracy=74.641
+--&gt; epoch=50, accuracy=77.512
+--&gt; epoch=60, accuracy=79.904
+--&gt; epoch=70, accuracy=81.818
+--&gt; epoch=80, accuracy=84.211
+--&gt; epoch=90, accuracy=85.646
+--&gt; epoch=100, accuracy=87.560
+--&gt; epoch=110, accuracy=87.081
+--&gt; epoch=120, accuracy=88.038
+--&gt; epoch=130, accuracy=88.517
+--&gt; epoch=140, accuracy=88.995
+--&gt; epoch=150, accuracy=89.474
+--&gt; epoch=160, accuracy=89.474
+--&gt; epoch=170, accuracy=89.952
+--&gt; epoch=180, accuracy=89.952
+--&gt; epoch=190, accuracy=89.952
+--&gt; epoch=200, accuracy=91.388
+--&gt; epoch=210, accuracy=91.866
+--&gt; epoch=220, accuracy=92.823
+--&gt; epoch=230, accuracy=93.301
+--&gt; epoch=240, accuracy=93.301
+--&gt; epoch=250, accuracy=93.301
+--&gt; epoch=260, accuracy=93.301
+--&gt; epoch=270, accuracy=93.780
+--&gt; epoch=280, accuracy=94.258
+--&gt; epoch=290, accuracy=94.737
+--&gt; epoch=300, accuracy=94.737
+--&gt; epoch=310, accuracy=95.215
+--&gt; epoch=320, accuracy=96.172
+--&gt; epoch=330, accuracy=96.172
+--&gt; epoch=340, accuracy=96.172
+--&gt; epoch=350, accuracy=96.172
+--&gt; epoch=360, accuracy=96.172
+--&gt; epoch=370, accuracy=96.651
+--&gt; epoch=380, accuracy=96.651
+--&gt; epoch=390, accuracy=97.129
+--&gt; epoch=400, accuracy=97.129
+--&gt; epoch=410, accuracy=97.129
+--&gt; epoch=420, accuracy=97.129
+--&gt; epoch=430, accuracy=97.129
+--&gt; epoch=440, accuracy=97.129
+--&gt; epoch=450, accuracy=97.129
+--&gt; epoch=460, accuracy=97.129
+--&gt; epoch=470, accuracy=97.129
+--&gt; epoch=480, accuracy=97.129
+--&gt; epoch=490, accuracy=97.608
+--&gt; epoch=500, accuracy=97.608
+training complete
+final accuracy: 97.608
+saving model weights
+done
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-org6a54ae7" class="outline-3">
+<h3 id="org6a54ae7"><span class="section-number-3">2.5.</span> test time</h3>
+<div class="outline-text-3" id="text-2-5">
+<div class="org-src-container">
+<pre><code>
+data = CatData()
+non_cat_examples = []
+cat_examples = []
+
+for example in data:
+  image, label = example
+  if label == 0:
+    non_cat_examples.append(image)
+  else:
+    cat_examples.append(image)
+
+cat_example = random.choice(cat_examples)
+print('This is a cat!')
+prediction = 'not a cat' if lrpredict(model, cat_example) == 0 else 'cat'
+print(f'The neuron thinks this is a {prediction}')
+plt.imshow(cat_example.reshape(64, 64, 3))
+plt.show()
+
+print('\n\n')
+
+non_cat_example = random.choice(non_cat_examples)
+print('This is not a cat!')
+prediction = 'not a cat' if lrpredict(model, non_cat_example) == 0 else 'cat'
+print(f'The neuron thinks this is a {prediction}')
+plt.imshow(non_cat_example.reshape(64, 64, 3))
+
+</code></pre>
+</div>
+
+<pre>
+This is a cat!
+The neuron thinks this is a cat
+</pre>
+
+
+<div id="orgf0f9c9c" class="figure">
+<p><img src="./.ob-jupyter/074a89d6ea60e0cfb829292ad531705994ac70de.png" alt="074a89d6ea60e0cfb829292ad531705994ac70de.png" />
+</p>
+</div>
+<pre>
+This is not a cat!
+The neuron thinks this is not a cat
+</pre>
+
+
+<div id="orgea57999" class="figure">
+<p><img src="./.ob-jupyter/6a5ff9e7613f6c88112bcd7a6752c48b50949243.png" alt="6a5ff9e7613f6c88112bcd7a6752c48b50949243.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
+<link rel="stylesheet" href="./script_html/css/nord.min.css">
+<script src="./script_html/js/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
