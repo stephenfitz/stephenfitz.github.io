@@ -125,6 +125,8 @@ The threshold is now a learnable **bias** parameter $w_{n+1}$
 - Points on the $w$-side: classified as $+1$
 - Points on the opposite side: classified as $-1$
 
+---
+
 ![The perceptron decision boundary in two dimensions. The weight vector $w$ is normal to the boundary $w_1 x_1 + w_2 x_2 = 0$. Points on the $w$-side are classified as $+1$ (blue); points on the opposite side as $-1$ (red).](figures/decision_boundary.png)
 
 ---
@@ -230,6 +232,8 @@ $$x^{(i)} \leftarrow \frac{x^{(i)}}{\max_j \|x^{(j)}\|}$$
 
 After normalization: $\|x^{(i)}\| \leq 1$ for all $i$
 
+---
+
 ![Data normalization: dividing all input vectors by the maximum norm maps every point inside the unit circle, preserving the classification problem while ensuring $\|x\| \leq 1$.](figures/data_normalization.png)
 
 ---
@@ -262,6 +266,7 @@ Track two quantities across weight updates:
 2. **$w^\top w$** — squared magnitude of learned weights
 
 We will show:
+
 - Alignment grows by at least $\alpha$ per update (steady progress)
 - Magnitude grows by at most 1 per update (bounded growth)
 
@@ -281,7 +286,7 @@ After $T$ updates: $w^\top \tilde{w} \geq T\alpha$
 
 ---
 
-## Lemma 2: Squared Norm Grows by $\leq 1$
+## Lemma 2: Squared Norm Grows by $< 1$
 
 After update $w \leftarrow w + tx$:
 
