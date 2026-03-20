@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Rosenblatt Perceptron &mdash; Flashcards</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            startup: {
+                typeset: false
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Light theme (default) */
+        html {
+            background-color: #f5f5f5;
+            transition: background-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #2a2a2a;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 3rem;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Dark theme */
+        html.dark {
+            background-color: #1a1a1a;
+        }
+
+        body.dark {
+            color: #d4d4d4;
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+        }
+
+        /* Header */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5em;
+            padding-bottom: 0.5em;
+            border-bottom: 3px solid #666;
+            flex-wrap: wrap;
+            gap: 1em;
+        }
+
+        body.dark .header-container {
+            border-color: #888;
+        }
+
+        h1 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 24pt;
+            color: #1a1a1a;
+            letter-spacing: 0.02em;
+            font-weight: 700;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        body.dark h1 {
+            color: #f0f0f0;
+        }
+
+        /* Theme toggle switch */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.8em;
+        }
+
+        .toggle-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #666;
+        }
+
+        body.dark .toggle-label {
+            color: #aaa;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background-color: #bbb;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            border: 2px solid #999;
+        }
+
+        body.dark .toggle-switch {
+            background-color: #666;
+            border-color: #888;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        body.dark .toggle-slider {
+            transform: translateX(30px);
+            background-color: #2a2a2a;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+
+        .toggle-slider::before {
+            content: '\2600';
+            color: #2a2a2a;
+        }
+
+        body.dark .toggle-slider::before {
+            content: '\263E';
+            color: #c0c8d8;
+        }
+
+        /* Article back link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2em;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #2a2a2a;
+        }
+
+        body.dark .back-link {
+            color: #aaa;
+        }
+
+        body.dark .back-link:hover {
+            color: #e8e8e8;
+        }
+
+        /* Card counter */
+        .card-counter {
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            color: #888;
+            margin-bottom: 1.5em;
+        }
+
+        body.dark .card-counter {
+            color: #999;
+        }
+
+        /* Flashcard container */
+        .flashcard-scene {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 680px;
+            min-height: 340px;
+            margin: 0 auto 2em auto;
+            cursor: pointer;
+        }
+
+        .flashcard {
+            position: relative;
+            width: 100%;
+            min-height: 340px;
+            transition: transform 0.6s ease;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-face {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 340px;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2.5em 2.5em;
+            border-radius: 10px;
+            border: 1px solid #d5d5d5;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body.dark .flashcard-face {
+            border-color: #555;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+        }
+
+        .flashcard-front {
+            background-color: #fafafa;
+        }
+
+        body.dark .flashcard-front {
+            background-color: #333;
+        }
+
+        .flashcard-back {
+            background-color: #f0f4f8;
+            transform: rotateY(180deg);
+        }
+
+        body.dark .flashcard-back {
+            background-color: #2f3640;
+        }
+
+        .flashcard-face .face-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 9pt;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #aaa;
+            margin-bottom: 1em;
+            font-weight: 600;
+        }
+
+        body.dark .flashcard-face .face-label {
+            color: #777;
+        }
+
+        .flashcard-front .card-text {
+            font-size: 14pt;
+            line-height: 1.5;
+            text-align: center;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        body.dark .flashcard-front .card-text {
+            color: #e8e8e8;
+        }
+
+        .flashcard-back .card-text {
+            font-size: 12pt;
+            line-height: 1.6;
+            text-align: center;
+            color: #2a2a2a;
+        }
+
+        body.dark .flashcard-back .card-text {
+            color: #d4d4d4;
+        }
+
+        .tap-hint {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 9pt;
+            color: #bbb;
+            margin-top: 1.2em;
+        }
+
+        body.dark .tap-hint {
+            color: #666;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            font-weight: 500;
+            padding: 0.7em 1.8em;
+            border-radius: 4px;
+            border: 2px solid #1a1a1a;
+            background-color: #e8e8e8;
+            color: #2a2a2a;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        body.dark .controls button {
+            background-color: #1a1a1a;
+            color: #e8e8e8;
+            border-color: #666;
+        }
+
+        .controls button:hover {
+            background-color: #f5f5f5;
+            border-color: #666;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        body.dark .controls button:hover {
+            background-color: #000;
+            border-color: #888;
+            box-shadow: 0 2px 8px rgba(102,102,102,0.4);
+        }
+
+        .controls button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .controls button:disabled:hover {
+            background-color: #e8e8e8;
+            border-color: #1a1a1a;
+            transform: none;
+            box-shadow: none;
+        }
+
+        body.dark .controls button:disabled:hover {
+            background-color: #1a1a1a;
+            border-color: #666;
+        }
+
+        .shuffle-btn {
+            border-style: dashed !important;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 3em;
+            padding-top: 1.5em;
+            border-top: 2px solid #ccc;
+            text-align: center;
+            color: #888;
+            font-size: 9pt;
+        }
+
+        body.dark footer {
+            border-color: #555;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            body {
+                padding: 2em 1.5em;
+                margin: 1rem;
+            }
+
+            h1 {
+                font-size: 18pt;
+            }
+
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .flashcard-scene {
+                min-height: 300px;
+            }
+
+            .flashcard {
+                min-height: 300px;
+            }
+
+            .flashcard-face {
+                min-height: 300px;
+                padding: 2em 1.5em;
+            }
+
+            .flashcard-front .card-text {
+                font-size: 13pt;
+            }
+
+            .flashcard-back .card-text {
+                font-size: 11pt;
+            }
+
+            .controls {
+                gap: 0.6em;
+            }
+
+            .controls button {
+                padding: 0.6em 1.2em;
+                font-size: 10pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <h1>The Rosenblatt Perceptron &mdash; Flashcards</h1>
+        <div class="theme-toggle">
+            <span class="toggle-label">Theme</span>
+            <div class="toggle-switch" onclick="toggleTheme()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </div>
+
+    <a href="perceptron-light.html" class="back-link article-link" data-article="perceptron">&larr; Back to article</a>
+
+    <div class="card-counter" id="cardCounter">Card 1 of 25</div>
+
+    <div class="flashcard-scene" id="flashcardScene" onclick="flipCard()">
+        <div class="flashcard" id="flashcard">
+            <div class="flashcard-face flashcard-front">
+                <div class="face-label">Question</div>
+                <div class="card-text" id="frontText"></div>
+                <div class="tap-hint">Click to reveal answer</div>
+            </div>
+            <div class="flashcard-face flashcard-back">
+                <div class="face-label">Answer</div>
+                <div class="card-text" id="backText"></div>
+                <div class="tap-hint">Click to see question</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" onclick="prevCard()">&larr; Previous</button>
+        <button class="shuffle-btn" onclick="shuffleDeck()">Shuffle</button>
+        <button id="nextBtn" onclick="nextCard()">Next &rarr;</button>
+    </div>
+
+    <footer>
+        <p>Stephen Fitz &middot; 2026</p>
+    </footer>
+
+    <script>
+        // Flashcard data
+        var cards = [
+            {
+                front: "Who invented the perceptron and when?",
+                back: "Frank Rosenblatt in 1957, while working at the Cornell Aeronautical Laboratory on a grant from the Office of Naval Research. The Mark I Perceptron was a hardware device designed for pattern recognition."
+            },
+            {
+                front: "What is the perceptron\u2019s mathematical model?",
+                back: "It computes a weighted sum \\(z = w^\\top x = \\sum_i w_i x_i\\) and applies a sign activation: \\(y = \\text{sgn}(w^\\top x)\\), outputting \\(+1\\) or \\(-1\\). It is a binary classifier."
+            },
+            {
+                front: "How is the threshold absorbed into the weight vector?",
+                back: "Append a constant \\(x_{n+1} = 1\\) to every input and set \\(w_{n+1} = -\\theta\\). Then \\(\\sum w_i x_i > \\theta\\) becomes \\(\\sum w_i x_i > 0\\) in the augmented space, and the decision rule simplifies to \\(y = \\text{sgn}(w^\\top x)\\)."
+            },
+            {
+                front: "What is the geometric interpretation of the perceptron?",
+                back: "The equation \\(w^\\top x = 0\\) defines a hyperplane in \\(\\mathbb{R}^n\\). The weight vector \\(w\\) is normal (perpendicular) to this hyperplane. Points on the \\(w\\)-side are classified as \\(+1\\); points on the opposite side as \\(-1\\)."
+            },
+            {
+                front: "What does it mean for data to be linearly separable?",
+                back: "A dataset \\(\\{(x^{(i)}, t^{(i)})\\}\\) is linearly separable if there exists a weight vector \\(w\\) such that \\(t^{(i)} \\cdot w^\\top x^{(i)} > 0\\) for all \\(i\\). That is, every example is on the correct side of the hyperplane."
+            },
+            {
+                front: "What is the perceptron loss function?",
+                back: "\\(L_w(x, t) = \\max(0, -t \\cdot w^\\top x)\\). Zero when the prediction is correct (\\(t\\) and \\(w^\\top x\\) have same sign), and \\(|w^\\top x|\\) when incorrect. It is piecewise-linear."
+            },
+            {
+                front: "What is the perceptron learning rule?",
+                back: "When a mistake is made on example \\((x, t)\\): \\(w \\leftarrow w + \\eta(t - y)x\\). With \\(\\eta = 1/2\\), this simplifies to \\(w \\leftarrow w + tx\\). No update occurs on correctly classified examples."
+            },
+            {
+                front: "Describe the full perceptron algorithm.",
+                back: "1) Initialize \\(w = 0\\). 2) Repeat until no mistakes: for each \\((x^{(i)}, t^{(i)})\\), compute \\(y = \\text{sgn}(w^\\top x^{(i)})\\); if \\(y \\neq t^{(i)}\\), update \\(w \\leftarrow w + t^{(i)} x^{(i)}\\). 3) Return \\(w\\). Each full pass is called an epoch."
+            },
+            {
+                front: "Why is scaling the weight vector irrelevant to the decision boundary?",
+                back: "Because \\(\\text{sgn}(cw^\\top x) = \\text{sgn}(w^\\top x)\\) for any \\(c > 0\\). The hyperplane \\(w^\\top x = 0\\) is identical regardless of the magnitude of \\(w\\). This means we can normalize data without changing the problem."
+            },
+            {
+                front: "What is the margin \\(\\alpha\\) in the perceptron convergence theorem?",
+                back: "The minimum distance of any training point from the decision boundary defined by a unit-length separating vector \\(\\tilde{w}\\): \\(\\alpha = \\min_x |\\tilde{w}^\\top x| > 0\\). A larger margin means the classes are well-separated."
+            },
+            {
+                front: "State the perceptron convergence theorem.",
+                back: "If the training data is linearly separable with margin \\(\\alpha > 0\\) (w.r.t. unit \\(\\tilde{w}\\), data normalized so \\(\\|x\\| \\leq 1\\)), the perceptron algorithm finds a separating hyperplane in at most \\(1/\\alpha^2\\) updates."
+            },
+            {
+                front: "What does Lemma 1 of the convergence proof show?",
+                back: "Each update increases \\(w^\\top \\tilde{w}\\) by at least \\(\\alpha\\). After \\(T\\) updates: \\(w^\\top \\tilde{w} \\geq T\\alpha\\). This means the learned weights make steady progress toward alignment with the target direction."
+            },
+            {
+                front: "What does Lemma 2 of the convergence proof show?",
+                back: "Each update increases \\(w^\\top w\\) by at most 1. After \\(T\\) updates: \\(w^\\top w < T\\), so \\(\\|w\\| < \\sqrt{T}\\). The key is that \\(2t \\cdot w^\\top x < 0\\) (misclassification) and \\(\\|x\\|^2 \\leq 1\\) (normalization)."
+            },
+            {
+                front: "How are Lemmas 1 and 2 combined to prove the bound?",
+                back: "By Cauchy-Schwarz: \\(T\\alpha \\leq w^\\top \\tilde{w} \\leq \\|w\\| \\cdot \\|\\tilde{w}\\| = \\|w\\| < \\sqrt{T}\\). So \\(T\\alpha < \\sqrt{T}\\), squaring gives \\(T^2\\alpha^2 < T\\), hence \\(T < 1/\\alpha^2\\)."
+            },
+            {
+                front: "If the margin is \\(\\alpha = 0.1\\), what is the maximum number of perceptron updates?",
+                back: "\\(1/\\alpha^2 = 1/0.01 = 100\\) updates."
+            },
+            {
+                front: "What is the XOR problem?",
+                back: "Four points in \\(\\mathbb{R}^2\\): (0,0) \\(\\to -1\\), (0,1) \\(\\to +1\\), (1,0) \\(\\to +1\\), (1,1) \\(\\to -1\\). No single line can separate the positive from negative examples. It is not linearly separable."
+            },
+            {
+                front: "What is the kernel trick?",
+                back: "Mapping inputs into a higher-dimensional feature space where they become linearly separable. For XOR, adding \\(x_3 = |x_1 + x_2|\\) lifts the data to \\(\\mathbb{R}^3\\) where a separating hyperplane exists."
+            },
+            {
+                front: "What was the impact of Minsky and Papert\u2019s Perceptrons (1969)?",
+                back: "They proved a single perceptron cannot solve non-linearly-separable problems like XOR. This was widely misinterpreted as a fundamental limitation of all neural networks, contributing to the AI winter. In fact, multi-layer networks can represent any continuous function."
+            },
+            {
+                front: "How does the perceptron learning rule relate to gradient descent?",
+                back: "The perceptron update \\(w \\leftarrow w + tx\\) is stochastic sub-gradient descent on the perceptron loss \\(L = \\max(0, -t \\cdot w^\\top x)\\). The sub-gradient is \\(-tx\\) when misclassified and \\(0\\) when correct."
+            },
+            {
+                front: "How do SVMs differ from the perceptron?",
+                back: "SVMs explicitly optimize for the maximum margin hyperplane\u2014the unique solution with the best generalization guarantees. The perceptron finds some separating hyperplane, which is non-unique and depends on example ordering."
+            },
+            {
+                front: "What does the perceptron do on a false negative (\\(t=+1, y=-1\\))?",
+                back: "The update \\(w \\leftarrow w + \\eta(t-y)x = w + 2\\eta x\\) moves the weight vector toward \\(x\\), making it more likely to correctly classify this point as positive in the future."
+            },
+            {
+                front: "What does the perceptron do on a false positive (\\(t=-1, y=+1\\))?",
+                back: "The update \\(w \\leftarrow w + \\eta(t-y)x = w - 2\\eta x\\) moves the weight vector away from \\(x\\), making it less likely to incorrectly classify this point as positive."
+            },
+            {
+                front: "What happens when the perceptron is run on non-separable data?",
+                back: "The algorithm does not converge. It cycles through the data indefinitely, making and correcting mistakes without ever reaching a state where all examples are correctly classified."
+            },
+            {
+                front: "Why is the convergence bound \\(1/\\alpha^2\\) important beyond the perceptron?",
+                back: "It reveals a fundamental relationship between geometry (the margin) and computation (number of updates). This connection reappears in SVMs, which maximize the margin, and in learning theory more broadly."
+            },
+            {
+                front: "What is the relationship between perceptrons and modern deep learning?",
+                back: "The perceptron introduced the core paradigm: define a parameterized model, define a loss function, and adjust parameters by gradient descent. Every neural network today follows this template, with backpropagation generalizing the perceptron\u2019s update rule to multi-layer networks."
+            }
+        ];
+
+        var currentIndex = 0;
+        var deck = cards.map(function(_, i) { return i; });
+
+        // Theme management
+        var savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.body.classList.add('dark');
+        }
+        updateArticleLink();
+
+        function toggleTheme() {
+            var isDark = document.body.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateArticleLink();
+        }
+
+        function updateArticleLink() {
+            var isDark = document.body.classList.contains('dark');
+            var theme = isDark ? 'dark' : 'light';
+            document.querySelectorAll('.article-link').forEach(function(link) {
+                var article = link.getAttribute('data-article');
+                link.href = article + '-' + theme + '.html';
+            });
+        }
+
+        // Card rendering
+        function renderCard() {
+            var card = cards[deck[currentIndex]];
+            document.getElementById('frontText').innerHTML = card.front;
+            document.getElementById('backText').innerHTML = card.back;
+            document.getElementById('cardCounter').textContent = 'Card ' + (currentIndex + 1) + ' of ' + deck.length;
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            document.getElementById('nextBtn').disabled = currentIndex === deck.length - 1;
+
+            // Reset flip
+            document.getElementById('flashcard').classList.remove('is-flipped');
+
+            // Typeset MathJax
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('frontText'), document.getElementById('backText')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
+            }
+        }
+
+        function flipCard() {
+            document.getElementById('flashcard').classList.toggle('is-flipped');
+            // Re-render MathJax on flip to ensure back side renders
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('backText')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCard();
+            }
+        }
+
+        function nextCard() {
+            if (currentIndex < deck.length - 1) {
+                currentIndex++;
+                renderCard();
+            }
+        }
+
+        function shuffleDeck() {
+            // Fisher-Yates shuffle
+            for (var i = deck.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = deck[i];
+                deck[i] = deck[j];
+                deck[j] = temp;
+            }
+            currentIndex = 0;
+            renderCard();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                prevCard();
+            } else if (e.key === 'ArrowRight') {
+                nextCard();
+            } else if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                flipCard();
+            }
+        });
+
+        // Initial render
+        renderCard();
+    </script>
+</body>
+</html>

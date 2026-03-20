@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+
+.reveal {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 28px;
+    color: #2a2a2a;
+}
+
+.reveal .slides {
+    text-align: left;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #1a1a1a;
+    text-transform: none;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.reveal h1 { font-size: 1.8em; }
+.reveal h2 { font-size: 1.4em; color: #333; }
+.reveal h3 { font-size: 1.15em; color: #444; }
+
+.reveal p { margin: 0 0 0.5em 0; }
+
+.reveal ul, .reveal ol {
+    display: block;
+    margin: 0.3em 0 0.6em 0;
+}
+
+.reveal li { margin-bottom: 0.3em; }
+
+.reveal blockquote {
+    width: 90%;
+    margin: 0.5em auto;
+    padding: 0.4em 0.8em;
+    border-left: 4px solid #aaa;
+    color: #555;
+    background-color: #fafafa;
+    font-style: italic;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+.reveal blockquote p:last-child { margin-bottom: 0; }
+
+.reveal code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.85em;
+    background-color: #f5f5f5;
+    padding: 0.15em 0.3em;
+    border-radius: 3px;
+    color: #3a3a3a;
+    border: 1px solid #ddd;
+}
+
+.reveal pre {
+    width: 100%;
+    font-size: 0.55em;
+    box-shadow: none;
+}
+
+.reveal pre code {
+    display: block;
+    background: #f8f8f8;
+    border: 1px solid #d5d5d5;
+    border-radius: 6px;
+    padding: 12px;
+    max-height: 400px;
+    line-height: 1.45;
+    overflow: auto;
+    color: #2a2a2a;
+}
+
+.reveal img {
+    display: block;
+    max-width: 55%;
+    max-height: 450px;
+    margin: 0.5em auto;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    padding: 6px;
+    background-color: #fafafa;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.reveal img + em, .reveal :has(> img) + p > em:only-child {
+    display: block;
+    text-align: center;
+    font-size: 0.65em;
+    color: #666;
+    margin-top: 0.3em;
+}
+
+.reveal table {
+    border-collapse: collapse;
+    margin: 0.5em auto;
+    font-size: 0.75em;
+}
+
+.reveal th, .reveal td {
+    border: 1px solid #bbb;
+    padding: 6px 10px;
+    text-align: left;
+}
+
+.reveal th {
+    background-color: #e8e8e8;
+    font-weight: 600;
+    color: #2a2a2a;
+}
+
+.reveal tr:nth-child(even) { background-color: #f5f5f5; }
+
+.reveal a { color: #444; text-decoration: underline; text-decoration-color: #999; }
+
+.reveal .katex { font-size: 1.0em; }
+.reveal .katex-display { margin: 0.5em 0; }
+
+.reveal .slide-number {
+    color: #666;
+    font-size: 14px;
+}
+
+.reveal .controls .navigate-left,
+.reveal .controls .navigate-right,
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-down {
+    color: #888;
+}
+
+.reveal .progress span { background: #888; }
+
+body { background-color: #f5f5f5; }
+.reveal .slide-background { background-color: white; }
+
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+<h1>The Rosenblatt Perceptron</h1>
+            </section>
+            <section>
+<h2>Outline</h2>
+<ul>
+<li>Historical context</li>
+<li>The perceptron neuron</li>
+<li>Geometric interpretation</li>
+<li>The learning setup</li>
+<li>The learning rule</li>
+<li>Invariance to scaling</li>
+<li>Proof of convergence</li>
+<li>The non-separable case</li>
+<li>Connections to gradient descent and SVMs</li>
+</ul>
+            </section>
+            <section>
+<h2>Part I: Historical Context</h2>
+            </section>
+            <section>
+<h2>The Mark I Perceptron</h2>
+<ul>
+<li>Frank Rosenblatt, Cornell Aeronautical Laboratory, 1957</li>
+<li>Goal: a machine that could <strong>learn to recognize patterns</strong></li>
+<li>Built with funding from the Office of Naval Research</li>
+<li>Designed for military applications (e.g., detecting naval mines from sonar)</li>
+</ul>
+            </section>
+            <section>
+<h2>The Hype</h2>
+<p><img alt="1950s article &quot;Perceptron Thinks&quot;." src="figures/perceptron_thinks.png" /></p>
+            </section>
+            <section>
+<h2>Media Frenzy</h2>
+<blockquote>
+<p>The Navy revealed the embryo of an electronic computer that it expects will be able to walk, talk, see, write, reproduce itself and be conscious of its existence. — <em>New York Times</em>, 1958</p>
+</blockquote>
+<p>The perceptron is a single linear classifier — but the core insight was real: a machine could adjust its own parameters in response to data</p>
+            </section>
+            <section>
+<h2>Rosenblatt's Vision</h2>
+<p><img alt="Rosenblatt's 1958 article &quot;The Design of an Intelligent Automaton&quot; in Research Trends, published by the Cornell Aeronautical Laboratory." src="figures/rosenblatt_article.jpg" /></p>
+            </section>
+            <section>
+<h2>The Backlash</h2>
+<ul>
+<li>Minsky and Papert, <em>Perceptrons</em> (1969)</li>
+<li>Proved a single perceptron cannot solve problems that are not <strong>linearly separable</strong> (e.g., XOR)</li>
+<li>Widely misinterpreted as a limitation of neural networks in general</li>
+<li>Contributed to the <strong>AI winter</strong> — decades of reduced funding</li>
+</ul>
+            </section>
+            <section>
+<h2>Why the Perceptron Still Matters</h2>
+<ul>
+<li>First algorithm that genuinely <strong>learned from data</strong></li>
+<li>Introduced the paradigm: model + loss + gradient-based optimization</li>
+<li>The learning rule is a direct precursor to <strong>backpropagation</strong></li>
+<li>Understanding the perceptron is understanding the foundation of deep learning</li>
+</ul>
+            </section>
+            <section>
+<h2>Part II: The Perceptron Neuron</h2>
+            </section>
+            <section>
+<h2>Biological Inspiration</h2>
+<ul>
+<li>A biological neuron receives signals through <strong>dendrites</strong></li>
+<li>Integrates them in the <strong>cell body</strong> (soma)</li>
+<li>If the combined signal exceeds a threshold, fires along the <strong>axon</strong></li>
+<li>The perceptron abstracts this into a mathematical model</li>
+</ul>
+<p><img alt="A biological neuron: signals arrive through the dendrites, are integrated in the cell body, and propagate along the axon to the terminal bulb." src="figures/bio_neuron.png" /></p>
+            </section>
+            <section>
+<h2>Mathematical Model</h2>
+<p>Input vector $x = (x_1, x_2, \ldots, x_n) \in \R^n$, <strong>weight vector</strong> $w$</p>
+<p>$$z = w^\top x = \sum_{i=1}^n w_i x_i$$</p>
+<p>Output determined by comparing to a <strong>threshold</strong> $\theta$:</p>
+<p>$$y = \begin{cases} +1 & \text{if } w^\top x > \theta \\ -1 & \text{if } w^\top x \leq \theta \end{cases}$$</p>
+            </section>
+            <section>
+<h2>The Perceptron Diagram</h2>
+<p><img alt="The perceptron as a computational diagram: inputs $x_1, \ldots, x_n$ are multiplied by weights $w_1, \ldots, w_n$, summed, and passed through an activation function to produce the output." src="figures/perceptron_diagram.png" /></p>
+            </section>
+            <section>
+<h2>Absorbing the Threshold (Bias Trick)</h2>
+<p>Append $x_{n+1} = 1$ to every input, set $w_{n+1} = -\theta$:</p>
+<p>$$\sum_{i=1}^n w_i x_i > \theta \iff \sum_{i=1}^{n+1} w_i x_i > 0$$</p>
+<p>The activation function simplifies to:</p>
+<p>$$y = \sgn(w^\top x)$$</p>
+<p>The threshold is now a learnable <strong>bias</strong> parameter $w_{n+1}$</p>
+            </section>
+            <section>
+<h2>Part III: Geometric Interpretation</h2>
+            </section>
+            <section>
+<h2>The Decision Boundary</h2>
+<ul>
+<li>$w^\top x = 0$ defines a <strong>hyperplane</strong> dividing $\R^n$ into two half-spaces</li>
+<li>The weight vector $w$ is <strong>normal</strong> (perpendicular) to the boundary</li>
+<li>Points on the $w$-side: classified as $+1$</li>
+<li>Points on the opposite side: classified as $-1$</li>
+</ul>
+<p><img alt="The perceptron decision boundary in two dimensions. The weight vector $w$ is normal to the boundary $w_1 x_1 + w_2 x_2 = 0$. Points on the $w$-side are classified as $+1$ (blue); points on the opposite side as $-1$ (red)." src="figures/decision_boundary.png" /></p>
+            </section>
+            <section>
+<h2>Linear Separability</h2>
+<p>Dataset $D = \{(x^{(i)}, t^{(i)})\}$ is <strong>linearly separable</strong> if there exists $w$ such that:</p>
+<p>$$t^{(i)} \cdot w^\top x^{(i)} > 0 \quad \text{for all } i$$</p>
+<p>Every example is on the correct side of the hyperplane</p>
+<p>Not all datasets are linearly separable (e.g., XOR)</p>
+            </section>
+            <section>
+<h2>Part IV: The Learning Setup</h2>
+            </section>
+            <section>
+<h2>Supervised Learning</h2>
+<p>Given a <strong>training set</strong> of labeled examples:</p>
+<p>$$D = \{(x^{(1)}, t^{(1)}), \ldots, (x^{(m)}, t^{(m)})\}$$</p>
+<ul>
+<li>Each $x^{(i)} \in \R^n$ is an input vector</li>
+<li>Each $t^{(i)} \in \{-1, +1\}$ is the <strong>target label</strong></li>
+<li>Goal: find $w$ such that $\sgn(w^\top x^{(i)}) = t^{(i)}$ for all $i$</li>
+</ul>
+            </section>
+            <section>
+<h2>The Perceptron Loss Function</h2>
+<p>$$L_w(x, t) = \max(0, -t \cdot w^\top x)$$</p>
+<ul>
+<li><strong>Correct prediction</strong>: $t$ and $w^\top x$ same sign $\Rightarrow$ $L = 0$</li>
+<li><strong>Incorrect prediction</strong>: $t$ and $w^\top x$ opposite signs $\Rightarrow$ $L = |w^\top x|$</li>
+</ul>
+<p>The further a point is on the wrong side, the greater the loss</p>
+            </section>
+            <section>
+<h2>Part V: The Learning Rule</h2>
+            </section>
+            <section>
+<h2>Weight Update Rule</h2>
+<p>When the perceptron misclassifies $(x, t)$, update:</p>
+<p>$$w \leftarrow w + \eta(t - y)x$$</p>
+<ul>
+<li><strong>False negative</strong> ($t = +1, y = -1$): $w \leftarrow w + 2\eta x$ — move toward $x$</li>
+<li><strong>False positive</strong> ($t = -1, y = +1$): $w \leftarrow w - 2\eta x$ — move away from $x$</li>
+<li><strong>Correct</strong>: no update</li>
+</ul>
+            </section>
+            <section>
+<h2>Simplified Form</h2>
+<p>Setting $\eta = 1/2$:</p>
+<p>$$w \leftarrow w + tx$$</p>
+<ul>
+<li>Adds $+x$ when a positive example was missed</li>
+<li>Adds $-x$ when a negative example was misclassified</li>
+<li>Pushes the weight vector toward the correct classification</li>
+</ul>
+            </section>
+            <section>
+<h2>The Algorithm</h2>
+<ol>
+<li>Initialize $w = (0, 0, \ldots, 0)$</li>
+<li>Repeat until no mistakes on the training set:<ul>
+<li>For each $(x^{(i)}, t^{(i)}) \in D$:<ul>
+<li>Compute $y = \sgn(w^\top x^{(i)})$</li>
+<li>If $y \neq t^{(i)}$: update $w \leftarrow w + t^{(i)} x^{(i)}$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Return $w$</li>
+</ol>
+<p>Each full pass = one <strong>epoch</strong></p>
+            </section>
+            <section>
+<h2>Learning in Action</h2>
+<p><img alt="The perceptron learning algorithm in action: the decision boundary (black line) rotates through a sequence of updates until it correctly separates the two classes." src="figures/perceptron_learning_steps.png" /></p>
+            </section>
+            <section>
+<h2>Part VI: Invariance to Scaling</h2>
+            </section>
+            <section>
+<h2>Scaling Does Not Change the Boundary</h2>
+<ul>
+<li>If $w$ separates the data, so does $cw$ for any $c > 0$</li>
+<li>$\sgn(cw^\top x) = \sgn(w^\top x)$ — same hyperplane</li>
+</ul>
+<p>We can <strong>normalize</strong> the data without loss of generality:</p>
+<p>$$x^{(i)} \leftarrow \frac{x^{(i)}}{\max_j \|x^{(j)}\|}$$</p>
+<p>After normalization: $\|x^{(i)}\| \leq 1$ for all $i$</p>
+<p><img alt="Data normalization: dividing all input vectors by the maximum norm maps every point inside the unit circle, preserving the classification problem while ensuring $\|x\| \leq 1$." src="figures/data_normalization.png" /></p>
+            </section>
+            <section>
+<h2>Part VII: Proof of Convergence</h2>
+            </section>
+            <section>
+<h2>Setup</h2>
+<ul>
+<li>Data is linearly separable and normalized ($\|x^{(i)}\| \leq 1$)</li>
+<li>There exists a unit vector $\tilde{w}$ ($\|\tilde{w}\| = 1$) that correctly classifies all examples</li>
+<li><strong>Margin</strong> $\alpha$: minimum distance from any point to the boundary</li>
+</ul>
+<p>$$\alpha = \min_{x \in D} |\tilde{w}^\top x| > 0$$</p>
+            </section>
+            <section>
+<h2>The Margin</h2>
+<p><img alt="The margin $\alpha$ is the distance from the decision boundary $\tilde{w}^\top x = 0$ to the nearest data point (circled). The unit vector $\tilde{w}$ is normal to the boundary. The dashed lines indicate the margin band." src="figures/margin.png" /></p>
+            </section>
+            <section>
+<h2>Proof Strategy</h2>
+<p>Track two quantities across weight updates:</p>
+<ol>
+<li><strong>$w^\top \tilde{w}$</strong> — alignment with the target direction</li>
+<li><strong>$w^\top w$</strong> — squared magnitude of learned weights</li>
+</ol>
+<p>We will show:
+- Alignment grows by at least $\alpha$ per update (steady progress)
+- Magnitude grows by at most 1 per update (bounded growth)</p>
+<p>Cauchy-Schwarz forces the algorithm to terminate</p>
+            </section>
+            <section>
+<h2>Lemma 1: Alignment Grows by $\geq \alpha$</h2>
+<p>After update $w \leftarrow w + tx$:</p>
+<p>$$(w + tx)^\top \tilde{w} = w^\top \tilde{w} + t \cdot \tilde{w}^\top x$$</p>
+<p>Since $\tilde{w}$ classifies correctly: $t \cdot \tilde{w}^\top x = |\tilde{w}^\top x| \geq \alpha$</p>
+<p>After $T$ updates: $w^\top \tilde{w} \geq T\alpha$</p>
+            </section>
+            <section>
+<h2>Lemma 2: Squared Norm Grows by $\leq 1$</h2>
+<p>After update $w \leftarrow w + tx$:</p>
+<p>$$(w + tx)^\top(w + tx) = w^\top w + \underbrace{2t \cdot w^\top x}_{< \, 0} + \underbrace{\|x\|^2}_{\leq \, 1}$$</p>
+<ul>
+<li>$2t \cdot w^\top x < 0$ because update only fires on mistakes</li>
+<li>$\|x\|^2 \leq 1$ by normalization</li>
+</ul>
+<p>After $T$ updates: $w^\top w < T$, so $\|w\| < \sqrt{T}$</p>
+            </section>
+            <section>
+<h2>Combining via Cauchy-Schwarz</h2>
+<p>$$T\alpha \leq w^\top \tilde{w} \leq \|w\| \cdot \|\tilde{w}\| = \|w\| < \sqrt{T}$$</p>
+<p>Therefore $T\alpha < \sqrt{T}$, squaring both sides:</p>
+<p>$$\boxed{T < \frac{1}{\alpha^2}}$$</p>
+            </section>
+            <section>
+<h2>The Convergence Theorem</h2>
+<p><strong>Theorem.</strong> If the training data is linearly separable with margin $\alpha > 0$, the perceptron converges in at most $1/\alpha^2$ updates.</p>
+<ul>
+<li>Margin $\alpha = 0.1$ $\Rightarrow$ at most 100 updates</li>
+<li>Large margin = easy problem, few updates</li>
+<li>Small margin = hard problem, many updates</li>
+</ul>
+<p>The <strong>geometry</strong> (margin) determines the <strong>computation</strong> (convergence speed)</p>
+            </section>
+            <section>
+<h2>Part VIII: The Non-Separable Case</h2>
+            </section>
+            <section>
+<h2>XOR: The Classic Failure</h2>
+<table>
+<thead>
+<tr>
+<th>$x_1$</th>
+<th>$x_2$</th>
+<th>$t$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>$-1$</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>$+1$</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>$+1$</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>$-1$</td>
+</tr>
+</tbody>
+</table>
+<p>No line can separate positive from negative — the perceptron algorithm will cycle forever</p>
+            </section>
+            <section>
+<h2>The Kernel Trick</h2>
+<p>Map inputs to a higher-dimensional space where they become separable</p>
+<p>For XOR, add $x_3 = |x_1 + x_2|$: data lifts from $\R^2$ to $\R^3$ where a separating plane exists</p>
+<p><img alt="The XOR problem solved by lifting to a higher dimension. Left: the four XOR points in 2D cannot be separated by any line. Center and right: adding a third coordinate $z = |x + y|$ lifts the points into 3D, where a separating plane exists." src="figures/xor_lifting.png" /></p>
+            </section>
+            <section>
+<h2>From Perceptrons to Neural Networks</h2>
+<ul>
+<li>Perceptron limitation is about the <strong>single-layer architecture</strong>, not neural networks</li>
+<li>Multi-layer networks with nonlinear activations can represent any continuous function (<strong>Universal Approximation Theorem</strong>)</li>
+<li>Minsky &amp; Papert were mathematically correct but widely misinterpreted</li>
+<li>The resulting AI winter delayed neural network research by decades</li>
+</ul>
+            </section>
+            <section>
+<h2>Part IX: Connections</h2>
+            </section>
+            <section>
+<h2>Connection to Gradient Descent</h2>
+<p>The perceptron update is <strong>stochastic sub-gradient descent</strong> on:</p>
+<p>$$L_w(x, t) = \max(0, -t \cdot w^\top x)$$</p>
+<p>Sub-gradient: $\frac{\partial L}{\partial w} = -tx$ when misclassified, $0$ otherwise</p>
+<p>Gradient descent step: $w \leftarrow w - \eta(-tx) = w + \eta \cdot tx$</p>
+<p>This is exactly the perceptron update rule</p>
+            </section>
+            <section>
+<h2>Connection to SVMs</h2>
+<ul>
+<li>The perceptron finds <strong>some</strong> separating hyperplane (depends on data ordering)</li>
+<li><strong>Support vector machines</strong> find the <strong>maximum-margin</strong> hyperplane</li>
+</ul>
+<p><img alt="Two different runs of the perceptron on the same data produce two different separating hyperplanes. Both are valid solutions, but the perceptron provides no guarantee about which one it will find." src="figures/solutions_not_unique.png" /></p>
+            </section>
+            <section>
+<h2>Perceptron vs. SVM</h2>
+<ul>
+<li>Both solve linear classification</li>
+<li>Both extend to nonlinear boundaries via the kernel trick</li>
+<li>Perceptron: simpler, faster, non-unique solution</li>
+<li>SVM: more expensive, unique maximum-margin solution with strong theoretical guarantees</li>
+</ul>
+            </section>
+            <section>
+<h2>Summary</h2>
+<ul>
+<li><strong>Perceptron neuron</strong>: $y = \sgn(w^\top x)$ — weighted sum through sign activation</li>
+<li><strong>Decision boundary</strong>: hyperplane $w^\top x = 0$ with $w$ as normal vector</li>
+<li><strong>Learning rule</strong>: $w \leftarrow w + tx$ — update only on mistakes</li>
+<li><strong>Perceptron loss</strong>: $L = \max(0, -t \cdot w^\top x)$ — equivalent to sub-gradient descent</li>
+<li><strong>Convergence</strong>: at most $1/\alpha^2$ updates for separable data</li>
+<li><strong>Proof</strong>: alignment grows by $\geq \alpha$, norm by $\leq 1$, Cauchy-Schwarz bounds $T$</li>
+<li><strong>Limitations</strong>: cannot learn non-separable functions (XOR)</li>
+<li><strong>Legacy</strong>: introduced model + loss + gradient descent — the template for all modern neural networks</li>
+</ul>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            transition: 'none',
+            slideNumber: false,
+            center: true,
+            width: 1200,
+            height: 700,
+            margin: 0.06,
+            hash: true,
+            plugins: [ RevealHighlight ]
+        });
+
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false,
+            trust: true,
+            strict: false,
+            macros: {
+                "\\logit": "\\operatorname{logit}",
+                "\\softmax": "\\operatorname{softmax}",
+                "\\sigmoid": "\\operatorname{sigmoid}",
+                "\\sgn": "\\operatorname{sgn}",
+                "\\sign": "\\operatorname{sign}",
+                "\\argmax": "\\operatorname{argmax}",
+                "\\argmin": "\\operatorname{argmin}",
+                "\\Var": "\\operatorname{Var}",
+                "\\Cov": "\\operatorname{Cov}",
+                "\\Corr": "\\operatorname{Corr}",
+                "\\E": "\\mathbb{E}",
+                "\\P": "\\mathbb{P}",
+                "\\R": "\\mathbb{R}",
+                "\\N": "\\mathbb{N}",
+                "\\Z": "\\mathbb{Z}",
+                "\\C": "\\mathbb{C}",
+                "\\ind": "\\mathbb{1}",
+                "\\KL": "\\operatorname{KL}",
+                "\\Tr": "\\operatorname{Tr}",
+                "\\tr": "\\operatorname{tr}",
+                "\\diag": "\\operatorname{diag}",
+                "\\rank": "\\operatorname{rank}",
+                "\\relu": "\\operatorname{ReLU}",
+                "\\gelu": "\\operatorname{GELU}",
+                "\\selu": "\\operatorname{SELU}"
+            }
+        });
+    </script>
+</body>
+</html>
