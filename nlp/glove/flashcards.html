@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GloVe &mdash; Flashcards</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            startup: {
+                typeset: false
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { background-color: #f5f5f5; transition: background-color 0.3s ease; }
+        body { font-family: 'Georgia', 'Times New Roman', serif; font-size: 12pt; line-height: 1.6; color: #2a2a2a; max-width: 900px; margin: 2rem auto; padding: 3rem; background-color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.12); border-radius: 4px; transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; }
+        html.dark { background-color: #1a1a1a; }
+        body.dark { color: #d4d4d4; background-color: #2a2a2a; box-shadow: 0 4px 16px rgba(0,0,0,0.5); }
+        .header-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5em; padding-bottom: 0.5em; border-bottom: 3px solid #666; flex-wrap: wrap; gap: 1em; }
+        body.dark .header-container { border-color: #888; }
+        h1 { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 24pt; color: #1a1a1a; letter-spacing: 0.02em; font-weight: 700; flex: 1; min-width: 250px; }
+        body.dark h1 { color: #f0f0f0; }
+        .theme-toggle { display: flex; align-items: center; gap: 0.8em; }
+        .toggle-label { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 10pt; color: #666; }
+        body.dark .toggle-label { color: #aaa; }
+        .toggle-switch { position: relative; width: 60px; height: 30px; background-color: #bbb; border-radius: 15px; cursor: pointer; transition: background-color 0.3s ease, border-color 0.3s ease; border: 2px solid #999; }
+        body.dark .toggle-switch { background-color: #666; border-color: #888; }
+        .toggle-slider { position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; background-color: #fff; border-radius: 50%; transition: transform 0.3s ease, background-color 0.3s ease; display: flex; align-items: center; justify-content: center; font-size: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        body.dark .toggle-slider { transform: translateX(30px); background-color: #2a2a2a; box-shadow: 0 1px 3px rgba(0,0,0,0.4); }
+        .toggle-slider::before { content: '\2600'; color: #2a2a2a; }
+        body.dark .toggle-slider::before { content: '\263E'; color: #c0c8d8; }
+        .back-link { display: inline-block; margin-bottom: 2em; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 10pt; color: #666; text-decoration: none; transition: color 0.2s ease; }
+        .back-link:hover { color: #2a2a2a; }
+        body.dark .back-link { color: #aaa; }
+        body.dark .back-link:hover { color: #e8e8e8; }
+        .card-counter { text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11pt; color: #888; margin-bottom: 1.5em; }
+        body.dark .card-counter { color: #999; }
+        .flashcard-scene { perspective: 1000px; width: 100%; max-width: 680px; min-height: 340px; margin: 0 auto 2em auto; cursor: pointer; }
+        .flashcard { position: relative; width: 100%; min-height: 340px; transition: transform 0.6s ease; transform-style: preserve-3d; }
+        .flashcard.is-flipped { transform: rotateY(180deg); }
+        .flashcard-face { position: absolute; top: 0; left: 0; width: 100%; min-height: 340px; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2.5em 2.5em; border-radius: 10px; border: 1px solid #d5d5d5; box-shadow: 0 3px 12px rgba(0,0,0,0.1); transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+        body.dark .flashcard-face { border-color: #555; box-shadow: 0 3px 12px rgba(0,0,0,0.4); }
+        .flashcard-front { background-color: #fafafa; }
+        body.dark .flashcard-front { background-color: #333; }
+        .flashcard-back { background-color: #f0f4f8; transform: rotateY(180deg); }
+        body.dark .flashcard-back { background-color: #2f3640; }
+        .flashcard-face .face-label { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.12em; color: #aaa; margin-bottom: 1em; font-weight: 600; }
+        body.dark .flashcard-face .face-label { color: #777; }
+        .flashcard-front .card-text { font-size: 14pt; line-height: 1.5; text-align: center; color: #1a1a1a; font-weight: 500; }
+        body.dark .flashcard-front .card-text { color: #e8e8e8; }
+        .flashcard-back .card-text { font-size: 12pt; line-height: 1.6; text-align: center; color: #2a2a2a; }
+        body.dark .flashcard-back .card-text { color: #d4d4d4; }
+        .tap-hint { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 9pt; color: #bbb; margin-top: 1.2em; }
+        body.dark .tap-hint { color: #666; }
+        .controls { display: flex; justify-content: center; align-items: center; gap: 1em; flex-wrap: wrap; }
+        .controls button { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11pt; font-weight: 500; padding: 0.7em 1.8em; border-radius: 4px; border: 2px solid #1a1a1a; background-color: #e8e8e8; color: #2a2a2a; cursor: pointer; transition: all 0.2s ease; }
+        body.dark .controls button { background-color: #1a1a1a; color: #e8e8e8; border-color: #666; }
+        .controls button:hover { background-color: #f5f5f5; border-color: #666; transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        body.dark .controls button:hover { background-color: #000; border-color: #888; box-shadow: 0 2px 8px rgba(102,102,102,0.4); }
+        .controls button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+        .controls button:disabled:hover { background-color: #e8e8e8; border-color: #1a1a1a; transform: none; box-shadow: none; }
+        body.dark .controls button:disabled:hover { background-color: #1a1a1a; border-color: #666; }
+        .shuffle-btn { border-style: dashed !important; }
+        footer { margin-top: 3em; padding-top: 1.5em; border-top: 2px solid #ccc; text-align: center; color: #888; font-size: 9pt; }
+        body.dark footer { border-color: #555; }
+        @media (max-width: 700px) {
+            body { padding: 2em 1.5em; margin: 1rem; }
+            h1 { font-size: 18pt; }
+            .header-container { flex-direction: column; align-items: flex-start; }
+            .flashcard-scene { min-height: 300px; }
+            .flashcard { min-height: 300px; }
+            .flashcard-face { min-height: 300px; padding: 2em 1.5em; }
+            .flashcard-front .card-text { font-size: 13pt; }
+            .flashcard-back .card-text { font-size: 11pt; }
+            .controls { gap: 0.6em; }
+            .controls button { padding: 0.6em 1.2em; font-size: 10pt; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <h1>GloVe &mdash; Flashcards</h1>
+        <div class="theme-toggle">
+            <span class="toggle-label">Theme</span>
+            <div class="toggle-switch" onclick="toggleTheme()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </div>
+
+    <a href="glove-light.html" class="back-link article-link" data-article="glove">&larr; Back to article</a>
+
+    <div class="card-counter" id="cardCounter">Card 1 of 25</div>
+
+    <div class="flashcard-scene" id="flashcardScene" onclick="flipCard()">
+        <div class="flashcard" id="flashcard">
+            <div class="flashcard-face flashcard-front">
+                <div class="face-label">Question</div>
+                <div class="card-text" id="frontText"></div>
+                <div class="tap-hint">Click to reveal answer</div>
+            </div>
+            <div class="flashcard-face flashcard-back">
+                <div class="face-label">Answer</div>
+                <div class="card-text" id="backText"></div>
+                <div class="tap-hint">Click to see question</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" onclick="prevCard()">&larr; Previous</button>
+        <button class="shuffle-btn" onclick="shuffleDeck()">Shuffle</button>
+        <button id="nextBtn" onclick="nextCard()">Next &rarr;</button>
+    </div>
+
+    <footer>
+        <p>Stephen Fitz &middot; 2026</p>
+    </footer>
+
+    <script>
+        // Flashcard data
+        var cards = [
+            {front: "What does GloVe stand for?", back: "Global Vectors for Word Representation. Introduced by Pennington, Socher, and Manning in 2014."},
+            {front: "What is the GloVe co-occurrence matrix \\(X\\)?", back: "A matrix where \\(X_{ij}\\) counts the number of times word \\(j\\) appears in the context of word \\(i\\), using a symmetric window of fixed size. It is symmetric: \\(X_{ij} = X_{ji}\\)."},
+            {front: "What is distance weighting in GloVe\u2019s co-occurrence counting?", back: "Context words closer to the target contribute more: a word at distance \\(d\\) contributes \\(1/d\\) instead of 1. This reflects the intuition that immediately adjacent words are more informative about meaning."},
+            {front: "What is the co-occurrence probability \\(P_{ij}\\)?", back: "\\(P_{ij} = P(j \\mid i) = X_{ij} / X_i\\), where \\(X_i = \\sum_k X_{ik}\\) is the total count of context words for word \\(i\\). It estimates the probability that word \\(j\\) appears in the context of word \\(i\\)."},
+            {front: "Why are co-occurrence probability ratios more informative than raw probabilities?", back: "Ratios cancel out overall word frequency. If \\(P(k|\\text{ice})/P(k|\\text{steam}) \\gg 1\\), probe \\(k\\) is related to \u2018ice\u2019 but not \u2018steam\u2019. If \\(\\approx 1\\), \\(k\\) is related to both or neither. Ratios provide a clean signal for discriminative associations."},
+            {front: "In the ice/steam example, what do the four cases of the ratio represent?", back: "Ratio \\(\\gg 1\\) (solid): related to ice only. Ratio \\(\\ll 1\\) (gas): related to steam only. Ratio \\(\\approx 1\\), both large (water): related to both. Ratio \\(\\approx 1\\), both small (fashion): related to neither."},
+            {front: "How are probability ratios encoded in word vector differences?", back: "The derivation starts with \\(F(w_i - w_j, \\tilde{w}_k) = P_{ik}/P_{jk}\\). The difference \\(w_i - w_j\\) captures how word \\(i\\) relates to probe \\(k\\) compared to word \\(j\\)."},
+            {front: "Why does the GloVe derivation require \\(F\\) to be the exponential function?", back: "Symmetry of the co-occurrence matrix requires word and context roles to be interchangeable. This means \\(F\\) must be a homomorphism from \\((\\mathbb{R}, +)\\) to \\((\\mathbb{R}_{>0}, \\times)\\), satisfying \\(F(a+b) = F(a) \\cdot F(b)\\). The unique continuous solution is \\(F = \\exp\\)."},
+            {front: "What is the GloVe model equation?", back: "\\(w_i^\\top \\tilde{w}_k + b_i + \\tilde{b}_k = \\log X_{ik}\\). The dot product of a word vector and context vector, plus bias terms, approximates the log co-occurrence count."},
+            {front: "What are the bias terms \\(b_i\\) and \\(\\tilde{b}_k\\) in GloVe?", back: "They absorb the word-frequency normalization term \\(\\log X_i\\) that arises when going from \\(\\log P_{ik}\\) to \\(\\log X_{ik}\\). This means the dot product \\(w_i^\\top \\tilde{w}_k\\) effectively approximates the pointwise mutual information."},
+            {front: "What is the GloVe loss function?", back: "\\(J = \\sum_{i,j} f(X_{ij})(w_i^\\top \\tilde{w}_j + b_i + \\tilde{b}_j - \\log X_{ij})^2\\). A weighted least-squares objective where \\(f\\) is a weighting function that handles zero counts and prevents frequent pairs from dominating."},
+            {front: "What are the three requirements for the GloVe weighting function \\(f\\)?", back: "1) \\(f(0) = 0\\): zero co-occurrences contribute nothing (avoids \\(\\log 0\\)). 2) Non-decreasing: more frequent co-occurrences get at least as much weight. 3) Bounded for large \\(x\\): extremely frequent pairs don\u2019t dominate."},
+            {front: "What is the specific form of the GloVe weighting function?", back: "\\(f(x) = (x/x_{\\max})^\\alpha\\) if \\(x < x_{\\max}\\), else 1. Default parameters: \\(x_{\\max} = 100\\) and \\(\\alpha = 3/4\\)."},
+            {front: "Why is \\(\\alpha = 3/4\\) used instead of \\(\\alpha = 1\\) in the weighting function?", back: "The sublinear exponent \\(3/4\\) compresses the range, giving moderate-frequency co-occurrences relatively more influence compared to linear weighting. This produces better embeddings because it prevents high-frequency function word pairs from dominating."},
+            {front: "What are the four sets of parameters in the GloVe model?", back: "Word vectors \\(w_i \\in \\mathbb{R}^d\\), context vectors \\(\\tilde{w}_j \\in \\mathbb{R}^d\\), word biases \\(b_i \\in \\mathbb{R}\\), and context biases \\(\\tilde{b}_j \\in \\mathbb{R}\\). Total: \\(2|V|(d+1)\\) parameters."},
+            {front: "What optimizer does GloVe use?", back: "AdaGrad, which adapts the learning rate for each parameter based on accumulated squared gradients. Parameters with frequent large gradients (common words) get smaller effective learning rates; rare words get larger ones."},
+            {front: "Why is GloVe called a batch method?", back: "The full co-occurrence matrix \\(X\\) is computed once from the corpus before optimization begins. Training iterates over nonzero entries of \\(X\\). All contextual information is pre-distilled into counts, unlike Word2Vec which processes the corpus online."},
+            {front: "How is the final GloVe embedding computed?", back: "\\(w_i^{\\text{final}} = w_i + \\tilde{w}_i\\). The sum of the word vector and context vector. Since \\(X\\) is symmetric, both vectors capture the same distributional information but learn slightly different aspects; summing produces a more robust representation."},
+            {front: "What matrix factorization does GloVe perform?", back: "\\(W\\tilde{W}^\\top \\approx \\log X\\). GloVe seeks the best rank-\\(d\\) factorization of the log-count matrix under the weighted least-squares criterion."},
+            {front: "How does GloVe differ from LSA?", back: "Three key differences: 1) GloVe factorizes \\(\\log X\\) while LSA uses raw counts or TF-IDF. 2) GloVe uses a learned weighting function; LSA treats all entries equally. 3) GloVe uses stochastic gradient descent; LSA uses exact SVD."},
+            {front: "What is the connection between GloVe and pointwise mutual information (PMI)?", back: "\\(\\log X_{ij} = \\text{PMI}(i,j) + \\log X_i + \\log X_j - \\log|\\text{corpus}|\\). The bias terms absorb the word-frequency terms, so \\(w_i^\\top \\tilde{w}_j\\) approximates PMI."},
+            {front: "What did Levy and Goldberg (2014) show about Word2Vec?", back: "That Word2Vec\u2019s skip-gram model with negative sampling implicitly factorizes a shifted PMI matrix\u2014the same quantity GloVe targets explicitly. The count-based and prediction-based paradigms converge on the same underlying target."},
+            {front: "How does GloVe bridge count-based and prediction-based methods?", back: "GloVe is count-based in its data (uses the full co-occurrence matrix) but prediction-like in its optimization (uses stochastic gradient descent). It demonstrates that both paradigms capture the same co-occurrence statistics through different computational means."},
+            {front: "What is the gradient of the GloVe loss with respect to word vector \\(w_i\\)?", back: "\\(\\frac{\\partial J_{ij}}{\\partial w_i} = 2 f(X_{ij}) \\Delta_{ij} \\tilde{w}_j\\), where \\(\\Delta_{ij} = w_i^\\top \\tilde{w}_j + b_i + \\tilde{b}_j - \\log X_{ij}\\) is the residual. The gradient is the context vector scaled by the weighted residual."},
+            {front: "Why does GloVe maintain separate word and context vectors?", back: "Although the co-occurrence matrix is symmetric (\\(X_{ij} = X_{ji}\\)), using two sets of vectors allows the model to distinguish between a word appearing as a target vs. as context. They are theoretically interchangeable and differ only due to random initialization."}
+        ];
+
+        var currentIndex = 0;
+        var deck = cards.map(function(_, i) { return i; });
+
+        var savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.body.classList.add('dark');
+        }
+        updateArticleLink();
+
+        function toggleTheme() {
+            var isDark = document.body.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateArticleLink();
+        }
+
+        function updateArticleLink() {
+            var isDark = document.body.classList.contains('dark');
+            var theme = isDark ? 'dark' : 'light';
+            document.querySelectorAll('.article-link').forEach(function(link) {
+                var article = link.getAttribute('data-article');
+                link.href = article + '-' + theme + '.html';
+            });
+        }
+
+        function renderCard() {
+            var card = cards[deck[currentIndex]];
+            document.getElementById('frontText').innerHTML = card.front;
+            document.getElementById('backText').innerHTML = card.back;
+            document.getElementById('cardCounter').textContent = 'Card ' + (currentIndex + 1) + ' of ' + deck.length;
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            document.getElementById('nextBtn').disabled = currentIndex === deck.length - 1;
+            document.getElementById('flashcard').classList.remove('is-flipped');
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('frontText'), document.getElementById('backText')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
+            }
+        }
+
+        function flipCard() {
+            document.getElementById('flashcard').classList.toggle('is-flipped');
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('backText')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) { currentIndex--; renderCard(); }
+        }
+
+        function nextCard() {
+            if (currentIndex < deck.length - 1) { currentIndex++; renderCard(); }
+        }
+
+        function shuffleDeck() {
+            for (var i = deck.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = deck[i]; deck[i] = deck[j]; deck[j] = temp;
+            }
+            currentIndex = 0;
+            renderCard();
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') { prevCard(); }
+            else if (e.key === 'ArrowRight') { nextCard(); }
+            else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flipCard(); }
+        });
+
+        renderCard();
+    </script>
+</body>
+</html>
