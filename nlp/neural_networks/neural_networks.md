@@ -154,7 +154,7 @@ This is an *existence* theorem, not a construction. It tells us that the network
 
 ### The Bump Construction
 
-The proof strategy is illuminating and connects to the lecture's visual demonstration. Consider a single input dimension. We can build a "bump" function — a function that is approximately 1 on a small interval and 0 elsewhere — using two sigmoid units:
+Consider a single input dimension. We can build a "bump" function — a function that is approximately 1 on a small interval and 0 elsewhere — using two sigmoid units:
 
 $$
 \text{bump}(x; a, b) = \sigma(w(x - a)) - \sigma(w(x - b))

@@ -286,7 +286,7 @@ $$
 <hr />
 <h2 id="network-architecture">Network Architecture</h2>
 <p>A <strong>feedforward neural network</strong> organizes neurons into layers. Information flows in one direction — from the input layer, through one or more <strong>hidden layers</strong>, to the output layer. There are no cycles.</p>
-<p><img alt="A feedforward network with an input layer of 3 units, two hidden layers of 5 and 4 units, and an output layer of 2 units. Each arrow represents a learnable weight. The weight matrices &lt;!--MATH4787e2720cad4fd0818474f1b3154998END--&gt;, &lt;!--MATH6e9d9373c5394a2b9864b3c79bcef46bEND--&gt;, and &lt;!--MATH06add8723c954f078c81d83a2531252bEND--&gt; connect successive layers." src="figures/network_architecture.png" /></p>
+<p><img alt="A feedforward network with an input layer of 3 units, two hidden layers of 5 and 4 units, and an output layer of 2 units. Each arrow represents a learnable weight. The weight matrices &lt;!--MATH8981b69a02f347108c157d64afdde25aEND--&gt;, &lt;!--MATH6330ba30d5664090b910e5f8d7e8c87bEND--&gt;, and &lt;!--MATHfe4ec13a158f4056ab4a79d3e52dd6e8END--&gt; connect successive layers." src="figures/network_architecture.png" /></p>
 <h3 id="notation">Notation</h3>
 <p>We adopt the following conventions for a network with $L$ layers (not counting the input):</p>
 <ul>
@@ -370,7 +370,7 @@ $$
 </blockquote>
 <p>This is an <em>existence</em> theorem, not a construction. It tells us that the network architecture is powerful enough in principle, but says nothing about how to find the right weights, or how many hidden units are needed (the answer can be exponentially large in the worst case).</p>
 <h3 id="the-bump-construction">The Bump Construction</h3>
-<p>The proof strategy is illuminating and connects to the lecture's visual demonstration. Consider a single input dimension. We can build a "bump" function — a function that is approximately 1 on a small interval and 0 elsewhere — using two sigmoid units:</p>
+<p>Consider a single input dimension. We can build a "bump" function — a function that is approximately 1 on a small interval and 0 elsewhere — using two sigmoid units:</p>
 $$
 \text{bump}(x; a, b) = \sigma(w(x - a)) - \sigma(w(x - b))
 $$
