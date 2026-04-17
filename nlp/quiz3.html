@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NLP Articles &mdash; Multiple Choice Quiz 3</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                macros: {
+                    logit: "\\operatorname{logit}",
+                    softmax: "\\operatorname{softmax}",
+                    sgn: "\\operatorname{sgn}",
+                    argmax: "\\operatorname*{arg\\,max}",
+                    argmin: "\\operatorname*{arg\\,min}",
+                    E: "\\mathbb{E}",
+                    R: "\\mathbb{R}",
+                    P: "\\mathbb{P}",
+                    relu: "\\operatorname{ReLU}",
+                    gelu: "\\operatorname{GELU}",
+                    sigmoid: "\\sigma"
+                }
+            },
+            startup: {
+                typeset: false,
+                ready: function() {
+                    MathJax.startup.defaultReady();
+                    var card = document.getElementById('quizCard');
+                    if (card) {
+                        MathJax.typesetPromise([card]);
+                    }
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Light theme (default) */
+        html {
+            background-color: #f5f5f5;
+            transition: background-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #2a2a2a;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 3rem;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Dark theme */
+        html.dark {
+            background-color: #1a1a1a;
+        }
+
+        body.dark {
+            color: #d4d4d4;
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+        }
+
+        /* Header */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5em;
+            padding-bottom: 0.5em;
+            border-bottom: 3px solid #666;
+            flex-wrap: wrap;
+            gap: 1em;
+        }
+
+        body.dark .header-container {
+            border-color: #888;
+        }
+
+        h1 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 24pt;
+            color: #1a1a1a;
+            letter-spacing: 0.02em;
+            font-weight: 700;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        body.dark h1 {
+            color: #f0f0f0;
+        }
+
+        /* Theme toggle switch */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.8em;
+        }
+
+        .toggle-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #666;
+        }
+
+        body.dark .toggle-label {
+            color: #aaa;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background-color: #bbb;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            border: 2px solid #999;
+        }
+
+        body.dark .toggle-switch {
+            background-color: #666;
+            border-color: #888;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        body.dark .toggle-slider {
+            transform: translateX(30px);
+            background-color: #2a2a2a;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+
+        .toggle-slider::before {
+            content: '\2600';
+            color: #2a2a2a;
+        }
+
+        body.dark .toggle-slider::before {
+            content: '\263E';
+            color: #c0c8d8;
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2em;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #2a2a2a;
+        }
+
+        body.dark .back-link {
+            color: #aaa;
+        }
+
+        body.dark .back-link:hover {
+            color: #e8e8e8;
+        }
+
+        /* Question counter */
+        .card-counter {
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            color: #888;
+            margin-bottom: 1.5em;
+        }
+
+        body.dark .card-counter {
+            color: #999;
+        }
+
+        /* Topic tag */
+        .topic-tag {
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 9pt;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #999;
+            margin-bottom: 0.5em;
+            font-weight: 600;
+        }
+
+        body.dark .topic-tag {
+            color: #777;
+        }
+
+        /* Quiz card */
+        .quiz-card {
+            width: 100%;
+            max-width: 680px;
+            margin: 0 auto 2em auto;
+            padding: 2.5em;
+            border-radius: 10px;
+            border: 1px solid #d5d5d5;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            background-color: #fafafa;
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body.dark .quiz-card {
+            background-color: #333;
+            border-color: #555;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+        }
+
+        .question-text {
+            font-size: 14pt;
+            line-height: 1.5;
+            text-align: center;
+            color: #1a1a1a;
+            font-weight: 500;
+            margin-bottom: 1.8em;
+        }
+
+        body.dark .question-text {
+            color: #e8e8e8;
+        }
+
+        /* Answer options */
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .option-item {
+            margin-bottom: 0.6em;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8em;
+            padding: 0.8em 1em;
+            border-radius: 6px;
+            border: 2px solid #d5d5d5;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.5;
+            color: #2a2a2a;
+            background-color: white;
+        }
+
+        body.dark .option-label {
+            border-color: #555;
+            color: #d4d4d4;
+            background-color: #2a2a2a;
+        }
+
+        .option-label:hover {
+            border-color: #999;
+            background-color: #f0f0f0;
+        }
+
+        body.dark .option-label:hover {
+            border-color: #777;
+            background-color: #3a3a3a;
+        }
+
+        .option-label.selected {
+            border-color: #666;
+            background-color: #eaeaea;
+        }
+
+        body.dark .option-label.selected {
+            border-color: #888;
+            background-color: #444;
+        }
+
+        .option-label.disabled {
+            cursor: default;
+        }
+
+        .option-label.disabled:hover {
+            background-color: white;
+            border-color: #d5d5d5;
+        }
+
+        body.dark .option-label.disabled:hover {
+            background-color: #2a2a2a;
+            border-color: #555;
+        }
+
+        .option-label.correct {
+            border-color: #4a8c5c;
+            background-color: #e8f5e9;
+        }
+
+        body.dark .option-label.correct {
+            border-color: #5ca86e;
+            background-color: #1e3a25;
+        }
+
+        .option-label.incorrect {
+            border-color: #c0392b;
+            background-color: #fde8e8;
+        }
+
+        body.dark .option-label.incorrect {
+            border-color: #c0392b;
+            background-color: #3a1e1e;
+        }
+
+        .option-letter {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 10pt;
+            color: #555;
+            margin-top: 1px;
+        }
+
+        body.dark .option-letter {
+            background-color: #444;
+            color: #bbb;
+        }
+
+        .option-label.selected .option-letter {
+            background-color: #666;
+            color: white;
+        }
+
+        body.dark .option-label.selected .option-letter {
+            background-color: #888;
+            color: #1a1a1a;
+        }
+
+        .option-label.correct .option-letter {
+            background-color: #4a8c5c;
+            color: white;
+        }
+
+        body.dark .option-label.correct .option-letter {
+            background-color: #5ca86e;
+            color: white;
+        }
+
+        .option-label.incorrect .option-letter {
+            background-color: #c0392b;
+            color: white;
+        }
+
+        body.dark .option-label.incorrect .option-letter {
+            background-color: #c0392b;
+            color: white;
+        }
+
+        .option-text {
+            flex: 1;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        /* Submit button */
+        .submit-container {
+            text-align: center;
+            margin-top: 1.5em;
+        }
+
+        .submit-btn {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            font-weight: 600;
+            padding: 0.7em 2.5em;
+            border-radius: 4px;
+            border: 2px solid #1a1a1a;
+            background-color: #1a1a1a;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        body.dark .submit-btn {
+            background-color: #e8e8e8;
+            color: #1a1a1a;
+            border-color: #e8e8e8;
+        }
+
+        .submit-btn:hover {
+            background-color: #444;
+            border-color: #444;
+        }
+
+        body.dark .submit-btn:hover {
+            background-color: #ccc;
+            border-color: #ccc;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .submit-btn:disabled:hover {
+            background-color: #1a1a1a;
+            border-color: #1a1a1a;
+        }
+
+        body.dark .submit-btn:disabled:hover {
+            background-color: #e8e8e8;
+            border-color: #e8e8e8;
+        }
+
+        /* Result feedback */
+        .result-feedback {
+            text-align: center;
+            margin-top: 1em;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            font-weight: 600;
+            min-height: 1.6em;
+        }
+
+        .result-feedback.correct-text {
+            color: #4a8c5c;
+        }
+
+        body.dark .result-feedback.correct-text {
+            color: #5ca86e;
+        }
+
+        .result-feedback.incorrect-text {
+            color: #c0392b;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            font-weight: 500;
+            padding: 0.7em 1.8em;
+            border-radius: 4px;
+            border: 2px solid #1a1a1a;
+            background-color: #e8e8e8;
+            color: #2a2a2a;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        body.dark .controls button {
+            background-color: #1a1a1a;
+            color: #e8e8e8;
+            border-color: #666;
+        }
+
+        .controls button:hover {
+            background-color: #f5f5f5;
+            border-color: #666;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        body.dark .controls button:hover {
+            background-color: #000;
+            border-color: #888;
+            box-shadow: 0 2px 8px rgba(102,102,102,0.4);
+        }
+
+        .controls button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .controls button:disabled:hover {
+            background-color: #e8e8e8;
+            border-color: #1a1a1a;
+            transform: none;
+            box-shadow: none;
+        }
+
+        body.dark .controls button:disabled:hover {
+            background-color: #1a1a1a;
+            border-color: #666;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            width: 100%;
+            max-width: 680px;
+            margin: 0 auto 1.5em auto;
+            height: 6px;
+            background-color: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        body.dark .progress-container {
+            background-color: #444;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #888;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        body.dark .progress-bar {
+            background-color: #999;
+        }
+
+        /* Score display */
+        .score-display {
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #888;
+            margin-bottom: 1em;
+        }
+
+        body.dark .score-display {
+            color: #999;
+        }
+
+        /* Final results screen */
+        .final-results {
+            display: none;
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto 2em auto;
+            padding: 3em 2.5em;
+            border-radius: 10px;
+            border: 1px solid #d5d5d5;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            background-color: #fafafa;
+        }
+
+        body.dark .final-results {
+            background-color: #333;
+            border-color: #555;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+        }
+
+        .final-title {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 20pt;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 0.5em;
+        }
+
+        body.dark .final-title {
+            color: #f0f0f0;
+        }
+
+        .final-score {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 36pt;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 0.3em;
+        }
+
+        body.dark .final-score {
+            color: #f0f0f0;
+        }
+
+        .final-message {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 12pt;
+            color: #666;
+            margin-bottom: 2em;
+            line-height: 1.6;
+        }
+
+        body.dark .final-message {
+            color: #aaa;
+        }
+
+        .retake-btn {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 12pt;
+            font-weight: 600;
+            padding: 0.8em 2.5em;
+            border-radius: 4px;
+            border: 2px solid #1a1a1a;
+            background-color: #1a1a1a;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        body.dark .retake-btn {
+            background-color: #e8e8e8;
+            color: #1a1a1a;
+            border-color: #e8e8e8;
+        }
+
+        .retake-btn:hover {
+            background-color: #444;
+            border-color: #444;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        body.dark .retake-btn:hover {
+            background-color: #ccc;
+            border-color: #ccc;
+            box-shadow: 0 2px 8px rgba(102,102,102,0.4);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 3em;
+            padding-top: 1.5em;
+            border-top: 2px solid #ccc;
+            text-align: center;
+            color: #888;
+            font-size: 9pt;
+        }
+
+        body.dark footer {
+            border-color: #555;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            body {
+                padding: 2em 1.5em;
+                margin: 1rem;
+            }
+
+            h1 {
+                font-size: 18pt;
+            }
+
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .quiz-card {
+                padding: 2em 1.5em;
+            }
+
+            .question-text {
+                font-size: 13pt;
+            }
+
+            .option-label {
+                font-size: 10pt;
+                padding: 0.7em 0.8em;
+            }
+
+            .controls {
+                gap: 0.6em;
+            }
+
+            .controls button {
+                padding: 0.6em 1.2em;
+                font-size: 10pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <h1>NLP Articles &mdash; Quiz 3</h1>
+        <div class="theme-toggle">
+            <span class="toggle-label">Theme</span>
+            <div class="toggle-switch" onclick="toggleTheme()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-link">&larr; Back to articles</a>
+
+    <div id="quizArea">
+        <div class="card-counter" id="cardCounter">Question 1 of 33</div>
+        <div class="score-display" id="scoreDisplay">Score: 0 / 0 answered</div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+        </div>
+        <div class="topic-tag" id="topicTag"></div>
+
+        <div class="quiz-card" id="quizCard">
+            <div class="question-text" id="questionText"></div>
+            <ul class="options-list" id="optionsList"></ul>
+            <div class="submit-container">
+                <button class="submit-btn" id="submitBtn" onclick="submitAnswer()" disabled>Submit</button>
+            </div>
+            <div class="result-feedback" id="resultFeedback"></div>
+        </div>
+
+        <div class="controls">
+            <button id="prevBtn" onclick="prevQuestion()">&larr; Previous</button>
+            <button id="nextBtn" onclick="nextQuestion()">Next &rarr;</button>
+        </div>
+    </div>
+
+    <div class="final-results" id="finalResults">
+        <div class="final-title">Quiz Complete</div>
+        <div class="final-score" id="finalScore"></div>
+        <div class="final-message" id="finalMessage"></div>
+        <button class="retake-btn" onclick="retakeQuiz()">Retake Quiz</button>
+    </div>
+
+    <footer>
+        <p>Stephen Fitz &middot; 2026</p>
+    </footer>
+
+    <script>
+        var questions = [
+            {
+                topic: "Sigmoid Neurons and Logistic Regression",
+                question: "What is the derivative of the sigmoid \\(\\sigma(z) = 1/(1+e^{-z})\\)?",
+                options: [
+                    "\\(\\sigma'(z) = \\sigma(z)(1 - \\sigma(z))\\)",
+                    "\\(\\sigma'(z) = 1 - \\sigma(z)^2\\)",
+                    "\\(\\sigma'(z) = e^{-z}\\)",
+                    "\\(\\sigma'(z) = \\sigma(z)^2\\)",
+                    "\\(\\sigma'(z) = \\sigma(-z)\\)"
+                ],
+                correct: 0
+            },
+            {
+                topic: "Sigmoid Neurons and Logistic Regression",
+                question: "Where does \\(\\sigma'(z)\\) attain its maximum value, and what is that value?",
+                options: [
+                    "At \\(z = 1\\), with value 1",
+                    "At \\(z = 0\\), with value \\(1/2\\)",
+                    "At \\(z = 0\\), with value \\(1/4\\)",
+                    "At \\(z \\to \\infty\\), with value 1",
+                    "At \\(z = -1\\), with value \\(1/e\\)"
+                ],
+                correct: 2
+            },
+            {
+                topic: "Sigmoid Neurons and Logistic Regression",
+                question: "How is the binary cross-entropy loss derived?",
+                options: [
+                    "It is chosen heuristically because logs are computationally cheap",
+                    "It is the negative log-likelihood of the Bernoulli model \\(y^{(i)} \\sim \\text{Bernoulli}(\\sigma(w^\\top x^{(i)}))\\)",
+                    "It arises from the Huber robust loss",
+                    "It is the second-order Taylor expansion of the quadratic loss",
+                    "It minimizes the hinge margin"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Sigmoid Neurons and Logistic Regression",
+                question: "What is the gradient of the cross-entropy loss \\(\\mathcal{L}(w)\\) in matrix form?",
+                options: [
+                    "\\(X^\\top X w\\)",
+                    "\\(X^\\top (y - Xw)\\)",
+                    "\\(X^\\top (\\sigma(Xw) - y)\\)",
+                    "\\(\\sigma(Xw) X^\\top\\)",
+                    "\\((\\sigma(Xw) - y) X\\)"
+                ],
+                correct: 2
+            },
+            {
+                topic: "Sigmoid Neurons and Logistic Regression",
+                question: "Why not use the quadratic (MSE) loss with a sigmoid activation?",
+                options: [
+                    "MSE gives inconsistent MLE estimates",
+                    "The combined loss is non-convex in \\(w\\), so gradient descent can get trapped in local minima",
+                    "MSE is undefined at the boundary \\(\\sigma = 0\\) or \\(\\sigma = 1\\)",
+                    "MSE requires labels in \\(\\{-1, +1\\}\\) rather than \\(\\{0, 1\\}\\)",
+                    "MSE does not converge under the perceptron convergence theorem"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Sigmoid Neurons and Logistic Regression",
+                question: "What does it mean that the log-odds of logistic regression are linear?",
+                options: [
+                    "\\(\\log P(y=1 \\mid x) = w^\\top x\\)",
+                    "\\(\\log\\frac{P(y=1 \\mid x)}{P(y=0 \\mid x)} = w^\\top x\\)",
+                    "\\(P(y=1 \\mid x) = w^\\top x\\)",
+                    "\\(\\sigma(w^\\top x)\\) is linear in \\(x\\)",
+                    "\\(w^\\top x\\) is a linear function of \\(y\\)"
+                ],
+                correct: 1
+            },
+            {
+                topic: "SMS Spam Detection",
+                question: "What is the initial cross-entropy loss of the sigmoid neuron when all weights are zero?",
+                options: [
+                    "0",
+                    "\\(\\log 2 \\approx 0.693\\)",
+                    "1",
+                    "\\(\\log 10\\)",
+                    "\\(-\\infty\\)"
+                ],
+                correct: 1
+            },
+            {
+                topic: "SMS Spam Detection",
+                question: "Why is <code>np.clip(z, -500, 500)</code> applied inside the sigmoid implementation?",
+                options: [
+                    "To bound the output of the sigmoid in a numerically stable range",
+                    "To prevent <code>np.exp</code> from overflowing on large negative inputs",
+                    "To improve convergence speed",
+                    "To enforce a minimum learning rate",
+                    "To implement dropout regularization"
+                ],
+                correct: 1
+            },
+            {
+                topic: "SMS Spam Detection",
+                question: "The learned weight of the word \"free\" is \\(w = +3.53\\). What is the corresponding odds multiplier?",
+                options: [
+                    "\\(3.53\\times\\)",
+                    "\\(e^{3.53} \\approx 34\\times\\)",
+                    "\\(\\log 3.53 \\approx 1.26\\times\\)",
+                    "\\(3.53^2 \\approx 12.5\\times\\)",
+                    "\\(1 + 3.53 = 4.53\\times\\)"
+                ],
+                correct: 1
+            },
+            {
+                topic: "SMS Spam Detection",
+                question: "Why can't a bag-of-words sigmoid neuron capture the spammy interaction between \"free\" and \"call\"?",
+                options: [
+                    "The cross-entropy loss does not support multi-word features",
+                    "The log-odds model is additive: \\(\\sum w_j x_j + b\\) — each word contributes independently",
+                    "The learning rate is too small to pick up interactions",
+                    "Bag-of-words features cannot be real-valued",
+                    "The gradient vanishes for interaction terms"
+                ],
+                correct: 1
+            },
+            {
+                topic: "SMS Spam Detection",
+                question: "What key capability does the sigmoid neuron offer over the perceptron for spam filtering?",
+                options: [
+                    "Faster training by orders of magnitude",
+                    "Calibrated probability outputs \\(P(\\text{spam} \\mid m) \\in (0,1)\\) that give the decision threshold a principled probabilistic meaning",
+                    "The ability to represent nonlinear decision boundaries with a single neuron",
+                    "Lower memory usage",
+                    "Exact probabilistic independence across words"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Logistic Regression Interpretability",
+                question: "What is the precise interpretation of coefficient \\(w_j\\) in logistic regression?",
+                options: [
+                    "The expected change in \\(P(y=1)\\) per unit change in \\(x_j\\)",
+                    "The partial derivative of the log-odds with respect to feature \\(x_j\\)",
+                    "The covariance of feature \\(x_j\\) with the label",
+                    "The correlation coefficient of \\(x_j\\) with \\(y\\)",
+                    "The marginal entropy contributed by \\(x_j\\)"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Logistic Regression Interpretability",
+                question: "When logistic regression is fit to soft labels \\(q \\in (0, 1)\\), what quantity does it (locally) try to match?",
+                options: [
+                    "The teacher's probability \\(q(x)\\) directly",
+                    "The teacher's logit \\(\\logit(q(x)) = \\log\\frac{q(x)}{1-q(x)}\\)",
+                    "The teacher's entropy \\(H(q)\\)",
+                    "The KL divergence between \\(q\\) and the uniform",
+                    "The cross-entropy \\(H(q, p_w)\\) without regard to the features"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Logistic Regression Interpretability",
+                question: "Near the optimum, cross-entropy \\(\\ell(z; q)\\) is locally quadratic. What is its curvature?",
+                options: [
+                    "\\(1\\)",
+                    "\\(q\\)",
+                    "\\(q(1-q)\\)",
+                    "\\(1/q\\)",
+                    "\\(\\log q\\)"
+                ],
+                correct: 2
+            },
+            {
+                topic: "Logistic Regression Interpretability",
+                question: "In the weighted least squares interpretation \\(\\min_{w,b} \\E[\\omega(x)(w^\\top\\phi + b - t)^2]\\), what does the weight \\(\\omega(x) = q(1-q)\\) accomplish?",
+                options: [
+                    "It upweights confident teacher predictions (near 0 or 1)",
+                    "It upweights uncertain teacher predictions (near 0.5) and downweights confident ones",
+                    "It keeps all examples weighted equally",
+                    "It corresponds to the L2 regularization strength",
+                    "It is a bias-correction term for imbalanced classes"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Logistic Regression Interpretability",
+                question: "What does a linear probe test?",
+                options: [
+                    "Whether a property is <em>present</em> in a representation, via any nonlinear decoder",
+                    "Whether a property is <em>linearly</em> decodable from a frozen representation",
+                    "Whether training a deep network beats a linear model on a downstream task",
+                    "Whether a network's weights are sparse",
+                    "Whether gradient descent converges on the representation"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Neural Networks",
+                question: "Why is XOR not solvable by a single neuron?",
+                options: [
+                    "Because sigmoids saturate at the XOR inputs",
+                    "Because the XOR outputs are discrete rather than continuous",
+                    "Because no single hyperplane can separate \\(\\{(0,1), (1,0)\\}\\) from \\(\\{(0,0), (1,1)\\}\\)",
+                    "Because XOR requires recurrence to compute",
+                    "Because backpropagation fails to converge on XOR"
+                ],
+                correct: 2
+            },
+            {
+                topic: "Neural Networks",
+                question: "Why must neural network activation functions be nonlinear?",
+                options: [
+                    "Nonlinearity is required for backpropagation to work",
+                    "Composing linear layers yields another linear map, defeating depth",
+                    "Linear activations cause the weights to diverge",
+                    "Nonlinearity is needed to make the loss convex",
+                    "Nonlinearity enables dropout regularization"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Neural Networks",
+                question: "Which initialization rule is appropriate for ReLU activations?",
+                options: [
+                    "Xavier: variance \\(2/(d_\\text{in} + d_\\text{out})\\)",
+                    "He: variance \\(2 / d_\\text{in}\\)",
+                    "Zero initialization",
+                    "Constant 0.5 initialization",
+                    "Orthogonal Gram–Schmidt initialization"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Neural Networks",
+                question: "What primarily drives the vanishing gradient problem for deep sigmoid networks?",
+                options: [
+                    "Numerical underflow in the forward pass",
+                    "The sigmoid derivative has maximum \\(1/4\\), so gradients shrink by at least \\(4\\times\\) per layer",
+                    "The cross-entropy loss is non-convex",
+                    "Mini-batch SGD has inherent noise",
+                    "Biases grow exponentially"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Neural Networks",
+                question: "What does the universal approximation theorem (Cybenko 1989) guarantee?",
+                options: [
+                    "That a two-layer network can approximate any continuous function on a compact domain arbitrarily well",
+                    "That any function can be learned in polynomial time by gradient descent",
+                    "That deep networks always outperform shallow networks",
+                    "That no function requires more than \\(O(d)\\) hidden units to approximate",
+                    "That backpropagation finds the global minimum"
+                ],
+                correct: 0
+            },
+            {
+                topic: "Neural Networks",
+                question: "Why does zero initialization fail to train a network?",
+                options: [
+                    "The loss is undefined at the origin",
+                    "All neurons in a layer compute the same function, receive the same gradient, and stay identical forever (the symmetry-breaking problem)",
+                    "Zero weights produce NaN under the sigmoid",
+                    "The gradient becomes too large near zero",
+                    "Dropout cannot be applied to zero weights"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Backpropagation",
+                question: "What is the local gradient rule?",
+                options: [
+                    "A node computes its gradient by numerical finite differences",
+                    "Downstream gradient = upstream gradient × local derivative \\(\\partial h/\\partial z\\)",
+                    "Each layer's gradient is the sum of all node gradients",
+                    "The gradient of a node is independent of the other nodes",
+                    "The bias gradient is always 1"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Backpropagation",
+                question: "What is the output-layer error signal \\(\\delta^{(L)}\\) for cross-entropy with sigmoid or softmax?",
+                options: [
+                    "\\(\\delta^{(L)} = \\hat y\\)",
+                    "\\(\\delta^{(L)} = -t\\)",
+                    "\\(\\delta^{(L)} = \\hat y - t\\)",
+                    "\\(\\delta^{(L)} = (\\hat y - t)\\odot\\sigma'(z^{(L)})\\)",
+                    "\\(\\delta^{(L)} = \\log(\\hat y / t)\\)"
+                ],
+                correct: 2
+            },
+            {
+                topic: "Backpropagation",
+                question: "What is the backpropagation recurrence for propagating the error signal backward through a layer?",
+                options: [
+                    "\\(\\delta^{(\\ell-1)} = W^{(\\ell)}\\delta^{(\\ell)}\\)",
+                    "\\(\\delta^{(\\ell-1)} = (W^{(\\ell)\\top}\\delta^{(\\ell)}) \\odot \\phi'(z^{(\\ell-1)})\\)",
+                    "\\(\\delta^{(\\ell-1)} = \\phi'(z^{(\\ell-1)}) \\cdot \\delta^{(\\ell)}\\)",
+                    "\\(\\delta^{(\\ell-1)} = W^{(\\ell)\\top} h^{(\\ell-1)}\\)",
+                    "\\(\\delta^{(\\ell-1)} = (\\delta^{(\\ell)})^{-1}\\)"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Backpropagation",
+                question: "Why is reverse-mode automatic differentiation preferred over forward-mode for training neural networks?",
+                options: [
+                    "Forward-mode does not handle nonlinear functions",
+                    "Reverse-mode computes gradients w.r.t. all \\(P\\) parameters in one backward pass; forward-mode would need \\(P\\) passes",
+                    "Reverse-mode is the only mode that can compute second derivatives",
+                    "Forward-mode requires GPUs while reverse-mode does not",
+                    "Reverse-mode avoids storing forward-pass activations"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Backpropagation",
+                question: "Given a fan-out where variable \\(z\\) feeds into nodes producing \\(a\\) and \\(b\\), how do we compute \\(\\partial\\mathcal{L}/\\partial z\\)?",
+                options: [
+                    "Take the max of the contributions from \\(a\\) and \\(b\\)",
+                    "Take the product of the contributions",
+                    "Sum the contributions from all consumers: \\(\\frac{\\partial\\mathcal{L}}{\\partial a}\\frac{\\partial a}{\\partial z} + \\frac{\\partial\\mathcal{L}}{\\partial b}\\frac{\\partial b}{\\partial z}\\)",
+                    "Average the two contributions",
+                    "Use only the first consumer's contribution"
+                ],
+                correct: 2
+            },
+            {
+                topic: "Backpropagation",
+                question: "How does gradient checking verify a backward pass implementation?",
+                options: [
+                    "By comparing analytical gradients to \\((\\mathcal{L}(\\theta + \\epsilon) - \\mathcal{L}(\\theta - \\epsilon))/(2\\epsilon)\\) for small \\(\\epsilon\\)",
+                    "By checking that gradients have the correct sign",
+                    "By ensuring gradients are always positive",
+                    "By verifying that gradients fall below a threshold",
+                    "By testing convergence on a held-out validation set"
+                ],
+                correct: 0
+            },
+            {
+                topic: "Word2Vec",
+                question: "What is the difference between CBOW and skipgram?",
+                options: [
+                    "CBOW uses a softmax; skipgram uses a sigmoid",
+                    "CBOW predicts the center word from averaged context; skipgram predicts each context word independently from the center",
+                    "CBOW is unsupervised; skipgram is supervised",
+                    "CBOW uses negative sampling; skipgram uses full softmax",
+                    "CBOW has one weight matrix; skipgram has two"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Word2Vec",
+                question: "Why does each word in Word2Vec carry two vector representations?",
+                options: [
+                    "To reduce the overall memory footprint",
+                    "An input vector \\(v_w\\) (when used as center) and an output vector \\(v'_w\\) (when used as target) play asymmetric roles and evolve under different gradients",
+                    "To enable bidirectional inference",
+                    "One is used for training and the other for testing",
+                    "The two vectors are mirror images with opposite signs"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Word2Vec",
+                question: "What problem does negative sampling solve?",
+                options: [
+                    "It makes the softmax normalizer over the entire vocabulary tractable by replacing it with a binary classification objective",
+                    "It eliminates the need for gradient descent",
+                    "It converts skipgram into CBOW",
+                    "It replaces embeddings with one-hot vectors",
+                    "It removes the need for a learning rate"
+                ],
+                correct: 0
+            },
+            {
+                topic: "Word2Vec",
+                question: "Why does training on <em>only</em> positive word-context pairs fail?",
+                options: [
+                    "Because the sigmoid saturates too quickly",
+                    "The objective is degenerate: making all embeddings huge and parallel drives every inner product (and hence every \\(\\sigma\\)) to 1",
+                    "Because the log-likelihood becomes infinite",
+                    "Because the gradient vanishes for positive pairs",
+                    "Because no gradient can flow through the softmax"
+                ],
+                correct: 1
+            },
+            {
+                topic: "Word2Vec",
+                question: "What did Levy and Goldberg (2014) show about skipgram with negative sampling (SGNS)?",
+                options: [
+                    "SGNS is equivalent to the perceptron algorithm",
+                    "SGNS implicitly factorizes a shifted pointwise mutual information (PMI) matrix: \\(v_w^\\top v_c \\approx \\text{PMI}(w,c) - \\log k\\)",
+                    "SGNS requires \\(O(V^2)\\) memory",
+                    "SGNS is a special case of PCA on word counts",
+                    "SGNS converges only for Zipfian word distributions"
+                ],
+                correct: 1
+            }
+        ];
+
+        // Shuffle answer options so the correct answer isn't always B/C
+        function shuffleOptions() {
+            for (var q = 0; q < questions.length; q++) {
+                var opts = questions[q].options;
+                var correctText = opts[questions[q].correct];
+                for (var i = opts.length - 1; i > 0; i--) {
+                    var j = Math.floor(Math.random() * (i + 1));
+                    var tmp = opts[i];
+                    opts[i] = opts[j];
+                    opts[j] = tmp;
+                }
+                questions[q].correct = opts.indexOf(correctText);
+            }
+        }
+        shuffleOptions();
+
+        var currentIndex = 0;
+        var answers = new Array(questions.length).fill(null);
+        var submitted = new Array(questions.length).fill(false);
+        var score = 0;
+
+        // Theme management
+        var savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.body.classList.add('dark');
+        }
+
+        function toggleTheme() {
+            var isDark = document.body.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function renderQuestion() {
+            var q = questions[currentIndex];
+            document.getElementById('cardCounter').textContent = 'Question ' + (currentIndex + 1) + ' of ' + questions.length;
+            document.getElementById('topicTag').textContent = q.topic;
+            document.getElementById('questionText').innerHTML = q.question;
+
+            var answeredCount = submitted.filter(function(s) { return s; }).length;
+            document.getElementById('scoreDisplay').textContent = 'Score: ' + score + ' / ' + answeredCount + ' answered';
+
+            var progress = (answeredCount / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+
+            var optionsList = document.getElementById('optionsList');
+            var letters = ['A', 'B', 'C', 'D', 'E'];
+            var html = '';
+
+            for (var i = 0; i < q.options.length; i++) {
+                var extraClass = '';
+                var isDisabled = submitted[currentIndex];
+
+                if (isDisabled) {
+                    extraClass = ' disabled';
+                    if (i === q.correct) {
+                        extraClass += ' correct';
+                    } else if (i === answers[currentIndex] && i !== q.correct) {
+                        extraClass += ' incorrect';
+                    }
+                } else if (answers[currentIndex] === i) {
+                    extraClass = ' selected';
+                }
+
+                html += '<li class="option-item">';
+                html += '<label class="option-label' + extraClass + '" onclick="selectOption(' + i + ')">';
+                html += '<span class="option-letter">' + letters[i] + '</span>';
+                html += '<span class="option-text">' + q.options[i] + '</span>';
+                html += '</label>';
+                html += '</li>';
+            }
+
+            optionsList.innerHTML = html;
+
+            // Submit button state
+            var submitBtn = document.getElementById('submitBtn');
+            if (submitted[currentIndex]) {
+                submitBtn.style.display = 'none';
+            } else {
+                submitBtn.style.display = 'inline-block';
+                submitBtn.disabled = answers[currentIndex] === null;
+            }
+
+            // Result feedback
+            var feedback = document.getElementById('resultFeedback');
+            if (submitted[currentIndex]) {
+                if (answers[currentIndex] === q.correct) {
+                    feedback.textContent = 'Correct!';
+                    feedback.className = 'result-feedback correct-text';
+                } else {
+                    feedback.textContent = 'Incorrect. The correct answer is ' + letters[q.correct] + '.';
+                    feedback.className = 'result-feedback incorrect-text';
+                }
+            } else {
+                feedback.textContent = '';
+                feedback.className = 'result-feedback';
+            }
+
+            // Nav buttons
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            document.getElementById('nextBtn').disabled = currentIndex === questions.length - 1;
+
+            // Typeset MathJax
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('quizCard')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
+            }
+        }
+
+        function selectOption(index) {
+            if (submitted[currentIndex]) return;
+            answers[currentIndex] = index;
+            renderQuestion();
+        }
+
+        function submitAnswer() {
+            if (answers[currentIndex] === null || submitted[currentIndex]) return;
+            submitted[currentIndex] = true;
+
+            if (answers[currentIndex] === questions[currentIndex].correct) {
+                score++;
+            }
+
+            renderQuestion();
+
+            // Check if all questions are answered
+            var allAnswered = submitted.every(function(s) { return s; });
+            if (allAnswered) {
+                setTimeout(showFinalResults, 800);
+            }
+        }
+
+        function showFinalResults() {
+            document.getElementById('quizArea').style.display = 'none';
+            var results = document.getElementById('finalResults');
+            results.style.display = 'block';
+
+            var pct = Math.round((score / questions.length) * 100);
+            document.getElementById('finalScore').textContent = score + ' / ' + questions.length + ' (' + pct + '%)';
+
+            var msg = '';
+            if (pct === 100) {
+                msg = 'Perfect score! You have an excellent grasp of the material.';
+            } else if (pct >= 80) {
+                msg = 'Great job! You have a strong understanding of the core concepts.';
+            } else if (pct >= 60) {
+                msg = 'Good effort! Consider reviewing the articles on topics you missed.';
+            } else if (pct >= 40) {
+                msg = 'You might want to revisit some of the articles before trying again.';
+            } else {
+                msg = 'Consider re-reading the articles and trying the quiz again.';
+            }
+            document.getElementById('finalMessage').textContent = msg;
+        }
+
+        function retakeQuiz() {
+            currentIndex = 0;
+            answers = new Array(questions.length).fill(null);
+            submitted = new Array(questions.length).fill(false);
+            score = 0;
+            shuffleOptions();
+
+            document.getElementById('finalResults').style.display = 'none';
+            document.getElementById('quizArea').style.display = 'block';
+            renderQuestion();
+        }
+
+        function prevQuestion() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentIndex < questions.length - 1) {
+                currentIndex++;
+                renderQuestion();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                prevQuestion();
+            } else if (e.key === 'ArrowRight') {
+                nextQuestion();
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (!submitted[currentIndex] && answers[currentIndex] !== null) {
+                    submitAnswer();
+                }
+            }
+        });
+
+        // Initial render
+        renderQuestion();
+    </script>
+</body>
+</html>

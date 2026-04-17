@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Logistic Regression as an Interpretability Tool &mdash; Flashcards</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            startup: {
+                typeset: false
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            background-color: #f5f5f5;
+            transition: background-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #2a2a2a;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 3rem;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        html.dark {
+            background-color: #1a1a1a;
+        }
+
+        body.dark {
+            color: #d4d4d4;
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5em;
+            padding-bottom: 0.5em;
+            border-bottom: 3px solid #666;
+            flex-wrap: wrap;
+            gap: 1em;
+        }
+
+        body.dark .header-container {
+            border-color: #888;
+        }
+
+        h1 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 24pt;
+            color: #1a1a1a;
+            letter-spacing: 0.02em;
+            font-weight: 700;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        body.dark h1 {
+            color: #f0f0f0;
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.8em;
+        }
+
+        .toggle-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #666;
+        }
+
+        body.dark .toggle-label {
+            color: #aaa;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background-color: #bbb;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            border: 2px solid #999;
+        }
+
+        body.dark .toggle-switch {
+            background-color: #666;
+            border-color: #888;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        body.dark .toggle-slider {
+            transform: translateX(30px);
+            background-color: #2a2a2a;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+
+        .toggle-slider::before {
+            content: '\2600';
+            color: #2a2a2a;
+        }
+
+        body.dark .toggle-slider::before {
+            content: '\263E';
+            color: #c0c8d8;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2em;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #2a2a2a;
+        }
+
+        body.dark .back-link {
+            color: #aaa;
+        }
+
+        body.dark .back-link:hover {
+            color: #e8e8e8;
+        }
+
+        .card-counter {
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            color: #888;
+            margin-bottom: 1.5em;
+        }
+
+        body.dark .card-counter {
+            color: #999;
+        }
+
+        .flashcard-scene {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 680px;
+            min-height: 340px;
+            margin: 0 auto 2em auto;
+            cursor: pointer;
+        }
+
+        .flashcard {
+            position: relative;
+            width: 100%;
+            min-height: 340px;
+            transition: transform 0.6s ease;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-face {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 340px;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2.5em 2.5em;
+            border-radius: 10px;
+            border: 1px solid #d5d5d5;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body.dark .flashcard-face {
+            border-color: #555;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+        }
+
+        .flashcard-front {
+            background-color: #fafafa;
+        }
+
+        body.dark .flashcard-front {
+            background-color: #333;
+        }
+
+        .flashcard-back {
+            background-color: #f0f4f8;
+            transform: rotateY(180deg);
+        }
+
+        body.dark .flashcard-back {
+            background-color: #2f3640;
+        }
+
+        .flashcard-face .face-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 9pt;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #aaa;
+            margin-bottom: 1em;
+            font-weight: 600;
+        }
+
+        body.dark .flashcard-face .face-label {
+            color: #777;
+        }
+
+        .flashcard-front .card-text {
+            font-size: 14pt;
+            line-height: 1.5;
+            text-align: center;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        body.dark .flashcard-front .card-text {
+            color: #e8e8e8;
+        }
+
+        .flashcard-back .card-text {
+            font-size: 12pt;
+            line-height: 1.6;
+            text-align: center;
+            color: #2a2a2a;
+        }
+
+        body.dark .flashcard-back .card-text {
+            color: #d4d4d4;
+        }
+
+        .tap-hint {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 9pt;
+            color: #bbb;
+            margin-top: 1.2em;
+        }
+
+        body.dark .tap-hint {
+            color: #666;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            font-weight: 500;
+            padding: 0.7em 1.8em;
+            border-radius: 4px;
+            border: 2px solid #1a1a1a;
+            background-color: #e8e8e8;
+            color: #2a2a2a;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        body.dark .controls button {
+            background-color: #1a1a1a;
+            color: #e8e8e8;
+            border-color: #666;
+        }
+
+        .controls button:hover {
+            background-color: #f5f5f5;
+            border-color: #666;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        body.dark .controls button:hover {
+            background-color: #000;
+            border-color: #888;
+            box-shadow: 0 2px 8px rgba(102,102,102,0.4);
+        }
+
+        .controls button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .controls button:disabled:hover {
+            background-color: #e8e8e8;
+            border-color: #1a1a1a;
+            transform: none;
+            box-shadow: none;
+        }
+
+        body.dark .controls button:disabled:hover {
+            background-color: #1a1a1a;
+            border-color: #666;
+        }
+
+        .shuffle-btn {
+            border-style: dashed !important;
+        }
+
+        footer {
+            margin-top: 3em;
+            padding-top: 1.5em;
+            border-top: 2px solid #ccc;
+            text-align: center;
+            color: #888;
+            font-size: 9pt;
+        }
+
+        body.dark footer {
+            border-color: #555;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 2em 1.5em;
+                margin: 1rem;
+            }
+
+            h1 {
+                font-size: 18pt;
+            }
+
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .flashcard-scene {
+                min-height: 300px;
+            }
+
+            .flashcard {
+                min-height: 300px;
+            }
+
+            .flashcard-face {
+                min-height: 300px;
+                padding: 2em 1.5em;
+            }
+
+            .flashcard-front .card-text {
+                font-size: 13pt;
+            }
+
+            .flashcard-back .card-text {
+                font-size: 11pt;
+            }
+
+            .controls {
+                gap: 0.6em;
+            }
+
+            .controls button {
+                padding: 0.6em 1.2em;
+                font-size: 10pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <h1>Logistic Regression as an Interpretability Tool &mdash; Flashcards</h1>
+        <div class="theme-toggle">
+            <span class="toggle-label">Theme</span>
+            <div class="toggle-switch" onclick="toggleTheme()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </div>
+
+    <a href="logistic_regression_interpretability-light.html" class="back-link article-link" data-article="logistic_regression_interpretability">&larr; Back to article</a>
+
+    <div class="card-counter" id="cardCounter">Card 1 of 25</div>
+
+    <div class="flashcard-scene" id="flashcardScene" onclick="flipCard()">
+        <div class="flashcard" id="flashcard">
+            <div class="flashcard-face flashcard-front">
+                <div class="face-label">Question</div>
+                <div class="card-text" id="frontText"></div>
+                <div class="tap-hint">Click to reveal answer</div>
+            </div>
+            <div class="flashcard-face flashcard-back">
+                <div class="face-label">Answer</div>
+                <div class="card-text" id="backText"></div>
+                <div class="tap-hint">Click to see question</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" onclick="prevCard()">&larr; Previous</button>
+        <button class="shuffle-btn" onclick="shuffleDeck()">Shuffle</button>
+        <button id="nextBtn" onclick="nextCard()">Next &rarr;</button>
+    </div>
+
+    <footer>
+        <p>Stephen Fitz &middot; 2026</p>
+    </footer>
+
+    <script>
+        var cards = [
+            {
+                front: "Define the log-odds function of a logistic regression model and give its value.",
+                back: "\\(\\ell_w(x) = \\log\\frac{p_w(x)}{1 - p_w(x)} = w^\\top x + b\\). The log-odds are a linear function of the features, because \\(\\sigma(z)/(1 - \\sigma(z)) = e^z\\)."
+            },
+            {
+                front: "What precise meaning does coefficient \\(w_j\\) have in logistic regression?",
+                back: "\\(w_j = \\frac{\\partial}{\\partial x_j}\\log\\frac{p_w(x)}{1 - p_w(x)}\\) — the partial derivative of the log-odds with respect to feature \\(x_j\\). It tells exactly how much a unit increase in \\(x_j\\) shifts the log-odds."
+            },
+            {
+                front: "State the odds-multiplier formula and give an example.",
+                back: "\\(\\text{odds}(x + \\Delta e_j)/\\text{odds}(x) = e^{\\Delta w_j}\\). For a unit increase, odds are multiplied by \\(e^{w_j}\\). Example: \\(w_j = -1\\) multiplies odds by \\(e^{-1} \\approx 0.37\\) — a 63% decrease."
+            },
+            {
+                front: "What are the two principal settings where logistic regression is used to interpret other models?",
+                back: "(1) <strong>Linear probes</strong>: fit logistic regression on a frozen deep-network representation \\(h_\\ell(x)\\) to decode what the representation encodes. (2) <strong>Surrogate models</strong>: fit LR to approximate a black-box \\(p_f(x)\\) for a local linear explanation (LIME-style)."
+            },
+            {
+                front: "What is a linear probe, and what does high probe accuracy imply?",
+                back: "A logistic regression fitted on a frozen representation: \\(P(y=1 \\mid x) = \\sigma(w^\\top h_\\ell(x) + b)\\). High accuracy implies the label is <strong>linearly encoded</strong> in that layer. The weights show which directions carry the signal."
+            },
+            {
+                front: "Write the cross-entropy loss with soft labels \\(q \\in (0, 1)\\).",
+                back: "\\(\\mathrm{CE}(q, p) = -[q\\log p + (1 - q)\\log(1 - p)]\\). This generalizes binary cross-entropy; reduces to the hard-label form when \\(q \\in \\{0, 1\\}\\)."
+            },
+            {
+                front: "Give the cross-entropy in logit form.",
+                back: "\\(\\mathrm{CE}(q, \\sigma(z)) = \\log(1 + e^z) - qz\\). The softplus \\(\\log(1 + e^z)\\) provides curvature; \\(-qz\\) is a linear tilt that shifts the minimum."
+            },
+            {
+                front: "Derive the logit form: show \\(\\mathrm{CE}(q, \\sigma(z)) = \\log(1 + e^z) - qz\\).",
+                back: "Use \\(\\log\\sigma(z) = z - \\log(1+e^z)\\) and \\(\\log(1-\\sigma(z)) = -\\log(1+e^z)\\). Then \\(-q[z-\\log(1+e^z)] - (1-q)[-\\log(1+e^z)] = -qz + \\log(1+e^z)\\)."
+            },
+            {
+                front: "What is the stationary condition of the cross-entropy in logit form?",
+                back: "\\(\\frac{d\\ell}{dz} = \\sigma(z) - q = 0 \\Rightarrow z^* = \\logit(q)\\). The optimal logit at each point is the teacher's own logit."
+            },
+            {
+                front: "Why is the stationary condition \\(z^* = \\logit(q)\\) conceptually important?",
+                back: "Fitting LR to soft labels is secretly doing <strong>function approximation in logit space</strong>: find a linear \\(w^\\top \\phi(x) + b\\) that best approximates the (nonlinear) teacher logit \\(t(x) = \\logit(q(x))\\)."
+            },
+            {
+                front: "Taylor-expand \\(\\ell(z; q)\\) around \\(z = t = \\logit(q)\\). What are the first two derivatives?",
+                back: "\\(\\ell'(t) = \\sigma(t) - q = 0\\) (optimum). \\(\\ell''(t) = \\sigma'(t) = \\sigma(t)(1 - \\sigma(t)) = q(1 - q)\\). So \\(\\ell(z;q) \\approx \\ell(t;q) + \\tfrac{1}{2}q(1-q)(z - t)^2\\)."
+            },
+            {
+                front: "Write the weighted least squares interpretation of LR on soft labels.",
+                back: "\\(\\min_{w,b}\\; \\E[\\omega(x)(w^\\top\\phi(x) + b - t(x))^2]\\) with \\(\\omega(x) = q(x)(1 - q(x))\\) and \\(t(x) = \\logit(q(x))\\). LR is weighted regression of teacher logits onto features."
+            },
+            {
+                front: "Interpret the weight function \\(\\omega(q) = q(1-q)\\) in SGD terms.",
+                back: "Maximized at \\(q = 1/2\\) (\\(\\omega = 0.25\\)): uncertain teacher predictions matter most. Vanishes at \\(q \\in \\{0, 1\\}\\): confident predictions have extreme logits that are hard to match precisely, and cross-entropy automatically downweights them."
+            },
+            {
+                front: "When does LR to soft labels reduce to ordinary least squares on logits?",
+                back: "When \\(\\omega(x) = q(x)(1 - q(x))\\) is approximately constant — i.e., when soft labels lie away from 0 and 1. Constant weights cancel out, leaving \\(\\min \\E[(w^\\top\\phi + b - t)^2]\\)."
+            },
+            {
+                front: "Write the normal equations for the OLS problem and state their geometric meaning.",
+                back: "\\(\\E[\\tilde\\phi\\tilde\\phi^\\top]\\tilde w = \\E[t\\tilde\\phi]\\). Geometrically: the residual \\(t(x) - \\tilde w^\\top\\tilde\\phi(x)\\) is orthogonal to every feature in the \\(L^2\\) inner product — the optimum is an <strong>orthogonal projection</strong>."
+            },
+            {
+                front: "State the Hilbert-space interpretation of logistic regression on soft labels.",
+                back: "The teacher's logit function \\(t(x)\\) lives in the Hilbert space \\(L^2\\) (inner product \\(\\langle a,b\\rangle = \\E[a(x)b(x)]\\)). The LR solution is the orthogonal projection of \\(t\\) onto the finite-dimensional subspace spanned by the features \\(\\tilde\\phi_j\\)."
+            },
+            {
+                front: "List the four steps of the full interpretability story, from teacher probabilities to weights.",
+                back: "(1) Teacher gives soft probabilities \\(q(x)\\). (2) Cross-entropy locally becomes regression on logits \\(t(x) = \\logit(q(x))\\). (3) Solution is orthogonal projection of \\(t\\) onto feature span. (4) Weight vector \\(w\\) encodes projection coefficients — partial derivatives of the linear approximation to the teacher's log-odds."
+            },
+            {
+                front: "Summarize the linear-probe procedure in 4 steps.",
+                back: "(1) Extract representation \\(h_\\ell(x)\\) at a chosen layer. (2) Freeze all network parameters. (3) Fit \\(P(y=1\\mid x) = \\sigma(w^\\top h_\\ell(x) + b)\\). (4) Interpret weights: large \\(|w_j|\\) = dimension \\(j\\) strongly encodes the label; odds multiplied by \\(e^{w_j}\\) per unit increase."
+            },
+            {
+                front: "How do comparative linear probes across layers reveal network behavior?",
+                back: "Probe accuracy that rises from layer 3 to layer 6 indicates the network is making the property progressively more linearly accessible. If it decreases in later layers, the network may be discarding that information as irrelevant to the final task."
+            },
+            {
+                front: "Name two limitations of linear probes.",
+                back: "(1) They detect only <strong>linear</strong> encoding — nonlinearly encoded properties go undetected. (2) In high dimensions, a probe can achieve nontrivial accuracy on spurious signal, so accuracy should be compared against a random-feature baseline."
+            },
+            {
+                front: "Why is it a problem to try to match teacher <em>probabilities</em> directly instead of logits?",
+                back: "Probabilities live in the bounded interval \\((0, 1)\\) and saturate. Confident teacher predictions (near 0 or 1) give extreme logits that are hard to match, but the cross-entropy naturally down-weights them via \\(\\omega = q(1-q)\\). Matching probabilities linearly would misspecify the objective."
+            },
+            {
+                front: "How is a surrogate model (LIME-style) related to logistic regression?",
+                back: "A surrogate fits a simple, interpretable model (e.g. LR) to approximate \\(p_w(x) \\approx p_f(x)\\) locally or globally. The surrogate's weights serve as a linear explanation of the black box's behavior in that region."
+            },
+            {
+                front: "Why does LR remain the default model in medicine, economics, and social science?",
+                back: "Because every coefficient \\(w_j\\) has a precise, quantitative meaning — the log-odds derivative and odds multiplier \\(e^{w_j}\\). Interpretability matters more than marginal accuracy improvements for decisions requiring accountability."
+            },
+            {
+                front: "Given teacher logit \\(t(x)\\) and student logit \\(z(x) = w^\\top\\phi(x)\\), what drives the loss?",
+                back: "Near the optimum, loss \\(\\approx \\frac{1}{2}\\omega(x)(z(x) - t(x))^2\\). The student is minimizing weighted squared error in logit space, with uncertain-teacher points weighted most heavily."
+            },
+            {
+                front: "What happens to the weight function \\(\\omega(q)\\) at \\(q = 0.01\\)?",
+                back: "\\(\\omega(0.01) = 0.01 \\cdot 0.99 \\approx 0.01\\) — very small. The curvature of cross-entropy at that point is tiny, so fitting errors at near-certain teacher predictions contribute little to the loss. Uncertain points dominate."
+            }
+        ];
+
+        var currentIndex = 0;
+        var deck = cards.map(function(_, i) { return i; });
+
+        var savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.body.classList.add('dark');
+        }
+        updateArticleLink();
+
+        function toggleTheme() {
+            var isDark = document.body.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateArticleLink();
+        }
+
+        function updateArticleLink() {
+            var isDark = document.body.classList.contains('dark');
+            var theme = isDark ? 'dark' : 'light';
+            document.querySelectorAll('.article-link').forEach(function(link) {
+                var article = link.getAttribute('data-article');
+                link.href = article + '-' + theme + '.html';
+            });
+        }
+
+        function renderCard() {
+            var card = cards[deck[currentIndex]];
+            document.getElementById('frontText').innerHTML = card.front;
+            document.getElementById('backText').innerHTML = card.back;
+            document.getElementById('cardCounter').textContent = 'Card ' + (currentIndex + 1) + ' of ' + deck.length;
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            document.getElementById('nextBtn').disabled = currentIndex === deck.length - 1;
+
+            document.getElementById('flashcard').classList.remove('is-flipped');
+
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('frontText'), document.getElementById('backText')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
+            }
+        }
+
+        function flipCard() {
+            document.getElementById('flashcard').classList.toggle('is-flipped');
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('backText')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCard();
+            }
+        }
+
+        function nextCard() {
+            if (currentIndex < deck.length - 1) {
+                currentIndex++;
+                renderCard();
+            }
+        }
+
+        function shuffleDeck() {
+            for (var i = deck.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = deck[i];
+                deck[i] = deck[j];
+                deck[j] = temp;
+            }
+            currentIndex = 0;
+            renderCard();
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                prevCard();
+            } else if (e.key === 'ArrowRight') {
+                nextCard();
+            } else if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                flipCard();
+            }
+        });
+
+        renderCard();
+    </script>
+</body>
+</html>

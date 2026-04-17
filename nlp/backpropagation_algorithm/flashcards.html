@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Backpropagation Algorithm &mdash; Flashcards</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            startup: {
+                typeset: false
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            background-color: #f5f5f5;
+            transition: background-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #2a2a2a;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 3rem;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        html.dark {
+            background-color: #1a1a1a;
+        }
+
+        body.dark {
+            color: #d4d4d4;
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5em;
+            padding-bottom: 0.5em;
+            border-bottom: 3px solid #666;
+            flex-wrap: wrap;
+            gap: 1em;
+        }
+
+        body.dark .header-container {
+            border-color: #888;
+        }
+
+        h1 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 24pt;
+            color: #1a1a1a;
+            letter-spacing: 0.02em;
+            font-weight: 700;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        body.dark h1 {
+            color: #f0f0f0;
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.8em;
+        }
+
+        .toggle-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #666;
+        }
+
+        body.dark .toggle-label {
+            color: #aaa;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background-color: #bbb;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            border: 2px solid #999;
+        }
+
+        body.dark .toggle-switch {
+            background-color: #666;
+            border-color: #888;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        body.dark .toggle-slider {
+            transform: translateX(30px);
+            background-color: #2a2a2a;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+
+        .toggle-slider::before {
+            content: '\2600';
+            color: #2a2a2a;
+        }
+
+        body.dark .toggle-slider::before {
+            content: '\263E';
+            color: #c0c8d8;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2em;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #2a2a2a;
+        }
+
+        body.dark .back-link {
+            color: #aaa;
+        }
+
+        body.dark .back-link:hover {
+            color: #e8e8e8;
+        }
+
+        .card-counter {
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            color: #888;
+            margin-bottom: 1.5em;
+        }
+
+        body.dark .card-counter {
+            color: #999;
+        }
+
+        .flashcard-scene {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 680px;
+            min-height: 340px;
+            margin: 0 auto 2em auto;
+            cursor: pointer;
+        }
+
+        .flashcard {
+            position: relative;
+            width: 100%;
+            min-height: 340px;
+            transition: transform 0.6s ease;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-face {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 340px;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2.5em 2.5em;
+            border-radius: 10px;
+            border: 1px solid #d5d5d5;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body.dark .flashcard-face {
+            border-color: #555;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+        }
+
+        .flashcard-front {
+            background-color: #fafafa;
+        }
+
+        body.dark .flashcard-front {
+            background-color: #333;
+        }
+
+        .flashcard-back {
+            background-color: #f0f4f8;
+            transform: rotateY(180deg);
+        }
+
+        body.dark .flashcard-back {
+            background-color: #2f3640;
+        }
+
+        .flashcard-face .face-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 9pt;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #aaa;
+            margin-bottom: 1em;
+            font-weight: 600;
+        }
+
+        body.dark .flashcard-face .face-label {
+            color: #777;
+        }
+
+        .flashcard-front .card-text {
+            font-size: 14pt;
+            line-height: 1.5;
+            text-align: center;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        body.dark .flashcard-front .card-text {
+            color: #e8e8e8;
+        }
+
+        .flashcard-back .card-text {
+            font-size: 12pt;
+            line-height: 1.6;
+            text-align: center;
+            color: #2a2a2a;
+        }
+
+        body.dark .flashcard-back .card-text {
+            color: #d4d4d4;
+        }
+
+        .tap-hint {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 9pt;
+            color: #bbb;
+            margin-top: 1.2em;
+        }
+
+        body.dark .tap-hint {
+            color: #666;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            font-weight: 500;
+            padding: 0.7em 1.8em;
+            border-radius: 4px;
+            border: 2px solid #1a1a1a;
+            background-color: #e8e8e8;
+            color: #2a2a2a;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        body.dark .controls button {
+            background-color: #1a1a1a;
+            color: #e8e8e8;
+            border-color: #666;
+        }
+
+        .controls button:hover {
+            background-color: #f5f5f5;
+            border-color: #666;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        body.dark .controls button:hover {
+            background-color: #000;
+            border-color: #888;
+            box-shadow: 0 2px 8px rgba(102,102,102,0.4);
+        }
+
+        .controls button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .controls button:disabled:hover {
+            background-color: #e8e8e8;
+            border-color: #1a1a1a;
+            transform: none;
+            box-shadow: none;
+        }
+
+        body.dark .controls button:disabled:hover {
+            background-color: #1a1a1a;
+            border-color: #666;
+        }
+
+        .shuffle-btn {
+            border-style: dashed !important;
+        }
+
+        footer {
+            margin-top: 3em;
+            padding-top: 1.5em;
+            border-top: 2px solid #ccc;
+            text-align: center;
+            color: #888;
+            font-size: 9pt;
+        }
+
+        body.dark footer {
+            border-color: #555;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 2em 1.5em;
+                margin: 1rem;
+            }
+
+            h1 {
+                font-size: 18pt;
+            }
+
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .flashcard-scene {
+                min-height: 300px;
+            }
+
+            .flashcard {
+                min-height: 300px;
+            }
+
+            .flashcard-face {
+                min-height: 300px;
+                padding: 2em 1.5em;
+            }
+
+            .flashcard-front .card-text {
+                font-size: 13pt;
+            }
+
+            .flashcard-back .card-text {
+                font-size: 11pt;
+            }
+
+            .controls {
+                gap: 0.6em;
+            }
+
+            .controls button {
+                padding: 0.6em 1.2em;
+                font-size: 10pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <h1>The Backpropagation Algorithm &mdash; Flashcards</h1>
+        <div class="theme-toggle">
+            <span class="toggle-label">Theme</span>
+            <div class="toggle-switch" onclick="toggleTheme()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </div>
+
+    <a href="backpropagation_algorithm-light.html" class="back-link article-link" data-article="backpropagation_algorithm">&larr; Back to article</a>
+
+    <div class="card-counter" id="cardCounter">Card 1 of 25</div>
+
+    <div class="flashcard-scene" id="flashcardScene" onclick="flipCard()">
+        <div class="flashcard" id="flashcard">
+            <div class="flashcard-face flashcard-front">
+                <div class="face-label">Question</div>
+                <div class="card-text" id="frontText"></div>
+                <div class="tap-hint">Click to reveal answer</div>
+            </div>
+            <div class="flashcard-face flashcard-back">
+                <div class="face-label">Answer</div>
+                <div class="card-text" id="backText"></div>
+                <div class="tap-hint">Click to see question</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" onclick="prevCard()">&larr; Previous</button>
+        <button class="shuffle-btn" onclick="shuffleDeck()">Shuffle</button>
+        <button id="nextBtn" onclick="nextCard()">Next &rarr;</button>
+    </div>
+
+    <footer>
+        <p>Stephen Fitz &middot; 2026</p>
+    </footer>
+
+    <script>
+        var cards = [
+            {
+                front: "What is a computation graph?",
+                back: "A directed acyclic graph whose nodes are either input variables or elementary operations (multiply, add, activate, etc.), with edges carrying intermediate values. It makes every step from inputs to loss explicit, so we never differentiate the whole composition at once."
+            },
+            {
+                front: "State the local gradient rule for a single-input node \\(h = f(z)\\).",
+                back: "\\(\\frac{\\partial \\mathcal{L}}{\\partial z} = \\frac{\\partial \\mathcal{L}}{\\partial h} \\cdot \\frac{\\partial h}{\\partial z}\\). The downstream gradient equals the upstream gradient times the node's local derivative."
+            },
+            {
+                front: "State the fan-out (multiple consumers) rule.",
+                back: "When a variable \\(z\\) feeds into multiple nodes, the gradient at \\(z\\) is the <strong>sum</strong> of contributions from all consumers. This is the multivariable chain rule: sum over all paths through which \\(z\\) influences the loss."
+            },
+            {
+                front: "What are the local gradients of multiplication \\(z = x \\cdot y\\)?",
+                back: "\\(\\partial z / \\partial x = y\\) and \\(\\partial z / \\partial y = x\\) — the derivative with respect to one input is the <em>other</em> input. This is why the backward pass needs the forward-pass inputs to be stored."
+            },
+            {
+                front: "What are the local gradients of addition \\(z = x + y\\)?",
+                back: "Both are 1: \\(\\partial z/\\partial x = \\partial z/\\partial y = 1\\). Addition distributes the upstream gradient equally to both inputs — which is why the bias gradient equals the delta."
+            },
+            {
+                front: "What is the local gradient of the sigmoid, expressed in terms of its output?",
+                back: "If \\(o = \\sigma(z)\\), then \\(\\partial o/\\partial z = o(1 - o)\\). This uses only the forward-pass output — no extra exponentials needed during the backward pass."
+            },
+            {
+                front: "What is the local gradient of ReLU?",
+                back: "\\(\\partial o/\\partial z = 1\\) if \\(z > 0\\), else 0. ReLU either passes the gradient through unattenuated (active neuron) or blocks it entirely (dead neuron). This binary gate is why ReLU avoids vanishing gradients."
+            },
+            {
+                front: "For \\(z = Wx\\), state the weight and input gradients given upstream \\(\\partial\\mathcal{L}/\\partial z\\).",
+                back: "\\(\\frac{\\partial \\mathcal{L}}{\\partial W} = \\frac{\\partial \\mathcal{L}}{\\partial z} \\cdot x^\\top\\) (outer product); \\(\\frac{\\partial \\mathcal{L}}{\\partial x} = W^\\top \\cdot \\frac{\\partial \\mathcal{L}}{\\partial z}\\) (backprojection). These two formulas are the heart of backprop in networks."
+            },
+            {
+                front: "Define the layer error signal \\(\\delta^{(\\ell)}\\) and the backprop recurrence.",
+                back: "\\(\\delta^{(\\ell)} = \\partial \\mathcal{L}/\\partial z^{(\\ell)}\\). Recurrence: \\(\\delta^{(\\ell-1)} = (W^{(\\ell)\\top}\\delta^{(\\ell)}) \\odot \\phi'(z^{(\\ell-1)})\\) — backproject through the weight transpose, then modulate element-wise by the activation derivative."
+            },
+            {
+                front: "What is the output-layer error signal for cross-entropy with sigmoid or softmax?",
+                back: "\\(\\delta^{(L)} = \\hat y - t\\). The combined derivative of the output nonlinearity and the matching cross-entropy cancels to \"prediction minus target\" — the same form in both binary and multi-class cases."
+            },
+            {
+                front: "List the four steps of the backpropagation algorithm.",
+                back: "(1) Forward pass: compute and store \\(z^{(\\ell)}\\) and \\(h^{(\\ell)}\\) for all \\(\\ell\\). (2) Output error: \\(\\delta^{(L)} = \\hat y - t\\). (3) Backward pass: for \\(\\ell = L-1,\\ldots,1\\), compute parameter gradients then propagate \\(\\delta^{(\\ell-1)}\\). (4) Update \\(\\theta \\leftarrow \\theta - \\eta \\nabla_\\theta\\mathcal{L}\\)."
+            },
+            {
+                front: "What is the asymptotic cost of one backward pass?",
+                back: "\\(O(P)\\) for a network with \\(P\\) parameters — roughly the same as one forward pass. One forward + one backward yields all \\(P\\) partial derivatives simultaneously, which is why training networks with billions of parameters is feasible."
+            },
+            {
+                front: "Contrast forward-mode and reverse-mode automatic differentiation.",
+                back: "<strong>Forward mode</strong>: propagate derivatives alongside values L-to-R; gives \\(\\partial/\\partial x_i\\) for <em>one input</em> per pass. <strong>Reverse mode</strong> (backprop): forward pass then gradients R-to-L; gives gradient w.r.t. <em>all inputs</em> per pass. Reverse mode is vastly better when outputs are few (scalar loss)."
+            },
+            {
+                front: "Why is reverse-mode AD the universal choice for neural network training?",
+                back: "Networks have \\(P \\gg 1\\) parameters and a scalar loss. Forward mode would need \\(P\\) passes (one per parameter); reverse mode needs just one. The ratio is \\(P:1\\) in reverse mode's favor, which is decisive when \\(P\\) is in the millions or billions."
+            },
+            {
+                front: "What is an autograd \"tape\", and why is it called dynamic?",
+                back: "A tape is a dynamic computation graph built during the forward pass: each operation records itself as a node. Called `backward()` traverses the tape in reverse. <strong>Dynamic</strong> means the graph is built fresh each forward pass, supporting data-dependent control flow and Python-level debugging."
+            },
+            {
+                front: "What three pieces of information does each tensor in an autograd framework carry?",
+                back: "(1) Its <strong>value</strong> from the forward pass. (2) Its <strong>gradient</strong>, filled in during backward. (3) A pointer to the <strong>operation that created it</strong>, so the backward pass can follow the graph from loss back to leaves."
+            },
+            {
+                front: "Describe gradient checking and when to use it.",
+                back: "Compare analytical gradients (from backprop) to numerical gradients \\(\\approx (\\mathcal{L}(\\theta+\\epsilon) - \\mathcal{L}(\\theta-\\epsilon))/(2\\epsilon)\\) with \\(\\epsilon \\sim 10^{-5}\\). Used only for debugging — it's slow (two forward passes per parameter). Relative error below \\(10^{-5}\\) is good; above \\(10^{-2}\\) indicates a bug."
+            },
+            {
+                front: "Show the forward pass of the worked ReLU example: \\(w = [1,2]\\), \\(x = [-1, 3]\\), \\(t = 2\\).",
+                back: "\\(w_1 x_1 = -1\\); \\(w_2 x_2 = 6\\); \\(z = -1 + 6 = 5\\); \\(y = \\max(0,5) = 5\\); \\(\\mathcal{L} = \\frac{1}{2}(5-2)^2 = 4.5\\)."
+            },
+            {
+                front: "Show the backward pass of that ReLU example and give the final weight gradients.",
+                back: "\\(\\partial\\mathcal{L}/\\partial y = y - t = 3\\). ReLU active, so gradient at \\(z\\) is 3. Addition passes 3 to both branches. Multiplications: \\(\\partial\\mathcal{L}/\\partial w_1 = 3 \\cdot x_1 = -3\\); \\(\\partial\\mathcal{L}/\\partial w_2 = 3 \\cdot x_2 = 9\\)."
+            },
+            {
+                front: "What is the \"output delta\" \\(\\delta_k = (\\mathcal{O}_k - \\tau_k)\\mathcal{O}_k(1-\\mathcal{O}_k)\\) for a squared-error + sigmoid output?",
+                back: "It is the prediction error \\((\\mathcal{O}_k - \\tau_k)\\) multiplied by the sigmoid derivative \\(\\mathcal{O}_k(1-\\mathcal{O}_k)\\). The gradient of a weight \\(W_{jk}\\) is \\(\\mathcal{O}_j \\cdot \\delta_k\\) — sending activation times receiving delta."
+            },
+            {
+                front: "What is the \"hidden delta\" \\(\\phi_j = \\mathcal{O}_j(1-\\mathcal{O}_j)\\sum_k \\delta_k W_{jk}\\)?",
+                back: "The error signal at a hidden neuron \\(j\\). The sum over \\(k\\) aggregates contributions from every output neuron that \\(j\\) feeds into (the fan-out rule). Multiplied by the sigmoid derivative at \\(j\\). Equivalent to \\(\\delta^{(\\ell-1)}\\) in matrix notation."
+            },
+            {
+                front: "Why must we store intermediate forward-pass values to compute the backward pass?",
+                back: "Local gradients at multiplicative and activation nodes depend on forward inputs/outputs: \\(\\partial(xy)/\\partial x = y\\); \\(\\sigma'(z) = \\sigma(z)(1-\\sigma(z))\\). Without saved forward values, these local gradients cannot be evaluated."
+            },
+            {
+                front: "How is backprop through a matrix multiplication \\(Z = AB\\) formulated?",
+                back: "\\(\\partial\\mathcal{L}/\\partial A = (\\partial\\mathcal{L}/\\partial Z) \\cdot B^\\top\\); \\(\\partial\\mathcal{L}/\\partial B = A^\\top \\cdot (\\partial\\mathcal{L}/\\partial Z)\\). In code: <code>self.creators[0].backward(self.grad.mm(self.creators[1].transpose()))</code>."
+            },
+            {
+                front: "Why do `sum` and `expand` show up as dual operations in an autograd framework?",
+                back: "Reducing a dimension during the forward pass means broadcasting the gradient back along that dimension during backward, and vice versa. So the backward of `sum` is `expand`, and the backward of `expand` is `sum`."
+            },
+            {
+                front: "How does an embedding layer's backward pass work?",
+                back: "Forward: select rows of an embedding matrix by integer indices. Backward: for each index \\(i\\), add the upstream gradient to row \\(i\\) of the embedding table. If an index appears multiple times, gradients accumulate."
+            }
+        ];
+
+        var currentIndex = 0;
+        var deck = cards.map(function(_, i) { return i; });
+
+        var savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.body.classList.add('dark');
+        }
+        updateArticleLink();
+
+        function toggleTheme() {
+            var isDark = document.body.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateArticleLink();
+        }
+
+        function updateArticleLink() {
+            var isDark = document.body.classList.contains('dark');
+            var theme = isDark ? 'dark' : 'light';
+            document.querySelectorAll('.article-link').forEach(function(link) {
+                var article = link.getAttribute('data-article');
+                link.href = article + '-' + theme + '.html';
+            });
+        }
+
+        function renderCard() {
+            var card = cards[deck[currentIndex]];
+            document.getElementById('frontText').innerHTML = card.front;
+            document.getElementById('backText').innerHTML = card.back;
+            document.getElementById('cardCounter').textContent = 'Card ' + (currentIndex + 1) + ' of ' + deck.length;
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            document.getElementById('nextBtn').disabled = currentIndex === deck.length - 1;
+
+            document.getElementById('flashcard').classList.remove('is-flipped');
+
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('frontText'), document.getElementById('backText')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
+            }
+        }
+
+        function flipCard() {
+            document.getElementById('flashcard').classList.toggle('is-flipped');
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('backText')]).catch(function(err) {
+                    console.log('MathJax typeset error:', err);
+                });
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCard();
+            }
+        }
+
+        function nextCard() {
+            if (currentIndex < deck.length - 1) {
+                currentIndex++;
+                renderCard();
+            }
+        }
+
+        function shuffleDeck() {
+            for (var i = deck.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = deck[i];
+                deck[i] = deck[j];
+                deck[j] = temp;
+            }
+            currentIndex = 0;
+            renderCard();
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                prevCard();
+            } else if (e.key === 'ArrowRight') {
+                nextCard();
+            } else if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                flipCard();
+            }
+        });
+
+        renderCard();
+    </script>
+</body>
+</html>
