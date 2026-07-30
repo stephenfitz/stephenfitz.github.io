@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shadows of the Collective Psyche</title>
+  <link rel="stylesheet" href="reveal/dist/reset.css">
+  <link rel="stylesheet" href="reveal/dist/reveal.css">
+  <link rel="stylesheet" href="reveal/dist/theme/black.css">
+  <link rel="stylesheet" href="nord-theme.css">
+  <style>
+    .reveal .slides section:first-child,
+    .reveal .slides section:last-child { text-align: left; }
+    .reveal section.center-slide,
+    .reveal section.divider,
+    .reveal section.fig-slide { text-align: center; }
+
+    .reveal .navhint {
+      font-size: 0.5em;
+      color: var(--n4);
+      margin-top: 2.2em;
+      letter-spacing: 0.06em;
+    }
+
+    .reveal .prompt-block {
+      font-family: "SF Mono", "Menlo", monospace;
+      font-size: 0.5em;
+      line-height: 1.55;
+      background: var(--n1);
+      border-left: 4px solid var(--yellow);
+      border-radius: 6px;
+      padding: 0.9em 1.1em;
+      margin: 0.5em 0;
+      color: var(--n5);
+      text-align: left;
+    }
+    .reveal .prompt-block .role {
+      display: block;
+      color: var(--frost3);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.8em;
+      margin-bottom: 0.3em;
+    }
+    .reveal .prompt-block .hl { color: var(--yellow); }
+    .reveal .prompt-block .dim { color: var(--n4); }
+
+    .reveal .lens-grid { display: flex; gap: 0.8em; margin-top: 0.5em; }
+    .reveal .lens {
+      flex: 1;
+      background: var(--n1);
+      border-radius: 8px;
+      border-top: 4px solid var(--frost4);
+      padding: 0.6em 0.85em;
+      font-size: 0.66em;
+      line-height: 1.4;
+    }
+    .reveal .lens h3 { font-size: 1.0em; color: var(--frost2); margin: 0 0 0.35em; }
+    .reveal .lens.explicit { border-top-color: var(--yellow); }
+    .reveal .lens.explicit h3 { color: var(--yellow); }
+    .reveal .lens ul { margin: 0 0 0 1em; }
+    .reveal .lens li { margin: 0.2em 0; }
+
+    .reveal .yr { color: var(--frost2); font-weight: 600; }
+    .reveal .divider .mini-map {
+      font-size: 0.62em;
+      color: var(--n4);
+      margin-top: 1.6em;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+
+        <section class="center-slide">
+          <p class="kicker">The University of Tokyo</p>
+          <h1 style="font-size: 42pt;">Shadows of the Collective Psyche</h1>
+          <p class="subtitle">Measuring and Controlling Personality in Language Models</p>
+          <p class="author">Stephen Fitz</p>
+          <p class="navhint">&rarr; next section &nbsp;&middot;&nbsp; &darr; within section &nbsp;&middot;&nbsp; ESC map</p>
+        </section>
+
+        <section class="fig-slide">
+          <h2>overview</h2>
+          <img src="assets/dark/intro_schematic.png" alt="Schematic: language encodes personality, models learn language, three measurement channels">
+          <p class="fig-note">personality science grew out of language &rarr; language models absorb
+          that language &rarr; psycholinguistic aspects manifest in three modalities
+        </section>
+
+        <section>
+          <h2>Factor analysis in one minute</h2>
+          <p class="method-line">the statistical engine behind the Big Five (Spearman 1904; Thurstone 1947)</p>
+          <p class="eq">x<sub>j</sub> &nbsp;=&nbsp; &Sigma;<sub>q</sub> &lambda;<sub>jq</sub>&thinsp;f<sub>q</sub> &nbsp;+&nbsp; &epsilon;<sub>j</sub></p>
+          <ul class="compact">
+            <li>Many correlated observed variables x<sub>j</sub> (ratings on trait words) explained by a
+                few <span class="frost">latent factors</span> f<sub>q</sub>, with loadings
+                &lambda;<sub>jq</sub> and a variable-specific residual &epsilon;<sub>j</sub></li>
+            <li>Implies the correlation matrix is <span class="frost">low-rank + diagonal</span> &mdash;
+                for this audience: PCA&rsquo;s cousin, with a per-variable noise term</li>
+            <li>Two practical decisions: <em>how many factors</em> (scree, parallel analysis) and
+                <em>rotation</em> to simple structure &mdash; each variable loading on few factors, so
+                the factors are interpretable</li>
+            <li class="fragment">Run it on ratings of trait adjectives and
+                <span class="aurora-y">five factors keep recurring</span> &mdash; next slide</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Where the Big Five came from</h2>
+          <ul class="compact">
+            <li><span class="yr">1884</span> Galton reads the dictionary: &ldquo;fully one thousand words
+                expressive of character&rdquo; &mdash; the <span class="frost">lexical hypothesis</span>:
+                differences that matter get encoded as words</li>
+            <li><span class="yr">1936</span> Allport &amp; Odbert extract <strong>17,953</strong>
+                person-descriptive terms from Webster&rsquo;s (&asymp;4,500 stable traits)</li>
+            <li><span class="yr">1943</span> Cattell clusters them to 35 variables, factor-analyzes,
+                claims twelve factors &mdash; which fail to replicate</li>
+            <li><span class="yr">1961</span> Tupes &amp; Christal reanalyze the data again:
+                <em>&ldquo;five relatively strong and recurrent factors and nothing more of any
+                consequence&rdquo;</em></li>
+            <li><span class="yr">1963&ndash;92</span> Norman replicates; Goldberg names the
+                <span class="frost">Big Five</span>, shows robustness across 1,431 adjectives, and
+                publishes standardized <strong>marker sets</strong></li>
+          </ul>
+          <p class="fragment takeaway">Personality science began as NLP: the Big Five are a
+          factor-analytic compression of the trait lexicon.</p>
+        </section>
+
+        <section>
+          <h2>The Big Five</h2>
+          <ul class="compact">
+            <li><strong style="color:#5E81AC">O &middot; Openness</strong> &mdash; intellectual
+                curiosity, aesthetic sensitivity, preference for novelty and variety over the
+                familiar</li>
+            <li><strong style="color:#D08770">C &middot; Conscientiousness</strong> &mdash; impulse
+                control in the service of goals: organization, dutifulness, deliberation,
+                achievement striving</li>
+            <li><strong style="color:#A3BE8C">E &middot; Extraversion</strong> &mdash; sociability,
+                assertive agency, positive emotionality</li>
+            <li><strong style="color:#B48EAD">A &middot; Agreeableness</strong> &mdash; a prosocial,
+                communal orientation: trust, straightforwardness, altruism, compliance</li>
+            <li><strong style="color:#BF616A">N &middot; Neuroticism</strong> &mdash; disposition to
+                negative affect (anxiety, hostility, depression); its inverse pole is
+                <em>emotional stability</em></li>
+          </ul>
+          <p class="fragment compact">Each dimension is <span class="frost">bipolar</span> &mdash; a
+          high and a low pole &mdash; which the marker pairs and statement pools of the later parts
+          exploit directly.</p>
+        </section>
+
+        <section>
+          <h2>Six facets under each domain</h2>
+          <p class="method-line">the NEO-PI-R hierarchy: 5 domains &times; 6 facets = 30 facets</p>
+          <ul class="compact" style="font-size:0.68em">
+            <li><strong style="color:#5E81AC">O</strong> &mdash; Fantasy &middot; Aesthetics &middot;
+                Feelings &middot; Actions &middot; Ideas &middot; Values</li>
+            <li><strong style="color:#D08770">C</strong> &mdash; Competence &middot; Order &middot;
+                Dutifulness &middot; Achievement Striving &middot; Self-Discipline &middot;
+                Deliberation</li>
+            <li><strong style="color:#A3BE8C">E</strong> &mdash; Warmth &middot; Gregariousness &middot;
+                Assertiveness &middot; Activity &middot; Excitement-Seeking &middot; Positive
+                Emotions</li>
+            <li><strong style="color:#B48EAD">A</strong> &mdash; Trust &middot; Straightforwardness
+                &middot; Altruism &middot; Compliance &middot; Modesty &middot; Tender-Mindedness</li>
+            <li><strong style="color:#BF616A">N</strong> &mdash; Anxiety &middot; Angry Hostility
+                &middot; Depression &middot; Self-Consciousness &middot; Impulsiveness &middot;
+                Vulnerability</li>
+          </ul>
+          <p class="fragment takeaway" style="font-size:0.8em">The hierarchy matters: a domain score can
+          mask divergent facet profiles &mdash; so we use facet-bearing instruments and
+          facet-balanced item pools.</p>
+        </section>
+
+        <section>
+          <h2>What turns a score into an instrument</h2>
+          <ul class="compact">
+            <li><span class="frost">Reliability</span> &mdash; the score is consistent:
+                estimated by test&ndash;retest, split-half, internal consistency (Cronbach&rsquo;s
+                &alpha;); grows lawfully with item count (Spearman&ndash;Brown)</li>
+            <li><span class="frost">Construct validity</span> &mdash; it measures what it claims to:
+                converges with other measures of the <em>same</em> trait, discriminates from measures
+                of <em>different</em> traits, and sits in a lawful web of predicted relations</li>
+            <li><span class="frost">Criterion validity</span> &mdash; it relates to external variables
+                it should: independent inventories, consequential real-world outcomes</li>
+          </ul>
+          <p class="fragment takeaway" style="font-size:0.8em">This checklist is exactly what we apply
+          to machines: the shaping method is validated by IPIP-NEO (construct) + SD3 (criterion), and
+          the implicit measure receives the full reliability workup.</p>
+        </section>
+
+        <section>
+          <h2>The taxonomy and its instruments</h2>
+          <p class="method-line">Five domains &mdash; O&middot;C&middot;E&middot;A&middot;N &mdash; each with six NEO facets:
+          curiosity &middot; self-discipline &middot; sociability &middot; warmth &middot; negative affect</p>
+          <ul class="compact">
+            <li><strong>NEO-PI-R</strong> &mdash; 240 items, the 30-facet reference inventory
+                &middot; <strong>BFI-44</strong> &mdash; 44 short phrases (&ldquo;is talkative&rdquo;)
+                &middot; <strong>TIPI</strong> &mdash; 10 items</li>
+            <li><span class="frost">IPIP-NEO-300</span> &mdash; public-domain, facet-bearing:
+                <strong>our manipulation check</strong> in Part&nbsp;1</li>
+            <li><span class="frost">Short Dark Triad</span> &mdash; 27 items: Machiavellianism,
+                narcissism, psychopathy &mdash; <strong>our criterion instrument</strong></li>
+            <li><span class="frost">BFI-44</span> returns in Part&nbsp;2 as the explicit self-report
+                baseline the implicit measure is compared against</li>
+          </ul>
+          <p class="fragment compact">All Likert summated-rating scales: statements rated 1&ndash;5,
+          reverse-keyed items recoded, item scores averaged per trait.</p>
+        </section>
+
+        <section>
+          <h2>Machine psychometrics: a new subject for AI</h2>
+          <ul class="compact">
+            <li>Deployed assistants show <span class="frost">stable stylistic and interpersonal
+                regularities</span> &mdash; and providers tune them deliberately</li>
+            <li>A <span class="frost">machine trait</span>: a cross-context regularity of the model&rsquo;s
+                conditional text distribution &mdash; no anthropomorphism needed</li>
+            <li>The field borrowed psychology&rsquo;s questionnaires but not its measurement theory
+                &mdash; and every classical threat has an <em>aggravated</em> machine analogue:</li>
+          </ul>
+          <p class="compact" style="margin-left:1.2em">
+            social desirability &rarr; <span class="aurora-y">preference optimization (RLHF)</span><br>
+            demand characteristics &rarr; <span class="aurora-y">the system prompt</span><br>
+            instructed faking &rarr; <span class="aurora-y">persona instructions</span>
+          </p>
+          <p class="fragment takeaway">So import the full apparatus &mdash; reliability, validity,
+          bias detection &mdash; and build channels that bypass self-report entirely.</p>
+        </section>
+
+        <section>
+          <h2>Three modalities</h2>
+          <ul>
+            <li><strong>Explicit / behavioral</strong> &mdash; shape personality by prompting;
+                measure by questionnaire and safety benchmark &rarr; <span class="frost">consequences</span></li>
+            <li><strong>Implicit / distributional</strong> &mdash; read personality from token
+                probabilities, no self-report &rarr; <span class="frost">stability</span></li>
+            <li><strong>Mechanistic / representational</strong> &mdash; find and steer trait
+                directions in activation space &rarr; <span class="frost">control</span></li>
+          </ul>
+          <p class="compact" style="margin-top:0.9em">we study three shadows of the collective psyche from different angles</p>
+        </section>
+
+      </section>
+
+      <section>
+
+        <section class="divider">
+          <p class="part-no">Part 1 &middot; Explicit / prompt modality</p>
+          <h1>Shaping personality by prompting<br>&mdash; and its safety cost</h1>
+          <p class="mini-map">markers &rarr; a one-sentence persona &rarr; validated trait shifts &rarr; benchmark consequences</p>
+        </section>
+
+        <section class="fig-slide">
+          <h2>overview</h2>
+          <img src="assets/dark/explicit_schematic.png" alt="Schematic: one persona sentence, targeted trait moves, safety falls while capability holds">
+          <p class="fig-note">one marker-built persona sentence, dosed by a qualifier &rarr; the
+          targeted trait moves on questionnaires &rarr; safety collapses while capability holds
+        </section>
+
+        <section>
+          <h2>Goldberg&rsquo;s lexical markers as prompt material</h2>
+          <ul class="compact">
+            <li>Markers are the <span class="frost">purest carriers of factor variance</span> &mdash;
+                prototypical adjectives loading maximally on one factor:
+                &ldquo;extravagant&rdquo; &harr; &ldquo;thrifty&rdquo; (Conscientiousness)</li>
+            <li><strong>104 bipolar pairs</strong>, mapped onto all 30 IPIP-NEO facets &mdash;
+                content validity inherited from the lexicon&rsquo;s factor-analytic provenance</li>
+            <li>Intensity from a Likert-style qualifier: &ldquo;not at all&rdquo; &hellip;
+                &ldquo;very&rdquo; &hellip; <span class="aurora-y">&ldquo;extremely&rdquo;</span>
+                &mdash; a linguistic dose</li>
+            <li class="fragment">Validated like a psychologist would: <span class="frost">IPIP-NEO</span>
+                confirms the targeted trait moves (C: 5.0 under High, 1.1 under Low);
+                <span class="frost">SD3</span> confirms coherence &mdash; low Agreeableness drives
+                Machiavellianism and narcissism up the scale</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Anatomy of a shaping prompt</h2>
+          <div class="prompt-block">
+            <span class="role">system</span>
+            For the following task, respond in a way that matches this description:
+            <span class="hl">&ldquo;I'm extremely unsure, extremely messy, extremely irresponsible,
+            extremely lazy, extremely undisciplined, extremely impractical, extremely extravagant,
+            extremely disorganized, extremely negligent, and extremely careless.&rdquo;</span>
+          </div>
+          <div class="prompt-block">
+            <span class="role">user &nbsp;<span class="dim">(questionnaire administration)</span></span>
+            Evaluating the statement, &ldquo;I get chores done right away&rdquo;, please rate how
+            accurately this describes you on a scale from 1 to 5 &hellip;
+            <span class="dim">RATING:</span>
+          </div>
+          <p class="compact">The Low-Conscientiousness condition in full &mdash; ten marker adjectives,
+          one qualifier, one fixed syntactic frame. <span class="aurora-y">The persona sentence is the
+          entire manipulation.</span></p>
+        </section>
+
+        <section>
+          <h2>Setup: five deployed systems, twelve measures</h2>
+          <ul class="compact">
+            <li>GPT-4.1 &middot; Llama-3-70B &middot; Llama-3-8B &middot; Llama-4-Maverick &middot; DeepSeek-V3</li>
+            <li>TruthfulQA &middot; WMDP bio/chem/cyber &middot; five ETHICS subscales &middot; MMLU &middot;
+                two sycophancy measures</li>
+            <li>Temperature 0, fixed seed, identical items &mdash;
+                <span class="frost">only the persona sentence varies</span></li>
+            <li class="fragment">Capability held fixed by construction &rarr; safety variance that
+                <em>cannot</em> be capability variance &mdash; orthogonal axis to the
+                <em>safetywashing</em> critique</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>The twelve measures, briefly</h2>
+          <ul class="compact">
+            <li><span class="frost">TruthfulQA</span> &mdash; resistance to common human falsehoods;
+                single-answer multiple-choice (MC1) accuracy</li>
+            <li><span class="frost">WMDP</span> bio &middot; chem &middot; cyber &mdash;
+                hazardous-knowledge probes; for these, <em>lower</em> accuracy is nominally safer</li>
+            <li><span class="frost">ETHICS</span> &times;5 &mdash; moral judgment: commonsense
+                morality, deontology, justice, utilitarianism, virtue</li>
+            <li><span class="frost">MMLU</span> &mdash; general knowledge and reasoning, run 0-shot
+                &mdash; the <span class="aurora-y">capability control</span></li>
+            <li><span class="frost">Sycophancy</span> &mdash; answer a knowledge question, then face a
+                user who repudiates it: original accuracy (<em>Orig</em>) and how often the model
+                abandons its answer under challenge (<em>Admit</em>) &mdash; steadfast = high Orig,
+                low Admit</li>
+          </ul>
+        </section>
+
+        <section class="fig-slide">
+          <h2>15 conditions &times; 12 measures</h2>
+          <img src="assets/dark/safety_heatmaps.png" alt="Benchmark changes under single-trait shaping">
+          <p class="fig-note">percentage points from each model&rsquo;s baseline &middot; blue = safer &middot;
+          <span class="aurora-r">CON&ndash;LO</span> is the catastrophic row</p>
+        </section>
+
+        <section>
+          <h2>The conscientiousness collapse</h2>
+          <p class="method-line">GPT-4.1 under CON&ndash;LO, from baseline</p>
+          <ul class="compact">
+            <li>TruthfulQA 83.2 &rarr; <span class="aurora-r">44.4</span> &middot;
+                ETHICS commonsense 71.4 &rarr; <span class="aurora-r">38.7</span> &middot;
+                justice 85.7 &rarr; 52.0</li>
+            <li>Sycophancy admit rate 9.5 &rarr; <span class="aurora-r">&asymp;99</span>:
+                the model capitulates to user pressure almost always</li>
+            <li>Robust across tone, syntax, postamble, and temperature variation</li>
+            <li>Strongest in GPT-4.1 and Llama-3-70B; attenuated in Llama-4-Maverick</li>
+          </ul>
+          <p class="fragment takeaway">In humans, conscientiousness underwrites self-regulation and
+          norm adherence. The machine parallel is uncomfortably literal.</p>
+        </section>
+
+        <section class="fig-slide">
+          <h2>Dark-triad composites: safety loss without capability loss</h2>
+          <img src="assets/dark/safety_combo_gpt4.png" alt="Composite persona effects on GPT-4.1">
+          <p class="fig-note">GPT-4.1 &middot; ethics down <span class="aurora-r">up to 31 points</span>
+          while MMLU moves &le; 3.3 &middot; the all-Medium profile mildly
+          <span class="aurora-g">improves</span> safety</p>
+        </section>
+
+      </section>
+
+      <section>
+
+        <section class="divider">
+          <p class="part-no">Part 2 &middot; Implicit / distributional modality</p>
+          <h1>Reading personality from<br>the distribution itself</h1>
+          <p class="mini-map">perplexity ratios &rarr; a shared inherited profile &rarr; two lenses on one model &rarr; the stable factor beneath the persona</p>
+        </section>
+
+        <section class="fig-slide">
+          <h2>overview</h2>
+          <img src="assets/dark/implicit_schematic.png" alt="Schematic: score trait statements by perplexity, the ratio is the score, alignment moves the explicit lens only">
+          <p class="fig-note">score trait-diagnostic statements by perplexity &rarr; the ratio is the
+          implicit trait score &rarr; alignment moves self-report, barely the substrate
+        </section>
+
+        <section>
+          <h2>Measure without asking</h2>
+          <p class="eq">R<sub>t</sub> &nbsp;=&nbsp; mean PPL(S<sub>t</sub><sup>+</sup>) / mean PPL(S<sub>t</sub><sup>&minus;</sup>)</p>
+          <ul class="compact">
+            <li>Newly written first-person statements per trait pole &mdash;
+                <em>&ldquo;I love exploring new ideas&hellip;&rdquo;</em> vs
+                <em>&ldquo;I prefer sticking to what I know&hellip;&rdquo;</em></li>
+            <li>R<sub>t</sub> &lt; 1: the high pole is <span class="frost">less surprising</span>
+                &mdash; an implicit orientation, read straight off the token probabilities</li>
+            <li>No instruction, no chat template, no self-concept in the context &mdash;
+                works on <span class="frost">base models</span> where questionnaires cannot</li>
+            <li class="fragment"><span class="aurora-g">Cheap</span>: forward passes over a fixed
+                corpus, no autoregressive generation &mdash; and deterministic</li>
+            <li class="fragment"><span class="aurora-g">Injection-proof</span>: there is no prompt in
+                the scoring context, so there is nothing to inject into</li>
+          </ul>
+        </section>
+
+        <section class="fig-slide">
+          <h2>A shared implicit profile</h2>
+          <img class="tall" src="assets/dark/ppl_fig1_implicit_profiles_radar.png" alt="Implicit profiles of 19 models overlaid">
+          <p class="fig-note">19 models &middot; 7 families &middot; one silhouette &mdash;
+          near-perfect agreement on the trait ordering &middot; dashed: no preference</p>
+        </section>
+
+        <section class="fig-slide">
+          <h2>Beneath the shared level: individuality</h2>
+          <img class="tall" src="assets/dark/rel_discriminant_ipsatized.png" alt="Profile-centered trait correlations across models">
+          <p class="fig-note">center each model&rsquo;s profile, correlate traits across models &middot;
+          correlations look
+          <span class="frost">psychologically validated</span></p>
+        </section>
+
+        <section>
+          <h2>Two lenses on one model</h2>
+          <div class="lens-grid">
+            <div class="lens">
+              <h3>Implicit &mdash; the inherited baseline</h3>
+              <ul>
+                <li>installed by the pretraining corpus</li>
+                <li>read from token probabilities</li>
+                <li>applies to base and aligned models alike</li>
+              </ul>
+            </div>
+            <div class="lens explicit">
+              <h3>Explicit &mdash; the expressed assistant</h3>
+              <ul>
+                <li>produced under system prompt + alignment</li>
+                <li>read from self-report answers</li>
+                <li>the personality the deployed persona performs</li>
+              </ul>
+            </div>
+          </div>
+          <p class="fragment takeaway" style="font-size:0.85em">The gradient between them, factor by
+          factor, is a lens on how the model was molded &mdash; where the assistant departs from the
+          humanity it was trained on.</p>
+        </section>
+
+        <section class="fig-slide">
+          <h2>Base &rarr; aligned: the self-report moves, the substrate stays</h2>
+          <img src="assets/dark/ppl_fig2_rlhf_divergence.png" alt="Explicit vs implicit shift under post-training">
+          <p class="fig-note">base/instruct pairs, both channels &middot; post-training shifts explicit
+          self-report roughly <span class="aurora-y">an order of magnitude more</span> than the
+          implicit profile</p>
+        </section>
+
+        <section>
+          <h2>What the model thinks vs. what it says</h2>
+          <ul class="compact">
+            <li>Like humans: implicit and explicit personality measures
+                <span class="frost">dissociate</span> &mdash; and each is informative about different
+                behavior</li>
+            <li>The same picture emerges in Anthropic&rsquo;s recent papers on emotions and consciousness aspects of Claude
+                </li>
+            <li>So far: <strong>&sect;1</strong> psychometrically grounded prompting shapes trait
+                expression, with first-order capability and safety consequences;
+                <strong>&sect;2</strong> the token-level distribution carries an implicit profile that
+                survives the self-presentation pressures installed by preference optimization</li>
+            <li class="fragment">Next, inside the model: do these trait regularities correspond to
+                <span class="frost">directions in the hidden representations</span>? Can they be
+                manipulated at inference time? What does their geometry reveal about what alignment
+                changes?</li>
+          </ul>
+        </section>
+
+      </section>
+
+      <section>
+
+        <section class="divider">
+          <p class="part-no">Part 3 &middot; Mechanistic / representational modality</p>
+          <h1>Steering personality<br>in activation space</h1>
+          <p class="mini-map">contrastive vectors &rarr; depth-weighted injection &rarr; the implicit ruler &rarr; what the geometry reveals</p>
+        </section>
+
+        <section class="fig-slide">
+          <h2>overview</h2>
+          <img src="assets/dark/steering_schematic.png" alt="Schematic: contrast personas, inject along depth, behavior shifts">
+          <p class="fig-note">contrast persona pairs &rarr; PC<sub>1</sub> of the differences &rarr;
+          inject under a Gaussian depth envelope &rarr; generation shifts along the trait
+        </section>
+
+        <section>
+          <h2>Extracting a trait direction</h2>
+          <p class="method-line">50 contrastive persona pairs per trait &times; 5 template variants &mdash;
+          e.g.&nbsp;&ldquo;always finishes what you start&rdquo; vs &ldquo;goes with the flow&rdquo;</p>
+          <p class="eq">&Delta;h<sup>(l)</sup><sub>t,i</sub> &nbsp;=&nbsp; h<sup>(l)</sup>(p<sup>+</sup><sub>t,i</sub>) &minus; h<sup>(l)</sup>(p<sup>&minus;</sup><sub>t,i</sub>)</p>
+          <p class="eq">v<sup>(l)</sup><sub>t</sub> &nbsp;=&nbsp; PC<sub>1</sub>(&Delta;H<sup>(l)</sup><sub>t</sub>)</p>
+          <ul class="compact">
+            <li>Hidden state at the final token, per layer &mdash; where the persona is fully integrated</li>
+            <li>Differencing removes everything the pair shares; only the trait contrast remains</li>
+            <li>PC<sub>1</sub> rather than the mean difference: the dominant axis of systematic
+                variation, robust to atypical pairs</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Steering: Gaussian depth-wise injection</h2>
+          <p class="eq">h<sup>(l)</sup> &nbsp;&larr;&nbsp; h<sup>(l)</sup> + &alpha;<sub>l</sub>&thinsp;v<sup>(l)</sup><sub>t</sub>,
+          &nbsp;&nbsp; &alpha;<sub>l</sub> = &alpha;&middot;exp(&minus;(l&minus;&mu;)<sup>2</sup>/2&sigma;<sup>2</sup>)</p>
+          <ul class="compact">
+            <li>Perturbation strength follows a <span class="frost">Gaussian envelope over depth</span>
+                (&mu; = 20, &sigma; = 4 in the primary model)</li>
+            <li>+&alpha; pushes generation toward the high pole, &minus;&alpha; toward the low pole</li>
+            <li>Why the envelope: single-layer injection fails to move the target; uniform all-layer
+                injection moves it at the cost of heavy off-target contamination &mdash; the graded,
+                distributed nudge is the reliable middle</li>
+          </ul>
+        </section>
+
+        <section class="fig-slide">
+          <h2>Scoring steering with the implicit ruler</h2>
+          <p class="eq" style="font-size:0.55em">r<sub>t</sub>(&alpha;) = mean&thinsp;PPL<sub>&alpha;</sub>(S<sup>+</sup><sub>t</sub>) / mean&thinsp;PPL<sub>&alpha;</sub>(S<sup>&minus;</sup><sub>t</sub>),
+          &nbsp;&nbsp;&Delta;r<sub>t</sub> = r<sub>t</sub>(+&alpha;) &minus; r<sub>t</sub>(&minus;&alpha;)</p>
+          <img src="assets/dark/eng_fig3_alpha_sweep.png" alt="Steering strength sweep: BFI saturates, perplexity ratio keeps resolving" style="max-height:400px">
+          <p class="fig-note">self-report saturates early &middot; the perplexity-ratio gap keeps
+          resolving graded change across the whole sweep &mdash;
+          <span class="frost">it detects manipulation where questionnaire scores saturate</span></p>
+        </section>
+
+        <section>
+          <h2>What the geometry reveals</h2>
+          <ul class="compact">
+            <li>The five trait directions are not independent: they share a
+                <span class="frost">low-dimensional manifold</span> &mdash; one component loads on all
+                five, replicated across model families</li>
+            <li>The shared geometry is <span class="frost">already present in the base model</span>
+                &mdash; pretraining draws the map</li>
+            <li>Alignment supplies the <span class="aurora-y">behavioral force</span>: the aligned
+                model responds far more strongly to the same vectors &mdash; alignment powers the
+                vehicle</li>
+            <li class="fragment">The implicit&ndash;explicit gradient of part&nbsp;2 is movement on
+                this manifold: two windows onto how alignment molds one underlying structure</li>
+          </ul>
+        </section>
+
+      <section class="fig-slide">
+        <h2>one component under five traits</h2>
+        <img src="assets/dark/eng_fig5_shared_pca.png" alt="Shared PCA of five trait vectors">
+        <p class="fig-note">PC1 &asymp; 36% of the five vectors&rsquo; joint variance (vs a 26% random-direction null) &middot;
+        every trait loads on it &middot; replicated at PC1 = .34&ndash;.43 across <span class="aurora-g">5 families</span></p>
+      </section>
+
+      <section class="fig-slide">
+        <h2>Prompting vs steering: sledgehammer vs scalpel</h2>
+        <img src="assets/dark/eng_fig9_prompting_baseline.png" alt="Prompting vs steering comparison">
+        <p class="fig-note">prompting: larger target gaps but <span class="aurora-r">2&ndash;15&times;</span> more off-target
+        contamination &middot; steering: smaller, surgical</p>
+      </section>
+
+        <section class="center-slide">
+          <blockquote class="big-quote" style="text-align:left">
+            A deployed language model is a <span class="frost">corpus-shaped
+            distribution</span> wearing an <span class="aurora-y">alignment-shaped
+            persona</span>.
+          </blockquote>
+          <p class="compact" style="text-align:center; margin-top:0.8em">The persona is what talks, what
+          prompts shape, what vectors steer. The distribution beneath is what implicit measurement
+          reads &mdash; and almost nothing moves it.</p>
+        </section>
+
+      <section>
+        <h2>One actor, four effects</h2>
+        <p class="method-line">Preference optimization (shorthand for the post-training pipeline)&hellip;</p>
+        <ul class="compact">
+          <li>&hellip;<strong>writes the self-portrait</strong>: the explicit shift exceeds the implicit in all ten pairs; the strongly post-trained pairs move to the desirable corner</li>
+          <li>&hellip;<strong>opens the control surface</strong>: aligned models follow persona instructions &mdash; that&rsquo;s why shaping works, and why it&rsquo;s dangerous</li>
+          <li>&hellip;<strong>activates the manifold</strong>: corpus-borne geometry, alignment-supplied behavioral force</li>
+          <li>&hellip;<strong>leaves the distribution legible</strong>: the implicit channel still reads through it</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>An audit protocol for deployed systems</h2>
+        <ul class="compact">
+          <li><strong>Read the disposition</strong> &mdash; implicit profile defining the default personality of the model at deployment</li>
+          <li><strong>Stress the persona</strong> &mdash; worst-case trait configurations (CON&ndash;LO, dark-triad composites) as standard reporting, not just average-case scores</li>
+          <li><strong>Watch the manifold</strong> &mdash; online monitoring with trained detectors of dangerous deviations off the default regime</li>
+          <li class="fragment">Benchmark reports should state the persona under which safety was measured</li>
+        </ul>
+      </section>
+
+      </section>
+
+      <section>
+      <section>
+        <h2>Contributions</h2>
+        <ul class="compact">
+          <li>A <strong>framework</strong>: machine traits defined distributionally; multi-channel measurement matrix; psychometric threat models translated</li>
+          <li>A <strong>shaping method</strong> with validated personas and the first systematic trait &times; safety-benchmark crossing</li>
+          <li>An <strong>implicit instrument</strong>: universal profile, RLHF divergence, shaping resistance, audited reliability</li>
+          <li>The <strong>alignment personality manifold</strong>: shared geometry, its base-model origin, surgical steering</li>
+          <li>A <strong>synthesis</strong>: two-layer picture + audit protocol</li>
+        </ul>
+      </section>
+      </section>
+
+      <section>
+        <section style="font-size:42pt;">
+        <p><center>ご清聴ありがとうございました。</center></p>
+        </section>
+      </section>
+
+    </div>
+  </div>
+  <script src="reveal/dist/reveal.js"></script>
+  <script src="reveal/plugin/notes/notes.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      transition: 'fade',
+      transitionSpeed: 'fast',
+      slideNumber: 'h.v',
+      controls: true,
+      progress: true,
+      plugins: [ RevealNotes ]
+    });
+  </script>
+</body>
+</html>
