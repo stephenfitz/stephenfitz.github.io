@@ -1,0 +1,326 @@
+{
+  "nn5_acf": {
+    "source": "Sample autocorrelation of the synthetic hourly load (seed 11, 2,016 hours). Shaded band: approximate 95% range for white noise (\u00b11.96/\u221an).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_attention_cost": {
+    "source": "Exact arithmetic: 4 bytes x T^2 attention scores for one head and one sequence, versus 4 bytes x T x 256 stored RNN states.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_attention_steps": {
+    "source": "Exact arithmetic for one query, three keys and scalar values; d_k = 2.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_baselines": {
+    "source": "Synthetic hourly load (seed 11). Origins every day at 10:00 on days 42-82; targets h = 14-37 h. Exponential smoothing alpha = 0.2.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_bottleneck": {
+    "source": "Schematic. Left: an encoder-decoder that passes one fixed-size vector. Right: attention forms a weighted context per output step; weights are illustrative.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_bptt": {
+    "source": "Schematic of backpropagation through time for a many-to-one RNN; dashed arrows carry gradients backwards through the shared recurrence.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_copy_illusion": {
+    "source": "Synthetic Gaussian random walk (seed 21, step SD 1.2), test days 250-399; the forecast is the previous value.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_course_map": {
+    "source": "Schematic summary of the five-day neural networks course.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_day_ahead": {
+    "source": "Synthetic hourly load (seed 11): trend, daily and weekly cycles, AR(1) noise. Hypothetical submission time 10:00 for next-day hourly values.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_decomposition": {
+    "source": "Synthetic hourly load (seed 11), weeks 4-7. Classical additive decomposition: centred 2x168 moving average, hour-of-week means of the detrended series, remainder.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_differencing": {
+    "source": "Synthetic hourly load (seed 11). Orange lines: 168-hour rolling means. Right: sample autocorrelation of the weekly-differenced series.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_error_accumulation": {
+    "source": "Simulated AR(2) process y_t = 1.2 y_t-1 - 0.5 y_t-2 + e_t (seed 8, unit noise); models fitted on the first 5,000 steps, RMSE on 1,986 later origins.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_gru_cell": {
+    "source": "Schematic of one GRU step in the PyTorch convention: h_t = (1 - z_t) * n_t + z_t * h_t-1; the reset gate scales the previous-state term inside the candidate.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_intervals": {
+    "source": "Synthetic 50 MW wind farm (seed 3). Quantile gradient boosting on the last six hourly values and hour of day; trained on days 1-90, scored on days 91-120.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_lstm_autoencoder": {
+    "source": "Schematic of an LSTM autoencoder for multivariate windows (curves illustrative).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_lstm_cell": {
+    "source": "Schematic of one LSTM step. Teal: sigmoid gates; purple: candidate values; blue: cell state; \u00d7 and + are elementwise operations.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_mape_pitfall": {
+    "source": "Synthetic 50 MW wind farm (seed 3), six days of hourly output; forecast = previous hour. Hours with zero output cannot enter MAPE.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_model_choice": {
+    "source": "Schematic model-choice guide; a starting point to be tested against baselines, not a rule.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_multihead": {
+    "source": "Schematic of multi-head self-attention with model width 64 and 4 heads of width 16.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_multistep": {
+    "source": "Schematic of three multi-step forecasting strategies for horizons 1-3. Dashed arrows: the recursive model also re-reads the observed history.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_patch_forecaster": {
+    "source": "Schematic of a patch-based transformer forecaster; the curves are a synthetic illustration, not model output.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_pinball": {
+    "source": "Exact quantile (pinball) loss for tau = 0.1, 0.5 and 0.9.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_positional_encoding": {
+    "source": "Exact sinusoidal encoding PE(pos, 2i) = sin(pos / 10000^(2i/64)), PE(pos, 2i+1) = cos(same); model width 64, positions 0-99.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_rag": {
+    "source": "Schematic of retrieval-augmented generation for technical documents.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_recon_error": {
+    "source": "Synthetic three-sensor series (seed 5) with three injected anomalies; LSTM autoencoder (hidden size 16, 24-step windows) trained on steps 0-1,499 (torch seed 0).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_rnn_unrolled": {
+    "source": "Schematic. The same weights W_x, W_h and bias b are used at every time step.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_soft_alignment": {
+    "source": "Hand-built queries and keys (clock-hour encodings, recency penalty 0.8 per day, sharpness 6), row-wise softmax; illustrates the mechanism, not a trained model.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_split_purge": {
+    "source": "Schematic. Bars are input windows, diamonds are targets. The faded window is removed from training because its target falls in the validation period.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_split_types": {
+    "source": "Schematic partition assignments for four wells of three observations each: random rows, whole wells, or the later period of every well.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_stacked_bidir": {
+    "source": "Schematic. Left: two stacked recurrent layers, many-to-one. Right: a bidirectional layer; the backward direction (purple) runs from the end of the window to the start.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_task_types": {
+    "source": "Schematic. Grey = inputs, blue/teal = learned states, orange = outputs, purple = covariates known in advance.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_tcn": {
+    "source": "Schematic of a causal temporal convolutional stack (kernel size 2, dilations 1, 2, 4, 8). Highlighted: every input that can influence the last output.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_teacher_forcing": {
+    "source": "Schematic of a recurrent decoder during training (teacher forcing) and inference (autoregressive rollout); y0 is the last observed value.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_transformer_block": {
+    "source": "Schematic of a pre-norm transformer encoder block; the 2017 original applied layer norm after each residual addition.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_vanishing": {
+    "source": "Computed Jacobian products for a tanh RNN with 32 units, orthogonal recurrent weights scaled by the gain, random inputs; median spectral norm over 30 runs (seed 4).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_windowing": {
+    "source": "Schematic, exact indexing: T = 20, lookback L = 6, horizon h = 3, stride s = 2, one feature (F = 1).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  }
+}

@@ -1,0 +1,326 @@
+{
+  "ml5_alert_budget": {
+    "source": "Synthetic fleet (seed 41): 50 pumps x 365 days of daily scores, 30 distinct events (at least 13 days apart on a pump) with precursors of random strength in the 5 days before; alert episodes = runs of alert days outside warning windows.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_alert_policy": {
+    "source": "Schematic alert pipeline; persistence and cooldown values are illustrative policy choices, not recommendations.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml5_anomaly_methods": {
+    "source": "Synthetic two-cluster reference set (seed 42); IsolationForest(random_state=42), LocalOutlierFactor(n_neighbors=20, novelty=True), OneClassSVM(nu=0.08, gamma=0.8); shading = -score_samples clipped to its 2nd-98th percentiles.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_anomaly_types": {
+    "source": "Synthetic hourly series (seed 11): daily cycle plus noise with an injected spike, four peak-level hours at trough time, and a 22-hour flat segment.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_autoencoder": {
+    "source": "Schematic undercomplete autoencoder, 6-4-2-4-6 units.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml5_bayesopt": {
+    "source": "Synthetic 1-D objective; scikit-learn GaussianProcessRegressor, Matern 2.5 kernel with fixed length scale 0.8 and variance 2 on normalized scores, fitted to 4 trials; expected improvement, xi = 0.01.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_class_weight": {
+    "source": "Synthetic 2-D data (seed 9), 5% events, 50/50 stratified split; logistic regression. Right: unweighted model with threshold 0.060, chosen to match the balanced model's training recall. Plots show 900 random test rows.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_course_map": {
+    "source": "Schematic of the course workflow; chips show where each module teaches the stage.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml5_drift_psi": {
+    "source": "Synthetic intake pressure (seed 15): reference N(120, 10), 5,000 rows; current N(125, 12), 1,500 rows. PSI over reference deciles = 0.248; two-sample KS D = 0.199, p = 2.6e-40.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_drift_types": {
+    "source": "Synthetic data (seed 14): events when x2 > 0.25 x1^2 + c; logistic regression fitted on the reference period only. Data drift moves the inputs; concept drift lowers c from 1.0 to 0.2.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_event_timeline": {
+    "source": "Synthetic 30-day hourly detector score (seed 22) with three events of 6 h; alert rows above threshold 1.5 merged into episodes when gaps are 6 h or less.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_fences": {
+    "source": "Synthetic GR-like mixture (seed 21): 900 sand rows N(38, 9), 100 shale rows N(102, 9), three tool spikes. Fence counts computed on the full sample.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_fleet_timeline": {
+    "source": "Synthetic fleet (seed 5): 10 pumps, 730 days, 9 trips; zoomed current trace is synthetic and illustrative, not field data.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_grid_random": {
+    "source": "Synthetic objective: score = g(important) + h(unimportant), with a narrow optimum at 0.72 on the important axis (teal curves). Random trials: one draw (seed 40); 9 random trials land within 0.05 of the optimum with probability 1 - 0.9^9 = 0.61.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_halving": {
+    "source": "Simulated learning curves for 27 candidates (seed 8): score = q - b / sqrt(budget) + noise; top third kept at each rung (factor 3).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_iforest_paths": {
+    "source": "Path lengths of the two highlighted rows over 1,000 fully grown random isolation paths (seeds 0-999) on the 61-row synthetic sample; s = 2^(-mean path / c(n)).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_iforest_splits": {
+    "source": "Synthetic 2-D sample (seed 2): 60 ordinary rows plus one unusual row. One random isolation path per row (path seeds 2 and 1); cuts numbered in order, the right panel zooms on the dashed box.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_lab1_results": {
+    "source": "Computed from well_logs_data.csv (course data): 27,845 rows, 5,493 complete in GR, RHOB, NPHI, DT, CALI, BS; StandardScaler; IsolationForest(n_estimators=100, random_state=42); scikit-learn 1.7.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "ml5_lab2_overlap": {
+    "source": "Computed from well_logs_data.csv (course data), 5,493 complete rows; lab settings (contamination / nu = 0.05, LOF n_neighbors = 20, OCSVM gamma = \"scale\"); scikit-learn 1.7.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "ml5_lifecycle": {
+    "source": "Schematic model lifecycle with a monitoring feedback loop.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml5_lof_k": {
+    "source": "Synthetic data (seed 12): 300 ordinary rows, an 8-row micro-cluster, 3 isolated rows. Rings mark the 11 highest LOF scores at each n_neighbors.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_lof_mechanism": {
+    "source": "Synthetic clusters (seed 8); scikit-learn LocalOutlierFactor with n_neighbors=6. Dashed circles: k-distance of A and B; grey circles: k-distance of one neighbour of each.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_mahalanobis": {
+    "source": "Synthetic correlated features (seed 4, correlation 0.9, 300 rows). Contour at the chi-square(2) 99% radius 3.03; test point distance 6.48.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_masking": {
+    "source": "Synthetic readings (seed 3): 200 ordinary N(50, 2) plus 25 offset N(65, 0.8). Mean 51.70, SD 5.16; median 50.31, MAD 1.45; ordinary rows flagged by the robust rule: 0.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_nested_cv": {
+    "source": "Schematic nested cross-validation: 5 outer folds, 4 inner folds.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml5_ocsvm_gamma": {
+    "source": "Synthetic arc-shaped reference data (seed 6, 260 rows, standardized); scikit-learn OneClassSVM, RBF kernel, nu = 0.05. Shaded: decision function >= 0. Flag rates on 2,000 new rows from the same generator (seed 60).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_one_se": {
+    "source": "Synthetic data (make_classification, seed 20, 800 rows); DecisionTreeClassifier, StratifiedKFold(10, shuffle, seed 0); error bars = standard error across folds.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_paired_folds": {
+    "source": "Synthetic data (make_classification, seed 4, 1,200 rows, about 16% events); RepeatedStratifiedKFold 5x2 (seed 0). Mean difference 0.0126, SD 0.0173; naive SE 0.0055; corrected SE 0.0103 (Nadeau-Bengio, test/train = 0.25).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_pca_recon": {
+    "source": "Left: synthetic correlated pair (seed 13), one principal component. Right: six synthetic channels from two latent factors (seed 32); PCA fitted on hours 0\u2013299; threshold 0.170 = 99th percentile of hours 300\u2013419; sensor 4 drifts +0.008 SD per hour from hour 520.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_prevalence_tree": {
+    "source": "Exact arithmetic for 10,000 rows, 1% prevalence, recall 80%, false-positive rate 5%.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_recall_ci": {
+    "source": "Exact Clopper\u2013Pearson 95% intervals for an observed recall of 80% at six event counts (scipy.stats.beta).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_reliability": {
+    "source": "Synthetic data (make_classification, seed 5, 40,000 rows, 5.5% events, 50/50 split); logistic regression. Prior correction p = b*ps / (b*ps - ps + 1) with b = 0.0581 (negatives kept).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_roc_pr_prevalence": {
+    "source": "Exact binormal scores: ordinary N(0, 1), events N(1.5, 1). Dots mark the threshold with FPR 5% (recall 0.44) and its precision; dotted lines show each prevalence.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_settings": {
+    "source": "Synthetic 2-D data (seed 7). Isolation Forest ranks the contaminated set; novelty LOF (n_neighbors=20) scores new rows; logistic regression separates labelled events.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_ts_residual": {
+    "source": "Same synthetic load (seed 17). Seasonal forecast = median of the same hour over the previous 7 days; residual scaled by median and MAD of days 7\u201314; threshold 3.5.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_ts_rolling": {
+    "source": "Synthetic hourly load (seed 17): daily cycle, slow trend, AR(1) noise; five afternoon hours near day 16.5 set to night level. Minimum trailing 24-h z-score in the anomaly: -1.52.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  }
+}

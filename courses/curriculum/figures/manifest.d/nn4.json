@@ -1,0 +1,344 @@
+{
+  "nn4_arch_timeline": {
+    "source": "Schematic timeline, not to scale; years of first publication (conference or preprint). Design ideas only, no benchmark results.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_augment_examples": {
+    "source": "scikit-learn sample image china.jpg (CC BY 2.0), 360 x 360 crop resized to 160 x 160; transforms computed with NumPy/SciPy, random seed 3.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_batchnorm_axes": {
+    "source": "Schematic of BatchNorm2d statistics: per channel, pooled over the batch and all spatial positions.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_casing_case": {
+    "source": "Synthetic wall-thickness maps (seeds 4-6), 0.05 m depth rows by 5-degree azimuth sectors; schematic unwrapping. Not tool data.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_cnn_blocks": {
+    "source": "Schematic of the compact CNN defined on the next slides; shapes are C x H x W for one image (batch dimension omitted).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_conv1d": {
+    "source": "Synthetic three-sensor series (seed 21); feature maps from three hand-set kernels for illustration; schematic head and causal-padding inset.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_conv_autoencoder": {
+    "source": "Schematic of the Lab 2A convolutional autoencoder (latent_dim = 64); shapes checked with PyTorch, batch dimension omitted.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_conv_numeric": {
+    "source": "Exact cross-correlation (scipy.signal.correlate2d) of a 3 x 3 input with a 2 x 2 kernel, stride 1, no padding; only the first output is shown.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_denoise_digits": {
+    "source": "Computed: convolutional denoising autoencoder (9,569 parameters, seed 0, CPU) trained on 1,437 scikit-learn digits with Gaussian noise; first eight of 360 held-out digits.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_digit_grid": {
+    "source": "scikit-learn bundled handwritten digit (index 3, a \"3\"); exact 0-16 pixel values.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn4_dilation": {
+    "source": "Schematic with exact output-size arithmetic; dilation 2, no padding, stride 1.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_equivariance": {
+    "source": "Exact computation: a scikit-learn digit placed on a 16 x 16 zero canvas, fixed Sobel x-derivative kernel with zero padding, ReLU, 2 x 2 max pooling.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_feature_maps": {
+    "source": "First-layer ReLU feature maps of the tiny digits CNN for two held-out digits (seed 0, CPU); each column scaled to its own maximum, darker = stronger response.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_grouped_patches": {
+    "source": "Schematic: depth windows of 32 rows with stride 16 (50% overlap); random assignment drawn with seed 8.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_iou": {
+    "source": "Exact intersection-over-union for two axis-aligned boxes (corners inclusive-exclusive).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_label_changing": {
+    "source": "scikit-learn digit; synthetic seismic trace (seed 7); synthetic thickness map (seed 5) circularly shifted by 18 of 72 sectors.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_learned_filters": {
+    "source": "First-layer 3 x 3 kernels of a tiny CNN trained on scikit-learn digits (1,437 training images, seed 0, CPU); held-out accuracy 95.0%.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_multichannel": {
+    "source": "Schematic of a Conv2d layer: each output map uses one C_in x K x K kernel plus a bias.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_occlusion": {
+    "source": "Tiny digits CNN (seed 0, CPU) on held-out digits: probability drop when a 2 x 2 patch is set to 0, and absolute input gradient of the true-class logit; each map scaled to its own maximum.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_one_by_one": {
+    "source": "Schematic of a 1 x 1 convolution mapping 4 channels to 2 at each pixel.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_padding": {
+    "source": "Schematic with exact output-size arithmetic; zero padding of width 1.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_param_budget": {
+    "source": "Exact parameter counts (weights + biases) of the Lab 1 SimpleCNN and the compact CNN, checked with PyTorch.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_pool_vs_stride": {
+    "source": "Exact arithmetic: 2 x 2 max pooling, a 2 x 2 stride-2 convolution with kernel [[1, 0], [0, -1]] and zero bias, and global averaging of three 3 x 3 maps.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_pooling": {
+    "source": "Exact 2 x 2 max and average pooling with stride 2 on one 4 x 4 matrix; window colours match the output cells.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_receptive_field": {
+    "source": "Exact receptive-field bookkeeping for conv 3x3 (stride 1), max pool 2x2 (stride 2), conv 3x3 (stride 1).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_recon_error": {
+    "source": "Synthetic casing-thickness patches (seed 11): autoencoder trained on 1,500 normal patches, threshold from 400 normal validation patches, evaluated on 400 normal and 100 defective test patches.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_residual_block": {
+    "source": "Schematic of basic residual blocks: output = ReLU(x + F(x)); the projection shortcut matches channels and resolution.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_rgb_channels": {
+    "source": "Crop of scikit-learn sample image china.jpg (CC BY 2.0, danielbuechele on Flickr); exact 8-bit channel values.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn4_seismic_fault_mask": {
+    "source": "Synthetic section (seed 7) and its fault mask (pixels within 1.5 traces of the fault plane; 2.5% of pixels).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_seismic_synthetic": {
+    "source": "Synthetic layered impedance model with a normal fault (seed 7); reflectivity convolved trace by trace with a 25 Hz Ricker wavelet, 2 ms sampling.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_shortcut": {
+    "source": "Computed: tiny CNN (seed 0, CPU) trained on scikit-learn 3s and 8s (214 training, 71 validation, 72 test images) with a bright 2 x 2 tag added to every training and validation 8.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_sliding_steps": {
+    "source": "Exact cross-correlation of the 3 x 3 input with the 2 x 2 kernel (stride 1, no padding); same numbers as the conv_numeric figure.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_sobel_maps": {
+    "source": "Fixed Sobel x and y kernels applied with zero padding (scipy.signal.correlate2d) to scikit-learn digit index 3; one colour scale centred on zero; hand-specified, not learned.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_stride": {
+    "source": "Schematic with exact output-size arithmetic; three of the four window positions shown.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_transfer": {
+    "source": "Schematic of three adaptation strategies for a four-stage pretrained backbone; learning rates are illustrative.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_unet": {
+    "source": "Schematic of a small U-Net for a 128 x 128 single-channel input; numbers are channel counts, side labels are spatial sizes.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_vision_tasks": {
+    "source": "Synthetic thickness patch (seed 12) with three pits and one groove; the label formats are derived from the known synthetic geometry, not from a model.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_weight_sharing": {
+    "source": "Schematic: seven inputs, five outputs; a kernel of size 3 without padding.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  }
+}

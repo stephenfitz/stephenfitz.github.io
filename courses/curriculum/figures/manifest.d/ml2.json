@@ -1,0 +1,317 @@
+{
+  "ml2_adaboost_alpha": {
+    "source": "Exact formula alpha = 0.5 ln((1 - eps) / eps); points are the three rounds of the synthetic AdaBoost example (seed 12).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_adaboost_rounds": {
+    "source": "Discrete AdaBoost with decision stumps on 36 synthetic points (seed 12; true boundary x1 + x2 = 0.15, dotted). Marker area is proportional to the row weight at the start of each round; rings mark rows the current stump misclassifies.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_artifact_bundle": {
+    "source": "Schematic of a versioned model artifact; file names are illustrative.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_bag_vs_boost": {
+    "source": "Schematic comparison of bagging and boosting.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_column_transformer": {
+    "source": "Schematic of a ColumnTransformer inside a Pipeline for the synthetic drilling table; column names are illustrative.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_correlated_importance": {
+    "source": "Synthetic drilling data (seed 11) with a downhole WOB column = 0.92 x surface WOB + noise (sd 4 kN, seed 1; correlation 0.997); RandomForestRegressor (300 trees, min_samples_leaf 3) trained on D1-D4, permutation importance on D5-D6, 30 repeats.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_early_stopping": {
+    "source": "Friedman #1 synthetic regression (10 features, noise sd 3): 400 training rows (seed 1), 2,000 validation rows (seed 2); GradientBoostingRegressor, learning rate 0.1, depth 3. Stop rule: 20 stages without improvement.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_facies_case": {
+    "source": "Synthetic well W8 held out; forest (300 trees, min_samples_leaf 3, seed 0) trained on wells W1-W7; accuracy on W8 = 0.750. Facies: gold sandstone, grey shale, blue limestone; arrows mark misclassified rows.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_forest_diagram": {
+    "source": "Schematic of a random forest classifier; feature names and probabilities are illustrative (the average of 0.82, 0.64 and 0.71 is 0.72).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_forest_regression": {
+    "source": "Synthetic data y = sin(x) + 0.25x + noise (sd 0.35), n = 70 with x drawn uniformly on 0-8, seed 8; RandomForestRegressor, 300 trees, min_samples_leaf = 5, seed 0. Shaded: no training data (x > 8).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_gb_stages": {
+    "source": "Synthetic data y = 2 sin(0.9x) + 0.15x + noise (sd 0.35), n = 60, seed 21; F0 = mean of y = 1.09; depth-2 regression trees; learning rate 0.5.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_hard_soft": {
+    "source": "Exact arithmetic for three illustrative probabilities (0.95, 0.40, 0.45): hard vote share 1/3, soft vote mean 0.60.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_histogram_binning": {
+    "source": "Sixty rows of the synthetic drilling data (seed 4); residuals after the first-stage mean prediction. Candidate splits scored with the squared-error gain G_L\u00b2/n_L + G_R\u00b2/n_R; best exact threshold 133.5 kN, best histogram threshold 134.3 kN (16 quantile bins; both give the same partition of the 60 rows).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_ice_interaction": {
+    "source": "Centred ICE curves from the synthetic-drilling HistGradientBoostingRegressor (wells D1-D5); 120 of 300 sampled rows shown, coloured by formation (soft: claystone, sandstone; hard: limestone, dolomite). The generator gives rpm less effect in hard rock.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_leakage_selection": {
+    "source": "20 synthetic datasets (seed 0), each 50 rows x 2000 pure-noise features with random balanced labels; SelectKBest(f_classif, k = 20) + LogisticRegression; 5-fold stratified CV. Means: outside 0.940, inside 0.504.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_loss_gradients": {
+    "source": "Exact functions. Huber threshold delta = 1; p = 1 / (1 + exp(-F)).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_max_features": {
+    "source": "Friedman #1 synthetic regression (12 features, 5 informative, noise sd 1): 16 independent training sets of 300 rows, one 400-row test set; forests of 60 trees. Correlation = between-training-set variance of the forest mean / total variance of one tree (ESL eq. 15.1).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_mdi_bias": {
+    "source": "Synthetic facies logs plus two pure-noise columns (seed 0); RandomForestClassifier, 300 unpruned trees, trained on wells W1-W6; permutation importance on W7-W8, 20 repeats (bars: mean, whiskers: standard deviation).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_missing_route": {
+    "source": "Schematic of native missing-value handling in histogram gradient boosting (scikit-learn HistGradientBoosting documentation behaviour).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_monitoring_loop": {
+    "source": "Schematic of a monitoring loop for a deployed model.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_oob_curve": {
+    "source": "Synthetic classification data (600 rows, 10 features, 5 informative, 5% label noise, seed 3); RandomForestClassifier grown with warm_start, seed 0.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_oob_grouped": {
+    "source": "Synthetic facies logs, 8 wells x 160 rows with well offsets and depth-correlated noise (seed 7); RandomForestClassifier, 300 trees, seed 0.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_oob_matrix": {
+    "source": "Bootstrap draws for 10 adjacent depth rows of one synthetic well and 6 trees (seed 2). \u00d7k = row drawn k times; \"out\" = out of bag for that tree.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_pdp_extrapolation": {
+    "source": "Synthetic drilling data (seed 11) with downhole WOB = 0.92 x surface WOB + noise (sd 4 kN, seed 1). A partial-dependence curve for surface WOB pairs each of 8 grid values with 120 sampled observed downhole values. x = farther (standardized) from every observed row than 99% of rows are from their nearest neighbour.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_pdp_ice": {
+    "source": "HistGradientBoostingRegressor (FORMATION categorical, seed 0) trained on synthetic wells D1-D5; sklearn.inspection.partial_dependence over 300 sampled training rows, 40 grid points between the 5th and 95th percentiles.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_rop_boosting": {
+    "source": "Synthetic drilling wells (seed 11): trained on D1-D5, evaluated on held-out well D6. RandomForestRegressor (300 trees, min_samples_leaf 3) and HistGradientBoostingRegressor (defaults), seed 0. MAE: Training mean 7.10, Deep tree 2.80, Random forest 2.50, Hist. gradient boosting 2.67 m/h.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_rop_motivation": {
+    "source": "Synthetic drilling wells (seed 11); five bootstrap resamples of wells D1-D5 (seed 3); each model predicts held-out well D6. Spread = standard deviation across the five models, averaged over depth (trees 2.64, forests 0.95 m/h).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_shap_waterfall": {
+    "source": "Exact interventional Shapley values for one row of synthetic well D6 (see ml2_shapley_lattice); base 23.38 + contributions +4.43, +2.72, -15.01 = 15.52 m/h.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_shapley_lattice": {
+    "source": "Exact interventional Shapley computation for one row of held-out well D6 (WOB 168 kN, 178 rpm, dolomite): GradientBoostingRegressor on WOB, RPM and FORMATION (wells D1-D5, seed 0); v(S) = mean prediction over 200 background rows with the features in S set to this row. Values in m/h.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_stacking_diagram": {
+    "source": "Schematic of stacking with K = 5 folds and three base models.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_subsample": {
+    "source": "Friedman #1 synthetic regression (noise sd 2), five independent datasets of 600 training and 2,000 validation rows (seeds 0-4); GradientBoostingRegressor, learning rate 0.1, depth 3.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_tree_growth": {
+    "source": "Schematic: three trees with three split nodes each, grown by different policies; numbers give the order in which splits are made.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_tree_instability": {
+    "source": "Synthetic two-moons data (n = 220, noise 0.23, seed 42); bootstrap seed 18; unpruned scikit-learn trees. Hollow markers are rows left out of that bootstrap sample.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_vote_curves": {
+    "source": "Exact binomial majority probabilities. Right: with probability rho all voters copy one shared vote (pairwise correlation of correctness = rho), otherwise they vote independently; accuracy = rho*p + (1-rho)*P(majority).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_vote_pmf": {
+    "source": "Exact binomial probabilities, n = 5 independent voters, each correct with p = 0.7.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  }
+}

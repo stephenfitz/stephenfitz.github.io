@@ -1,0 +1,317 @@
+{
+  "ml4_autoencoder": {
+    "source": "Schematic.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml4_batch_map": {
+    "source": "Synthetic logs from four wells (seed 21); well W3 has a density-neutron offset; t-SNE perplexity 30 on standardized GR, RHOB, NPHI, PEF.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_biplot": {
+    "source": "Synthetic drilling channels (seed 4); scores coloured by formation after fitting; arrows = loadings x 5 (display scale); RPM and gas load on PC3-PC4.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_case_channels": {
+    "source": "Synthetic drilling channels from three latent drivers plus noise; illustrative relationships; seed 4.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_choose_k": {
+    "source": "Synthetic drilling channels (seed 4); scree and cumulative variance from all 720 minutes; held-out error from PCA fitted on minutes 0-429 and validated on 430-719.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_corr_redundancy": {
+    "source": "Pearson correlations of a synthetic log suite (seed 11); blocks outlined where |r| > 0.7.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_cov_eigen": {
+    "source": "Synthetic drilling channels (seed 4); eigen-decomposition of the 2 x 2 covariance of standardized WOB and torque; arrows = 2 sqrt(lambda).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_curse_geometry": {
+    "source": "Exact formulas for uniform data in the unit cube: 1 - 0.9^d, ball volume pi^(d/2)/Gamma(d/2+1)(1/2)^d, and edge r^(1/d).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_drilling_compression": {
+    "source": "Synthetic drilling channels (seed 4); PCA on standardized minutes 0-429, reconstruction error on minutes 430-719 in original units.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_geodesic": {
+    "source": "Synthetic noisy spiral (seed 0, 400 points); 7-nearest-neighbour graph and scipy shortest path; colour = position along the spiral.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_ica_sources": {
+    "source": "Synthetic sources (seed 1) mixed by a fixed 3 x 3 matrix; FastICA (seed 0); ICA rows reordered and sign-matched for display.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_kernel_pca": {
+    "source": "scikit-learn make_circles (400 points, noise 0.06, seed 0); colours = ring membership, not used in fitting.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_knn_noise": {
+    "source": "Synthetic two-class data with two informative features plus Gaussian noise features; 5 datasets (seeds 0-4) x 5-fold CV.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_l1_path": {
+    "source": "Lasso path (scikit-learn lasso_path) on the synthetic log suite plus 6 noise channels; target log permeability.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_lda_vs_pca": {
+    "source": "Synthetic two-class Gaussian data with a shared covariance (seed 2); d\u2032 = mean difference / pooled SD.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_loadings_heatmap": {
+    "source": "Synthetic drilling channels (seed 4), standardized; rows of PCA components_ (signs fixed so the largest entry is positive).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_log_qc": {
+    "source": "Synthetic log suites (reference seed 11, new well seed 23) with an injected washout at 2120-2138 m; PCA (k = 4) fitted on the standardized reference well.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_mutual_info": {
+    "source": "Synthetic drilling example (seed 7): vibration = resonance peak in RPM + weak WOB effect + noise; MI by the k-NN estimator.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_nmf_parts": {
+    "source": "Synthetic production profiles (seed 9): non-negative mixtures of three shapes plus noise; NMF (k = 3, seed 0) and PCA (k = 3).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_pca_k_cv": {
+    "source": "Synthetic 20-feature data (seed 3): three high-variance nuisance factors; the class signal lies in a low-variance direction.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_production_shapes": {
+    "source": "Synthetic production profiles for 90 wells (seed 13): three shape families, well sizes varying more than tenfold; colours added after fitting.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_recon_anomaly": {
+    "source": "Synthetic drilling channels (seed 4) with an injected SPP drift and a hook-load glitch; PCA (k = 4) fitted on minutes 0-399.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_rfe_curve": {
+    "source": "RFECV with linear regression on a synthetic log suite plus 6 noise channels (seeds 11, 5); band = \u00b11 SD across folds.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_scaling_pc1": {
+    "source": "Synthetic drilling channels in their units (seed 4): SPP psi, flow gpm, WOB klbf, etc.; first principal component before and after standardization.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_select_vs_extract": {
+    "source": "Schematic.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml4_selection_families": {
+    "source": "Schematic.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml4_selection_leakage": {
+    "source": "Pure-noise data: 60 rows, random labels, 30 datasets per point (seeds 2000-2029); SelectKBest(k = 10) + logistic regression; 5-fold CV; bands = \u00b11 SD.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_selection_stability": {
+    "source": "LassoCV refitted in each of 10 contiguous depth folds; synthetic log suite plus 6 noise channels (seeds 11, 5).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_svd_blocks": {
+    "source": "Schematic of the thin singular value decomposition of a centred data matrix.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml4_swiss_roll": {
+    "source": "scikit-learn make_swiss_roll (1500 points, noise 0.05, seed 0); Isomap k = 10, LLE k = 12, t-SNE perplexity 30; colour = position along the roll.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_tree_importance": {
+    "source": "Random forest (300 trees, seed 0) on the synthetic log suite plus six noise channels (seeds 11, 5); target log permeability.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_trust_compare": {
+    "source": "sklearn.manifold.trustworthiness at k = 10 (continuity = same function with the arguments swapped); Swiss roll seed 0; 600 standardized digit images (seed 42).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_tsne_seeds": {
+    "source": "Six synthetic 10-D Gaussian clusters (make_blobs seed 11); t-SNE perplexity 30 with init=\"random\"; colours = generating cluster, not used in fitting.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_tsne_sizes": {
+    "source": "Synthetic 2-D clusters (seed 0): spreads 0.3 / 1.5 / 0.3, centres at 0, 5, 25; t-SNE seed 0. Spread = RMS distance to the cluster centre.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_umap_schematic": {
+    "source": "Schematic of UMAP parameters drawn by hand; not UMAP output (umap-learn is an optional package).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  }
+}

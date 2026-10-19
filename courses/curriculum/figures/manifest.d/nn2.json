@@ -1,0 +1,335 @@
+{
+  "nn2_act_hist": {
+    "source": "Computed: 10-layer tanh network, width 256, Gaussian weights with the stated standard deviation, no biases, 1,000 standard-normal inputs, numpy seed 0; histograms of all activations.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_adamw_decay": {
+    "source": "Analytical approximation: with an L2 term inside Adam the decay part of the update is about \u03b7\u03bb\u03b8/\u221av\u0302 (valid while \u03bb\u03b8 is small relative to the gradient); AdamW applies \u03b7\u03bb\u03b8 directly.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_ae_manifold": {
+    "source": "Computed: 400 synthetic two-sensor rows near a curve (numpy seed 3); autoencoder 2-32-32-1-32-32-2 (tanh), Adam lr 3e-3, 3,000 full-batch steps, torch seed 0; five hand-placed unusual rows.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_ae_scores": {
+    "source": "Computed: synthetic 8-channel sensor rows driven by two hidden factors (numpy seed 11); autoencoder 8-16-2-16-8 (tanh) trained on 2,000 normal rows, torch seed 0; test = 500 normal + 60 unusual rows (30 with one drifting sensor, 30 with decoupled channels).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_augment": {
+    "source": "Computed: synthetic ESP motor-current trace (numpy seed 4) with augmented copies (seed 1); noise level, shift and gain are illustrative, not sensor specifications.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_autoencoder": {
+    "source": "Schematic of a dense autoencoder (8-5-2-5-8).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_batch_noise": {
+    "source": "Computed: logistic-regression gradients at one fixed parameter vector on 4,096 synthetic rows (numpy seed 0); 300 random mini-batches per size; star = full-batch gradient, ellipse = 2 standard deviations; dashed line = 1/\u221aB reference.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_bn_batchsize": {
+    "source": "Computed: 20,000 random batches per size from a standard-normal feature (numpy seed 0); spread = standard deviation of the batch mean and of the batch standard deviation across batches.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_bn_modes": {
+    "source": "Computed with torch.nn.BatchNorm1d (momentum 0.1, affine off) on a synthetic feature with mean 3 and standard deviation 2; batches of 16; numpy and torch seed 0.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_bn_steps": {
+    "source": "Exact arithmetic with torch.nn.BatchNorm1d in training mode (affine off, eps 1e-5); population standard deviation over the batch.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_clip_geometry": {
+    "source": "Schematic of gradient-norm clipping in two dimensions.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_dataloader": {
+    "source": "Schematic; sizes follow the Lab 1 Sonar training partition (124 rows, batch 16).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_debug_flowchart": {
+    "source": "Schematic debugging order.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_double_descent": {
+    "source": "Computed: random ReLU features fitted by minimum-norm least squares (orange) or ridge 0.1 (teal) to 100 synthetic training rows with 10 inputs and noise 0.3; median over 20 feature draws; numpy seed 0.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_dropout_net": {
+    "source": "Schematic of inverted dropout with drop probability 0.5.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_early_stop": {
+    "source": "Computed: synthetic ESP-style table (240 training / 1,000 validation rows); MLP 12-64-64-1, AdamW lr 1e-3, weight decay 0.1, dropout 0.2, torch seed 0; patience rule applied to the recorded validation curve; grey = epochs after the stop.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_fan_diagram": {
+    "source": "Schematic of one dense layer with 4 inputs and 3 units.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_grad_depth": {
+    "source": "Analytical: products of a repeated per-layer factor of 0.6, 1.0 or 1.2 over 40 layers; illustrates the mechanism, not measured gradients.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_grad_flow": {
+    "source": "Computed: 6-layer MLPs of width 32, PyTorch default initialization, one backward pass of MSE on 256 random rows, torch seed 0. \"None\" marks layers whose .grad stayed None (no gradient reached them).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_initial_loss": {
+    "source": "Computed: MLP 20-64-64-C with PyTorch default initialization, 2,000 random standard-normal inputs (or the same inputs x 20), uniformly random labels; 20 torch seeds per C (points = mean, bars = range).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_label_smoothing": {
+    "source": "Exact targets and cross-entropy for K = 4 classes with label smoothing 0.1 (PyTorch convention: (1 - \u03b5) one-hot + \u03b5/K); other logits held equal.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_lr_range": {
+    "source": "Computed: learning-rate range test on a synthetic ESP-style table (4,000 rows, seed 3); MLP 12-64-64-1, AdamW, batch 32, torch seed 0, rate raised geometrically from 1e-6 each step; grey = raw batch loss, blue = exponential moving average.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_lr_steps": {
+    "source": "Computed: exact gradient descent on L = w\u00b2 from w = 3, 30 updates; each update multiplies w by (1 \u2212 2 \u00d7 learning rate).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_norm_cubes": {
+    "source": "Schematic after the axis diagram in Wu and He (2018), Group Normalization.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_opt_adaptive": {
+    "source": "Computed with torch.optim (default betas and alpha) on L = (w1\u00b2 + 50 w2\u00b2)/2 from (-4.5, 1.5), 50 steps; learning rates chosen for illustration.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_opt_momentum": {
+    "source": "Computed with torch.optim on the quadratic L = (w1\u00b2 + 50 w2\u00b2)/2 from (-4.5, 1.5), 50 steps; learning rates chosen for illustration (0.038 is just below the SGD stability limit 0.04).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_overfit_batch": {
+    "source": "Computed: first 32 rows of the synthetic ESP-style table, MLP 12-64-64-1, Adam lr 1e-2, torch seed 0; the two bugs are injected deliberately.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_random_search": {
+    "source": "Computed: 24 random trials, learning rate log-uniform on [1e-5, 0.32] and AdamW weight decay log-uniform on [1e-4, 3.2] (numpy seed 7); synthetic ESP-style table; best validation loss with patience 15, at most 100 epochs; ticks mark the sampled rates.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_residual_block": {
+    "source": "Schematic residual block.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_residual_grad": {
+    "source": "Computed: 30 blocks of Linear-ReLU-Linear (width 64) with and without the identity path; identical PyTorch default initialization; one backward pass of MSE on 256 random rows (torch seeds 0 and 1).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_schedules": {
+    "source": "Computed by stepping the named torch.optim.lr_scheduler classes for 100 steps (peak learning rate scaled to 1).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_seed_spread": {
+    "source": "Computed from the course file sonar.all-data.csv with the Lab 1 split and training loop (width 32, dropout 0.2, AdamW lr 1e-3, weight decay 1e-3, batch 16, patience 10); torch seeds 0-9.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn2_signal_depth": {
+    "source": "Computed: 30-layer ReLU network, width n = 256, Gaussian weights with the stated variance, 1,000 standard-normal inputs, numpy seed 0; no biases, no normalization.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_three_runs": {
+    "source": "Synthetic ESP-style table (240 training / 1,000 validation rows, seeds 1 and 2); MLP 12-64-64-1, AdamW lr 1e-3, batch 32, torch seed 0. Right panel: weight decay 1.0, dropout 0.3, patience 25.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_train_step": {
+    "source": "Schematic of one PyTorch optimization step.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_training_curves": {
+    "source": "Computed: synthetic ESP-style table (240 training / 1,000 validation rows); MLP with two hidden layers, AdamW, batch 32, torch seed 0; one setting changed per panel.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_weight_decay": {
+    "source": "Computed: synthetic ESP-style table (240 training rows), MLP 12-64-64-1, AdamW lr 1e-3, weight_decay 0 or 1.0 (decay per step = lr x weight_decay), torch seed 0.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "description": "SHA-256 checksums of the supplied laboratory datasets; curriculum/preflight.py verifies them.",
+  "files": [
+    {
+      "path": "machine_learning_course/Module_1_Supervised_Learning_1/exercises/03_svm/SVM_dataset.csv",
+      "bytes": 86259,
+      "sha256": "44f08ed38ec434dc3e5a76ae92ddb3171de297c0b1c781e02baaa1d3b5a7f04f"
+    },
+    {
+      "path": "machine_learning_course/Module_1_Supervised_Learning_1/exercises/04_facies_classification/facies_dataset.csv",
+      "bytes": 943008,
+      "sha256": "e5a9cf20905c20d8abf62a96ca0af6d13e6e8ce1f61348335fe8b732216a314f"
+    },
+    {
+      "path": "machine_learning_course/Module_1_Supervised_Learning_1/exercises/04_facies_classification/facies_labels.csv",
+      "bytes": 226,
+      "sha256": "c71c33fa61d2d55602599d5a090b57eb83b83734afb0ab4ae4eae1416451b2da"
+    },
+    {
+      "path": "machine_learning_course/Module_3_Unsupervised_Learning_1/exercises/01_kmeans/production_data.csv",
+      "bytes": 5563,
+      "sha256": "3923d8136a7cc084c83c4cae1c4b075af24a19b7bb7a8d7f5f09dd55e7efe060"
+    },
+    {
+      "path": "machine_learning_course/Module_3_Unsupervised_Learning_1/exercises/01_kmeans/w5.csv",
+      "bytes": 650566,
+      "sha256": "2ec6926b63ac6d0f579747e0635bd05c2c79bb83fa5dbf95a05923cab3561e2c"
+    },
+    {
+      "path": "machine_learning_course/Module_3_Unsupervised_Learning_1/exercises/02_dbscan/log.csv",
+      "bytes": 2035,
+      "sha256": "aa14d63a1fe72bdbb79de6cbbc1965cb017642a55480280078c61378c3ece84d"
+    },
+    {
+      "path": "machine_learning_course/Module_3_Unsupervised_Learning_1/exercises/02_dbscan/w5.csv",
+      "bytes": 650566,
+      "sha256": "2ec6926b63ac6d0f579747e0635bd05c2c79bb83fa5dbf95a05923cab3561e2c"
+    },
+    {
+      "path": "machine_learning_course/Module_3_Unsupervised_Learning_1/exercises/03_gmm/rock_multiclass_raw.csv",
+      "bytes": 129166,
+      "sha256": "b59fe9e97413db556dfaae8035b4b5236d8460a9e3a5574b5181f266aaaa410f"
+    },
+    {
+      "path": "machine_learning_course/Module_3_Unsupervised_Learning_1/exercises/04_hierarchical/hierarchical_clustering_dataset.csv",
+      "bytes": 2212,
+      "sha256": "32f33f103102901cbee5ef8f70226e6eb2ef228309bcff35e1b8839de0994d68"
+    },
+    {
+      "path": "machine_learning_course/Module_3_Unsupervised_Learning_1/exercises/05_comparison/production_data.csv",
+      "bytes": 5563,
+      "sha256": "3923d8136a7cc084c83c4cae1c4b075af24a19b7bb7a8d7f5f09dd55e7efe060"
+    },
+    {
+      "path": "machine_learning_course/Module_3_Unsupervised_Learning_1/exercises/05_comparison/w5.csv",
+      "bytes": 650566,
+      "sha256": "2ec6926b63ac6d0f579747e0635bd05c2c79bb83fa5dbf95a05923cab3561e2c"
+    },
+    {
+      "path": "machine_learning_course/Module_4_Unsupervised_Learning_2/exercises/01_pca/drilling.csv",
+      "bytes": 9288,
+      "sha256": "5439c6c7d361a176a8623cca4293fd38455e8ba4641714d2d2836e27f175dffb"
+    },
+    {
+      "path": "machine_learning_course/Module_4_Unsupervised_Learning_2/exercises/02_tsne/Oil_production.csv",
+      "bytes": 48228,
+      "sha256": "29ddcb5fe91c67ee6fe76672e0d7024c296e7114a7533d5d908a3aa2131fda06"
+    },
+    {
+      "path": "machine_learning_course/Module_4_Unsupervised_Learning_2/exercises/03_umap/petro.csv",
+      "bytes": 197904,
+      "sha256": "0da7ccba34165baa35ecfe46c6ecd258e359c14063e5290d86cef6dc01326a92"
+    },
+    {
+      "path": "machine_learning_course/Module_4_Unsupervised_Learning_2/exercises/04_comparison/petro.csv",
+      "bytes": 197904,
+      "sha256": "0da7ccba34165baa35ecfe46c6ecd258e359c14063e5290d86cef6dc01326a92"
+    },
+    {
+      "path": "machine_learning_course/Module_5_Advanced_Supervised/exercises/anomaly_detection/well_logs_data.csv",
+      "bytes": 2741317,
+      "sha256": "712254fd74e59d67fe7d6ee64b56984a5555ac5fb9156852cdd5ecc85746448c"
+    },
+    {
+      "path": "neural_networks_course/Day_1_Intro_to_NN/exercises/01_sklearn_pipeline/sonar.all-data.csv",
+      "bytes": 87775,
+      "sha256": "3079c09b5d2789a0f96aff82c28e5164fafe2495c5f8da96c6c256c1bd25763f"
+    },
+    {
+      "path": "neural_networks_course/Day_1_Intro_to_NN/exercises/02_nn_from_scratch/sonar.all-data.csv",
+      "bytes": 87775,
+      "sha256": "3079c09b5d2789a0f96aff82c28e5164fafe2495c5f8da96c6c256c1bd25763f"
+    },
+    {
+      "path": "neural_networks_course/Day_2_NN_Advanced/exercises/01_pytorch_pipeline/sonar.all-data.csv",
+      "bytes": 87775,
+      "sha256": "3079c09b5d2789a0f96aff82c28e5164fafe2495c5f8da96c6c256c1bd25763f"
+    },
+    {
+      "path": "neural_networks_course/Day_2_NN_Advanced/exercises/02_tensorflow_pipeline/sonar.all-data.csv",
+      "bytes": 87775,
+      "sha256": "3079c09b5d2789a0f96aff82c28e5164fafe2495c5f8da96c6c256c1bd25763f"
+    },
+    {
+      "path": "neural_networks_course/Day_2_NN_Advanced/exercises/04_nn_unsupervised/classif_test.csv",
+      "bytes": 47128,
+      "sha256": "c910115ee68ac4f4303a9a6733bd755718b2694111135d7c7b60fbd1307bce97"
+    },
+    {
+      "path": "neural_networks_course/Day_2_NN_Advanced/exercises/04_nn_unsupervised/classif_train.csv",
+      "bytes": 481331,
+      "sha256": "872f088348a0c882fa27e814a3e016a4e6f2699ff8d39b845f876f5064e2d531"
+    },
+    {
+      "path": "neural_networks_course/Day_3_Capstone/exercises/01_esp_gas_lock/esp_test.csv",
+      "bytes": 100284,
+      "sha256": "90ad6e4f1e5049d91601de622489f106a863ba05c1492b430e45c022893fc24b"
+    },
+    {
+      "path": "neural_networks_course/Day_3_Capstone/exercises/01_esp_gas_lock/esp_test_actual_gas_lock.csv",
+      "bytes": 9684,
+      "sha256": "ab5904116d62552b69319f5a0c23bd87d886ee22b60b71f0c052e88cac5e3869"
+    },
+    {
+      "path": "neural_networks_course/Day_3_Capstone/exercises/01_esp_gas_lock/esp_train.csv",
+      "bytes": 283368,
+      "sha256": "4673754b1d67dc4386d20e2a100a8df6b8be8939c1bf12904afd023c1220266f"
+    },
+    {
+      "path": "neural_networks_course/Day_3_Capstone/exercises/02_log_curves/Log curve - Labels.csv",
+      "bytes": 2138,
+      "sha256": "68bbf8617a2fcd9904030bfc0690ef760751420812b2defddc10a0b89bc965c3"
+    },
+    {
+      "path": "neural_networks_course/Day_3_Capstone/exercises/02_log_curves/Log curve - Test.csv",
+      "bytes": 11755,
+      "sha256": "946d049e011d7c67fce09c0dad030768179776ae16e8a3236ab6e9cb311c9518"
+    },
+    {
+      "path": "neural_networks_course/Day_3_Capstone/exercises/02_log_curves/Log curve - Train.csv",
+      "bytes": 118557,
+      "sha256": "0ce57da343ec5fce20ecddd639031add3ba6603a060773acccfc5c18fee3b48d"
+    },
+    {
+      "path": "neural_networks_course/Day_3_Capstone/exercises/03_sensor_signals/Sensor_target.csv",
+      "bytes": 9350,
+      "sha256": "0684c2f6a4ed8a262b91a59ce4b1af8aa688d3230390093ea58bf0a6bf82d2c0"
+    },
+    {
+      "path": "neural_networks_course/Day_3_Capstone/exercises/03_sensor_signals/Sensor_test.csv",
+      "bytes": 55908,
+      "sha256": "8dc43919b0eae5954849d47bf99f74384f3350bedb49b5b0f038798df5046e50"
+    },
+    {
+      "path": "neural_networks_course/Day_3_Capstone/exercises/03_sensor_signals/Sensor_train.csv",
+      "bytes": 232541,
+      "sha256": "6ced4b83bb2e62fb4b2e979fd19f6df2db992f2ad6ad8ef8a779a79ef91d5832"
+    },
+    {
+      "path": "neural_networks_course/Day_4_CNN/exercises/04_defect_detection/data_AutoDefect_USIT_UKPublic.h5",
+      "bytes": 490125501,
+      "sha256": "7218ec8c4807c34d9642c2f0083a4366b243bed4721607e676474477bb5712c8"
+    },
+    {
+      "path": "neural_networks_course/Day_5_RNN_Applications/exercises/01_lstm_shampoo/shampoo.csv",
+      "bytes": 519,
+      "sha256": "f709eaa344b2d07039a49e2193cbff5e56206354f3a8203c0e02471beb39a451"
+    },
+    {
+      "path": "neural_networks_course/Day_5_RNN_Applications/exercises/02_lstm_climate/jena_climate.csv",
+      "bytes": 42407641,
+      "sha256": "30bf8a496e7eee1ca4a4b0627eb0e1f0479b195970667cae429bfef8d7d12421"
+    },
+    {
+      "path": "neural_networks_course/Day_5_RNN_Applications/exercises/03_walmart_timeseries/walmart_retail/calendar.csv",
+      "bytes": 103469,
+      "sha256": "d12b5914ef03e66649adf5dd9e996e6602251c22b7a6af8f1f7e3aa12f8860f5"
+    },
+    {
+      "path": "neural_networks_course/Day_5_RNN_Applications/exercises/03_walmart_timeseries/walmart_retail/sales_train_evaluation.csv",
+      "bytes": 121736518,
+      "sha256": "4b4a47c44c38380d2a9168216fea8c9ff2f31b1ddb772f8a0995952a038b8aa0"
+    },
+    {
+      "path": "neural_networks_course/Day_5_RNN_Applications/exercises/03_walmart_timeseries/walmart_retail/sales_train_validation.csv",
+      "bytes": 120007726,
+      "sha256": "f368e66ed1dbecb48b2cc8fc589bf68b3deddbbb36bf5c88b4d6d0a09b9b6724"
+    },
+    {
+      "path": "neural_networks_course/Day_5_RNN_Applications/exercises/03_walmart_timeseries/walmart_retail/sell_prices.csv",
+      "bytes": 203395785,
+      "sha256": "9da3ad1f8b8ccacdbdc70612191dd375ec24a4ac6625c24b75b3bc60b0bed2ef"
+    },
+    {
+      "path": "neural_networks_course/Day_5_RNN_Applications/exercises/04_timeseries_autoencoder/processminer-rare-event-mts.xlsx",
+      "bytes": 8089814,
+      "sha256": "244e9f4fffd7dcddca47f93686d22fff5a893bfdba94b89111e337ca9e2fe4ea"
+    },
+    {
+      "path": "neural_networks_course/Day_5_RNN_Applications/exercises/05_stock_prediction/apple_stock.csv",
+      "bytes": 68897,
+      "sha256": "3e5ed32fd9c41084afce9d084bd644490a55855e717159c3e27bda23b17df0c6"
+    }
+  ]
+}

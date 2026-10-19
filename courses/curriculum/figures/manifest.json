@@ -1,0 +1,3656 @@
+{
+  "activation": {
+    "source": "Exact analytical functions; ReLU derivative at zero shown using a software-style zero convention.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "activation_derivatives": {
+    "source": "Exact analytical functions; ReLU derivative at zero shown using a software-style zero convention.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "anomaly_scores": {
+    "source": "Simulated score distributions, not a fitted detector or calibrated probabilities.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "attention_weights": {
+    "source": "Exact row-wise softmax over an illustrative fixed score matrix, with additive negative-infinity future mask.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "bagging_samples": {
+    "source": "Deterministic synthetic teaching example; seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "bias_variance": {
+    "source": "Schematic analytical curves; not estimated from data.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "boosting_steps": {
+    "source": "Deterministic synthetic teaching example generated with random seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "clusters_shapes": {
+    "source": "Deterministic synthetic teaching example generated with random seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "confusion": {
+    "source": "Illustrative counts TN=85, FP=5, FN=3, TP=7; not model performance.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "distance_concentration": {
+    "source": "Deterministic synthetic teaching example generated with random seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "elbow_silhouette": {
+    "source": "Deterministic synthetic teaching example generated with random seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ensemble_boundaries": {
+    "source": "Deterministic synthetic teaching example generated with random seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ensemble_variance": {
+    "source": "Analytical equal-variance, equal-correlation formula.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "esp_profile": {
+    "source": "Local esp_train.csv; full training file, 3,243 rows, 7 entities; counts are observations, not events.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "forecast_horizon": {
+    "source": "Simulated AR(1) process, coefficient 0.85, innovation SD 0.4; linear model fitted before index 600, evaluation origins 650-969.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "gb_learning": {
+    "source": "Synthetic sin(3x) data with noise, seed 42; 60/40 train/validation split; depth-3 trees.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "gd_path": {
+    "source": "Exact quadratic loss L = w1 squared + 5 w2 squared; learning rate 0.16.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "group_split": {
+    "source": "Schematic partition assignments for four wells with four ordered observations each.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "importance": {
+    "source": "Deterministic synthetic teaching example generated with random seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "knn_boundaries": {
+    "source": "Deterministic synthetic teaching example generated with random seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "layout_cnn_blocks": {
+    "source": "Schematic.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "layout_conv_matrix": {
+    "source": "Exact arithmetic.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "layout_mlp": {
+    "source": "Schematic.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "layout_mlp_boundary": {
+    "source": "MLP fitted to synthetic moons; seed 0.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "layout_pipeline_flow": {
+    "source": "Schematic.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "log_profile": {
+    "source": "Local Log curve - Train.csv, original row order. Units and well identifiers are not supplied in the CSV.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "ml1_basis_expansion": {
+    "source": "Synthetic head-flow data (seed 8), 45 points; cubic fit on the standardized flow z; intercept 1341 m.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_case_split_gap": {
+    "source": "Synthetic 8-well facies dataset (seed 7), 5 log features; standardized 1-nearest-neighbour classifier. Random 5-fold mean 0.942; leave-one-well-out mean 0.793 (range 0.695-0.868).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_contract_timeline": {
+    "source": "Schematic prediction contract for a next-day oil-rate forecast.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml1_cv_basic": {
+    "source": "Fold assignments computed with scikit-learn KFold and StratifiedKFold (4 folds, shuffle, random_state=1) for 16 rows with 4 events.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_cv_structured": {
+    "source": "Fold assignments computed with scikit-learn GroupKFold(4) for 8 equal-size wells and TimeSeriesSplit(4) for 10 time blocks.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_diagnostic_curves": {
+    "source": "Synthetic data y = 1 + x + 1.6x\u00b2 + noise (SD 0.24): validation curve on 40 rows (seed 94, realized noise SD 0.238; 5-fold CV repeated 12 times), learning curves on a 400-row pool (seed 12, 40 shuffle splits); mean RMSE.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_eda_corr": {
+    "source": "Pearson correlations over all 3,200 samples of the synthetic 8-well dataset (seed 7).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_eda_depth_shift": {
+    "source": "Synthetic well W4 (seed 7); run 2 GR recorded 1.2 m deep with independent noise (seed 4); Pearson correlation at each trial shift.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_eda_distributions": {
+    "source": "Synthetic 8-well log dataset (seed 7), 3,200 depth samples; skewness computed with scipy.stats.skew.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_eda_missing": {
+    "source": "Synthetic 8-well dataset (seed 7) with injected, patterned missingness: PE absent in W3 and W6, DT only in the lower 55% of W1, W2, W5, a washout in W7 and a run gap in W4.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_eda_traps": {
+    "source": "Synthetic 8-well dataset (seed 7) with injected problems: -999.25 null codes in W3 GR (seed 21) and W5 NPHI multiplied by 100.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_encode_impute": {
+    "source": "Schematic worked example; the median is computed from the three observed training values.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml1_energy_landscape": {
+    "source": "Schematic overview of typical supervised problem formulations; no performance implied.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml1_facies_confusion": {
+    "source": "Synthetic 8-well facies data (seed 7); standardized RBF SVM, leave-one-well-out out-of-fold predictions; macro recall 0.800, weighted recall (= accuracy) 0.863.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_fold_pipeline": {
+    "source": "Schematic of fitting preprocessing and model inside one cross-validation fold.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml1_grid_search": {
+    "source": "Synthetic 8-well facies data (seed 7); wells W1-W6 for GridSearchCV(GroupKFold(3), f1_macro) over a standardized RBF SVM; best {'svc__C': 10, 'svc__gamma': 0.01}, CV 0.754; test wells W7-W8 macro F1 0.760.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_hinge": {
+    "source": "Exact loss functions of the margin: 0-1 error, hinge max(0, 1 - m) and logistic log2(1 + exp(-m)).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_huber": {
+    "source": "Synthetic data (seed 6): rate = 10 x frequency + noise (SD 12) with 5 upward spikes; OLS slope 16.83, HuberRegressor(epsilon=1.35) slope 11.03.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_impurity": {
+    "source": "Exact two-class impurity functions: entropy -p log2 p - (1-p) log2(1-p), Gini 2p(1-p), misclassification 1 - max(p, 1-p).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_kernel_lift": {
+    "source": "Symmetric toy data (8 points per class). In (x, x\u00b2) the maximum-margin line is x\u00b2 = 1.25, midway between 0.81 and 1.69; thresholds \u00b11.118.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_knn_scaling": {
+    "source": "Synthetic sand and limestone samples (25 each, seed 9); query GR 28 API, RHOB 2.35 g/cm\u00b3 (star); K = 5 nearest neighbours by Euclidean distance before and after standardization.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_l1_l2_geometry": {
+    "source": "Exact quadratic loss centred at (2.0, 0.75); constrained minima: L1 corner (1, 0), elastic net (0.893, 0.248), L2 (0.903, 0.430) by SLSQP.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_lasso_path": {
+    "source": "Same standardized synthetic data as the shared ridge_path figure (seed 42; true coefficients 2, 1, -1, 0.5, 0; feature 2 = feature 1 + noise); scikit-learn lasso_path.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_linear_density": {
+    "source": "Synthetic data (seed 3): porosity = (2.65 - RHOB)/1.65 plus noise (SD 0.012); least-squares fit intercept 1.539, slope -0.5780.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_log_tracks": {
+    "source": "Synthetic well W2 (seed 7), 33 m at 0.15 m sampling; curves generated from facies-dependent distributions with tool-like smoothing.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_logloss": {
+    "source": "Exact log-loss (binary cross-entropy) functions; marked values -ln(0.9), -ln(0.5), -ln(0.1).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_logreg_boundary": {
+    "source": "Synthetic sand and shale samples (80 each, seed 4); standardized logistic regression (C=1); contours of predicted probability.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_model_compare": {
+    "source": "Synthetic 8-well facies data (seed 7); leave-one-well-out macro F1 for five pipelines on identical folds; grey lines join scores of the same held-out well; bars are means.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_roc": {
+    "source": "Synthetic ESP-trip events (15% prevalence, seed 13): logistic regression trained on 1,000 rows, evaluated on 600 validation rows; AUC two sensors 0.851, one sensor 0.735.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_scalers": {
+    "source": "Synthetic feature: 40 samples from N(50, 10), seed 5, plus one outlier at 400. Each scaler fitted with and without the outlier; bars show the range of the ordinary samples.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_sigmoid_logodds": {
+    "source": "Synthetic sand (N(52, 15)) and shale (N(88, 15)) GR, 60 each, seed 2; logistic regression (C=1e4): intercept -12.329, weight 0.1744 per API.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_svm_gamma": {
+    "source": "Synthetic moons (220 rows, noise 0.23, seed 42) as in the shared boundary figures; standardized RBF SVM with C = 1; accuracy on training rows and 5-fold stratified CV (seed 0).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_tree_fitted": {
+    "source": "Synthetic facies samples (60 per class, seed 2); DecisionTreeClassifier(max_depth=2, min_samples_leaf=5) drawn from its tree_ arrays; training accuracy 0.967.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_tree_regression": {
+    "source": "Synthetic compaction trend porosity = 0.35 exp(-(z - 1000)/1800) + noise (SD 0.015), 120 samples, seed 10; DecisionTreeRegressor with max_depth 2 and 5.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_workflow": {
+    "source": "Schematic supervised-learning workflow.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_adaboost_alpha": {
+    "source": "Exact formula alpha = 0.5 ln((1 - eps) / eps); points are the three rounds of the synthetic AdaBoost example (seed 12).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_adaboost_rounds": {
+    "source": "Discrete AdaBoost with decision stumps on 36 synthetic points (seed 12; true boundary x1 + x2 = 0.15, dotted). Marker area is proportional to the row weight at the start of each round; rings mark rows the current stump misclassifies.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_artifact_bundle": {
+    "source": "Schematic of a versioned model artifact; file names are illustrative.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_bag_vs_boost": {
+    "source": "Schematic comparison of bagging and boosting.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_column_transformer": {
+    "source": "Schematic of a ColumnTransformer inside a Pipeline for the synthetic drilling table; column names are illustrative.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_correlated_importance": {
+    "source": "Synthetic drilling data (seed 11) with a downhole WOB column = 0.92 x surface WOB + noise (sd 4 kN, seed 1; correlation 0.997); RandomForestRegressor (300 trees, min_samples_leaf 3) trained on D1-D4, permutation importance on D5-D6, 30 repeats.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_early_stopping": {
+    "source": "Friedman #1 synthetic regression (10 features, noise sd 3): 400 training rows (seed 1), 2,000 validation rows (seed 2); GradientBoostingRegressor, learning rate 0.1, depth 3. Stop rule: 20 stages without improvement.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_facies_case": {
+    "source": "Synthetic well W8 held out; forest (300 trees, min_samples_leaf 3, seed 0) trained on wells W1-W7; accuracy on W8 = 0.750. Facies: gold sandstone, grey shale, blue limestone; arrows mark misclassified rows.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_forest_diagram": {
+    "source": "Schematic of a random forest classifier; feature names and probabilities are illustrative (the average of 0.82, 0.64 and 0.71 is 0.72).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_forest_regression": {
+    "source": "Synthetic data y = sin(x) + 0.25x + noise (sd 0.35), n = 70 with x drawn uniformly on 0-8, seed 8; RandomForestRegressor, 300 trees, min_samples_leaf = 5, seed 0. Shaded: no training data (x > 8).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_gb_stages": {
+    "source": "Synthetic data y = 2 sin(0.9x) + 0.15x + noise (sd 0.35), n = 60, seed 21; F0 = mean of y = 1.09; depth-2 regression trees; learning rate 0.5.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_hard_soft": {
+    "source": "Exact arithmetic for three illustrative probabilities (0.95, 0.40, 0.45): hard vote share 1/3, soft vote mean 0.60.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_histogram_binning": {
+    "source": "Sixty rows of the synthetic drilling data (seed 4); residuals after the first-stage mean prediction. Candidate splits scored with the squared-error gain G_L\u00b2/n_L + G_R\u00b2/n_R; best exact threshold 133.5 kN, best histogram threshold 134.3 kN (16 quantile bins; both give the same partition of the 60 rows).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_ice_interaction": {
+    "source": "Centred ICE curves from the synthetic-drilling HistGradientBoostingRegressor (wells D1-D5); 120 of 300 sampled rows shown, coloured by formation (soft: claystone, sandstone; hard: limestone, dolomite). The generator gives rpm less effect in hard rock.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_leakage_selection": {
+    "source": "20 synthetic datasets (seed 0), each 50 rows x 2000 pure-noise features with random balanced labels; SelectKBest(f_classif, k = 20) + LogisticRegression; 5-fold stratified CV. Means: outside 0.940, inside 0.504.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_loss_gradients": {
+    "source": "Exact functions. Huber threshold delta = 1; p = 1 / (1 + exp(-F)).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_max_features": {
+    "source": "Friedman #1 synthetic regression (12 features, 5 informative, noise sd 1): 16 independent training sets of 300 rows, one 400-row test set; forests of 60 trees. Correlation = between-training-set variance of the forest mean / total variance of one tree (ESL eq. 15.1).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_mdi_bias": {
+    "source": "Synthetic facies logs plus two pure-noise columns (seed 0); RandomForestClassifier, 300 unpruned trees, trained on wells W1-W6; permutation importance on W7-W8, 20 repeats (bars: mean, whiskers: standard deviation).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_missing_route": {
+    "source": "Schematic of native missing-value handling in histogram gradient boosting (scikit-learn HistGradientBoosting documentation behaviour).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_monitoring_loop": {
+    "source": "Schematic of a monitoring loop for a deployed model.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_oob_curve": {
+    "source": "Synthetic classification data (600 rows, 10 features, 5 informative, 5% label noise, seed 3); RandomForestClassifier grown with warm_start, seed 0.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_oob_grouped": {
+    "source": "Synthetic facies logs, 8 wells x 160 rows with well offsets and depth-correlated noise (seed 7); RandomForestClassifier, 300 trees, seed 0.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_oob_matrix": {
+    "source": "Bootstrap draws for 10 adjacent depth rows of one synthetic well and 6 trees (seed 2). \u00d7k = row drawn k times; \"out\" = out of bag for that tree.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_pdp_extrapolation": {
+    "source": "Synthetic drilling data (seed 11) with downhole WOB = 0.92 x surface WOB + noise (sd 4 kN, seed 1). A partial-dependence curve for surface WOB pairs each of 8 grid values with 120 sampled observed downhole values. x = farther (standardized) from every observed row than 99% of rows are from their nearest neighbour.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_pdp_ice": {
+    "source": "HistGradientBoostingRegressor (FORMATION categorical, seed 0) trained on synthetic wells D1-D5; sklearn.inspection.partial_dependence over 300 sampled training rows, 40 grid points between the 5th and 95th percentiles.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_rop_boosting": {
+    "source": "Synthetic drilling wells (seed 11): trained on D1-D5, evaluated on held-out well D6. RandomForestRegressor (300 trees, min_samples_leaf 3) and HistGradientBoostingRegressor (defaults), seed 0. MAE: Training mean 7.10, Deep tree 2.80, Random forest 2.50, Hist. gradient boosting 2.67 m/h.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_rop_motivation": {
+    "source": "Synthetic drilling wells (seed 11); five bootstrap resamples of wells D1-D5 (seed 3); each model predicts held-out well D6. Spread = standard deviation across the five models, averaged over depth (trees 2.64, forests 0.95 m/h).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_shap_waterfall": {
+    "source": "Exact interventional Shapley values for one row of synthetic well D6 (see ml2_shapley_lattice); base 23.38 + contributions +4.43, +2.72, -15.01 = 15.52 m/h.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_shapley_lattice": {
+    "source": "Exact interventional Shapley computation for one row of held-out well D6 (WOB 168 kN, 178 rpm, dolomite): GradientBoostingRegressor on WOB, RPM and FORMATION (wells D1-D5, seed 0); v(S) = mean prediction over 200 background rows with the features in S set to this row. Values in m/h.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_stacking_diagram": {
+    "source": "Schematic of stacking with K = 5 folds and three base models.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_subsample": {
+    "source": "Friedman #1 synthetic regression (noise sd 2), five independent datasets of 600 training and 2,000 validation rows (seeds 0-4); GradientBoostingRegressor, learning rate 0.1, depth 3.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_tree_growth": {
+    "source": "Schematic: three trees with three split nodes each, grown by different policies; numbers give the order in which splits are made.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml2_tree_instability": {
+    "source": "Synthetic two-moons data (n = 220, noise 0.23, seed 42); bootstrap seed 18; unpruned scikit-learn trees. Hollow markers are rows left out of that bootstrap sample.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_vote_curves": {
+    "source": "Exact binomial majority probabilities. Right: with probability rho all voters copy one shared vote (pairwise correlation of correctness = rho), otherwise they vote independently; accuracy = rho*p + (1-rho)*P(majority).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml2_vote_pmf": {
+    "source": "Exact binomial probabilities, n = 5 independent voters, each correct with p = 0.7.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_agglomerative_steps": {
+    "source": "Seven hand-placed points; scipy linkage(method=\"ward\"). Merge numbers are the order of the rows of the linkage matrix.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_bic_curve": {
+    "source": "Same synthetic data as the covariance-type figure (three generating components, seed 17); GaussianMixture(covariance_type=\"full\", n_init=5, random_state=0) for K = 1-8.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_components_vs_groups": {
+    "source": "Synthetic: a curved group and a log-normal (skewed) group, seed 23. GaussianMixture(full, n_init=5, random_state=0); ellipses at 1.5 standard deviations.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_contingency": {
+    "source": "Synthetic well S-1 (seed 7): reference lithology versus KMeans(K=5, n_init=10, random_state=0) on standardized logs; counts of depth samples.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_cov_types": {
+    "source": "Synthetic three-component data (seed 17); GaussianMixture(K=3, n_init=5, random_state=0) with each covariance_type; ellipses at 1 and 2 standard deviations.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_dbscan_chain": {
+    "source": "Synthetic two moons (make_moons, 230 points, noise 0.065, random_state=42) plus three hand-placed outliers; DBSCAN(eps=0.2, min_samples=8). Discs: eps-neighbourhoods of a chain of core points.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_dbscan_concept": {
+    "source": "Hand-placed points; types computed with DBSCAN(eps=1.0, min_samples=4).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_dendrogram_basic": {
+    "source": "Twelve synthetic points from three blobs (make_blobs random_state=42); scipy Ward linkage; colours mark the three clusters below the cut at height 3.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_dendrogram_cut": {
+    "source": "Synthetic 34 points from four blobs (random_state=1); scipy Ward linkage; cuts halfway between merge heights; fcluster(maxclust).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_depth_tracks": {
+    "source": "Synthetic well S-1 (seed 7): KMeans(K=4) on standardized GR, RHOB, NPHI, log10 RT; per-sample silhouette from sklearn; \"core lithology\" is the simulation truth.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_em_iterations": {
+    "source": "Synthetic three-component data (seed 31). EM for a full-covariance Gaussian mixture written in numpy from a deliberately poor start; point colour mixes component colours by responsibility.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_energy_uses": {
+    "source": "Synthetic data: well S-1 (seed 7) k-means K=4 and depth-constrained Ward; Arps-type decline curves (seed 3) k-means K=3; ESP regimes (seed 5) Gaussian mixture K=3.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_eps_panels": {
+    "source": "Same synthetic data as the k-distance plot; DBSCAN(min_samples=5) at three eps values. Grey crosses are noise.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_feature_weights": {
+    "source": "Synthetic four-group data, seed 8, standardized; KMeans(K=2) after multiplying feature 2 by the stated weight; plotted in unweighted coordinates.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_gmm_soft": {
+    "source": "Two synthetic overlapping bivariate normal groups of 150 points (numpy seed 42); GaussianMixture(2, n_init=5, random_state=42); colour = predict_proba for component 1.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_gmm_uncertainty": {
+    "source": "Synthetic overlapping groups (seed 41); GaussianMixture(K=3, full, n_init=5, random_state=0). 2-SD ellipses of the fitted components.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_hdbscan_vs_dbscan": {
+    "source": "Synthetic dense, medium and sparse groups plus uniform background (seed 14); scikit-learn DBSCAN(min_samples=10) and HDBSCAN(min_cluster_size=20). Grey crosses are noise.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_internal_indices": {
+    "source": "Synthetic five blobs with two close pairs (make_blobs random_state=0); KMeans(n_init=10, random_state=0) for K = 2-8; scikit-learn metric implementations.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_kdistance": {
+    "source": "Synthetic moons (random_state=3) plus 28 uniform noise points; NearestNeighbors(n_neighbors=5) on the training points, so each point counts itself, as DBSCAN min_samples does.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_kmeans_failures": {
+    "source": "Synthetic data after the scikit-learn k-means assumptions example (make_blobs random_state=170; unequal sizes numpy seed 3). KMeans(K=3, n_init=10). Dashed ellipses: generating groups, 90% coverage. Share computed after best label matching.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_kmeans_steps": {
+    "source": "Synthetic three blobs (make_blobs, 150 points, random_state=42); one Lloyd iteration from fixed starting centres (-2.5, 1.8), (0.2, 0.5), (2.8, 1.6). Hollow crosses in the middle panel mark the starting centres.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_kmeanspp": {
+    "source": "Synthetic four-blob data (random_state=2). One textbook k-means++ draw (D\u00b2 sampling, numpy seed 0) and one uniform draw (seed 0). One seed in every blob: 66% of 2,000 textbook k-means++ draws (numpy seed 0), 95% of 2,000 scikit-learn kmeans_plusplus draws (random_state 0-1999); uniform sampling of four distinct points 9.5% (exact).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_linkage_compare": {
+    "source": "Synthetic: two dense blobs joined by a 14-point bridge plus an elongated third group (seed 5); AgglomerativeClustering(n_clusters=3) with each linkage.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_linkage_defs": {
+    "source": "Two hand-placed five-point groups; distances computed exactly. Ward: increase in the within-cluster sum of squares if the groups merge (dashed = distances to the merged centroid).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_method_flow": {
+    "source": "Schematic method shortlist; a starting point, not a rule.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml3_mixture_1d": {
+    "source": "Exact two-component normal mixture (weights 0.4/0.6, means 45/100 API, SD 12/14 API) with a 700-sample synthetic histogram (seed 9).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_optics": {
+    "source": "Same synthetic data as the HDBSCAN comparison; OPTICS(min_samples=30, xi=0.03). Bars are coloured by the extracted cluster; grey = noise. A horizontal cut reproduces DBSCAN at that eps.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_profile_heatmap": {
+    "source": "Synthetic well S-1 (seed 7): KMeans(K=4) on standardized logs. Cells show cluster means in original units (RT as geometric mean); colour = standardized mean, blue above and orange below the well average.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_profiles_warmup": {
+    "source": "Synthetic decline curves: A hyperbolic (qi=300, Di=0.25/month, b=0.8); B = 3 x A; C plateau at 170 for 14 months then exponential decline 0.10/month.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_restarts": {
+    "source": "Synthetic 3 x 3 blob grid (make_blobs random_state=7, 495 points). Lloyd iterations from 20 uniform random starts (numpy seeds 100-119), K=9, 25 iterations each.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_scaling_effect": {
+    "source": "Synthetic GR and RHOB samples of three lithologies, seed 4; KMeans(K=3, n_init=10, random_state=0) on raw and on standardized features; cluster colours matched to the reference.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_silhouette_geometry": {
+    "source": "Synthetic three-cluster example (seed 21); a, b and s computed with numpy and checked against sklearn silhouette_samples.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_silhouette_knife": {
+    "source": "Synthetic three-blob data (random_state=5); KMeans(n_init=10, random_state=0) with K=3 and K=5; per-sample values from sklearn silhouette_samples.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_stability": {
+    "source": "Synthetic well S-1 (seed 7), standardized logs. For each K, KMeans refitted on 30 bootstrap resamples (numpy seed 0), labels predicted for all samples and compared with the full-data fit.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_structureless": {
+    "source": "Synthetic: 500 draws from one standard bivariate normal, seed 11; KMeans(K=4, n_init=10, random_state=0).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_voronoi": {
+    "source": "Synthetic blobs (make_blobs, random_state=6), standardized; KMeans(K=5). Shading = nearest-centroid (Voronoi) cells.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml3_w5_debrief": {
+    "source": "Computed from w5.csv (course data, 7,071 samples): KMeans(n_init=10, random_state=42) on six standardized features as in the Lab 1 notebook; K=3 clusters plotted against depth.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "ml3_workflow": {
+    "source": "Schematic clustering workflow.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml3_zonation": {
+    "source": "Synthetic well S-1 (seed 7): Ward clustering of standardized GR, RHOB, NPHI and log10 RT; unconstrained K=4, and with a connectivity matrix linking adjacent samples (cuts at 6 and 16 zones).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_autoencoder": {
+    "source": "Schematic.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml4_batch_map": {
+    "source": "Synthetic logs from four wells (seed 21); well W3 has a density-neutron offset; t-SNE perplexity 30 on standardized GR, RHOB, NPHI, PEF.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_biplot": {
+    "source": "Synthetic drilling channels (seed 4); scores coloured by formation after fitting; arrows = loadings x 5 (display scale); RPM and gas load on PC3-PC4.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_case_channels": {
+    "source": "Synthetic drilling channels from three latent drivers plus noise; illustrative relationships; seed 4.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_choose_k": {
+    "source": "Synthetic drilling channels (seed 4); scree and cumulative variance from all 720 minutes; held-out error from PCA fitted on minutes 0-429 and validated on 430-719.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_corr_redundancy": {
+    "source": "Pearson correlations of a synthetic log suite (seed 11); blocks outlined where |r| > 0.7.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_cov_eigen": {
+    "source": "Synthetic drilling channels (seed 4); eigen-decomposition of the 2 x 2 covariance of standardized WOB and torque; arrows = 2 sqrt(lambda).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_curse_geometry": {
+    "source": "Exact formulas for uniform data in the unit cube: 1 - 0.9^d, ball volume pi^(d/2)/Gamma(d/2+1)(1/2)^d, and edge r^(1/d).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_drilling_compression": {
+    "source": "Synthetic drilling channels (seed 4); PCA on standardized minutes 0-429, reconstruction error on minutes 430-719 in original units.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_geodesic": {
+    "source": "Synthetic noisy spiral (seed 0, 400 points); 7-nearest-neighbour graph and scipy shortest path; colour = position along the spiral.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_ica_sources": {
+    "source": "Synthetic sources (seed 1) mixed by a fixed 3 x 3 matrix; FastICA (seed 0); ICA rows reordered and sign-matched for display.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_kernel_pca": {
+    "source": "scikit-learn make_circles (400 points, noise 0.06, seed 0); colours = ring membership, not used in fitting.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_knn_noise": {
+    "source": "Synthetic two-class data with two informative features plus Gaussian noise features; 5 datasets (seeds 0-4) x 5-fold CV.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_l1_path": {
+    "source": "Lasso path (scikit-learn lasso_path) on the synthetic log suite plus 6 noise channels; target log permeability.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_lda_vs_pca": {
+    "source": "Synthetic two-class Gaussian data with a shared covariance (seed 2); d\u2032 = mean difference / pooled SD.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_loadings_heatmap": {
+    "source": "Synthetic drilling channels (seed 4), standardized; rows of PCA components_ (signs fixed so the largest entry is positive).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_log_qc": {
+    "source": "Synthetic log suites (reference seed 11, new well seed 23) with an injected washout at 2120-2138 m; PCA (k = 4) fitted on the standardized reference well.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_mutual_info": {
+    "source": "Synthetic drilling example (seed 7): vibration = resonance peak in RPM + weak WOB effect + noise; MI by the k-NN estimator.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_nmf_parts": {
+    "source": "Synthetic production profiles (seed 9): non-negative mixtures of three shapes plus noise; NMF (k = 3, seed 0) and PCA (k = 3).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_pca_k_cv": {
+    "source": "Synthetic 20-feature data (seed 3): three high-variance nuisance factors; the class signal lies in a low-variance direction.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_production_shapes": {
+    "source": "Synthetic production profiles for 90 wells (seed 13): three shape families, well sizes varying more than tenfold; colours added after fitting.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_recon_anomaly": {
+    "source": "Synthetic drilling channels (seed 4) with an injected SPP drift and a hook-load glitch; PCA (k = 4) fitted on minutes 0-399.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_rfe_curve": {
+    "source": "RFECV with linear regression on a synthetic log suite plus 6 noise channels (seeds 11, 5); band = \u00b11 SD across folds.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_scaling_pc1": {
+    "source": "Synthetic drilling channels in their units (seed 4): SPP psi, flow gpm, WOB klbf, etc.; first principal component before and after standardization.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_select_vs_extract": {
+    "source": "Schematic.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml4_selection_families": {
+    "source": "Schematic.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml4_selection_leakage": {
+    "source": "Pure-noise data: 60 rows, random labels, 30 datasets per point (seeds 2000-2029); SelectKBest(k = 10) + logistic regression; 5-fold CV; bands = \u00b11 SD.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_selection_stability": {
+    "source": "LassoCV refitted in each of 10 contiguous depth folds; synthetic log suite plus 6 noise channels (seeds 11, 5).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_svd_blocks": {
+    "source": "Schematic of the thin singular value decomposition of a centred data matrix.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml4_swiss_roll": {
+    "source": "scikit-learn make_swiss_roll (1500 points, noise 0.05, seed 0); Isomap k = 10, LLE k = 12, t-SNE perplexity 30; colour = position along the roll.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_tree_importance": {
+    "source": "Random forest (300 trees, seed 0) on the synthetic log suite plus six noise channels (seeds 11, 5); target log permeability.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_trust_compare": {
+    "source": "sklearn.manifold.trustworthiness at k = 10 (continuity = same function with the arguments swapped); Swiss roll seed 0; 600 standardized digit images (seed 42).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_tsne_seeds": {
+    "source": "Six synthetic 10-D Gaussian clusters (make_blobs seed 11); t-SNE perplexity 30 with init=\"random\"; colours = generating cluster, not used in fitting.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_tsne_sizes": {
+    "source": "Synthetic 2-D clusters (seed 0): spreads 0.3 / 1.5 / 0.3, centres at 0, 5, 25; t-SNE seed 0. Spread = RMS distance to the cluster centre.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml4_umap_schematic": {
+    "source": "Schematic of UMAP parameters drawn by hand; not UMAP output (umap-learn is an optional package).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml5_alert_budget": {
+    "source": "Synthetic fleet (seed 41): 50 pumps x 365 days of daily scores, 30 distinct events (at least 13 days apart on a pump) with precursors of random strength in the 5 days before; alert episodes = runs of alert days outside warning windows.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_alert_policy": {
+    "source": "Schematic alert pipeline; persistence and cooldown values are illustrative policy choices, not recommendations.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml5_anomaly_methods": {
+    "source": "Synthetic two-cluster reference set (seed 42); IsolationForest(random_state=42), LocalOutlierFactor(n_neighbors=20, novelty=True), OneClassSVM(nu=0.08, gamma=0.8); shading = -score_samples clipped to its 2nd-98th percentiles.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_anomaly_types": {
+    "source": "Synthetic hourly series (seed 11): daily cycle plus noise with an injected spike, four peak-level hours at trough time, and a 22-hour flat segment.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_autoencoder": {
+    "source": "Schematic undercomplete autoencoder, 6-4-2-4-6 units.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml5_bayesopt": {
+    "source": "Synthetic 1-D objective; scikit-learn GaussianProcessRegressor, Matern 2.5 kernel with fixed length scale 0.8 and variance 2 on normalized scores, fitted to 4 trials; expected improvement, xi = 0.01.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_class_weight": {
+    "source": "Synthetic 2-D data (seed 9), 5% events, 50/50 stratified split; logistic regression. Right: unweighted model with threshold 0.060, chosen to match the balanced model's training recall. Plots show 900 random test rows.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_course_map": {
+    "source": "Schematic of the course workflow; chips show where each module teaches the stage.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml5_drift_psi": {
+    "source": "Synthetic intake pressure (seed 15): reference N(120, 10), 5,000 rows; current N(125, 12), 1,500 rows. PSI over reference deciles = 0.248; two-sample KS D = 0.199, p = 2.6e-40.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_drift_types": {
+    "source": "Synthetic data (seed 14): events when x2 > 0.25 x1^2 + c; logistic regression fitted on the reference period only. Data drift moves the inputs; concept drift lowers c from 1.0 to 0.2.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_event_timeline": {
+    "source": "Synthetic 30-day hourly detector score (seed 22) with three events of 6 h; alert rows above threshold 1.5 merged into episodes when gaps are 6 h or less.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_fences": {
+    "source": "Synthetic GR-like mixture (seed 21): 900 sand rows N(38, 9), 100 shale rows N(102, 9), three tool spikes. Fence counts computed on the full sample.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_fleet_timeline": {
+    "source": "Synthetic fleet (seed 5): 10 pumps, 730 days, 9 trips; zoomed current trace is synthetic and illustrative, not field data.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_grid_random": {
+    "source": "Synthetic objective: score = g(important) + h(unimportant), with a narrow optimum at 0.72 on the important axis (teal curves). Random trials: one draw (seed 40); 9 random trials land within 0.05 of the optimum with probability 1 - 0.9^9 = 0.61.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_halving": {
+    "source": "Simulated learning curves for 27 candidates (seed 8): score = q - b / sqrt(budget) + noise; top third kept at each rung (factor 3).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_iforest_paths": {
+    "source": "Path lengths of the two highlighted rows over 1,000 fully grown random isolation paths (seeds 0-999) on the 61-row synthetic sample; s = 2^(-mean path / c(n)).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_iforest_splits": {
+    "source": "Synthetic 2-D sample (seed 2): 60 ordinary rows plus one unusual row. One random isolation path per row (path seeds 2 and 1); cuts numbered in order, the right panel zooms on the dashed box.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_lab1_results": {
+    "source": "Computed from well_logs_data.csv (course data): 27,845 rows, 5,493 complete in GR, RHOB, NPHI, DT, CALI, BS; StandardScaler; IsolationForest(n_estimators=100, random_state=42); scikit-learn 1.7.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "ml5_lab2_overlap": {
+    "source": "Computed from well_logs_data.csv (course data), 5,493 complete rows; lab settings (contamination / nu = 0.05, LOF n_neighbors = 20, OCSVM gamma = \"scale\"); scikit-learn 1.7.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "ml5_lifecycle": {
+    "source": "Schematic model lifecycle with a monitoring feedback loop.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml5_lof_k": {
+    "source": "Synthetic data (seed 12): 300 ordinary rows, an 8-row micro-cluster, 3 isolated rows. Rings mark the 11 highest LOF scores at each n_neighbors.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_lof_mechanism": {
+    "source": "Synthetic clusters (seed 8); scikit-learn LocalOutlierFactor with n_neighbors=6. Dashed circles: k-distance of A and B; grey circles: k-distance of one neighbour of each.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_mahalanobis": {
+    "source": "Synthetic correlated features (seed 4, correlation 0.9, 300 rows). Contour at the chi-square(2) 99% radius 3.03; test point distance 6.48.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_masking": {
+    "source": "Synthetic readings (seed 3): 200 ordinary N(50, 2) plus 25 offset N(65, 0.8). Mean 51.70, SD 5.16; median 50.31, MAD 1.45; ordinary rows flagged by the robust rule: 0.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_nested_cv": {
+    "source": "Schematic nested cross-validation: 5 outer folds, 4 inner folds.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml5_ocsvm_gamma": {
+    "source": "Synthetic arc-shaped reference data (seed 6, 260 rows, standardized); scikit-learn OneClassSVM, RBF kernel, nu = 0.05. Shaded: decision function >= 0. Flag rates on 2,000 new rows from the same generator (seed 60).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_one_se": {
+    "source": "Synthetic data (make_classification, seed 20, 800 rows); DecisionTreeClassifier, StratifiedKFold(10, shuffle, seed 0); error bars = standard error across folds.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_paired_folds": {
+    "source": "Synthetic data (make_classification, seed 4, 1,200 rows, about 16% events); RepeatedStratifiedKFold 5x2 (seed 0). Mean difference 0.0126, SD 0.0173; naive SE 0.0055; corrected SE 0.0103 (Nadeau-Bengio, test/train = 0.25).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_pca_recon": {
+    "source": "Left: synthetic correlated pair (seed 13), one principal component. Right: six synthetic channels from two latent factors (seed 32); PCA fitted on hours 0\u2013299; threshold 0.170 = 99th percentile of hours 300\u2013419; sensor 4 drifts +0.008 SD per hour from hour 520.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_prevalence_tree": {
+    "source": "Exact arithmetic for 10,000 rows, 1% prevalence, recall 80%, false-positive rate 5%.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_recall_ci": {
+    "source": "Exact Clopper\u2013Pearson 95% intervals for an observed recall of 80% at six event counts (scipy.stats.beta).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_reliability": {
+    "source": "Synthetic data (make_classification, seed 5, 40,000 rows, 5.5% events, 50/50 split); logistic regression. Prior correction p = b*ps / (b*ps - ps + 1) with b = 0.0581 (negatives kept).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_roc_pr_prevalence": {
+    "source": "Exact binormal scores: ordinary N(0, 1), events N(1.5, 1). Dots mark the threshold with FPR 5% (recall 0.44) and its precision; dotted lines show each prevalence.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_settings": {
+    "source": "Synthetic 2-D data (seed 7). Isolation Forest ranks the contaminated set; novelty LOF (n_neighbors=20) scores new rows; logistic regression separates labelled events.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_ts_residual": {
+    "source": "Same synthetic load (seed 17). Seasonal forecast = median of the same hour over the previous 7 days; residual scaled by median and MAD of days 7\u201314; threshold 3.5.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml5_ts_rolling": {
+    "source": "Synthetic hourly load (seed 17): daily cycle, slow trend, AR(1) noise; five afternoon hours near day 16.5 set to night level. Minimum trailing 24-h z-score in the anomaly: -1.52.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_ai_ml_dl": {
+    "source": "Schematic nesting of fields; examples are illustrative, not exhaustive.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn1_batch_modes": {
+    "source": "Same synthetic data and start as the gradient-descent figure; 3 epochs, learning rate 0.5, shuffling seed 0. Dotted line: minimum loss.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_bce_curves": {
+    "source": "Exact binary cross-entropy: -ln p for true label 1 and -ln(1 - p) for true label 0; marked point p = 0.7109, L = 0.3412.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_bio_vs_artificial": {
+    "source": "Schematic drawing; not anatomically accurate.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn1_boundary_evolution": {
+    "source": "Synthetic moons (400 points, noise 0.25, seed 1), 70/30 split; PyTorch 2-16-16-1 ReLU network, SGD learning rate 0.1, batch 32, seeds 0; lowest validation loss at epoch 118 (0.2299); final training 0.1274, validation 0.2499.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_broadcasting": {
+    "source": "Exact NumPy broadcasting arithmetic; MSE values 0.0467 and 0.3133.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_course_route": {
+    "source": "Schematic course map; card titles are the day titles and topics are drawn from each day's parts.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn1_cpu_gpu": {
+    "source": "Schematic; core counts are illustrative, not a specific device.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn1_depth_width": {
+    "source": "Synthetic two spirals (800 points, noise 0.08, seed 0), 70/30 split; scikit-learn MLPClassifier defaults (ReLU, Adam), random_state 0; (params, val acc, iterations) {'(2,)': (9, 0.738, 305), '(16,)': (65, 0.85, 1432), '(256,)': (1025, 0.958, 2107), '(16, 16, 16)': (609, 0.963, 778)}.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_energy_map": {
+    "source": "Schematic. Typical data-architecture pairings, not recommendations; glyphs are drawings, not data.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn1_forward_pass": {
+    "source": "Exact arithmetic: h = ReLU((2.5, 1.0)), z = 0.4*2.5 - 0.2*1.0 + 0.1 = 0.9, sigmoid(0.9) = 0.7109.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_gd_surface": {
+    "source": "Mean binary cross-entropy of a one-feature logistic model on synthetic data (200 points, seed 7); full-batch gradient descent, learning rate 1.0, 40 steps from (-1.5, 2.0); optimum (1.79, -0.53); final loss 0.4930.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_gelu_silu": {
+    "source": "Exact functions: GELU(z) = z Phi(z) (erf form), SiLU(z) = z sigmoid(z); minima -0.170 and -0.278.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_gradcheck": {
+    "source": "Central differences for dL/dv1 of the worked network (exact value -0.72263); best (eps, error): {'float64': (4.2e-06, 8.8e-12), 'float32': (0.0023, 6.2e-07)}.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_graph_backward": {
+    "source": "Exact reverse-mode gradients of the worked network: dL/dz = p - y = -0.2891; dL/dv = [-0.7226, -0.2891]; dL/dW1 = [[-0.1156, -0.2312], [0.0578, 0.1156]].",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_graph_forward": {
+    "source": "Exact forward pass of the worked network: u = (2.5, 1.0), h = (2.5, 1.0), z = 0.9, p = 0.7109, L = 0.3412 for y = 1.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_history": {
+    "source": "Schematic timeline; publication years of the cited works.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn1_layer_matrix": {
+    "source": "Exact arithmetic: z = Wx + b = (2.5, 1.0, -0.3), a = ReLU(z) = (2.5, 1.0, 0).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_linear_collapse": {
+    "source": "Synthetic circles (300 points, noise 0.08, seed 0); scikit-learn MLPClassifier (16, 16, 16), random_state 0.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_logic_gates": {
+    "source": "Exact threshold units w = (1, 1) with b = -1.5 (AND) and b = -0.5 (OR); on XOR the OR line misclassifies (1, 1). The perceptron rule on XOR still makes errors every epoch after 20 epochs.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_lr_preview": {
+    "source": "Exact gradient descent on L(w) = w squared from w = 2, update w <- w(1 - 2 eta), six steps per panel.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_mlp_shapes": {
+    "source": "Schematic of a 60-32-16-1 network; parameter counts exact (2497).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn1_neuron": {
+    "source": "Exact arithmetic for inputs (1, 2), weights (0.5, -1), bias 1; sigmoid(-0.5) = 0.3775.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_perceptron": {
+    "source": "Exact boundary x1 + 2 x2 - 3 = 0 with w = (1, 2), b = -3; illustrative points.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_perceptron_update": {
+    "source": "Exact perceptron update: w [1.0, -1.0] -> [1.5, 0.0], b -0.5 -> 0.0, learning rate 0.5, x = (1, 2), y = 1.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_regression_losses": {
+    "source": "Left: exact loss functions. Right: synthetic line (slope 0.8, noise sd 0.6, seed 5) with 4 added spikes; fitted slopes {'MSE': 1.136, 'MAE': 0.817, 'Huber': 0.85}.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_shape_contract": {
+    "source": "Schematic of Z = XW + b with B = 32 examples, D = 60 features and H = 16 hidden units.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn1_small_data_curve": {
+    "source": "Synthetic two moons (noise 0.3) plus 4 noise features; 8 resamples per size (seeds 0-7); scikit-learn pipelines with StandardScaler; lines: mean, bands: +/- 1 sd; (logistic, MLP) mean accuracy by size {25: (0.783, 0.739), 50: (0.818, 0.768), 100: (0.839, 0.796), 200: (0.841, 0.821), 400: (0.847, 0.864), 800: (0.849, 0.871), 1600: (0.849, 0.882)}.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_softmax": {
+    "source": "Exact softmax of logits (2.0, 1.0, 0.1) divided by temperature T: {0.5: [0.864, 0.117, 0.019], 1: [0.659, 0.242, 0.099], 2: [0.502, 0.304, 0.194]}.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_sonar_profiles": {
+    "source": "sonar.all-data.csv (208 echoes): median and interquartile range of each band by class.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn1_sonar_protocols": {
+    "source": "sonar.all-data.csv; Lab 1 pipelines (scaler + model, default settings); test split random_state=42; shuffled folds random_state=0.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn1_tensor_ranks": {
+    "source": "Schematic. B = batch, D = features, T = time steps, F = channels, C = image channels, H x W = image size.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn1_universal_approx": {
+    "source": "Synthetic daily-load-shaped curve; one hidden layer of n ReLU units with evenly spaced kinks (ticks), output weights by least squares; RMSE {2: 0.11022548706946048, 5: 0.048796411981354405, 20: 0.0026504215851447166}.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_xor_hidden_space": {
+    "source": "Noisy XOR (4 x 40 points, sd 0.13, seed 0); 2-2-1 network, tanh hidden units, 300 full-batch steps (learning rate 1.0), init seed 2; training accuracy 1.000. Dashed lines: where each hidden unit is zero.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_xor_mlp": {
+    "source": "Exact hand-set 2-2-1 threshold network: h1 = step(x1 + x2 - 0.5), h2 = step(x1 + x2 - 1.5), y = step(h1 - h2 - 0.5).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn1_xor_seeds": {
+    "source": "Noisy XOR, 20 initialization seeds per width, 4000 full-batch steps, learning rate 1.0; solved = training accuracy >= 0.95: {2: 14, 4: 20, 8: 20}.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_act_hist": {
+    "source": "Computed: 10-layer tanh network, width 256, Gaussian weights with the stated standard deviation, no biases, 1,000 standard-normal inputs, numpy seed 0; histograms of all activations.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_adamw_decay": {
+    "source": "Analytical approximation: with an L2 term inside Adam the decay part of the update is about \u03b7\u03bb\u03b8/\u221av\u0302 (valid while \u03bb\u03b8 is small relative to the gradient); AdamW applies \u03b7\u03bb\u03b8 directly.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_ae_manifold": {
+    "source": "Computed: 400 synthetic two-sensor rows near a curve (numpy seed 3); autoencoder 2-32-32-1-32-32-2 (tanh), Adam lr 3e-3, 3,000 full-batch steps, torch seed 0; five hand-placed unusual rows.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_ae_scores": {
+    "source": "Computed: synthetic 8-channel sensor rows driven by two hidden factors (numpy seed 11); autoencoder 8-16-2-16-8 (tanh) trained on 2,000 normal rows, torch seed 0; test = 500 normal + 60 unusual rows (30 with one drifting sensor, 30 with decoupled channels).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_augment": {
+    "source": "Computed: synthetic ESP motor-current trace (numpy seed 4) with augmented copies (seed 1); noise level, shift and gain are illustrative, not sensor specifications.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_autoencoder": {
+    "source": "Schematic of a dense autoencoder (8-5-2-5-8).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_batch_noise": {
+    "source": "Computed: logistic-regression gradients at one fixed parameter vector on 4,096 synthetic rows (numpy seed 0); 300 random mini-batches per size; star = full-batch gradient, ellipse = 2 standard deviations; dashed line = 1/\u221aB reference.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_bn_batchsize": {
+    "source": "Computed: 20,000 random batches per size from a standard-normal feature (numpy seed 0); spread = standard deviation of the batch mean and of the batch standard deviation across batches.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_bn_modes": {
+    "source": "Computed with torch.nn.BatchNorm1d (momentum 0.1, affine off) on a synthetic feature with mean 3 and standard deviation 2; batches of 16; numpy and torch seed 0.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_bn_steps": {
+    "source": "Exact arithmetic with torch.nn.BatchNorm1d in training mode (affine off, eps 1e-5); population standard deviation over the batch.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_clip_geometry": {
+    "source": "Schematic of gradient-norm clipping in two dimensions.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_dataloader": {
+    "source": "Schematic; sizes follow the Lab 1 Sonar training partition (124 rows, batch 16).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_debug_flowchart": {
+    "source": "Schematic debugging order.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_double_descent": {
+    "source": "Computed: random ReLU features fitted by minimum-norm least squares (orange) or ridge 0.1 (teal) to 100 synthetic training rows with 10 inputs and noise 0.3; median over 20 feature draws; numpy seed 0.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_dropout_net": {
+    "source": "Schematic of inverted dropout with drop probability 0.5.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_early_stop": {
+    "source": "Computed: synthetic ESP-style table (240 training / 1,000 validation rows); MLP 12-64-64-1, AdamW lr 1e-3, weight decay 0.1, dropout 0.2, torch seed 0; patience rule applied to the recorded validation curve; grey = epochs after the stop.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_fan_diagram": {
+    "source": "Schematic of one dense layer with 4 inputs and 3 units.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_grad_depth": {
+    "source": "Analytical: products of a repeated per-layer factor of 0.6, 1.0 or 1.2 over 40 layers; illustrates the mechanism, not measured gradients.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_grad_flow": {
+    "source": "Computed: 6-layer MLPs of width 32, PyTorch default initialization, one backward pass of MSE on 256 random rows, torch seed 0. \"None\" marks layers whose .grad stayed None (no gradient reached them).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_initial_loss": {
+    "source": "Computed: MLP 20-64-64-C with PyTorch default initialization, 2,000 random standard-normal inputs (or the same inputs x 20), uniformly random labels; 20 torch seeds per C (points = mean, bars = range).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_label_smoothing": {
+    "source": "Exact targets and cross-entropy for K = 4 classes with label smoothing 0.1 (PyTorch convention: (1 - \u03b5) one-hot + \u03b5/K); other logits held equal.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_lr_range": {
+    "source": "Computed: learning-rate range test on a synthetic ESP-style table (4,000 rows, seed 3); MLP 12-64-64-1, AdamW, batch 32, torch seed 0, rate raised geometrically from 1e-6 each step; grey = raw batch loss, blue = exponential moving average.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_lr_steps": {
+    "source": "Computed: exact gradient descent on L = w\u00b2 from w = 3, 30 updates; each update multiplies w by (1 \u2212 2 \u00d7 learning rate).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_norm_cubes": {
+    "source": "Schematic after the axis diagram in Wu and He (2018), Group Normalization.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_opt_adaptive": {
+    "source": "Computed with torch.optim (default betas and alpha) on L = (w1\u00b2 + 50 w2\u00b2)/2 from (-4.5, 1.5), 50 steps; learning rates chosen for illustration.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_opt_momentum": {
+    "source": "Computed with torch.optim on the quadratic L = (w1\u00b2 + 50 w2\u00b2)/2 from (-4.5, 1.5), 50 steps; learning rates chosen for illustration (0.038 is just below the SGD stability limit 0.04).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_overfit_batch": {
+    "source": "Computed: first 32 rows of the synthetic ESP-style table, MLP 12-64-64-1, Adam lr 1e-2, torch seed 0; the two bugs are injected deliberately.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_random_search": {
+    "source": "Computed: 24 random trials, learning rate log-uniform on [1e-5, 0.32] and AdamW weight decay log-uniform on [1e-4, 3.2] (numpy seed 7); synthetic ESP-style table; best validation loss with patience 15, at most 100 epochs; ticks mark the sampled rates.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_residual_block": {
+    "source": "Schematic residual block.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_residual_grad": {
+    "source": "Computed: 30 blocks of Linear-ReLU-Linear (width 64) with and without the identity path; identical PyTorch default initialization; one backward pass of MSE on 256 random rows (torch seeds 0 and 1).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_schedules": {
+    "source": "Computed by stepping the named torch.optim.lr_scheduler classes for 100 steps (peak learning rate scaled to 1).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_seed_spread": {
+    "source": "Computed from the course file sonar.all-data.csv with the Lab 1 split and training loop (width 32, dropout 0.2, AdamW lr 1e-3, weight decay 1e-3, batch 16, patience 10); torch seeds 0-9.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn2_signal_depth": {
+    "source": "Computed: 30-layer ReLU network, width n = 256, Gaussian weights with the stated variance, 1,000 standard-normal inputs, numpy seed 0; no biases, no normalization.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_three_runs": {
+    "source": "Synthetic ESP-style table (240 training / 1,000 validation rows, seeds 1 and 2); MLP 12-64-64-1, AdamW lr 1e-3, batch 32, torch seed 0. Right panel: weight decay 1.0, dropout 0.3, patience 25.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_train_step": {
+    "source": "Schematic of one PyTorch optimization step.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn2_training_curves": {
+    "source": "Computed: synthetic ESP-style table (240 training / 1,000 validation rows); MLP with two hidden layers, AdamW, batch 32, torch seed 0; one setting changed per panel.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn2_weight_decay": {
+    "source": "Computed: synthetic ESP-style table (240 training rows), MLP 12-64-64-1, AdamW lr 1e-3, weight_decay 0 or 1.0 (decay per step = lr x weight_decay), torch seed 0.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn3_audit_board": {
+    "source": "Computed from the supplied training files and the test input files (shape, Depth, keys and feature vectors only); no test labels are read.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_calibration": {
+    "source": "Computed: logistic-regression baselines. Left, esp_train.csv with leave-one-entity-out predictions (3,243 rows); right, Sensor_train.csv with the reference stratified 20% validation split (716 rows). Bins with fewer than 10 rows are omitted.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_class_weights": {
+    "source": "Computed from esp_train.csv: logistic regression with and without class_weight='balanced', leave-one-entity-out predictions pooled over seven entities.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_confusion": {
+    "source": "Computed from esp_train.csv: logistic-regression baseline, leave-one-entity-out predictions pooled over the seven entities, threshold 0.5.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_data_roles": {
+    "source": "Schematic of the three roles for data in the capstone: fit on the training portion, select on the validation portion, assess once on the supplied test file.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn3_day_gantt": {
+    "source": "Schematic day plan matching the agenda: 165 min of lectures including the close, 170 min of project sprints, four 10-min checkpoints, 35 min of presentations, 70 min of breaks.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn3_depth_errors": {
+    "source": "Computed from Log curve - Train.csv: absolute errors of the Ridge baseline and of the training-mean prediction on the validation block, grouped in 25-unit Depth blocks with at least five rows.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_early_stop": {
+    "source": "Computed: the reference workflow in curriculum/capstone.py on the ESP project (width 32, AdamW lr 0.001, seed 42, patience 8), validation = held-out entities esp_30 and esp_31.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn3_entity_errors": {
+    "source": "Computed from esp_train.csv: logistic-regression baseline, leave-one-entity-out; each entity scored by a model fitted on the other six. Labels give errors/rows of that class.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_esp_class_dist": {
+    "source": "Computed from esp_train.csv: 3,193 rows with all six sensors present, pooled over seven entities; step histograms normalized within each class.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_esp_split": {
+    "source": "Computed split membership: GroupShuffleSplit(n_splits=1, test_size=2, random_state=42) on ENTITY as in curriculum/capstone.py, and LeaveOneGroupOut folds; test entity names from esp_test.csv.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn3_esp_timeline": {
+    "source": "Computed from esp_train.csv (labels, missing cells, timestamps) and from the ENTITY and TimeSlot columns of esp_test.csv; the test label file is not read.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_esp_traces": {
+    "source": "Computed from esp_train.csv: entities esp_30 and esp_39, rows sorted by TimeSlot; values as supplied (units undocumented); shading marks GAS_LOCK = 1 and rows whose six sensors are all missing.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_evidence": {
+    "source": "Computed from esp_train.csv. Left: scikit-learn MLP (32 units), random 5-fold row split, pooled accuracy (a deliberately weak evidence figure). Right: leave-one-entity-out average precision per entity for logistic regression and the same MLP with identical preprocessing.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_ladder": {
+    "source": "Computed on the PE reference split (source rows 0-2336 train, 2337-2921 validation): scikit-learn baselines and the reference training loop from curriculum/capstone.py.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn3_lifecycle": {
+    "source": "Schematic of the capstone project lifecycle and the four milestone checkpoints.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn3_log_corr": {
+    "source": "Computed from Log curve - Train.csv: Pearson correlations over all 2,922 training rows (descriptive; rows are not independent). ILD = ILD_log10.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_log_pe_dist": {
+    "source": "Computed from Log curve - Train.csv: PE in the training portion and in the validation block of the reference split (last 20% of source rows).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_log_split": {
+    "source": "Computed from Log curve - Train.csv: Depth in source-row order; the reference split keeps rows 0-2336 for training and holds out rows 2337-2921.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_log_tracks": {
+    "source": "Computed from Log curve - Train.csv: source rows 0-470, the first block of increasing Depth; curves as supplied, units undocumented; well identity is not given.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_model_card": {
+    "source": "Template with values computed from esp_train.csv (logistic baseline, leave-one-entity-out average precision per entity).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn3_param_count": {
+    "source": "Exact parameter counts for dense networks with 6 inputs and one output (weights plus biases); training-row counts from the reference splits in curriculum/capstone.py.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn3_positional": {
+    "source": "Schematic with illustrative GR values: positional labels paired with predictions made after re-ordering the inputs.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn3_preprocess": {
+    "source": "Schematic of the preprocessing order; value ranges computed from the training portion (five entities) of the reference ESP split in esp_train.csv.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn3_presentation": {
+    "source": "Schematic storyboard for the five-minute team presentation.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn3_repro": {
+    "source": "Schematic of a reproducible capstone run; command-line options and artifact names from curriculum/capstone.py.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn3_residuals": {
+    "source": "Computed from Log curve - Train.csv: Ridge baseline fitted on source rows 0-2336, residuals on the validation block (rows 2337-2921).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_seed_spread": {
+    "source": "Computed: the reference training loop from curriculum/capstone.py on the PE project, seeds 0-4 per width (bars = medians), same split and preprocessing; baselines fitted on the same training portion.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn3_sensor_class_dist": {
+    "source": "Computed from Sensor_train.csv (3,580 rows): histogram of col1 by class, and per-column medians with interquartile ranges; column index is a name, not a verified time axis.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_sensor_corr": {
+    "source": "Computed from Sensor_train.csv: Pearson correlations between col1-col10 over 3,580 rows; the minimum off-diagonal value is 0.9995.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_sensor_uuid": {
+    "source": "Computed from Sensor_train.csv: row means in uuid order; macro-F1 from StratifiedKFold(5, shuffle, seed 0) versus GroupKFold(5) on five contiguous uuid blocks, scaling fitted inside folds, threshold 0.5.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_shared_pipeline": {
+    "source": "Schematic of a matched comparison: one split, one fitted preprocessing, two models, one evaluation.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn3_split_gap": {
+    "source": "Computed from esp_train.csv (3,243 rows, 7 entities): scikit-learn models with median imputation and scaling fitted inside each fold; KFold(5, shuffle, seed 0) versus LeaveOneGroupOut on ENTITY; pooled out-of-fold accuracy at threshold 0.5.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn3_three_projects": {
+    "source": "Computed on the reference splits of curriculum/capstone.py (training files only): reference = prevalence, training mean or majority class; linear = logistic or Ridge; trees = HistGradientBoosting (defaults); network = reference training loop, width 32, seed 42. Sensor thresholds chosen on validation.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn3_tree_bias": {
+    "source": "Synthetic example, seed 0: 300 noisy samples of a step function; scikit-learn HistGradientBoostingRegressor and MLPRegressor (64, 64) with default settings; RMSE against the true function on a fine grid.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_arch_timeline": {
+    "source": "Schematic timeline, not to scale; years of first publication (conference or preprint). Design ideas only, no benchmark results.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_augment_examples": {
+    "source": "scikit-learn sample image china.jpg (CC BY 2.0), 360 x 360 crop resized to 160 x 160; transforms computed with NumPy/SciPy, random seed 3.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_batchnorm_axes": {
+    "source": "Schematic of BatchNorm2d statistics: per channel, pooled over the batch and all spatial positions.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_casing_case": {
+    "source": "Synthetic wall-thickness maps (seeds 4-6), 0.05 m depth rows by 5-degree azimuth sectors; schematic unwrapping. Not tool data.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_cnn_blocks": {
+    "source": "Schematic of the compact CNN defined on the next slides; shapes are C x H x W for one image (batch dimension omitted).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_conv1d": {
+    "source": "Synthetic three-sensor series (seed 21); feature maps from three hand-set kernels for illustration; schematic head and causal-padding inset.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_conv_autoencoder": {
+    "source": "Schematic of the Lab 2A convolutional autoencoder (latent_dim = 64); shapes checked with PyTorch, batch dimension omitted.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_conv_numeric": {
+    "source": "Exact cross-correlation (scipy.signal.correlate2d) of a 3 x 3 input with a 2 x 2 kernel, stride 1, no padding; only the first output is shown.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_denoise_digits": {
+    "source": "Computed: convolutional denoising autoencoder (9,569 parameters, seed 0, CPU) trained on 1,437 scikit-learn digits with Gaussian noise; first eight of 360 held-out digits.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_digit_grid": {
+    "source": "scikit-learn bundled handwritten digit (index 3, a \"3\"); exact 0-16 pixel values.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn4_dilation": {
+    "source": "Schematic with exact output-size arithmetic; dilation 2, no padding, stride 1.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_equivariance": {
+    "source": "Exact computation: a scikit-learn digit placed on a 16 x 16 zero canvas, fixed Sobel x-derivative kernel with zero padding, ReLU, 2 x 2 max pooling.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_feature_maps": {
+    "source": "First-layer ReLU feature maps of the tiny digits CNN for two held-out digits (seed 0, CPU); each column scaled to its own maximum, darker = stronger response.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_grouped_patches": {
+    "source": "Schematic: depth windows of 32 rows with stride 16 (50% overlap); random assignment drawn with seed 8.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_iou": {
+    "source": "Exact intersection-over-union for two axis-aligned boxes (corners inclusive-exclusive).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_label_changing": {
+    "source": "scikit-learn digit; synthetic seismic trace (seed 7); synthetic thickness map (seed 5) circularly shifted by 18 of 72 sectors.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_learned_filters": {
+    "source": "First-layer 3 x 3 kernels of a tiny CNN trained on scikit-learn digits (1,437 training images, seed 0, CPU); held-out accuracy 95.0%.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_multichannel": {
+    "source": "Schematic of a Conv2d layer: each output map uses one C_in x K x K kernel plus a bias.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_occlusion": {
+    "source": "Tiny digits CNN (seed 0, CPU) on held-out digits: probability drop when a 2 x 2 patch is set to 0, and absolute input gradient of the true-class logit; each map scaled to its own maximum.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_one_by_one": {
+    "source": "Schematic of a 1 x 1 convolution mapping 4 channels to 2 at each pixel.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_padding": {
+    "source": "Schematic with exact output-size arithmetic; zero padding of width 1.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_param_budget": {
+    "source": "Exact parameter counts (weights + biases) of the Lab 1 SimpleCNN and the compact CNN, checked with PyTorch.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_pool_vs_stride": {
+    "source": "Exact arithmetic: 2 x 2 max pooling, a 2 x 2 stride-2 convolution with kernel [[1, 0], [0, -1]] and zero bias, and global averaging of three 3 x 3 maps.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_pooling": {
+    "source": "Exact 2 x 2 max and average pooling with stride 2 on one 4 x 4 matrix; window colours match the output cells.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_receptive_field": {
+    "source": "Exact receptive-field bookkeeping for conv 3x3 (stride 1), max pool 2x2 (stride 2), conv 3x3 (stride 1).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_recon_error": {
+    "source": "Synthetic casing-thickness patches (seed 11): autoencoder trained on 1,500 normal patches, threshold from 400 normal validation patches, evaluated on 400 normal and 100 defective test patches.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_residual_block": {
+    "source": "Schematic of basic residual blocks: output = ReLU(x + F(x)); the projection shortcut matches channels and resolution.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_rgb_channels": {
+    "source": "Crop of scikit-learn sample image china.jpg (CC BY 2.0, danielbuechele on Flickr); exact 8-bit channel values.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "nn4_seismic_fault_mask": {
+    "source": "Synthetic section (seed 7) and its fault mask (pixels within 1.5 traces of the fault plane; 2.5% of pixels).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_seismic_synthetic": {
+    "source": "Synthetic layered impedance model with a normal fault (seed 7); reflectivity convolved trace by trace with a 25 Hz Ricker wavelet, 2 ms sampling.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_shortcut": {
+    "source": "Computed: tiny CNN (seed 0, CPU) trained on scikit-learn 3s and 8s (214 training, 71 validation, 72 test images) with a bright 2 x 2 tag added to every training and validation 8.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_sliding_steps": {
+    "source": "Exact cross-correlation of the 3 x 3 input with the 2 x 2 kernel (stride 1, no padding); same numbers as the conv_numeric figure.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_sobel_maps": {
+    "source": "Fixed Sobel x and y kernels applied with zero padding (scipy.signal.correlate2d) to scikit-learn digit index 3; one colour scale centred on zero; hand-specified, not learned.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_stride": {
+    "source": "Schematic with exact output-size arithmetic; three of the four window positions shown.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_transfer": {
+    "source": "Schematic of three adaptation strategies for a four-stage pretrained backbone; learning rates are illustrative.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_unet": {
+    "source": "Schematic of a small U-Net for a 128 x 128 single-channel input; numbers are channel counts, side labels are spatial sizes.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn4_vision_tasks": {
+    "source": "Synthetic thickness patch (seed 12) with three pits and one groove; the label formats are derived from the known synthetic geometry, not from a model.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn4_weight_sharing": {
+    "source": "Schematic: seven inputs, five outputs; a kernel of size 3 without padding.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_acf": {
+    "source": "Sample autocorrelation of the synthetic hourly load (seed 11, 2,016 hours). Shaded band: approximate 95% range for white noise (\u00b11.96/\u221an).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_attention_cost": {
+    "source": "Exact arithmetic: 4 bytes x T^2 attention scores for one head and one sequence, versus 4 bytes x T x 256 stored RNN states.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_attention_steps": {
+    "source": "Exact arithmetic for one query, three keys and scalar values; d_k = 2.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_baselines": {
+    "source": "Synthetic hourly load (seed 11). Origins every day at 10:00 on days 42-82; targets h = 14-37 h. Exponential smoothing alpha = 0.2.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_bottleneck": {
+    "source": "Schematic. Left: an encoder-decoder that passes one fixed-size vector. Right: attention forms a weighted context per output step; weights are illustrative.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_bptt": {
+    "source": "Schematic of backpropagation through time for a many-to-one RNN; dashed arrows carry gradients backwards through the shared recurrence.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_copy_illusion": {
+    "source": "Synthetic Gaussian random walk (seed 21, step SD 1.2), test days 250-399; the forecast is the previous value.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_course_map": {
+    "source": "Schematic summary of the five-day neural networks course.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_day_ahead": {
+    "source": "Synthetic hourly load (seed 11): trend, daily and weekly cycles, AR(1) noise. Hypothetical submission time 10:00 for next-day hourly values.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_decomposition": {
+    "source": "Synthetic hourly load (seed 11), weeks 4-7. Classical additive decomposition: centred 2x168 moving average, hour-of-week means of the detrended series, remainder.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_differencing": {
+    "source": "Synthetic hourly load (seed 11). Orange lines: 168-hour rolling means. Right: sample autocorrelation of the weekly-differenced series.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_error_accumulation": {
+    "source": "Simulated AR(2) process y_t = 1.2 y_t-1 - 0.5 y_t-2 + e_t (seed 8, unit noise); models fitted on the first 5,000 steps, RMSE on 1,986 later origins.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_gru_cell": {
+    "source": "Schematic of one GRU step in the PyTorch convention: h_t = (1 - z_t) * n_t + z_t * h_t-1; the reset gate scales the previous-state term inside the candidate.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_intervals": {
+    "source": "Synthetic 50 MW wind farm (seed 3). Quantile gradient boosting on the last six hourly values and hour of day; trained on days 1-90, scored on days 91-120.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_lstm_autoencoder": {
+    "source": "Schematic of an LSTM autoencoder for multivariate windows (curves illustrative).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_lstm_cell": {
+    "source": "Schematic of one LSTM step. Teal: sigmoid gates; purple: candidate values; blue: cell state; \u00d7 and + are elementwise operations.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_mape_pitfall": {
+    "source": "Synthetic 50 MW wind farm (seed 3), six days of hourly output; forecast = previous hour. Hours with zero output cannot enter MAPE.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_model_choice": {
+    "source": "Schematic model-choice guide; a starting point to be tested against baselines, not a rule.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_multihead": {
+    "source": "Schematic of multi-head self-attention with model width 64 and 4 heads of width 16.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_multistep": {
+    "source": "Schematic of three multi-step forecasting strategies for horizons 1-3. Dashed arrows: the recursive model also re-reads the observed history.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_patch_forecaster": {
+    "source": "Schematic of a patch-based transformer forecaster; the curves are a synthetic illustration, not model output.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_pinball": {
+    "source": "Exact quantile (pinball) loss for tau = 0.1, 0.5 and 0.9.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_positional_encoding": {
+    "source": "Exact sinusoidal encoding PE(pos, 2i) = sin(pos / 10000^(2i/64)), PE(pos, 2i+1) = cos(same); model width 64, positions 0-99.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_rag": {
+    "source": "Schematic of retrieval-augmented generation for technical documents.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_recon_error": {
+    "source": "Synthetic three-sensor series (seed 5) with three injected anomalies; LSTM autoencoder (hidden size 16, 24-step windows) trained on steps 0-1,499 (torch seed 0).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_rnn_unrolled": {
+    "source": "Schematic. The same weights W_x, W_h and bias b are used at every time step.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_soft_alignment": {
+    "source": "Hand-built queries and keys (clock-hour encodings, recency penalty 0.8 per day, sharpness 6), row-wise softmax; illustrates the mechanism, not a trained model.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_split_purge": {
+    "source": "Schematic. Bars are input windows, diamonds are targets. The faded window is removed from training because its target falls in the validation period.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_split_types": {
+    "source": "Schematic partition assignments for four wells of three observations each: random rows, whole wells, or the later period of every well.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_stacked_bidir": {
+    "source": "Schematic. Left: two stacked recurrent layers, many-to-one. Right: a bidirectional layer; the backward direction (purple) runs from the end of the window to the start.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_task_types": {
+    "source": "Schematic. Grey = inputs, blue/teal = learned states, orange = outputs, purple = covariates known in advance.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_tcn": {
+    "source": "Schematic of a causal temporal convolutional stack (kernel size 2, dilations 1, 2, 4, 8). Highlighted: every input that can influence the last output.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_teacher_forcing": {
+    "source": "Schematic of a recurrent decoder during training (teacher forcing) and inference (autoregressive rollout); y0 is the last observed value.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_transformer_block": {
+    "source": "Schematic of a pre-norm transformer encoder block; the 2017 original applied layer norm after each residual addition.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "nn5_vanishing": {
+    "source": "Computed Jacobian products for a tanh RNN with 32 units, orthogonal recurrent weights scaled by the gain, random inputs; median spectral norm over 30 runs (seed 4).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "nn5_windowing": {
+    "source": "Schematic, exact indexing: T = 20, lookback L = 6, horizon h = 3, stride s = 2, one feature (F = 1).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "pca_projection": {
+    "source": "Deterministic synthetic teaching example generated with random seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "pca_reconstruction": {
+    "source": "sklearn bundled handwritten digits; PCA fitted to the local dataset; illustrative reconstruction.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "pca_variance": {
+    "source": "Deterministic synthetic teaching example generated with random seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "pr_curve": {
+    "source": "Deterministic synthetic teaching example generated with random seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "recurrent_memory": {
+    "source": "Analytical powers of fixed forget factors, ignoring candidate additions; schematic LSTM memory path.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "regression_fit": {
+    "source": "Deterministic synthetic teaching example generated with random seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "regression_residuals": {
+    "source": "Deterministic synthetic teaching example generated with random seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ridge_path": {
+    "source": "Deterministic synthetic teaching example generated with random seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "rolling_origin": {
+    "source": "Schematic expanding-window evaluation. Gray blocks are not used in that fold.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "sensor_profile": {
+    "source": "Local Sensor_train.csv; first five records of each target class; physical units and ordering semantics are not documented.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "data"
+  },
+  "sequence_window": {
+    "source": "Schematic forecast timeline, lookback 24 observations, horizon 6 steps.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "smote": {
+    "source": "Exact interpolation along one selected minority-neighbor segment; not a full SMOTE implementation.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "svm_kernels": {
+    "source": "Deterministic synthetic teaching example generated with random seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "svm_margin": {
+    "source": "Deterministic synthetic teaching example generated with random seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "threshold_cost": {
+    "source": "Fixed synthetic validation predictions; illustrative false-positive cost 1 and false-negative cost 12.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "training_curves": {
+    "source": "Schematic learning curves, not measured training runs; shapes admit multiple diagnoses.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "tree_depth": {
+    "source": "Deterministic synthetic teaching example generated with random seed 42.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "tsne_perplexity": {
+    "source": "450 fixed sampled sklearn digit images, standardized; TSNE seeds 42; labels colour only, never used in fitting.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  }
+}

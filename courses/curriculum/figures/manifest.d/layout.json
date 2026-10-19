@@ -1,0 +1,47 @@
+{
+  "layout_cnn_blocks": {
+    "source": "Schematic.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "layout_conv_matrix": {
+    "source": "Exact arithmetic.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "layout_mlp": {
+    "source": "Schematic.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "layout_mlp_boundary": {
+    "source": "MLP fitted to synthetic moons; seed 0.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "layout_pipeline_flow": {
+    "source": "Schematic.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  }
+}

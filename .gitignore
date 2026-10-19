@@ -1,1 +1,7 @@
 .DS_Store
+# Large datasets (>100MB, exceed GitHub file limit)
+courses/neural_networks_course/Day_4_CNN/exercises/04_defect_detection/data_AutoDefect_USIT_UKPublic.h5
+courses/neural_networks_course/Day_5_RNN_Applications/exercises/03_walmart_timeseries/walmart_retail/sell_prices.csv
+courses/neural_networks_course/Day_5_RNN_Applications/exercises/03_walmart_timeseries/walmart_retail/sales_train_evaluation.csv
+courses/neural_networks_course/Day_5_RNN_Applications/exercises/03_walmart_timeseries/walmart_retail/sales_train_validation.csv
+*.zip

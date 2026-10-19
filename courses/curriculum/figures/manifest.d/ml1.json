@@ -1,0 +1,317 @@
+{
+  "ml1_basis_expansion": {
+    "source": "Synthetic head-flow data (seed 8), 45 points; cubic fit on the standardized flow z; intercept 1341 m.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_case_split_gap": {
+    "source": "Synthetic 8-well facies dataset (seed 7), 5 log features; standardized 1-nearest-neighbour classifier. Random 5-fold mean 0.942; leave-one-well-out mean 0.793 (range 0.695-0.868).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_contract_timeline": {
+    "source": "Schematic prediction contract for a next-day oil-rate forecast.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml1_cv_basic": {
+    "source": "Fold assignments computed with scikit-learn KFold and StratifiedKFold (4 folds, shuffle, random_state=1) for 16 rows with 4 events.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_cv_structured": {
+    "source": "Fold assignments computed with scikit-learn GroupKFold(4) for 8 equal-size wells and TimeSeriesSplit(4) for 10 time blocks.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_diagnostic_curves": {
+    "source": "Synthetic data y = 1 + x + 1.6x\u00b2 + noise (SD 0.24): validation curve on 40 rows (seed 94, realized noise SD 0.238; 5-fold CV repeated 12 times), learning curves on a 400-row pool (seed 12, 40 shuffle splits); mean RMSE.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_eda_corr": {
+    "source": "Pearson correlations over all 3,200 samples of the synthetic 8-well dataset (seed 7).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_eda_depth_shift": {
+    "source": "Synthetic well W4 (seed 7); run 2 GR recorded 1.2 m deep with independent noise (seed 4); Pearson correlation at each trial shift.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_eda_distributions": {
+    "source": "Synthetic 8-well log dataset (seed 7), 3,200 depth samples; skewness computed with scipy.stats.skew.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_eda_missing": {
+    "source": "Synthetic 8-well dataset (seed 7) with injected, patterned missingness: PE absent in W3 and W6, DT only in the lower 55% of W1, W2, W5, a washout in W7 and a run gap in W4.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_eda_traps": {
+    "source": "Synthetic 8-well dataset (seed 7) with injected problems: -999.25 null codes in W3 GR (seed 21) and W5 NPHI multiplied by 100.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_encode_impute": {
+    "source": "Schematic worked example; the median is computed from the three observed training values.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml1_energy_landscape": {
+    "source": "Schematic overview of typical supervised problem formulations; no performance implied.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml1_facies_confusion": {
+    "source": "Synthetic 8-well facies data (seed 7); standardized RBF SVM, leave-one-well-out out-of-fold predictions; macro recall 0.800, weighted recall (= accuracy) 0.863.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_fold_pipeline": {
+    "source": "Schematic of fitting preprocessing and model inside one cross-validation fold.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  },
+  "ml1_grid_search": {
+    "source": "Synthetic 8-well facies data (seed 7); wells W1-W6 for GridSearchCV(GroupKFold(3), f1_macro) over a standardized RBF SVM; best {'svc__C': 10, 'svc__gamma': 0.01}, CV 0.754; test wells W7-W8 macro F1 0.760.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_hinge": {
+    "source": "Exact loss functions of the margin: 0-1 error, hinge max(0, 1 - m) and logistic log2(1 + exp(-m)).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_huber": {
+    "source": "Synthetic data (seed 6): rate = 10 x frequency + noise (SD 12) with 5 upward spikes; OLS slope 16.83, HuberRegressor(epsilon=1.35) slope 11.03.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_impurity": {
+    "source": "Exact two-class impurity functions: entropy -p log2 p - (1-p) log2(1-p), Gini 2p(1-p), misclassification 1 - max(p, 1-p).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_kernel_lift": {
+    "source": "Symmetric toy data (8 points per class). In (x, x\u00b2) the maximum-margin line is x\u00b2 = 1.25, midway between 0.81 and 1.69; thresholds \u00b11.118.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_knn_scaling": {
+    "source": "Synthetic sand and limestone samples (25 each, seed 9); query GR 28 API, RHOB 2.35 g/cm\u00b3 (star); K = 5 nearest neighbours by Euclidean distance before and after standardization.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_l1_l2_geometry": {
+    "source": "Exact quadratic loss centred at (2.0, 0.75); constrained minima: L1 corner (1, 0), elastic net (0.893, 0.248), L2 (0.903, 0.430) by SLSQP.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_lasso_path": {
+    "source": "Same standardized synthetic data as the shared ridge_path figure (seed 42; true coefficients 2, 1, -1, 0.5, 0; feature 2 = feature 1 + noise); scikit-learn lasso_path.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_linear_density": {
+    "source": "Synthetic data (seed 3): porosity = (2.65 - RHOB)/1.65 plus noise (SD 0.012); least-squares fit intercept 1.539, slope -0.5780.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_log_tracks": {
+    "source": "Synthetic well W2 (seed 7), 33 m at 0.15 m sampling; curves generated from facies-dependent distributions with tool-like smoothing.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_logloss": {
+    "source": "Exact log-loss (binary cross-entropy) functions; marked values -ln(0.9), -ln(0.5), -ln(0.1).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_logreg_boundary": {
+    "source": "Synthetic sand and shale samples (80 each, seed 4); standardized logistic regression (C=1); contours of predicted probability.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_model_compare": {
+    "source": "Synthetic 8-well facies data (seed 7); leave-one-well-out macro F1 for five pipelines on identical folds; grey lines join scores of the same held-out well; bars are means.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_roc": {
+    "source": "Synthetic ESP-trip events (15% prevalence, seed 13): logistic regression trained on 1,000 rows, evaluated on 600 validation rows; AUC two sensors 0.851, one sensor 0.735.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_scalers": {
+    "source": "Synthetic feature: 40 samples from N(50, 10), seed 5, plus one outlier at 400. Each scaler fitted with and without the outlier; bars show the range of the ordinary samples.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_sigmoid_logodds": {
+    "source": "Synthetic sand (N(52, 15)) and shale (N(88, 15)) GR, 60 each, seed 2; logistic regression (C=1e4): intercept -12.329, weight 0.1744 per API.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_svm_gamma": {
+    "source": "Synthetic moons (220 rows, noise 0.23, seed 42) as in the shared boundary figures; standardized RBF SVM with C = 1; accuracy on training rows and 5-fold stratified CV (seed 0).",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_tree_fitted": {
+    "source": "Synthetic facies samples (60 per class, seed 2); DecisionTreeClassifier(max_depth=2, min_samples_leaf=5) drawn from its tree_ arrays; training accuracy 0.967.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_tree_regression": {
+    "source": "Synthetic compaction trend porosity = 0.35 exp(-(z - 1000)/1800) + noise (SD 0.015), 120 samples, seed 10; DecisionTreeRegressor with max_depth 2 and 5.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "computed"
+  },
+  "ml1_workflow": {
+    "source": "Schematic supervised-learning workflow.",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "kind": "schematic"
+  }
+}
