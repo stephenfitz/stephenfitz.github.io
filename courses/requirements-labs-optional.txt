@@ -1,8 +1,0 @@
-# Optional extensions referenced in the decks. Not needed for the core labs.
--r requirements-labs.txt
-umap-learn>=0.5,<1        # ML Module 4 UMAP notebooks (03_umap, 04_comparison)
-xgboost>=2,<4             # ML Module 2 ensemble notebook, optional Part 9
-imbalanced-learn>=0.12,<1 # ML Module 5 resampling-inside-folds example
-# The Keras alternative for NN Day 2 needs TensorFlow; install it in a separate
-# environment if it conflicts with the PyTorch versions above:
-#   pip install "tensorflow>=2.16,<3"
